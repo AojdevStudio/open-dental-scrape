@@ -1,0 +1,132 @@
+{
+  "id": "db-payment",
+  "type": "database",
+  "title": "payment",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "payment",
+      "Payment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "payment",
+    "description": "Table for payment data.",
+    "columns": [
+      {
+        "name": "paymentNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "paymentNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-payplancharges",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-procedurelogs",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-eobattaches",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-clinics",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-paysplits",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-definitions",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-benefits",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-payplans",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-claimprocs",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-chartmodules",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-accountmodules",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-statements",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-payments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-insplans",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-claimpayments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-reports",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-claims",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

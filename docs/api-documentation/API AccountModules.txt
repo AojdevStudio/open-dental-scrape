@@ -1,0 +1,167 @@
+API AccountModules
+See API Specification
+
+AccountModules GET Aging
+Version Added: 22.3.6
+
+Gets the Aging information for a patient and their family, similarly to how it shows in the Account Module Aging grid.
+
+PatNum: Required in the URL.
+
+Returned fields are detailed below:
+
+Bal_0_30: Aged balance from 0 to 30 days old for the entire family.
+Bal_31_60: Aged balance from 31 to 60 days old for the entire family.
+Bal_61_90: Aged balance from 61 to 90 days old for the entire family.
+BalOver90: Aged balance over 90 days old for the entire family.
+Total: Total balance for entire family before insurance estimate.
+InsEst: Insurance Estimate for entire family.
+EstBal: The total remaining balance for the family after subtracting pending insurance amounts and write-offs.
+PatEstBal: The patient balance after subtracting pending insurance amounts and write-offs.
+Unearned: The total Unearned / Prepayment balance for the family.
+
+Example Request:
+GET /accountmodules/1337/Aging
+
+Example Response:
+{
+"Bal_0_30": 276.28,
+"Bal_31_60": 49.0,
+"Bal_61_90": 64.0,
+"BalOver90": 278.03,
+"Total": 667.31,
+"InsEst": 100.0,
+"EstBal": 567.31,
+"PatEstBal": 24.0,
+"Unearned": 2.46
+}
+
+200 OK
+400 BadRequest (Patient is deleted, etc)
+404 NotFound (Patient not found)
+
+AccountModules GET PatientBalances
+Version Added: 22.1
+
+Gets the patient portion for a patient's family, similarly to how it shows in the Account Module's Select Patient grid.
+
+PatNum: Required in the URL.
+
+Returned fields are detailed below:
+
+PatNum: The patient's PatNum / family guarantor's PatNum.
+Name: The first and last name of the patient, or "Entire Family" when regarding the total patient portion of the family.
+Balance: The balance of the patient/entire family.
+
+Example Request:
+GET /accountmodules/16/PatientBalances
+
+Example Response:
+[
+{
+"PatNum": 15,
+"Name": "Smith, John",
+"Balance": 140.2
+},
+{
+"PatNum": 16,
+"Name": "Smith, Jane",
+"Balance": 180.55
+},
+{
+"PatNum": 17,
+"Name": "Smith, Junior",
+"Balance": 68
+},
+{
+"PatNum": 18,
+"Name": "Smith, Sis",
+"Balance": 0
+},
+{
+"PatNum": 15,
+"Name": "Entire Family",
+"Balance": 388.75
+}
+]
+
+AccountModules GET ServiceDateView
+Version Added: 22.3.32
+
+Gets a list of all charges and credits to the account for a patient and their family, similarly to how it shows in the Service Date View.
+
+PatNum: Required in the URL.
+isFamily: Optional. Either "true" or "false". Return data for the entire patient's family. Default "false".
+
+Returned fields are detailed below:
+
+ObjectType: The type of object being returned. Either ProcedureLog, Adjustment, PaySplit, ClaimProc, PayPlanCharge, or PayPlan. Otherwise blank.
+PrimaryKey: Primary Key corresponding to the ObjectType. Example: procedure.ProcNum=985.
+Type: Further details of the ObjectType being displayed: 'Proc', 'Adj-Att.', 'PatPay Att.', 'WriteOff-Att.', 'InsPay-Att.', 'PayPlan Charge Att.', 'PatPay Att. PayPlan', 'Unallocated', 'PatPay', 'WriteOff', 'Adj', 'InsPay', 'PayPlan Credit', 'Dynamic PayPlan Credit', 'PayPlan Charge', 'PatPay PayPlan', 'Day Total', 'Overall Total'. Att. indicates Attached.
+ServiceDate: Date service was provided.
+TransDate: Date transaction was posted.
+Patient: patient.FName.
+PatNum: patient.PatNum.
+Reference: Description of the of the returned object.
+Charge: Amount that was charged.
+Credit: Amount that was paid.
+Provider: provider.Abbr.
+InsBal: Balance of estimated insurance payment.
+AcctBal: The remaining patient portion balance.
+
+Example Request:
+GET /accountmodules/65/ServiceDateView?isFamily=true
+
+Example Response:
+[
+{
+"ObjectType": "Procedure",
+"PrimaryKey": "43",
+"Type": "Proc",
+"ServiceDate": "2021-07-13",
+"TransDate": "",
+"Patient": "Jaime",
+"PatNum": "65",
+"Reference": "D2393:#14-MOD-C3(P)",
+"Charge": "235.00",
+"Credit": "0.00",
+"Provider": "DOC2",
+"InsBal": "0.00",
+"AcctBal": "216.20"
+},
+{
+"ObjectType": "Adjustment",
+"PrimaryKey": "10",
+"Type": "Adj-Att.",
+"ServiceDate": "",
+"TransDate": "2021-07-13",
+"Patient": "Jaime",
+"PatNum": "65",
+"Reference": "Adj- Discount",
+"Charge": "0.00",
+"Credit": "18.80",
+"Provider": "DOC2",
+"InsBal": "",
+"AcctBal": ""
+},
+{
+"ObjectType": "",
+"PrimaryKey": "",
+"Type": "Day Total",
+"ServiceDate": "2021-07-13",
+"TransDate": "",
+"Patient": "",
+"PatNum": "",
+"Reference": "Total for Date",
+"Charge": "235.00",
+"Credit": "18.80",
+"Provider": "",
+"InsBal": "0.00",
+"AcctBal": "216.20"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (Patient is deleted, etc)
+404 NotFound (Patient not found)

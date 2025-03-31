@@ -1,0 +1,171 @@
+{
+  "id": "api-allergies",
+  "type": "api",
+  "title": "Allergies",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Allergies.txt",
+  "content": "API Allergies\nSee API Specification\n\nAllergies GET\nVersion Added: 21.1\n\nGets all allergies for a specified patient.\n\nPatNum: Required.\n\nExample Request:\nGET /allergies?PatNum=15\n\nExample Response:\n[\n{\n\"AllergyNum\": 1,\n\"AllergyDefNum\": 4,\n\"PatNum\": 15,\n\"defDescription\": \"Penicillin\",\n\"defSnomedType\": \"None\",\n\"Reaction\": \"Rash\",\n\"StatusIsActive\": \"true\",\n\"DateAdverseReaction\": \"2020-03-18\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAllergies POST\nVersion Added: 21.3\n\nAttaches an AllergyDef to a patient.\n\nAllergyDefNum: Rarely used. Just use defDescription instead, which handles insertion of AllergyDef automatically.\nPatNum: Required.\ndefDescription: Required unless you choose to use AllergyDefNum.\n\nReaction: Optional. String describing the adverse reaction.\nStatusIsActive: Optional. Either \"true\" or \"false\". Default \"true\".\nDateAdverseReaction: Optional. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\n\nExample Requests:\nPOST /allergies\n\n{\n\"PatNum\": 12,\n\"AllergyDefNum\": \"243\"\n}\n\nor\n\n{\n\"PatNum\": 12,\n\"defDescription\": \"Penicillin\",\n\"Reaction\": \"Hives\",\n\"DateAdverseReaction\": \"2019-09-23\"\n}\n\nExample Responses:\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAllergies PUT\nVersion Added: 22.1\n\nUpdates the allergy associated with a patient.\n\nAllergyNum: Required in the URL.\n\nReaction: String describing the adverse reaction.\nDateAdverseReaction: String in \"yyyy-MM-dd\" format.\nStatusIsActive: Either \"true\" or \"false\".\n\nExample Request:\nPUT /allergies/12\n\n{\n\"Reaction\": \"Rash\",\n\"DateAdverseReaction\": \"2022-04-13\",\n\"StatusIsActive\": \"true\"\n}\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAllergies DELETE\nVersion Added: 22.1\n\nDeletes an allergy associated with a patient.\n\nAllergyNum: Required in the URL.\n\nExample Requests:\nDELETE /allergies/13\n\nExample Responses:\n200 OK\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Allergies",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Allergies",
+      "method": "GET",
+      "path": "/allergies",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /allergies?PatNum=15",
+          "response": "[\n{\n\"AllergyNum\": 1,\n\"AllergyDefNum\": 4,\n\"PatNum\": 15,\n\"defDescription\": \"Penicillin\",\n\"defSnomedType\": \"None\",\n\"Reaction\": \"Rash\",\n\"StatusIsActive\": \"true\",\n\"DateAdverseReaction\": \"2020-03-18\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all allergies for a specified patient."
+    },
+    {
+      "resource": "Allergies",
+      "method": "POST",
+      "path": "/allergies",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /allergies\n\n{\n\"PatNum\": 12,\n\"AllergyDefNum\": \"243\"\n}\n\nor\n\n{\n\"PatNum\": 12,\n\"defDescription\": \"Penicillin\",\n\"Reaction\": \"Hives\",\n\"DateAdverseReaction\": \"2019-09-23\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Attaches an AllergyDef to a patient."
+    },
+    {
+      "resource": "Allergies",
+      "method": "PUT",
+      "path": "/allergies",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /allergies/12\n\n{\n\"Reaction\": \"Rash\",\n\"DateAdverseReaction\": \"2022-04-13\",\n\"StatusIsActive\": \"true\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates the allergy associated with a patient."
+    },
+    {
+      "resource": "Allergies",
+      "method": "DELETE",
+      "path": "/allergies",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /allergies/13",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes an allergy associated with a patient."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-allergydef",
+      "description": "API references database table allergydef"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-snomed",
+      "description": "API references database table snomed"
+    },
+    {
+      "type": "references",
+      "target": "db-allergy",
+      "description": "API references database table allergy"
+    }
+  ]
+}

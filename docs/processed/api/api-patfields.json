@@ -1,0 +1,124 @@
+{
+  "id": "api-patfields",
+  "type": "api",
+  "title": "PatFields",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API PatFields.txt",
+  "content": "API PatFields\nSee API Specification\n\nPatient Fields are custom fields that are found in various areas of Open Dental such as the Patient Information area of the Family Module, Account Module, and Chart Module.\n\nFieldTypes can be:\n\nText - String.\nPickList - patfieldpickitem.Name for the patfielddef\nDate - String in \"yyyy-MM-dd\" format.\nCheckbox - \"1\" indicates true.\nCurrency - Monetary amount.\nPatFields GET (single)\nVersion Added: 22.4\n\nGets a single PatField.\n\nPatFieldNum: Required in the URL.\n\nExample Request:\nGET /patfields/5\n\nExample Response:\n{\n\"PatFieldNum\": 5,\n\"PatNum\": 69,\n\"FieldName\": \"Ins Verified\",\n\"FieldValue\": \"Yes\"\n\"SecDateTEdit\": \"2022-12-15 11:26:31\",\n\"SecDateEntry\":\"2021-12-04\"\n}\n\nPatFields GET (multiple)\nVersion Added: 21.1\n\nGets a list of PatFields.\n\nParameters: All optional.\n\nPatNum: (Optional after version 22.4.5) The patient's PatNum.\nFieldName: (Optional after version 22.4.5) FK to patFieldDef.FieldName. Case sensitive.\nSecDateTEdit: (Added in version 22.4.5) Timestamp representing when the PatField was last edited. In \"yyyy-MM-dd HH:mm:ss\" format.\n\nExample Requests:\nGET /patfields\nGET /patfields?PatNum=69&FieldName=Ins%20Verified\nGET /patfields?FieldName=Deposit\n\nExample Responses:\n[\n{\n\"PatFieldNum\": 1,\n\"PatNum\": 39,\n\"FieldName\": \"Deposit\",\n\"FieldValue\": \"450.29\",\n\"SecDateTEdit\": \"2022-12-22 09:31:00\",\n\"SecDateEntry\":\"2021-02-04\"\n},\n{\n\"PatFieldNum\": 2,\n\"PatNum\": 68,\n\"FieldName\": \"Over 18\",\n\"FieldValue\": \"1\",\n\"SecDateTEdit\": \"2022-10-22 08:35:33\",\n\"SecDateEntry\":\"2020-03-14\"\n},\n{\n\"PatFieldNum\": 3,\n\"PatNum\": 86,\n\"FieldName\": \"Ortho Status\",\n\"FieldValue\": \"In Progress\",\n\"SecDateTEdit\": \"2022-12-22 14:45:11\",\n\"SecDateEntry\":\"2020-06-24\"\n},\netc...\n]\n\nor\n\n{\n\"PatFieldNum\": 5,\n\"PatNum\": 69,\n\"FieldName\": \"Ins Verified\",\n\"FieldValue\":\"Yes\"\n\"SecDateTEdit\": \"2022-12-15 11:26:31\",\n\"SecDateEntry\":\"2021-05-05\"\n}\n\nor\n\n{\n\"PatFieldNum\": 1,\n\"PatNum\": 39,\n\"FieldName\": \"Deposit\",\n\"FieldValue\": \"450.29\",\n\"SecDateTEdit\": \"2022-12-22 09:31:00\",\n\"SecDateEntry\":\"2009-11-09\"\n}\n\nPatFields POST (create)\nVersion Added: 22.4\n\nCreates a patfield. Cannot create PatFields associated with hidden PatFieldDefs.\n\nParameters:\n\nPatNum: Required. The patient's PatNum.\nFieldName: Required. FK to PatFieldDef.FieldName. Case sensitive.\nFieldValue: Required. See the top of this page for more information. Relies on PatFieldDef.FieldType.\n\nExample Request:\nPOST /patfields\n\n{\n\"PatNum\":10,\n\"FieldName\": \"Ins Verified\",\n\"FieldValue\":\"Yes\"\n}\n\nExample Response:\n{\n\"PatFieldNum\": 29,\n\"PatNum\": 10,\n\"FieldName\": \"Ins Verified\",\n\"FieldValue\": \"Yes\",\n\"SecDateTEdit\": \"2022-12-28 09:38:01\",\n\"SecDateEntry\":\"2021-12-04\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPatFields PUT\nVersion Added: 21.1\n\nUpdates an existing patfield.\n\nParameters:\n\nPatNum: Required. The patient's PatNum.\nFieldName: Required. FK to patFieldDef.FieldName. Case sensitive.\nFieldValue: Required. See the top of this page for more information. Relies on PatFieldDef.FieldType.\n\nExample Request:\nPUT /patfields\n\n{\n\"PatNum\":101,\n\"FieldName\": \"Ins Verified\",\n\"FieldValue\":\"Yes\"\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n\nPatFields DELETE\nVersion Added: 22.4\n\nDeletes a patfield. Will not delete a PatField with an associated PatFieldDef of type CareCreditStatus.\n\nPatFieldNum: Required in the URL.\n\nExample Request:\nDELETE /patfields/29\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.4",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "PatFields",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PatFields",
+      "method": "PUT",
+      "path": "/patfields",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /patfields\n\n{\n\"PatNum\":101,\n\"FieldName\": \"Ins Verified\",\n\"FieldValue\":\"Yes\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates an existing patfield."
+    },
+    {
+      "resource": "PatFields",
+      "method": "DELETE",
+      "path": "/patfields",
+      "versionAdded": "22.4",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /patfields/29",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a patfield. Will not delete a PatField with an associated PatFieldDef of type CareCreditStatus."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patfield",
+      "description": "API references database table patfield"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-patfielddef",
+      "description": "API references database table patfielddef"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-patfieldpickitem",
+      "description": "API references database table patfieldpickitem"
+    },
+    {
+      "type": "references",
+      "target": "db-deposit",
+      "description": "API references database table deposit"
+    }
+  ]
+}

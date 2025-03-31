@@ -1,0 +1,40 @@
+{
+  "id": "db-medicalorder",
+  "type": "database",
+  "title": "medicalorder",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "medicalorder",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "medicalorder",
+    "description": "Table for medicalorder data.",
+    "columns": [
+      {
+        "name": "medicalorderNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "medicalorderNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

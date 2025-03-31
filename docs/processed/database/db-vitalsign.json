@@ -1,0 +1,40 @@
+{
+  "id": "db-vitalsign",
+  "type": "database",
+  "title": "vitalsign",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "vitalsign",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "vitalsign",
+    "description": "Table for vitalsign data.",
+    "columns": [
+      {
+        "name": "vitalsignNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "vitalsignNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

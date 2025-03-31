@@ -1,0 +1,87 @@
+{
+  "id": "api-proccodes",
+  "type": "api",
+  "title": "ProcCodes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ProcCodes.txt",
+  "content": "API ProcedureCodes\nSee API Specification\n\nProcedureCodes GET (single)\nVersion Added: 23.3.25\n\nGets a single ProcedureCode.\n\nExample Request:\nGET /procedurecodes/35\n\nExample Response:\n{\n\"CodeNum\": 35,\n\"ProcCode\": \"D0120\",\n\"Descript\": \"periodic oral evaluation - established patient\",\n\"AbbrDesc\": \"PerEx\",\n\"ProcTime\": \"/X/\",\n\"ProcCat\": 73,\n\"procCat\": \"Exams & Xrays\",\n\"TreatArea\": \"Mouth\",\n\"NoBillIns\": \"false\",\n\"IsProsth\": \"false\",\n\"DefaultNote\": \"\",\n\"IsHygiene\": \"false\",\n\"AlternateCode1\": \"\",\n\"MedicalCode\": \"\",\n\"IsTaxed\": \"false\",\n\"PaintType\": \"None\",\n\"LaymanTerm\": \"\",\n\"IsCanadianLab\": \"false\",\n\"BaseUnits\": 0,\n\"SubstitutionCode\": \"\",\n\"SubstOnlyIf\": \"Always\",\n\"DateTStamp\": \"2023-12-12 09:15:11\",\n\"DrugNDC\": \"\",\n\"RevenueCodeDefault\": \"\",\n\"ProvNumDefault\": 0,\n\"CanadaTimeUnits\": 0.0,\n\"IsRadiology\": \"false\",\n\"DefaultClaimNote\": \"\",\n\"DefaultTPNote\": \"\",\n\"PaintText\": \"\",\n\"AreaAlsoToothRange\": \"false\",\n\"DiagnosticCodes\": \"\"\n}\n\n200 OK\n404 NotFound\n\nProcedureCodes GET (multiple)\nVersion Added: 22.3.22\n\nGets a list of ProcedureCodes.\n\nDateTStamp: (Added in version 22.4.28) Optional. String in \"yyyy-MM-dd HH:mm:ss\" format. Get ProcedureCodes altered on and after the specified date and time.\n\nExample Requests:\nGET /procedurecodes\nGET /procedurecodes?DateTStamp=2021-11-07%2014%3A00%3A00\n\nExample Response:\n[\n{\n\"CodeNum\": 35,\n\"ProcCode\": \"D0120\",\n\"Descript\": \"periodic oral evaluation - established patient\",\n\"AbbrDesc\": \"PerEx\",\n\"ProcTime\": \"/X/\",\n\"ProcCat\": 73,\n\"procCat\": \"Exams & Xrays\",\n\"TreatArea\": \"Mouth\",\n\"NoBillIns\": \"false\",\n\"IsProsth\": \"false\",\n\"DefaultNote\": \"\",\n\"IsHygiene\": \"false\",\n\"AlternateCode1\": \"\",\n\"MedicalCode\": \"\",\n\"IsTaxed\": \"false\",\n\"PaintType\": \"None\",\n\"LaymanTerm\": \"\",\n\"IsCanadianLab\": \"false\",\n\"BaseUnits\": 0,\n\"SubstitutionCode\": \"\",\n\"SubstOnlyIf\": \"Always\",\n\"DateTStamp\": \"2023-12-12 09:15:11\",\n\"DrugNDC\": \"\",\n\"RevenueCodeDefault\": \"\",\n\"ProvNumDefault\": 0,\n\"CanadaTimeUnits\": 0.0,\n\"IsRadiology\": \"false\",\n\"DefaultClaimNote\": \"\",\n\"DefaultTPNote\": \"\",\n\"PaintText\": \"\",\n\"AreaAlsoToothRange\": \"false\",\n\"DiagnosticCodes\": \"\"\n},\n{\n\"CodeNum\": 36,\n\"ProcCode\": \"D0140\",\n\"Descript\": \"limited oral evaluation - problem focused\",\n\"AbbrDesc\": \"LimEx\",\n\"ProcTime\": \"/X/\",\n\"ProcCat\": 73,\n\"procCat\": \"Exams & Xrays\",\n\"TreatArea\": \"Mouth\",\n\"NoBillIns\": \"false\",\n\"IsProsth\": \"false\",\n\"DefaultNote\": \"\",\n\"IsHygiene\": \"false\",\n\"AlternateCode1\": \"\",\n\"MedicalCode\": \"\",\n\"IsTaxed\": \"false\",\n\"PaintType\": \"None\",\n\"LaymanTerm\": \"\",\n\"IsCanadianLab\": \"false\",\n\"BaseUnits\": 0,\n\"SubstitutionCode\": \"\",\n\"SubstOnlyIf\": \"Always\",\n\"DateTStamp\": \"2018-07-18 08:59:14\",\n\"DrugNDC\": \"\",\n\"RevenueCodeDefault\": \"\",\n\"ProvNumDefault\": 0,\n\"CanadaTimeUnits\": 1.0,\n\"IsRadiology\": \"false\",\n\"DefaultClaimNote\": \"\",\n\"DefaultTPNote\": \"\",\n\"PaintText\": \"\",\n\"AreaAlsoToothRange\": \"false\",\n\"DiagnosticCodes\": \"\"\n},\netc...\n]\n\n200 OK\n400 BadRequest\n\nProcedureCodes POST (create)\nVersion Added: 22.3\n\nCreates a new ProcedureCode. For more information, see Procedure Code.\n\nProcCode: Required. Dental code.\nDescript: Required. The main description of the procedure.\nAbbrDesc: Required. Abbreviated description.\nProcCat: This or procCat is required. FK to definition.DefNum where definition.Category=11.\nprocCat: This or ProcCat is required. The string version of the definition.ItemName.\n\nProcTime: Optional. Time pattern in increments defined by the AppointmentTimeIncrement preference. A string consisting of 'X' and '/' characters only. Default \"/X/\".\nTreatArea: (Added in version 22.4.34) Optional. Either \"None\", \"Surf\", \"Tooth\", \"Mouth\", \"Quad\", \"Sextant\", \"Arch\", or \"ToothRange\". Default is \"None\".\nNoBillIns: (Added in version 23.2.10) Optional. Either \"true\" or \"false\". Default \"false\".\nIsProsth: (Added in version 23.3.25) Optional. Either \"true\" or \"false\". Default \"false\".\nDefaultNote: Optional. The default note for this procedure that will be copied to a ProcNote when marking complete.\nIsHygiene: Optional. Either \"true\" or \"false\". Default \"false\".\nAlternateCode1: (Added in version 23.3.25) Optional. For Medicaid.\nMedicalCode: Optional. FK to procedurecode.ProcCode. The medical code that is being referenced must be set up first. Anytime a procedure is added, this medical code will also be added to that procedure.\nIsTaxed: (Added in version 23.3.25) Optional. If true, uses PrefName.SalesTaxDefaultProvider to apply a sales tax adjustment to procedurelog. Either \"true\" or \"false\". Default \"false\".\nPaintType: (Added in version 23.3.25) Optional. Either \"None\", \"Extraction\", \"Implant\", \"RCT\", \"PostBU\", \"FillingDark\", \"FillingLight\", \"CrownDark\", \"CrownLight\", \"BridgeDark\", \"BridgeLight\", \"DentureDark\", \"DentureLight\", \"Sealant\", \"Veneer\", \"Text\", \"RetainedRoot\", or \"SpaceMaintainer\". Default is \"None\".\nLaymanTerm: Optional. When creating treatment plans, this description will be used instead of Descript.\nIsCanadianLab: (Added in version 23.3.25) Optional. True if procedure code is used as an adjunct to track the lab fee. Either \"true\" or \"false\". Default \"false\".\nBaseUnits: (Added in version 23.3.25) Optional. Base units for a code. Cannot be negative. Normally 0.\nSubstitutionCode: (Added in version 22.4.9) Optional. FK to procedurecode.ProcCode. Used to create a substitution code at the procedure level. Case sensitive.\nSubstOnlyIf: (Added in version 22.4.9) Optional. Either \"Always\", \"Molar\", \"SecondMolar\", \"Never\", or \"Posterior\". Only used if SubstitutionCode is set. Default is \"Always\".\nDrugNDC: (Added in version 23.3.25) Optional. National Drug Code number. 11 digits or blank.\nRevenueCodeDefault: (Added in version 23.3.25) Optional. A 3-digit code sometimes used for institutional claims.\nProvNumDefault: Optional. FK to provider.ProvNum. 0 for none. Otherwise, this provider will override other providers.\nCanadaTimeUnits: Optional. Tracks scaling insurance and periodontal scaling units for patients depending on coverage.\nIsRadiology: (Added in version 23.3.25) Optional. Either \"true\" or \"false\". Default \"false\".\nDefaultClaimNote: (Added in version 23.3.25) Optional. Default note appended to claim.ClaimNote when a claim is created using this procedure code.\nDefaultTPNote: (Added in version 23.3.25) Optional. Default note appended to a treatment planned procedure.\nPaintText: (Added in version 23.3.24) Optional. The text to draw on the tooth. PaintType must be \"Text\".\nAreaAlsoToothRange: (Added in version 23.3.25) Optional. TreatArea must be \"Quad\" or \"Arch\". Either \"true\" or \"false\". Default \"false\".\nDiagnosticCodes: (Added in version 23.3.25) Optional. Text to store up to 4 ICD-10 codes. Codes are comma-separated with no whitespace.\n\nExample Request:\nPOST /procedurecodes\n\n{\n\"ProcCode\": \"G0140\",\n\"Descript\": \"limited oral evaluation - problem focused\",\n\"AbbrDesc\": \"LimEx\",\n\"ProcCat\": 83,\n\"DiagnosticCodes\": \"B08.09\"\n}\n\nExample Response:\n{\n\"CodeNum\": 617,\n\"ProcCode\": \"G0140\",\n\"Descript\": \"limited oral evaluation - problem focused\",\n\"AbbrDesc\": \"LimEx\",\n\"ProcTime\": \"/X/\",\n\"ProcCat\": 83,\n\"procCat\": \"Ortho\",\n\"TreatArea\": \"None\",\n\"NoBillIns\": \"false\",\n\"IsProsth\": \"false\",\n\"DefaultNote\": \"\",\n\"IsHygiene\": \"false\",\n\"AlternateCode1\": \"\",\n\"MedicalCode\": \"\",\n\"IsTaxed\": \"false\",\n\"PaintType\": \"None\",\n\"LaymanTerm\": \"\",\n\"IsCanadianLab\": \"false\",\n\"BaseUnits\": 0,\n\"SubstitutionCode\": \"\",\n\"SubstOnlyIf\": \"Always\",\n\"DateTStamp\": \"2023-12-29 09:19:21\",\n\"DrugNDC\": \"\",\n\"RevenueCodeDefault\": \"\",\n\"ProvNumDefault\": 0,\n\"CanadaTimeUnits\": 0.0,\n\"IsRadiology\": \"false\",\n\"DefaultClaimNote\": \"\",\n\"DefaultTPNote\": \"\",\n\"PaintText\": \"\",\n\"AreaAlsoToothRange\": \"false\",\n\"DiagnosticCodes\": \"B08.09\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureCodes PUT (update)\nVersion Added: 23.3.25\n\nUpdates an existing ProcedureCode. All fields are optional. For more information, see Procedure Code.\n\nCodeNum: Required in URL.\n\nDescript: The main description of the Procedure.\nAbbrDesc: Abbreviated description.\nProcTime: Time pattern in increments defined by the AppointmentTimeIncrement preference. A string consisting of 'X' and '/' characters only.\nProcCat: This or procCat. FK to definition.DefNum where definition.Category=11.\nprocCat: This or ProcCat. The string version of the definition.ItemName.\nTreatArea: Either \"None\", \"Surf\", \"Tooth\", \"Mouth\", \"Quad\", \"Sextant\", \"Arch\", or \"ToothRange\".\nNoBillIns: Either \"true\" or \"false\".\nIsProsth: Either \"true\" or \"false\".\nDefaultNote: The default note for this procedure that will be copied to a ProcNote when marking complete.\nIsHygiene: Either \"true\" or \"false\".\nAlternateCode1: For Medicaid.\nMedicalCode: FK to procedurecode.ProcCode. The medical code that is being referenced must be set up first. Anytime a procedure is added, this medical code will also be added to that procedure.\nIsTaxed: If true, uses PrefName.SalesTaxDefaultProvider to apply a sales tax adjustiment to a procedurelog. Either \"true\" or \"false\".\nPaintType: Either \"None\", \"Extraction\", \"Implant\", \"RCT\", \"PostBU\", \"FillingDark\", \"FillingLight\", \"CrownDark\", \"CrownLight\", \"BridgeDark\", \"BridgeLight\", \"DentureDark\", \"DentureLight\", \"Sealant\", \"Veneer\", \"Text\", \"RetainedRoot\", or \"SpaceMaintainer\".\nLaymanTerm: When creating treatment plans, this description will be used instead of the Descript.\nIsCanadianLab: True if procedure code is used as an adjunct to track lab fee. Either \"true\" or \"false\".\nBaseUnits: Base units for a code. Cannot be negative. Normally 0.\nSubstitutionCode: FK to procedureCode.ProcCode. Used to create a substitution code at the procedure level. Case sensitive.\nSubstOnlyIf: Either \"Always\", \"Molar\", \"SecondMolar\", \"Never\", or \"Posterior\". Only used if SubstitutionCode is set.\nDrugNDC: National Drug Code number. 11 digits or blank.\nRevenueCodeDefault: A 3-digit code sometimes used for institutional claims.\nProvNumDefault: FK to provider.ProvNum. 0 for none. Otherwise, this provider will override other providers.\nCanadaTimeUnits: Tracks scaling insurance and periodontal scaling units for patients depending on coverage.\nIsRadiology: Either \"true\" or \"false\".\nDefaultClaimNote: Default note appended to claim.ClaimNote when a claim is created using this procedure code.\nDefaultTPNote: Default note appended to a treatment planned procedure.\nPaintText: The text to draw on the tooth. PaintType must be \"Text\".\nAreaAlsoToothRange: TreatArea must be \"Quad\" or \"Arch\". Either \"true\" or \"false\".\nDiagnosticCodes: Text to store up to 4 ICD-10 codes. Codes are comma-separated with no whitespace.\n\nExample Request:\nPUT /procedurecodes/617\n\n{\n\"PaintType\": \"Text\",\n\"PaintText\": \"Watch\"\n}\n\nExample Response:\n{\n\"CodeNum\": 617,\n\"ProcCode\": \"G0140\",\n\"Descript\": \"limited oral evaluation - problem focused\",\n\"AbbrDesc\": \"LimEx\",\n\"ProcTime\": \"/X/\",\n\"ProcCat\": 83,\n\"procCat\": \"Ortho\",\n\"TreatArea\": \"None\",\n\"NoBillIns\": \"false\",\n\"IsProsth\": \"false\",\n\"DefaultNote\": \"\",\n\"IsHygiene\": \"false\",\n\"AlternateCode1\": \"\",\n\"MedicalCode\": \"\",\n\"IsTaxed\": \"false\",\n\"PaintType\": \"Text\",\n\"LaymanTerm\": \"\",\n\"IsCanadianLab\": \"false\",\n\"BaseUnits\": 0,\n\"SubstitutionCode\": \"\",\n\"SubstOnlyIf\": \"Always\",\n\"DateTStamp\": \"2023-12-29 09:19:21\",\n\"DrugNDC\": \"\",\n\"RevenueCodeDefault\": \"\",\n\"ProvNumDefault\": 0,\n\"CanadaTimeUnits\": 0.0,\n\"IsRadiology\": \"false\",\n\"DefaultClaimNote\": \"\",\n\"DefaultTPNote\": \"\",\n\"PaintText\": \"Watch\",\n\"AreaAlsoToothRange\": \"false\",\n\"DiagnosticCodes\": \"B08.09\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.25",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ProcCodes",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-procnote",
+      "description": "API references database table procnote"
+    },
+    {
+      "type": "references",
+      "target": "db-evaluation",
+      "description": "API references database table evaluation"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    }
+  ]
+}

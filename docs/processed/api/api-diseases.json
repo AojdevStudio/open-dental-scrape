@@ -1,0 +1,140 @@
+{
+  "id": "api-diseases",
+  "type": "api",
+  "title": "Diseases",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Diseases.txt",
+  "content": "API Diseases\nSee API Specification\n\nSee Problem List for more information.\n\nDiseases GET (single)\nVersion Added: 24.2.5\n\nGet a single disease (Problem) that can be assigned to a patient.\n\nDiseaseNum: Required in the URL.\n\nExample Request:\nGET /diseases/2\n\nExample Response:\n{\n\"DiseaseNum\": 2,\n\"PatNum\": 41,\n\"DiseaseDefNum\": 44,\n\"diseaseDefName\": \"COPD\",\n\"PatNote\": \"\",\n\"ProbStatus\": \"Active\",\n\"DateStart\": \"0001-01-01\",\n\"DateStop\": \"0001-01-01\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nDiseases GET (multiple)\nVersion Added: 21.3\n\nGets a list of all diseases (Problems) that are assigned to a patient.\n\nParameters:\n\nPatNum: Optional (Optional after version 24.2.5).\n\nExample Requests:\nGET /diseases\nGET /diseases?PatNum=41\n\nExample Response:\n[\n{\n\"DiseaseNum\": 2,\n\"PatNum\": 41,\n\"DiseaseDefNum\": 44,\n\"diseaseDefName\": \"COPD\",\n\"PatNote\": \"\",\n\"ProbStatus\": \"Active\",\n\"DateStart\": \"0001-01-01\",\n\"DateStop\": \"0001-01-01\"\n},\n{\n\"DiseaseNum\": 8,\n\"PatNum\": 41,\n\"DiseaseDefNum\": 58,\n\"diseaseDefName\": \"Severe Back Pain\",\n\"PatNote\": \"\",\n\"ProbStatus\": \"Inactive\",\n\"DateStart\": \"0001-01-01\",\n\"DateStop\": \"0001-01-01\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nDiseases POST\nVersion Added: 21.3\n\nAttaches a diseaseDef (Problem) to a patient.\n\nPatNum: Required.\nDiseaseDefNum: Rarely used. Just use diseaseDefName instead, which handles insertion of DiseaseDef automatically.\ndiseaseDefName: Required unless you choose to use DiseaseDefNum.\n\nDateStart: Optional. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\nDateStop: Optional. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\nProbStatus: Optional. Either \"Active\", \"Resolved\" or \"Inactive\". Default \"Active\".\nPatNote: Optional.\n\nExample Requests:\nPOST /diseases\n\n{\n\"PatNum\": 74,\n\"diseaseDefName\": \"Diabetes\"\n}\nor\n{\n\"PatNum\": 74,\n\"DiseaseDefName\": \"Severe Back Pain\",\n\"PatNote\": \"Patient underwent corrective surgery 04/11/2019\",\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2016-01-01\",\n\"DateStop\": \"2019-04-30\"\n}\n\nExample Response:\n{\n\"DiseaseNum\": 15,\n\"PatNum\": 74,\n\"DiseaseDefNum\": 28\n\"diseaseDefName\": \"Severe Back Pain\",\n\"PatNote\": \"Patient underwent corrective surgery 04/11/2019\",\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2016-01-01\",\n\"DateStop\": \"2019-04-30\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nDiseases PUT\nVersion Added: 22.1\n\nUpdates a disease (Problem) for a patient.\n\nDiseaseNum: Required in the URL.\n\nDateStart: Optional. String in \"yyyy-MM-dd\" format.\nDateStop: Optional. String in \"yyyy-MM-dd\" format.\nProbStatus: Optional. Either \"Active\", \"Resolved\" or \"Inactive\".\nPatNote: Optional. Will overwrite existing note.\n\nExample Request:\nPUT /diseases/8\n\n{\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2020-10-01\",\n\"DateStop\": \"2022-05-25\"\n}\n\nExample Response:\n{\n\"DiseaseNum\": 8,\n\"PatNum\": 26,\n\"DiseaseDefNum\": 14\n\"diseaseDefName\": \"Asthma\",\n\"PatNote\": \"\",\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2020-10-01\",\n\"DateStop\": \"2022-05-25\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nDiseases DELETE\nVersion Added: 22.1\n\nDeletes a disease (Problem) for a patient.\n\nDiseaseNum: Required in the URL.\n\nExample Request:\nDELETE /diseases/8\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.5",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Diseases",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Diseases",
+      "method": "POST",
+      "path": "/diseases",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /diseases\n\n{\n\"PatNum\": 74,\n\"diseaseDefName\": \"Diabetes\"\n}\nor\n{\n\"PatNum\": 74,\n\"DiseaseDefName\": \"Severe Back Pain\",\n\"PatNote\": \"Patient underwent corrective surgery 04/11/2019\",\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2016-01-01\",\n\"DateStop\": \"2019-04-30\"\n}",
+          "response": "{\n\"DiseaseNum\": 15,\n\"PatNum\": 74,\n\"DiseaseDefNum\": 28\n\"diseaseDefName\": \"Severe Back Pain\",\n\"PatNote\": \"Patient underwent corrective surgery 04/11/2019\",\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2016-01-01\",\n\"DateStop\": \"2019-04-30\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Attaches a diseaseDef (Problem) to a patient."
+    },
+    {
+      "resource": "Diseases",
+      "method": "PUT",
+      "path": "/diseases",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /diseases/8\n\n{\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2020-10-01\",\n\"DateStop\": \"2022-05-25\"\n}",
+          "response": "{\n\"DiseaseNum\": 8,\n\"PatNum\": 26,\n\"DiseaseDefNum\": 14\n\"diseaseDefName\": \"Asthma\",\n\"PatNote\": \"\",\n\"ProbStatus\": \"Resolved\",\n\"DateStart\": \"2020-10-01\",\n\"DateStop\": \"2022-05-25\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates a disease (Problem) for a patient."
+    },
+    {
+      "resource": "Diseases",
+      "method": "DELETE",
+      "path": "/diseases",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /diseases/8",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a disease (Problem) for a patient."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-diseasedef",
+      "description": "API references database table diseasedef"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-disease",
+      "description": "API references database table disease"
+    }
+  ]
+}

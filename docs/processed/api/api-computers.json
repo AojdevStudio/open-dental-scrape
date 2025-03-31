@@ -1,0 +1,59 @@
+{
+  "id": "api-computers",
+  "type": "api",
+  "title": "Computers",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Computers.txt",
+  "content": "API Computers\nSee API Specification\n\nSee Computers for additional information.\n\nComputers GET\nVersion Added: 23.1.30\n\nGets a list of computers.\n\nLastHeartBeat indicates which computers are actively running. See Database Schema for additional information.\n\nExample Request:\nGET /computers\n\nExample Response:\n[\n{\n\"ComputerNum\": 1,\n\"CompName\": \"JORDANS\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 3,\n\"CompName\": \"ROCHELLES\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 5,\n\"CompName\": \"SARAHL\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 7,\n\"CompName\": \"JUSTINE\",\n\"LastHeartBeat\": \"2023-06-28 14:55:25\"\n},\n{\n\"ComputerNum\": 9,\n\"CompName\": \"JTS\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 11,\n\"CompName\": \"DEREKR\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\netc...\n]\n\n200 OK\n400 BadRequest",
+  "metadata": {
+    "version": "23.1.30",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Computers",
+      "GET",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Computers",
+      "method": "GET",
+      "path": "/computers",
+      "versionAdded": "23.1.30",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /computers",
+          "response": "[\n{\n\"ComputerNum\": 1,\n\"CompName\": \"JORDANS\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 3,\n\"CompName\": \"ROCHELLES\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 5,\n\"CompName\": \"SARAHL\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 7,\n\"CompName\": \"JUSTINE\",\n\"LastHeartBeat\": \"2023-06-28 14:55:25\"\n},\n{\n\"ComputerNum\": 9,\n\"CompName\": \"JTS\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\n{\n\"ComputerNum\": 11,\n\"CompName\": \"DEREKR\",\n\"LastHeartBeat\": \"0001-01-01 00:00:00\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of computers."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-computer",
+      "description": "API references database table computer"
+    }
+  ]
+}

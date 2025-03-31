@@ -1,0 +1,115 @@
+{
+  "id": "api-disclountplans",
+  "type": "api",
+  "title": "DisclountPlans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API DisclountPlans.txt",
+  "content": "API DiscountPlans\nSee API Specification\n\nSee Discount Plans for more information.\n\nDiscountPlans GET (single)\nVersion Added: 22.4.19\n\nGets a single Discount Plan.\n\nParameters:\n\nDiscountPlanNum: Required in URL.\n\nExample Request:\nGET /discountplans/2\n\nExample Response:\n{\n\"DiscountPlanNum\": 2,\n\"Description\": \"Happy Smiles Basic\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"false\",\n\"PlanNote\": \"50% services when paid cash at time of service.\",\n\"ExamFreqLimit\": 1,\n\"XrayFreqLimit\": 1,\n\"ProphyFreqLimit\": 1,\n\"FluorideFreqLimit\": 0,\n\"PerioFreqLimit\": 1,\n\"LimitedExamFreqLimit\": 0,\n\"PAFreqLimit\": 1,\n\"AnnualMax\": 1000.0\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nDiscountPlans GET (multiple)\nVersion Added: 22.4.19\n\nGets a list of Discount Plans.\n\nExample Request:\nGET /discountplans\n\nExample Response:\n[\n{\n\"DiscountPlanNum\": 1,\n\"Description\": \"Happy Smiles Plus\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"true\",\n\"PlanNote\": \"75% services when paid cash at time of service.\",\n\"ExamFreqLimit\": 1,\n\"XrayFreqLimit\": 0,\n\"ProphyFreqLimit\": 0,\n\"FluorideFreqLimit\": 0,\n\"PerioFreqLimit\": 1,\n\"LimitedExamFreqLimit\": 1,\n\"PAFreqLimit\": 1,\n\"AnnualMax\": 500.0\n},\n{\n\"DiscountPlanNum\": 2,\n\"Description\": \"Happy Smiles Basic\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"false\",\n\"PlanNote\": \"50% services when paid cash at time of service.\",\n\"ExamFreqLimit\": 1,\n\"XrayFreqLimit\": 1,\n\"ProphyFreqLimit\": 1,\n\"FluorideFreqLimit\": 0,\n\"PerioFreqLimit\": 1,\n\"LimitedExamFreqLimit\": 0,\n\"PAFreqLimit\": 1,\n\"AnnualMax\": 1000.0\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nDiscountPlans POST\nVersion Added: 23.1.20\n\nCreates a DiscountPlan. Frequencies that do not have a limitation display as blank in Open Dental and are stored as -1 in the database.\n\nDescription: Required. Description of this Discount Plan.\nFeeSchedNum: Required. FK to feesched.FeeSchedNum.\nDefNum: Required. definition.DefNum where definition.Category=1 and definition.ItemValue=dp.\n\nIsHidden: Optional. Hides a Discount Plan. Default \"false\".\nPlanNote: Optional. Note on a Discount Plan.\nExamFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Exam category. Default -1.\nXrayFreqLimit: Optional. Number of procedures allowed for a Discount Plan's X-Ray category. Default -1 .\nProphyFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Prophylaxis category. Default -1.\nFluorideFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Fluoride category. Default -1.\nPerioFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Periodontal category. Default -1.\nLimitedExamFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Limited Exam category. Default -1.\nPAFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Periapical X-Ray category. Default -1.\nAnnualMax: Optional. Annual discount maximum for frequency limitations. Default -1, indicates no annual max limitation.\n\nExample Request:\nPOST /discountplans\n\n{\n\"Description\": \"Happy Smiles Ultra\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336\n}\n\nExample Response:\n{\n\"DiscountPlanNum\": 3,\n\"Description\": \"Happy Smiles Ultra\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"false\",\n\"PlanNote\": \"\",\n\"ExamFreqLimit\": -1,\n\"XrayFreqLimit\": -1,\n\"ProphyFreqLimit\": -1,\n\"FluorideFreqLimit\": -1,\n\"PerioFreqLimit\": -1,\n\"LimitedExamFreqLimit\": -1,\n\"PAFreqLimit\": -1,\n\"AnnualMax\": -1.0\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nDiscountPlans PUT\nVersion Added: 23.1.20\n\nUpdates an existing DiscountPlan. Updating Description and/or PlanNote will overwrite existing values. Frequencies that do not have a limitation display as blank in Open Dental and are stored as -1 in the database.\n\nDiscountPlanNum: Required in URL.\n\nDescription: Description of this Discount Plan.\nFeeSchedNum: FK to feesched.FeeSchedNum.\nDefNum: definition.DefNum where definition.Category=1 and definition.ItemValue=dp.\nIsHidden: Hides a Discount Plan. Either \"true\" or \"false\".\nPlanNote: Note on a Discount Plan.\nExamFreqLimit: Number of procedures allowed for a Discount Plan's Exam category. -1 indicates blank.\nXrayFreqLimit: Number of procedures allowed for a Discount Plan's X-Ray category. -1 indicates blank.\nProphyFreqLimit: Number of procedures allowed for a Discount Plan's Prophylaxis category. -1 indicates blank.\nFluorideFreqLimit: Number of procedures allowed for a Discount Plan's Fluoride category. -1 indicates blank.\nPerioFreqLimit: Number of procedures allowed for a Discount Plan's Periodontal category. -1 indicates blank.\nLimitedExamFreqLimit: Number of procedures allowed for a Discount Plan's Limited Exam category. -1 indicates blank.\nPAFreqLimit: Number of procedures allowed for a Discount Plan's Periapical X-Ray category. -1 indicates blank.\nAnnualMax: Annual discount maximum for frequency limitations. -1 indicates blank or no annual max limitation.\n\nExample Request:\nPUT /discountplans/1\n\n{\n\"Description\": \"Happy Smiles Basic Plus\",\n\"IsHidden\": \"false\"\n}\n\nExample Response:\n{\n\"DiscountPlanNum\": 1,\n\"Description\": \"Happy Smiles Basic Plus\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"false\",\n\"PlanNote\": \"75% services when paid cash at time of service.\",\n\"ExamFreqLimit\": 1,\n\"XrayFreqLimit\": 0,\n\"ProphyFreqLimit\": 0,\n\"FluorideFreqLimit\": 0,\n\"PerioFreqLimit\": 1,\n\"LimitedExamFreqLimit\": 1,\n\"PAFreqLimit\": 1,\n\"AnnualMax\": 500.0\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.1.20",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "DisclountPlans",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "DiscountPlans",
+      "method": "POST",
+      "path": "/discountplans",
+      "versionAdded": "23.1.20",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /discountplans\n\n{\n\"Description\": \"Happy Smiles Ultra\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336\n}",
+          "response": "{\n\"DiscountPlanNum\": 3,\n\"Description\": \"Happy Smiles Ultra\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"false\",\n\"PlanNote\": \"\",\n\"ExamFreqLimit\": -1,\n\"XrayFreqLimit\": -1,\n\"ProphyFreqLimit\": -1,\n\"FluorideFreqLimit\": -1,\n\"PerioFreqLimit\": -1,\n\"LimitedExamFreqLimit\": -1,\n\"PAFreqLimit\": -1,\n\"AnnualMax\": -1.0\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a DiscountPlan. Frequencies that do not have a limitation display as blank in Open Dental and are stored as -1 in the database."
+    },
+    {
+      "resource": "DiscountPlans",
+      "method": "PUT",
+      "path": "/discountplans",
+      "versionAdded": "23.1.20",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /discountplans/1\n\n{\n\"Description\": \"Happy Smiles Basic Plus\",\n\"IsHidden\": \"false\"\n}",
+          "response": "{\n\"DiscountPlanNum\": 1,\n\"Description\": \"Happy Smiles Basic Plus\",\n\"FeeSchedNum\": 54,\n\"DefNum\": 336,\n\"adjustmentType\": \"Discount Plan\",\n\"IsHidden\": \"false\",\n\"PlanNote\": \"75% services when paid cash at time of service.\",\n\"ExamFreqLimit\": 1,\n\"XrayFreqLimit\": 0,\n\"ProphyFreqLimit\": 0,\n\"FluorideFreqLimit\": 0,\n\"PerioFreqLimit\": 1,\n\"LimitedExamFreqLimit\": 1,\n\"PAFreqLimit\": 1,\n\"AnnualMax\": 500.0\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates an existing DiscountPlan. Updating Description and/or PlanNote will overwrite existing values. Frequencies that do not have a limitation display as blank in Open Dental and are stored as -1 in the database."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-discountplan",
+      "description": "API references database table discountplan"
+    }
+  ]
+}

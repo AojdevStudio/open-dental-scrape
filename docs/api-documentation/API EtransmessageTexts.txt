@@ -1,0 +1,24 @@
+API EtransMessageTexts
+See API Specification
+
+EtransMessageTexts GET (single)
+Version Added: 23.2.11
+
+Gets a single EtransTextMessage. For more information, see Etrans Edit.
+
+Parameters:
+
+EtransMessageTextNum: Required in URL.
+
+Example Request:
+GET /etransmessagetexts/45
+
+Example Response:
+{
+"EtransMessageTextNum": 45,
+"MessageText": "ISA*00* *00* *30*330989922 *30*330989922 *171003*0802*U*00401*000000000*0*P*:~..."
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

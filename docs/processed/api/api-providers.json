@@ -1,0 +1,70 @@
+{
+  "id": "api-providers",
+  "type": "api",
+  "title": "Providers",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Providers.txt",
+  "content": "API Providers\nSee API Specification\n\nProviders GET (single)\nVersion Added: 24.4.17\n\nGets a single provider.\n\nProvNum: Required in URL.\n\nExample Request:\nGET /providers/4\n\nExample Response:\n{\n\"ProvNum\": 4,\n\"Abbr\": \"HYG2\",\n\"LName\": \"Bently\",\n\"FName\": \"Bruce\",\n\"MI\": \"\",\n\"Suffix\": \"\",\n\"FeeSched\": 53,\n\"Specialty\": 265,\n\"SSN\": \"\",\n\"StateLicense\": \"\",\n\"IsSecondary\": \"true\",\n\"provColor\": \"164,164,255\",\n\"IsHidden\": \"false\",\n\"UsingTIN\": \"false\",\n\"SigOnFile\": \"false\",\n\"NationalProvID\": \"\",\n\"DateTStamp\": \"2016-03-03 13:10:47\",\n\"IsNotPerson\": \"false\",\n\"ProvStatus\": \"Active\",\n\"IsHiddenReport\": \"false\",\n\"Birthdate\": \"0001-01-01\",\n\"SchedNote\": \"\",\n\"PreferredName\": \"\",\n\"serverDateTime\": \"2021-01-16 12:55:39\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nProviders GET (multiple)\nVersion Added: 21.1\n\nGets a list of all providers. Can be optionally filtered by either ClinicNum or DateTStamp. Two different queries are used. ClinicNum is not a field in the Provider table, so it does not get returned in any results.\n\nClinicNum: Optional. Specifying a ClinicNum returns list of non-hidden providers that are either not restricted to a clinic, or are restricted to the ClinicNum provided. When using ClinicNum, a serverDateTime will not be returned.\nDateTStamp (added in version 21.3): Optional. String in \"yyyy-MM-dd HH:mm:ss\" format. Get providers altered after the specified date and time. This is a good way for you to keep a synchronized copy of providers. Store serverDateTime that gets returned, and use it to run the next GET.\n\nExample Requests:\nGET /providers\nGET /providers?DateTStamp=2021-08-01%2005%3A30%3A00\n\nExample Response:\n[\n{\n\"ProvNum\": 1,\n\"Abbr\": \"DOC1\",\n\"LName\": \"Albert\",\n\"FName\": \"Brian\",\n\"MI\": \"L\",\n\"Suffix\": \"\",\n\"FeeSched\": 53,\n\"Specialty\": 263,\n\"SSN\": \"1522864182\",\n\"StateLicense\": \"D7601\",\n\"IsSecondary\": \"false\",\n\"provColor\": \"164,255,164\",\n\"IsHidden\": \"false\",\n\"UsingTIN\": \"true\",\n\"SigOnFile\": \"true\",\n\"NationalProvID\": \"1679608723\",\n\"DateTStamp\": \"2021-08-04 08:33:01\",\n\"IsNotPerson\": \"false\",\n\"ProvStatus\": \"Active\",\n\"IsHiddenReport\": \"false\",\n\"Birthdate\": \"0001-01-01\",\n\"SchedNote\": \"\",\n\"PreferredName\": \"\",\n\"serverDateTime\": \"2021-08-31 12:05:31\"\n},\n{\n\"ProvNum\": 2,\n\"Abbr\": \"HYG1\",\n\"LName\": \"Jones\",\n\"FName\": \"Tina\",\n\"MI\": \"\",\n\"Suffix\": \"\",\n\"FeeSched\": 53,\n\"Specialty\": 264,\n\"SSN\": \"\",\n\"StateLicense\": \"D7601\",\n\"IsSecondary\": \"true\",\n\"provColor\": \"203,151,255\",\n\"IsHidden\": \"false\",\n\"UsingTIN\": \"false\",\n\"SigOnFile\": \"false\",\n\"NationalProvID\": \"1657398425\",\n\"DateTStamp\": \"2021-08-15 13:18:51\",\n\"IsNotPerson\": \"false\",\n\"ProvStatus\": \"Deleted\",\n\"IsHiddenReport\": \"false\",\n\"Birthdate\": \"0001-01-01\",\n\"SchedNote\": \"\",\n\"PreferredName\": \"\",\n\"serverDateTime\": \"2021-08-31 12:05:31\"\n}\n]\n\nExample Request:\nGET /providers?ClinicNum=4\n\nExample Response:\n{\n\"ProvNum\": 6,\n\"Abbr\": \"HYG2\",\n\"LName\": \"Thomason\",\n\"FName\": \"Shirley\",\n\"MI\": \"\",\n\"Suffix\": \"\",\n\"FeeSched\": 53,\n\"Specialty\": 264,\n\"SSN\": \"\",\n\"StateLicense\": \"D7601\",\n\"IsSecondary\": \"true\",\n\"provColor\": \"255,183,183\",\n\"IsHidden\": \"false\",\n\"UsingTIN\": \"false\",\n\"SigOnFile\": \"false\",\n\"NationalProvID\": \"1857495435\",\n\"DateTStamp\": \"2021-07-25 10:20:21\",\n\"IsNotPerson\": \"false\",\n\"ProvStatus\": \"Active\",\n\"IsHiddenReport\": \"false\",\n\"Birthdate\": \"1969-10-01\",\n\"SchedNote\": \"\",\n\"PreferredName\": \"\",\n\"serverDateTime\": \"\"\n}\n\n200 OK\n400 BadRequest \"DateTStamp format must be yyyy-MM-dd HH:mm:ss\"\n404 NotFound \"Clinic not found\"\n\nProviders POST (create)\nVersion Added: 21.4\n\nCreates a new provider, billing entity, or dummy provider. After adding a provider, there's no way to delete it, not even from within Open Dental. The best you can do is to go into Open Dental and hide the provider.\n\nAbbr: Required. A short abbreviation that shows in various lists throughout Open Dental.\nLName: Optional. Last name. If billing as an entity, enter the billing entity name.\nFName: Optional. First name.\nMI: Optional. Middle initial.\nSuffix: Optional. MD, DMD, DDS, etc.\nFeeSched: Optional. Foreign key to feesched.FeeSchedNum. Default is the first in the Fee Schedule list.\nSpecialty: Optional. Definition.DefNum where definition.Category=35. Default is the first in the Specialty list.\nSSN: Optional. Provider's SSN or TIN. Most offices will enter their TIN here. If SSN the TIN field must be set to \"false\". SSN/TIN is not allowed to have dashes.\nStateLicense: (Added in version 24.4.31) Optional. The provider's state license number.\nIsSecondary: Optional. True if provider is a hygienist. Default is false.\nIsHidden: Optional. If true, provider will be removed as a selection option in various areas of Open Dental. Default is false.\nUsingTIN: Optional. True if SSN field is storing TIN. Default is true.\nSigOnFile: (Added in version 24.4.17) Optional. Signature on file. May affect what shows on the ADA Claim Forms for treating provider signature. Either \"true\" or \"false\". Default is \"false\".\nNationalProvID: (Added in version 24.4.31) Optional. The provider's national provider ID.\nIsNotPerson: Optional. This is set to true if the provider is used as an entity or organization instead of a person. When set to true, FName and MI must be omitted. Default is false.\nIsHiddenReport: Optional. Determines whether the provider will show on standard reports. Default is false.\nBirthDate: Optional. Provider's birth date in \"yyyy-mm-dd\" format.\nSchedNote: Optional. Indicates if the provider should be scheduled in a certain way.\nPreferredName: Optional. The preferred name of the provider. This is displayed in the eClipboard.\n\nExample Request:\nPOST /providers\n\n{\n\"Abbr\": \"DOCE\",\n\"LName\": \"Fisher\",\n\"FName\": \"Ethan\",\n\"Suffix\": \"DDS\",\n\"SSN\":\"123859778\",\n\"IsHiddenReport\": \"true\",\n\"Birthdate\": \"1987-07-17\",\n\"SchedNote\": \"Root canals only.\",\n\"PreferredName\": \"Doc E.\"\n}\n\nExample Response:\n{\n\"ProvNum\": 12,\n\"Abbr\": \"DOCE\",\n\"LName\": \"Fisher\",\n\"FName\": \"Ethan\",\n\"MI\": \"\",\n\"Suffix\": \"DDS\",\n\"FeeSched\": 53,\n\"Specialty\": 263,\n\"SSN\": \"123859778\",\n\"StateLicense\": \"\",\n\"IsSecondary\": \"false\",\n\"provColor\": \"0,0,0\",\n\"IsHidden\": \"false\",\n\"UsingTIN\": \"true\",\n\"SigOnFile\": \"false\",\n\"NationalProvID\": \"\",\n\"DateTStamp\": \"2021-08-04 08:33:01\",\n\"IsNotPerson\": \"false\",\n\"ProvStatus\": \"Active\",\n\"IsHiddenReport\": \"true\",\n\"Birthdate\": \"1987-07-17\",\n\"SchedNote\": \"Root canals only.\",\n\"PreferredName\": \"Doc E.\",\n\"serverDateTime\": \"\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProviders PUT (update)\nVersion Added: 22.1\n\nAll fields are optional.\n\nAbbr: The provider's abbreviation. Cannot be blank.\nFName: The provider's first name.\nLName: The provider's last name.\nMI: The provider's middle initial.\nSuffix: The provider's suffix (Jr., III, IV, etc...).\nPreferredName: The provider's preferred name.\nSpecialty: The DefNum of the provider's specialty, where the definition category is 35.\nSigOnFile: (Added in version 24.4.17) Signature on file. May affect what shows on the ADA Claim Forms for treating provider signature. Either \"true\" or \"false\".\nNationalProvId: The provider's national provider ID.\nStateLicense: The provider's state license number.\nSSN: Provider's SSN or TIN, no dashes.\nUsingTIN: True if SSN field is storing TIN. Valid values are \"true\" and \"false\".\n\nExample Request:\nPUT /providers/13\n\n{\n\"Abbr\": \"DOC1\",\n\"FName\": \"Philip\",\n\"LName\": \"Sherman\",\n\"MI\": \"\",\n\"Suffix\": \"\",\n\"PreferredName\": \"Phil\",\n\"Specialty\": 264,\n\"NationalProvId\": \"1245319599\",\n\"StateLicense\": \"183815\",\n\"SSN\": \"123456789\",\n\"UsingTIN\": \"false\"\n}\n\nExample Response:\n{\n\"ProvNum\": 13,\n\"Abbr\": \"DOC1\",\n\"LName\": \"Sherman\",\n\"FName\": \"Philip\",\n\"MI\": \"\",\n\"Suffix\": \"\",\n\"FeeSched\": 53,\n\"Specialty\": 263,\n\"SSN\": \"123456789\",\n\"StateLicense\": \"D7601\",\n\"IsSecondary\": \"false\",\n\"provColor\": \"0,0,0\",\n\"IsHidden\": \"false\",\n\"UsingTIN\": \"false\",\n\"SigOnFile\": \"true\",\n\"NationalProvID\": \"1245319599\",\n\"DateTStamp\": \"2021-08-04 08:33:01\",\n\"IsNotPerson\": \"false\",\n\"ProvStatus\": \"Active\",\n\"IsHiddenReport\": \"true\",\n\"Birthdate\": \"1987-07-17\",\n\"SchedNote\": \"Root canals only.\",\n\"PreferredName\": \"Phil\",\n\"serverDateTime\": \"\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.17",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Providers",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-cert",
+      "description": "API references database table cert"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "id": "api-inssubs",
+  "type": "api",
+  "title": "InsSubs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API InsSubs.txt",
+  "content": "API InsSubs\nSee API Specification\n\nLinks an InsPlan to a Subscriber (patient.PatNum). Also, see PatPlans to indicate coverage.\n\nInsSubs GET (single)\nVersion Added: 22.4.28\n\nGets a single InsSub.\n\nInsSubNum: Required in the URL.\n\nExample Request:\nGET /inssubs/34\n\nExample Response:\n{\n\"InsSubNum\":34,\n\"PlanNum\": 15,\n\"Subscriber\": 1,\n\"DateEffective\":\"2019-01-01\",\n\"DateTerm\": \"2019-12-31\",\n\"SubscriberID\":\"8645332\",\n\"BenefitNotes\":\"\",\n\"ReleaseInfo\":\"true\",\n\"AssignBen\":\"true\",\n\"SubscNote\":\"Other info\",\n\"SecDateTEdit\":\"2023-03-02 04:15:00\"\n}\n\n200 OK\n404 NotFound\n400 BadRequest\n\nInsSubs GET (multiple)\nVersion Added: 22.4.28\n\nGets all InsSubs based on provided parameters. If no parameter is given, it will get all InsSubs ordered by InsSubNum.\n\nPlanNum: Optional. The PlanNum of the InsPlan.\nSubscriber: Optional. The PatNum of the patient who is subscribed to this plan.\nSecDateTEdit: Optional. The last date the InsPlan was edited. Returns all InsSubs on or after this date.\n\nExample Request:\nGET /inssubs?PlanNum=11\nGET /inssubs?Subscriber=485\nGET /inssubs?SecDateTEdit=2023-03-02%2004:15:00\n\nExample Response:\n[\n{\n\"InsSubNum\":43,\n\"PlanNum\": 15,\n\"Subscriber\": 1,\n\"DateEffective\":\"2019-01-01\",\n\"DateTerm\": \"2019-12-31\",\n\"SubscriberID\":\"8645332\",\n\"BenefitNotes\":\"\",\n\"ReleaseInfo\":\"true\",\n\"AssignBen\":\"true\",\n\"SubscNote\":\"Other info\",\n\"SecDateTEdit\":\"2023-03-02 04:15:00\"\n},\netc...\n]\n\n200 OK\n404 NotFound\n400 BadRequest\n\nInsSubs POST (create)\nVersion Added: 21.1\n\nThis does not create a new insurance plan or change benefits.\n\nPlanNum: Required. The PlanNum of the InsPlan.\nSubscriber: Required. The PatNum of the patient who is subscribed to this plan.\nSubscriberID: Required. Number assigned by insurance company.\n\nDateEffective: Optional. The date this InsPlan became effective.\nDateTerm: Optional. Not usually used. The date this InsPlan was terminated.\nBenefitNotes: Optional. BenefitNotes are specifically designed to store automated notes. For example, when automatically requesting benefits through Trojan. Benefits are stored here in text form for later reference. Not at plan level because might be specific to subscriber. If blank, it may display a benefitNote for another subscriber to the plan.\nReleaseInfo: Added in 21.4. Optional. This is set to either \"true\" or \"false\". Default \"true\". This authorizes the release of information based on if there is a signature on file.\nAssignBen: Added in 21.4. Optional. Either \"true\" or \"false\". Default is according to global preference within Open Dental. This authorizes the assignment of benefits based on if there is a signature on file.\nSubscNote: (Added in version 22.4.26) Optional. Use to store any other info that affects coverage.\n\nExample Request:\nPOST /inssubs\n{\n\"PlanNum\": 15,\n\"Subscriber\": 1,\n\"DateEffective\":\"2019-01-01\",\n\"DateTerm\": \"2019-12-31\",\n\"SubscriberID\":\"8645332\",\n\"BenefitNotes\":\"Waiting period on crowns.\",\n\"ReleaseInfo\":\"true\",\n\"AssignBen\":\"true\",\n\"SubscNote\":\"Other info\"\n}\n\nExample Response:\n{\n\"InsSubNum\":43,\n\"PlanNum\": 15,\n\"Subscriber\": 1,\n\"DateEffective\":\"2019-01-01\",\n\"DateTerm\": \"2019-12-31\",\n\"SubscriberID\":\"8645332\",\n\"BenefitNotes\":\"Add these notes\",\n\"ReleaseInfo\":\"true\",\n\"AssignBen\":\"true\",\n\"SubscNote\":\"Other info\",\n\"SecDateTEdit\":\"2023-02-02 09:22:00\"\n}\n201 Created\n(no \"location\" Header is returned because there is no GET method yet)\n400 (Missing or invalid fields)\n\nInsSubs PUT (update)\nVersion Added: 21.1\n\nThis can be used to assign a different PlanNum or Subscriber to this InsSub. None of these changes affect the InsSubNum, so all the PatPlans (coverage) for family members will continue to point to this InsSub and will be untouched. You can obtain the InsSubNum from FamilyModules GET Insurance. SecDateTEdit is updated automatically and cannot be set by developers.\n\nInsSubNum: Required in the URL.\n\nPlanNum: Optional. The PlanNum of the InsPlan.\nSubscriber: Added in 21.4. Optional. The PatNum of the patient who is subscribed to this plan.\nSubscriberID: Added in 21.4. Optional.\nDateEffective: Added in 21.4. Optional. The date this InsPlan became effective.\nDateTerm: Added in 21.4. Optional. The date this InsPlan was terminated.\nBenefitNotes: Optional. BenefitNotes are specifically designed to store automated notes. For example, when automatically requesting benefits through Trojan. Benefits are stored here in text form for later reference. Not at plan level because might be specific to subscriber. If blank, it may display a benefitNote for another subscriber to the plan.\nReleaseInfo: Added in 21.4. Optional. This is set to either \"true\" or \"false\". This authorizes the release of information based on if there is a signature on file.\nAssignBen: Added in 21.4. Optional. Either \"true\" or \"false\". This authorizes the assignment of benefits based on if there is a signature on file.\nSubscNote: (Added in version 22.4.26) Optional. Use to store any other info that affects coverage.\n\nExample Request:\nPUT /inssubs/82\n{\n\"PlanNum\": 15,\n\"Subscriber\": 1,\n\"DateEffective\":\"2019-01-01\",\n\"DateTerm\": \"2019-12-31\",\n\"SubscriberID\":\"8645332\",\n\"BenefitNotes\":\"Waiting period on crowns.\",\n\"ReleaseInfo\":\"true\",\n\"AssignBen\":\"true\",\n\"SubscNote\":\"Other info\"\n}\n\nExample Response:\n200 OK\n\nInsSubs DELETE\nVersion Added: 21.1\n\nWill fail if any PatPlans exist. You can obtain the InsSubNum from FamilyModules GET Insurance.\n\nInsSubNum: Required in the URL.\n\nExample Request:\nDELETE /inssubs/82\n\nExample Response:\n200 OK\n400 Bad Request, \"Can't delete InsSub because PatPlans are still attached.\"",
+  "metadata": {
+    "version": "22.4.28",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "InsSubs",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "InsSubs",
+      "method": "DELETE",
+      "path": "/inssubs",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /inssubs/82",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        }
+      ],
+      "description": "Will fail if any PatPlans exist. You can obtain the InsSubNum from FamilyModules GET Insurance."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

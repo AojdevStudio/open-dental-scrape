@@ -1,0 +1,107 @@
+{
+  "id": "db-insplan",
+  "type": "database",
+  "title": "insplan",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "insplan",
+      "Insurance",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "insplan",
+    "description": "Table for insplan data.",
+    "columns": [
+      {
+        "name": "insplanNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "insplanNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-inssubs",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-events",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-insverifies",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-familymodule",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-hisappointments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-appointments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-benefits",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-patplans",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-substituionlinks",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-insplans",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-claimpayments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-claims",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

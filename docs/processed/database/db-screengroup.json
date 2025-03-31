@@ -1,0 +1,40 @@
+{
+  "id": "db-screengroup",
+  "type": "database",
+  "title": "screengroup",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "screengroup",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "screengroup",
+    "description": "Table for screengroup data.",
+    "columns": [
+      {
+        "name": "screengroupNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "screengroupNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

@@ -1,0 +1,40 @@
+{
+  "id": "db-hiequeue",
+  "type": "database",
+  "title": "hiequeue",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "hiequeue",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "hiequeue",
+    "description": "Table for hiequeue data.",
+    "columns": [
+      {
+        "name": "hiequeueNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "hiequeueNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

@@ -1,0 +1,70 @@
+API TaskLists
+See API Specification
+
+TaskLists GET
+Version Added: 22.3.15
+
+Gets a list of all the TaskLists filtered by TaskListStatus.
+
+Parameters:
+
+TaskListStatus: Optional. Either "Active" or "Archived". Default "Active".
+
+Example Request
+GET /tasklists?TaskListStatus=Archived&Offset=100
+
+Example Response:
+[
+{
+"TaskListNum": 102,
+"Descript": "Brittany",
+"Parent": 0,
+"DateTL": "0001-01-01",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Patient",
+"DateTimeEntry": "2021-10-05 10:25:43",
+"TaskListStatus": "Archived"
+},
+{
+"TaskListNum": 103,
+"Descript": "Brittany Paperwork",
+"Parent": 102,
+"DateTL": "0001-01-01",
+"IsRepeating": "false",
+"DateType": "Week",
+"FromNum": 0,
+"ObjectType": "None",
+"DateTimeEntry": "2021-10-05 10:27:29",
+"TaskListStatus": "Archived"
+},
+{
+"TaskListNum": 105,
+"Descript": "Brittany Appointments",
+"Parent": 102,
+"DateTL": "0001-01-01",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Appointment",
+"DateTimeEntry": "2021-10-05 10:28:11",
+"TaskListStatus": "Archived"
+},
+{
+"TaskListNum": 107,
+"Descript": "Debbie",
+"Parent": 0,
+"DateTL": "0001-01-01",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "None",
+"DateTimeEntry": "2021-10-28 11:46:16",
+"TaskListStatus": "Archived"
+},
+etc...
+]
+
+200 OK
+400 Bad Request (Invalid TaskListStatus)

@@ -1,0 +1,47 @@
+{
+  "id": "db-apptremindersent",
+  "type": "database",
+  "title": "apptremindersent",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "apptremindersent",
+      "Appointment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "apptremindersent",
+    "description": "Table for apptremindersent data.",
+    "columns": [
+      {
+        "name": "apptremindersentNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "apptremindersentNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "related_concept",
+      "target": "manual-module",
+      "description": "Related by concept: appointment"
+    }
+  ]
+}

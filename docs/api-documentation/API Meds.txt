@@ -1,0 +1,59 @@
+API Medications
+See API Specification
+
+Medications GET
+Version Added: 21.3
+
+Gets the list of medications that can be assigned to patients.
+
+Rarely used. Usually just use MedicationPats GET and POST.
+
+Example Request:
+GET /medications
+
+Example Response:
+[
+{
+"MedicationNum": 12,
+"MedName": "Glucophage",
+"GenericNum": 124,
+"genericName": "Metformin",
+"Notes": "Antidiabetic agent",
+"DateTStamp": "2016-12-01"
+},
+etc...
+]
+
+Example Response:
+201 Created
+400 BadRequest (Missing or Invalid fields)
+
+Medications POST
+Version Added: 21.3
+
+Creates a new medication.
+
+Rarely used. Usually just use MedicationPats GET and POST.
+
+MedName: Required.
+
+genericName: Optional. If not provided this will be the same as MedName.
+Notes: Optional.
+
+Example Requests:
+POST /medications
+
+{
+"MedName": "Metformin"
+}
+
+{
+"MedName": "Glucophage",
+"genericName": "Metformin",
+"Notes": "Antidiabetic agent"
+}
+
+Example Response:
+201 Created
+400 BadRequest (Missing or Invalid fields)
+404 Not Found "No Medication with that genericName was found"

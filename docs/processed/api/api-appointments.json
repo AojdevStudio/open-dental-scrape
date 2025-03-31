@@ -1,0 +1,411 @@
+{
+  "id": "api-appointments",
+  "type": "api",
+  "title": "Appointments",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Appointments.txt",
+  "content": "API Appointments\nSee API Specification\n\nAppointments GET (single)\nVersion Added: 21.1\n\nGets a single appointment.\n\nAptNum: Required in URL.\n\nExample Request:\nGET /appointments/18\n\nExample Response:\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 18,\n\"PatNum\": 17,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 3,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC1\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2020-07-31 08:30:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Seal, Seal\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"false\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 35,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"//////X/\",\n\"ItemOrderPlanned\": 0\n}\n\n200 OK\n404 NotFound (with explanation)\n\nAppointments GET (multiple)\nVersion Added: 21.1\n\nParameters: All optional.\n\nPatNum: (Added in version 21.4) Filter responses by PatNum.\nAptStatus: (Added in version 22.4.28) Filter responses by AptStatus. Either \"Scheduled\", \"Complete\", \"UnschedList\", \"ASAP\", \"Broken\", \"Planned\", or (rarely used) \"PtNote\", \"PtNoteCompleted\".\nOp: (Added in version 23.2.27) Filter responses by Op.\ndate: Search for a single day in \"yyyy-MM-dd\" format.\ndateStart, dateEnd: Search for a date range, inclusive of both dates, in \"yyyy-MM-dd\" format.\nClinicNum: ClinicNum of a clinic. Leave blank if not using clinics, or if results for all clinics are desired. Use 0 to filter for appointments not attached to clinics.\nDateTStamp: Only include appointments with a DateTStamp altered after the specified date and time. This provides a good way for you to keep a synchronized copy of appointments. Store serverDateTime (added in 21.2) that gets returned, and use it to run the next GET.\nAppointmentTypeNum: (Added in version 24.4.22) FK to appointmenttype.AppointmentTypeNum.\n\nExample Requests:\nGET /appointments?Offset=400\nGET /appointments?date=2020-07-30&Offset=200\nGET /appointments?dateStart=2020-07-30&dateEnd=2020-08-02&DateTStamp=2020-07-30&ClinicNum=3\nGET /appointments?PatNum=20\n\nExample Response:\n[\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 4,\n\"PatNum\": 20,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 2,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Ex, PA\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"false\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 35,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////////\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 3,\n\"PatNum\": 21,\n\"AptStatus\": \"Complete\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 6,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 4,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Ex\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"true\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"2020-07-31 08:52:31\",\n\"DateTimeSeated\": \"2020-07-31 09:01:15\",\n\"DateTimeDismissed\": \"2020-07-31 09:55:42\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"2020-07-31 09:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 1,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"//////////\",\n\"ItemOrderPlanned\": 0\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments GET ASAP\nVersion Added: 21.1\n\nGets the ASAP list. An appointment is considered to be on the ASAP list if the Priority field is set to ASAP instead of Normal.\n\nParameters:\n\nClinicNum: Required only if Clinics are enabled. Use 0 to filter for appointments not attached to clinics.\nProvNum: Optional. ProvNum of a provider.\n\nExample Requests:\nGET /appointments/ASAP\nGET /appointments/ASAP?ClinicNum=2\nGET /appointments/ASAP?Offset=200\n\nExample Response:\n[\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 4,\n\"PatNum\": 20,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 2,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Ex, PA\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"false\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 1,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"ASAP\",\n\"PatternSecondary\": \"////////\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 3,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 6,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 4,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Ex\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"true\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"ASAP\",\n\"PatternSecondary\": \"//////////\",\n\"ItemOrderPlanned\": 0\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nAppointments GET Slots\nVersion Added: 21.1\n\nFor simple dental office setups. See also Schedules GET.\n\nThis is closer to how search behaves from within Open Dental instead of WebSched. This requires no advanced setup. It looks at open schedule times, whether the schedules are attached to a provider or an operatory.\n\nThere are, however, some differences between this and the Search in Open Dental. This returns entire open slots instead of a series of suggested appointment times or the first appointment time for each day. It also currently searches by entire appointment length instead of the XXX provider times on appointments. For providers assigned to a single operatory, the results will be the same as what a person would see if looking at the Appointments Module. If a provider has existing appointments in multiple operatories, it considers all of them as a whole and only returns slots that are available in all operatories for that provider simultaneously.\n\nMost users will specify a ProvNum and an OpNum.\n\nParameters: All optional.\n\ndate: Search for a single day in \"yyyy-MM-dd\" format. Must be today or a future date. Default is the next 14 days.\ndateStart, dateEnd: Search for a date range, inclusive of both dates, in \"yyyy-MM-dd\" format.\nlengthMinutes: Ignores slots that are shorter than the supplied number of minutes.\nProvNum: ProvNum of a provider. Defaults to the Practice Default Provider.\nOpNum: (Added in version 22.1) FK to operatory.OperatoryNum that the provider is assigned to.\n\nExample Requests:\nGET /appointments/Slots?date=2021-02-15\nGET /appointments/Slots?date=2022-03-30&ProvNum=50&OpNum=16\nGET /appointments/Slots?ProvNum=1&OpNum=18&dateStart=2022-03-28&dateEnd=2022-04-01\n\nExample Responses:\n[\n{\n\"DateTimeStart\": \"2021-02-15 08:00:00\",\n\"DateTimeEnd\": \"2021-02-15 10:30:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\n{\n\"DateTimeStart\": \"2021-02-15 13:00:00\",\n\"DateTimeEnd\": \"2021-02-15 15:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\netc...\n]\n\nor\n\n[\n{\n\"DateTimeStart\": \"2022-03-30 07:00:00\",\n\"DateTimeEnd\": \"2022-03-30 08:20:00\",\n\"ProvNum\": 50,\n\"OpNum\": 16\n},\n{\n\"DateTimeStart\": \"2022-03-30 09:00:00\",\n\"DateTimeEnd\": \"2022-03-30 10:00:00\",\n\"ProvNum\": 50,\n\"OpNum\": 16\n},\n{\n\"DateTimeStart\": \"2022-03-30 12:30:00\",\n\"DateTimeEnd\": \"2022-03-30 13:20:00\",\n\"ProvNum\": 50,\n\"OpNum\": 16\n},\n{\n\"DateTimeStart\": \"2022-03-30 13:50:00\",\n\"DateTimeEnd\": \"2022-03-30 15:00:00\",\n\"ProvNum\": 50,\n\"OpNum\": 16\n}\n]\n\nor\n\n[\n{\n\"DateTimeStart\": \"2022-03-28 08:00:00\",\n\"DateTimeEnd\": \"2022-03-28 11:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n},\n{\n\"DateTimeStart\": \"2022-03-29 08:00:00\",\n\"DateTimeEnd\": \"2022-03-29 08:10:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n},\n{\n\"DateTimeStart\": \"2022-03-29 08:50:00\",\n\"DateTimeEnd\": \"2022-03-29 11:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n},\n{\n\"DateTimeStart\": \"2022-03-30 08:00:00\",\n\"DateTimeEnd\": \"2022-03-30 09:20:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n},\n{\n\"DateTimeStart\": \"2022-03-30 09:30:00\",\n\"DateTimeEnd\": \"2022-03-30 11:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n},\n{\n\"DateTimeStart\": \"2022-03-31 08:00:00\",\n\"DateTimeEnd\": \"2022-03-31 11:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n},\n{\n\"DateTimeStart\": \"2022-04-01 08:00:00\",\n\"DateTimeEnd\": \"2022-04-01 11:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 18\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nAppointments GET SlotsWebSched\nVersion Added: 21.1\n\nRarely used. Probably just use Appointments GET Slots instead. Offices must be subscribed to WebSched eServices.\n\nThis gets slots according to the existing logic used for WebSched existing patient or new patient. Customer must first have gone to Setup WebSched (Existing Patient or New Patient) and done all the setup, including creating Appointment Types and linking Appointment Types to WebSched. This all requires a fair amount of setup on the customer's end, but that restriction is usually preferred when patients are making their own appointments.\n\nAfter calling this method, use Appointments POST WebSched to create a new WebSched appointment.\n\ndate: Search for a single day in \"yyyy-MM-dd\" format.\ndateStart, dateEnd: Search for a date range, inclusive of both dates, in \"yyyy-MM-dd\" format. If no dates at all are supplied, the default is the next two weeks.\nClinicNum: Required if clinics are enabled. FK to clinic.ClinicNum.\ndefNumApptType: Optional. definition.DefNum where definition.Category=42 (NewPat) or 51 (ExistingPat). There must also be an appointmenttype linked to that DefNum and it must be set to be used in WebSched.\nisNewPatient: Optional. Defaults to false. Should match the kind of defNumApptType that you use.\n\nExample Request:\nGET /appointments/SlotsWebSched?dateStart=2021-02-15&dateEnd=2021-02-15&defNumApptType=326\n\nExample Response:\n[\n{\n\"DateTimeStart\": \"2021-02-15 08:00:00\",\n\"DateTimeEnd\": \"2021-02-15 08:30:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\n{\n\"DateTimeStart\": \"2021-02-15 08:30:00\",\n\"DateTimeEnd\": \"2021-02-15 09:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\n{\n\"DateTimeStart\": \"2021-02-15 09:00:00\",\n\"DateTimeEnd\": \"2021-02-15 09:30:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\netc...\n]\n\nAppointments GET WebSched\nVersion Added: 21.3\n\nRarely used. Probably just use Appointments GET (multiple) instead.\n\nGets a list of all appointments, indicating which were made through the WebSched service. This is displayed in the eServiceLogType field as either \"Recall\", \"NewPat\", \"ExistingPat\", or \"ASAP\". Appointments not made through WebSched will have an eServiceLogType of \"None\".\n\nParameters: All optional.\n\ndate: Search for a single day in \"yyyy-MM-dd\" format.\ndateStart, dateEnd: Search for a date range, inclusive of both dates, in \"yyyy-MM-dd\" format.\nDateTStamp: String in \"yyyy-MM-dd HH:mm:ss\" format. Only returns appointments with a DateTStamp altered after the specified date and time.\nClinicNum: ClinicNum of a clinic.\n\nExample Requests:\nGET /appointments/WebSched\nGET /appointments/WebSched?date=2021-02-15\nGET /appointments/WebSched?date=2021-02-15&Offset=200\n\nExample Response:\n[\n{\n\"AptNum\": 3,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"Op\": 6,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 4,\n\"AptDateTime\": \"2021-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"ProcDescript\": \"Ex\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"True\",\n\"DateTStamp\":\"2021-08-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"AppointmentTypeNum\": 0,\n\"eServiceLogType\": \"NewPat\",\n\"serverDateTime\":\"2021-08-04 09:32:45\"\n},\n{\n\"AptNum\": 35,\n\"PatNum\": 37,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"/XXXX/\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"Op\": 5,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 7,\n\"AptDateTime\": \"2021-10-18 13:30:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 92,\n\"unschedStatus\": \"Appointment Scheduled\",\n\"ProcDescript\": \"\",\n\"ClinicNum\": 2,\n\"IsHygiene\": \"False\",\n\"DateTStamp\": \"2021-08-23 10:52:22\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"AppointmentTypeNum\": 1,\n\"eServiceLogType\": \"None\",\n\"serverDateTime\": \"2021-09-13 09:09:37\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nAppointments POST (create)\nVersion Added: 21.1\n\nCreates an appointment for a patient.\n\nPatNum: Required.\nOp: Required.\nAptDateTime: Required. String in \"yyyy-MM-dd HH:mm:ss\" format. Use Appointments GET Slots to find available times.\n\nAptStatus: Optional. Either \"Scheduled\", \"Complete\", \"UnschedList\", or (rarely used) \"PtNote\", \"PtNoteCompleted\". Default \"Scheduled\".\nPattern: Optional. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only. Patterns exceeding 9 hours will be trimmed down to 9 hours. Default \"/XX/\" (20 minutes).\nConfirmed: Optional. definition.DefNum where definition.Category=2. Default is the first definition in that Category.\nNote: Optional. Default blank.\nProvNum: Optional. Default patient.PriProv, if they have one set. Otherwise, default is the dental office's default provider.\nProvHyg: Optional. Default 0.\nClinicNum: Optional. Default to op.ClinicNum if they have one set. Otherwise, default is patient.ClinicNum.\nIsHygiene: Optional. Default \"false\".\nIsNewPatient: (Added in version 21.3) Optional. Either \"true\" or \"false\". Default \"false\". If \"true\", and the patient has no completed procedures, then patient.DateFirstVisit will be set to this appointment's AptDateTime.\nPriority: (Added in version 22.1) Optional. Either \"Normal\" or \"ASAP\". Default \"Normal\".\nAppointmentTypeNum: (Added in version 22.1) Optional. FK to appointmenttype.AppointmentTypeNum. Default 0 (None). Follows the same logic for adding attached procedures, pattern, and color as in Open Dental. The pattern will only be applied if Pattern is not specified in the request.\ncolorOverride: (Added in version 22.3.9) Optional. Must be a color in \"R,G,B\" format. Default is (0,0,0), unless an AppointmentTypeNum was supplied, in which it will instead default to the AppointmentType's color.\nPatternSecondary: (Added in version 23.3.17) Optional. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only. Must match the length of Pattern. Defaults to a string consisting of \"/\" that spans the length of Pattern.\n\nExample Request:\nPOST /appointments\n\n{\n\"PatNum\": 21,\n\"Op\": 6,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"colorOverride\": \"100,0,255\"\n}\n\nExample Response:\n{\n\"AptNum\": 3,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"/XX/\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 6,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"false\"\n\"DateTStamp\": \"2020-07-26 07:43:29\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 3,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"100,0,255\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////\",\n\"ItemOrderPlanned\": 0\n}\n\n201 Created (Header \"location\": https://api.opendental.com/api/v1/appointments/3)\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments POST Planned\nVersion Added: 22.2.31\n\nCreates a planned appointment for a patient, which appears in the Planned Appts tab in the Chart Module. See Planned Appointments for more detailed information.\n\nMost dental offices require their appointments to contain procedures. However, if the ApptsRequireProc preference is not enabled, then this Planned Appointment's pattern will be set from the AppointmentWithoutProcsDefaultLength preference, if it is set.\n\nProcedures are attached to the Planned appointment by either including an AppointmentTypeNum or an array of procNums. Obtain the ProcNums of the procedures being attached to the Planned appointment with ProcedureLogs GET.\n\nPatNum: Required.\nAppointmentTypeNum: This or procNums is required to add procedures. FK to appointmenttype.AppointmentTypeNum. Follows the same logic for adding attached procedures, pattern, and color as in Open Dental. The pattern will only be applied if Pattern is not specified in the request.\nprocNums: This or AppointmentTypeNum is required to add procedures. An array of ProcNums in [1,2,3] format. The pattern will be derived from the length of all procedures if Pattern is not specified in the request. Repeated ProcNums will be silently ignored.\n\nPattern: Optional. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only. Patterns exceeding 9 hours will be trimmed down to 9 hours. Default \"/XX/\" (20 minutes).\nConfirmed: Optional. definition.DefNum where definition.Category=2. Default is the first definition in that Category.\nNote: Optional. Default blank.\nProvNum: Optional. Defaults to patient.PriProv, if it is set, or the dental office's default provider.\nProvHyg: Optional. Default 0.\nClinicNum: Optional. Defaults to patient.ClinicNum.\nIsHygiene: Optional. Either \"true\" or \"false\". Default \"false\".\nIsNewPatient: Optional. Either \"true\" or \"false\". Default \"false\".\nPriority: Optional. Either \"Normal\" or \"ASAP\". Default \"Normal\".\nPatternSecondary: (Added in version 23.3.17) Optional. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only. Must match the length of Pattern. Defaults to a string consisting of \"/\" that spans the length of Pattern.\n\nExample Requests:\nPOST /appointments/Planned\n\n{\n\"PatNum\": 72,\n\"AppointmentTypeNum\": 12\n}\n\nor\n\n{\n\"PatNum\": 72,\n\"procNums\": [880,881,882,891,893]\n}\n\nor\n\n{\n\"PatNum\": 72,\n\"Pattern\": \"//XXXXXX//\",\n\"PatternSecondary\": \"////////XX\",\n\"Confirmed\": 19,\n\"Note\": \"Planned Appointment, Schedule for sometime in June 2022\",\n\"ProvNum\": 10,\n\"ProvHyg\": 0,\n\"IsNewPatient\": \"false\",\n\"ClinicNum\": 3,\n\"IsHygiene\": \"false\",\n\"Priority\": \"Normal\",\n\"AppointmentTypeNum\": 8\n}\n\nExample Response:\n{\n\"AptNum\": 414,\n\"PatNum\": 72,\n\"AptStatus\": \"Planned\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 0,\n\"Note\": \"Planned Appointment, Schedule for sometime in June 2022\",\n\"ProvNum\": 10,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-06-14 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"PerEx, 2BW, Pano\",\n\"ClinicNum\": 3,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-18 11:52:41\",\n\"DateTimeArrived\": \"2022-06-14 00:00:00\",\n\"DateTimeSeated\": \"2022-06-14 00:00:00\",\n\"DateTimeDismissed\": \"2022-06-14 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"180,30,150\",\n\"AppointmentTypeNum\": 8,\n\"SecDateTEntry\":\"2021-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////////XX\",\n\"ItemOrderPlanned\": 1\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments POST SchedulePlanned\nVersion Added: 22.2\n\nCreates a new Scheduled appointment from an existing Planned Appointment. Does not modify or delete the original planned appointment. To reschedule a broken appointment, use Appointments PUT (update) to update the Status, AptDateTime, and Op of the broken appointment.\n\nPrior to running this method, obtain the AptNum of the Planned Appointment with ChartModules GET PlannedAppt or Appointments GET (single or multiple). Then use Appointments GET Slots to get the specific timeslots available for the Planned Appointment. The ProvNum, OpNum, and time stamps returned from that method are used below.\n\nAptNum: Required. AptNum of an appointment with an AptStatus of \"Planned\".\nAptDateTime: Required. String in \"yyyy-MM-dd HH:mm:ss\". Use Appointments GET Slots to find available times.\nProvNum: Required. The ProvNum of the appointment timeslot.\nOp: Required. The OpNum of the appointment timeslot.\n\nConfirmed: Optional. definition.DefNum where definition.Category=2.\nNote: Optional. Will overwrite any existing note.\n\nExample Request:\nPOST /appointments/SchedulePlanned\n\n{\n\"AptNum\": 413,\n\"AptDateTime\": \"2022-06-14 09:00:00\",\n\"ProvNum\": 10,\n\"Op\": 1\n}\n\nExample Response:\n{\n\"AptNum\": 414,\n\"PatNum\": 72,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 1,\n\"Note\": \"Planned Appointment, Schedule for sometime in June 2022\",\n\"ProvNum\": 10,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-06-14 09:00:00\",\n\"NextAptNum\": 413,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"PerEx, 2BW, Pano\",\n\"ClinicNum\": 3,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-18 11:52:41\",\n\"DateTimeArrived\": \"2022-06-14 00:00:00\",\n\"DateTimeSeated\": \"2022-06-14 00:00:00\",\n\"DateTimeDismissed\": \"2022-06-14 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2021-08-04 11:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////\",\n\"ItemOrderPlanned\": 1\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments POST WebSched\nVersion Added: 21.3\n\nSee Appointments GET WebSched\nSee Appointments GET SlotsWebSched\n\nRarely used. Probably just use Appointments POST (create) instead. Offices must be subscribed to WebSched eServices.\n\nCreates a WebSched appointment. This appointment is similar to appointments made through Open Dental's WebSched eServices, which the dental office must have set up.\n\nPrior to running this method, use Appointments GET SlotsWebSched to get the specific timeslots available for WebSched appointments. The ProvNum, OpNum, and time stamps returned from that method are used below.\n\nPatNum: Required.\nDateTimeStart: Required. The start time of the appointment timeslot in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeEnd: Required. The end time of the appointment timeslot in \"yyyy-MM-dd HH:mm:ss\" format.\nProvNum: Required. The ProvNum of the appointment timeslot.\nOpNum: Required. The OpNum of the appointment timeslot.\ndefNumApptType: Required. This must the be the same defNumApptType used to find the timeslot.\n\nExample Request:\nPOST /appointments/WebSched\n\n{\n\"PatNum\": 21,\n\"dateTimeStart\": \"2021-11-19 09:00:00\",\n\"dateTimeEnd\":\"2021-11-19 09:30:00\",\n\"ProvNum\": 5,\n\"OpNum\": 3,\n\"defNumApptType\": 326\n}\n\nExample Response:\n{\n\"AptNum\": 121,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX\",\n\"Confirmed\": 395,\n\"confirmed\": \"Created from Web Sched\",\n\"TimeLocked\": \"false\",\n\"Op\": 3,\n\"Note\": \"Appointment Reason: New Patient Exam\",\n\"ProvNum\": 5,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2021-11-19 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"true\",\n\"ProcDescript\": \"LimEx, 2BW\",\n\"ClinicNum\": 1,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"0001-01-01 00:00:00\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 9,\n\"InsPlan2\": 18,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-09-24 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments PUT (update)\nUpdates an appointment. All fields are optional. It is common to only set one or two fields. Note will overwrite any existing note. Use Appointments PUT Note to instead append a note. Use ProcedureLogs PUT to update attached procedures.\n\nIt is rare to use this method. There would be complex issues involved. It is recommended to instead use Appointments PUT Note, PUT Confirm, and PUT Break.\n\nAptNum: Required in the URL.\n\nAptStatus: Either \"Scheduled\", \"Complete\", \"UnschedList\", \"Broken\", \"Planned\", \"PtNote\", or \"PtNoteCompleted\".\nPattern: Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only. Patterns exceeding 9 hours will be trimmed down to 9 hours.\nConfirmed: definition.DefNum where definition.Category=2.\nOp: FK to operatory.OperatoryNum.\nNote: Overwrites existing note.\nProvNum: ProvNum of a provider.\nProvHyg: ProvNum of a hygiene provider.\nAptDateTime: Start time for the appointment. String in \"yyyy-MM-dd HH:mm:ss\" format.\nClinicNum: ClinicNum of a clinic.\nIsHygiene: Either \"true\" or \"false\". True if a hygiene appointment.\nIsNewPatient: (Added in version 21.3) Either \"true\" or \"false\".\nPriority: (Added in version 22.1) Either \"Normal\" or \"ASAP\".\nAppointmentTypeNum: (Added in version 22.1) FK to appointmenttype.AppointmentTypeNum. Use 0 to indicate None. Follows the same logic for adding attached procedures, pattern, and color as in Open Dental. The pattern will only be applied if Pattern is not specified in the request.\nUnschedStatus: (Added in version 22.2) definition.DefNum where definition.Category=13. Use 0 to indicate None.\ncolorOverride: (Added in version 22.3.9) Comma delimited list of three color values from 0-255.\nPatternSecondary: (Added in version 23.3.17) Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only. Must match the length of Pattern.\n\nExample Request:\nPUT /appointments/34\n\n{\n\"Note\":\"Note on appointment.\"\n}\n\nExample Response:\n{\n\"AptNum\": 34,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 3,\n\"Note\": \"Note on appointment.\",\n\"ProvNum\": 5,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2021-11-19 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"true\",\n\"ProcDescript\": \"LimEx, 2BW\",\n\"ClinicNum\": 1,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"0001-01-01 00:00:00\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 9,\n\"InsPlan2\": 18,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-09-24 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////\"\n}\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments PUT Break\nVersion Added: 21.3\n\nBreaks an appointment. Only appointments with an AptStatus of Scheduled can be broken. Creates a CommLog entry if the office has that preference turned on. To reschedule a broken appointment, use Appointments PUT (update) to update the Status, AptDateTime, and Op of the broken appointment.\n\nAptNum: Required in the URL.\n\nsendToUnscheduledList: Required. Either \"true\" or \"false\". Usually use \"true\" to send the broken appointment to the Unscheduled List. This will allow the patient or the office to see that this appointment is ready to be scheduled when they are ready. The only reason you would ever use \"false\" is if you were setting breakType to \"Missed\" or \"Cancelled\". \"false\" would leave the appointment in place on the appointment book.\nbreakType: Optional. Rarely used. Only used if you want a procedure to be added, which is usually associated with a fee. Use \"Missed\" to add a procedure with code D9986, indicating that they missed their appointment without notice. Use \"Cancelled\" to add procedure with code D9987, indicating less than 24 hrs notice. Normally, if more than 24 hrs notice is given, you would not specify breakType. These options cannot be used unless the offices has gone to Setup > Appointments > Appts Preferences, and changed the broken appointment procedure type to no longer be \"None\".\n\nExample Request:\nPUT /appointments/5/Break\n\n{\n\"sendToUnscheduledList\":\"true\"\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments PUT Note\nVersion Added: 21.1\n\nAppends a new line of text to an existing appointment's note.\n\nAptNum: Required in the URL.\n\nNote: Required. If a note already exists, a CR is included before the new note is appended.\n\nExample Request:\nPUT /appointments/34/Note\n\n{\n\"Note\":\"Requests reschedule\"\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAppointments PUT Confirm\nVersion Added: 21.1\n\nUpdates appointment.Confirmed for a specified appointment. Only one field is allowed in the JSON object, either confirmVal or defNum. A confirmVal of \"None\" corresponds to the default status for all new appointments, which is based on the first item listed in Definitions > Appt Confirmed. The other four confirmVal options are managed by the office in eServices Setup > Automated Messaging.\n\nconfirmVal: Either \"None\", \"Sent\", \"Confirmed\", \"Not Accepted\", or \"Failed\".\ndefNum: (Added in version 21.2) definition.DefNum where definition.Category=2.\n\nExample Requests:\nPUT /appointments/34/Confirm\n\n{\n\"confirmVal\":\"Confirmed\"\n}\n\nor\n\n{\n\"defNum\":209\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.2.31",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Appointments",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Appointments",
+      "method": "GET",
+      "path": "/appointments",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /appointments/ASAP\nGET /appointments/ASAP?ClinicNum=2\nGET /appointments/ASAP?Offset=200",
+          "response": "[\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 4,\n\"PatNum\": 20,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 2,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Ex, PA\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"false\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 1,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"ASAP\",\n\"PatternSecondary\": \"////////\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"serverDateTime\":\"2021-05-04 09:32:45\",\n\"AptNum\": 3,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 6,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 4,\n\"AptDateTime\": \"2020-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Ex\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"true\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"ASAP\",\n\"PatternSecondary\": \"//////////\",\n\"ItemOrderPlanned\": 0\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets the ASAP list. An appointment is considered to be on the ASAP list if the Priority field is set to ASAP instead of Normal."
+    },
+    {
+      "resource": "Appointments",
+      "method": "GET",
+      "path": "/appointments",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /appointments/Slots?date=2021-02-15\nGET /appointments/Slots?date=2022-03-30&ProvNum=50&OpNum=16\nGET /appointments/Slots?ProvNum=1&OpNum=18&dateStart=2022-03-28&dateEnd=2022-04-01",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "For simple dental office setups. See also Schedules GET."
+    },
+    {
+      "resource": "Appointments",
+      "method": "GET",
+      "path": "/appointments",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /appointments/SlotsWebSched?dateStart=2021-02-15&dateEnd=2021-02-15&defNumApptType=326",
+          "response": "[\n{\n\"DateTimeStart\": \"2021-02-15 08:00:00\",\n\"DateTimeEnd\": \"2021-02-15 08:30:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\n{\n\"DateTimeStart\": \"2021-02-15 08:30:00\",\n\"DateTimeEnd\": \"2021-02-15 09:00:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\n{\n\"DateTimeStart\": \"2021-02-15 09:00:00\",\n\"DateTimeEnd\": \"2021-02-15 09:30:00\",\n\"ProvNum\": 1,\n\"OpNum\": 1\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "326",
+          "status": "Example",
+          "description": ""
+        }
+      ],
+      "description": "Rarely used. Probably just use Appointments GET Slots instead. Offices must be subscribed to WebSched eServices."
+    },
+    {
+      "resource": "Appointments",
+      "method": "GET",
+      "path": "/appointments",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /appointments/WebSched\nGET /appointments/WebSched?date=2021-02-15\nGET /appointments/WebSched?date=2021-02-15&Offset=200",
+          "response": "[\n{\n\"AptNum\": 3,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"Op\": 6,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 4,\n\"AptDateTime\": \"2021-07-31 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"ProcDescript\": \"Ex\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"True\",\n\"DateTStamp\":\"2021-08-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"AppointmentTypeNum\": 0,\n\"eServiceLogType\": \"NewPat\",\n\"serverDateTime\":\"2021-08-04 09:32:45\"\n},\n{\n\"AptNum\": 35,\n\"PatNum\": 37,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"/XXXX/\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"Op\": 5,\n\"Note\": \"\",\n\"ProvNum\": 3,\n\"provAbbr\": \"DOC2\",\n\"ProvHyg\": 7,\n\"AptDateTime\": \"2021-10-18 13:30:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 92,\n\"unschedStatus\": \"Appointment Scheduled\",\n\"ProcDescript\": \"\",\n\"ClinicNum\": 2,\n\"IsHygiene\": \"False\",\n\"DateTStamp\": \"2021-08-23 10:52:22\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"AppointmentTypeNum\": 1,\n\"eServiceLogType\": \"None\",\n\"serverDateTime\": \"2021-09-13 09:09:37\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Rarely used. Probably just use Appointments GET (multiple) instead."
+    },
+    {
+      "resource": "Appointments",
+      "method": "POST",
+      "path": "/appointments",
+      "versionAdded": "22.2.31",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /appointments/Planned\n\n{\n\"PatNum\": 72,\n\"AppointmentTypeNum\": 12\n}\n\nor\n\n{\n\"PatNum\": 72,\n\"procNums\": [880,881,882,891,893]\n}\n\nor\n\n{\n\"PatNum\": 72,\n\"Pattern\": \"//XXXXXX//\",\n\"PatternSecondary\": \"////////XX\",\n\"Confirmed\": 19,\n\"Note\": \"Planned Appointment, Schedule for sometime in June 2022\",\n\"ProvNum\": 10,\n\"ProvHyg\": 0,\n\"IsNewPatient\": \"false\",\n\"ClinicNum\": 3,\n\"IsHygiene\": \"false\",\n\"Priority\": \"Normal\",\n\"AppointmentTypeNum\": 8\n}",
+          "response": "{\n\"AptNum\": 414,\n\"PatNum\": 72,\n\"AptStatus\": \"Planned\",\n\"Pattern\": \"//XXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 0,\n\"Note\": \"Planned Appointment, Schedule for sometime in June 2022\",\n\"ProvNum\": 10,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-06-14 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"PerEx, 2BW, Pano\",\n\"ClinicNum\": 3,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-18 11:52:41\",\n\"DateTimeArrived\": \"2022-06-14 00:00:00\",\n\"DateTimeSeated\": \"2022-06-14 00:00:00\",\n\"DateTimeDismissed\": \"2022-06-14 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"180,30,150\",\n\"AppointmentTypeNum\": 8,\n\"SecDateTEntry\":\"2021-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////////XX\",\n\"ItemOrderPlanned\": 1\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a planned appointment for a patient, which appears in the Planned Appts tab in the Chart Module. See Planned Appointments for more detailed information."
+    },
+    {
+      "resource": "Appointments",
+      "method": "POST",
+      "path": "/appointments",
+      "versionAdded": "22.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /appointments/SchedulePlanned\n\n{\n\"AptNum\": 413,\n\"AptDateTime\": \"2022-06-14 09:00:00\",\n\"ProvNum\": 10,\n\"Op\": 1\n}",
+          "response": "{\n\"AptNum\": 414,\n\"PatNum\": 72,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 1,\n\"Note\": \"Planned Appointment, Schedule for sometime in June 2022\",\n\"ProvNum\": 10,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-06-14 09:00:00\",\n\"NextAptNum\": 413,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"PerEx, 2BW, Pano\",\n\"ClinicNum\": 3,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-18 11:52:41\",\n\"DateTimeArrived\": \"2022-06-14 00:00:00\",\n\"DateTimeSeated\": \"2022-06-14 00:00:00\",\n\"DateTimeDismissed\": \"2022-06-14 00:00:00\",\n\"InsPlan1\": 19,\n\"InsPlan2\": 48,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2021-08-04 11:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////\",\n\"ItemOrderPlanned\": 1\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a new Scheduled appointment from an existing Planned Appointment. Does not modify or delete the original planned appointment. To reschedule a broken appointment, use Appointments PUT (update) to update the Status, AptDateTime, and Op of the broken appointment."
+    },
+    {
+      "resource": "Appointments",
+      "method": "POST",
+      "path": "/appointments",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /appointments/WebSched\n\n{\n\"PatNum\": 21,\n\"dateTimeStart\": \"2021-11-19 09:00:00\",\n\"dateTimeEnd\":\"2021-11-19 09:30:00\",\n\"ProvNum\": 5,\n\"OpNum\": 3,\n\"defNumApptType\": 326\n}",
+          "response": "{\n\"AptNum\": 121,\n\"PatNum\": 21,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX\",\n\"Confirmed\": 395,\n\"confirmed\": \"Created from Web Sched\",\n\"TimeLocked\": \"false\",\n\"Op\": 3,\n\"Note\": \"Appointment Reason: New Patient Exam\",\n\"ProvNum\": 5,\n\"provAbbr\": \"SMITH\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2021-11-19 09:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"true\",\n\"ProcDescript\": \"LimEx, 2BW\",\n\"ClinicNum\": 1,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"0001-01-01 00:00:00\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 9,\n\"InsPlan2\": 18,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-09-24 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"////\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "See Appointments GET WebSched\nSee Appointments GET SlotsWebSched"
+    },
+    {
+      "resource": "Appointments",
+      "method": "PUT",
+      "path": "/appointments",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /appointments/5/Break\n\n{\n\"sendToUnscheduledList\":\"true\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Breaks an appointment. Only appointments with an AptStatus of Scheduled can be broken. Creates a CommLog entry if the office has that preference turned on. To reschedule a broken appointment, use Appointments PUT (update) to update the Status, AptDateTime, and Op of the broken appointment."
+    },
+    {
+      "resource": "Appointments",
+      "method": "PUT",
+      "path": "/appointments",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /appointments/34/Note\n\n{\n\"Note\":\"Requests reschedule\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Appends a new line of text to an existing appointment's note."
+    },
+    {
+      "resource": "Appointments",
+      "method": "PUT",
+      "path": "/appointments",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /appointments/34/Confirm\n\n{\n\"confirmVal\":\"Confirmed\"\n}\n\nor\n\n{\n\"defNum\":209\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates appointment.Confirmed for a specified appointment. Only one field is allowed in the JSON object, either confirmVal or defNum. A confirmVal of \"None\" corresponds to the default status for all new appointments, which is based on the first item listed in Definitions > Appt Confirmed. The other four confirmVal options are managed by the office in eServices Setup > Automated Messaging."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-operatory",
+      "description": "API references database table operatory"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-eservicelog",
+      "description": "API references database table eservicelog"
+    },
+    {
+      "type": "references",
+      "target": "db-commlog",
+      "description": "API references database table commlog"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-appointmenttype",
+      "description": "API references database table appointmenttype"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "referenced_by",
+      "target": "manual-module",
+      "description": "API referenced by manual section"
+    }
+  ]
+}

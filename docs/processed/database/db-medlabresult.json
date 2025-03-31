@@ -1,0 +1,40 @@
+{
+  "id": "db-medlabresult",
+  "type": "database",
+  "title": "medlabresult",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "medlabresult",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "medlabresult",
+    "description": "Table for medlabresult data.",
+    "columns": [
+      {
+        "name": "medlabresultNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "medlabresultNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

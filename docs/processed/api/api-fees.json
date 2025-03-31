@@ -1,0 +1,108 @@
+{
+  "id": "api-fees",
+  "type": "api",
+  "title": "Fees",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Fees.txt",
+  "content": "API Fees\nSee API Specification\n\nFees are complex. See Procedure Codes, Fee Schedules, and Fee Schedule Logic for more information. Fees associated with a FeeSchedGroup cannot be created, updated or deleted. See Fee Schedule Groups for more information.\n\nFees GET (single)\nVersion Added: 23.3.11\n\nGets a single fee.\n\nFeeNum: Required in the URL.\n\nExample Request:\nGET /fees/112\n\nExample Response:\n{\n\"FeeNum\": 112,\n\"Amount\": 180.0,\n\"FeeSched\": 55,\n\"CodeNum\": 60,\n\"ClinicNum\": 0,\n\"ProvNum\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2017-02-27\",\n\"SecDateTEdit\": \"2017-02-28 18:23:04\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nFees GET (multiple)\nVersion Added: 23.3.11\n\nGets a list of fees. Any fees with ClinicNum and/or ProvNum greater than zero are associated with a non-global FeeSched. See Fee Override for Provider or Clinic for more information.\n\nParameters: All optional.\n\nFeeSched: FK to feesched.FeeSchedNum.\nCodeNum: FK to procedurecode.CodeNum.\nClinicNum: FK to clinic.ClinicNum.\nProvNum: FK to provider.ProvNum.\n\nExample Requests:\nGET /fees?FeeSched=13\nGET /fees?ClinicNum=8\nGET /fees?CodeNum=436&ProvNum=21\n\nExample Response:\n[\n{\n\"FeeNum\": 1817,\n\"Amount\": 97.0,\n\"FeeSched\": 269,\n\"CodeNum\": 688,\n\"ClinicNum\": 1,\n\"ProvNum\": 1,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-09-12\",\n\"SecDateTEdit\": \"2023-09-12 08:55:25\"\n},\n{\n\"FeeNum\": 1818,\n\"Amount\": 99.0,\n\"FeeSched\": 269,\n\"CodeNum\": 677,\n\"ClinicNum\": 3,\n\"ProvNum\": 1,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-09-12\",\n\"SecDateTEdit\": \"2023-09-12 08:55:26\"\n},\netc...\n]\n\n200 OK\n404 NotFound (with explanation)\n\nFees POST (create)\nVersion Added: 23.3.11\n\nFees are complex. If the FeeSched is non-global, you can specify a ClinicNum and/or a ProvNum. See Fee Override for Provider or Clinic for more information.\n\nAmount: Required. The amount usually charged.\nFeeSched: Required. FK to feesched.FeeSchedNum.\nCodeNum: Required. FK to procedurecode.CodeNum.\n\nClinicNum: Optional. FK to clinic.ClinicNum. Default 0.\nProvNum: Optional. FK to provider.ProvNum. Default 0.\n\nExample Requests:\nPOST /fees\n\n{\n\"Amount\": \"99.99\",\n\"FeeSched\": 263,\n\"CodeNum\": 693\n}\n\nor\n\n{\n\"Amount\": \"99.99\",\n\"FeeSched\": 263,\n\"CodeNum\": 693,\n\"ClinicNum\": 9,\n\"ProvNum\": 23\n}\n\nExample Response:\n{\n\"FeeNum\": 1907,\n\"Amount\": \"99.99\",\n\"FeeSched\": 263,\n\"CodeNum\": 693,\n\"ClinicNum\": 9,\n\"ProvNum\": 23,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-11-06\",\n\"SecDateTEdit\": \"2023-11-06 13:28:06\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nFees PUT (update)\nVersion Added: 23.3.11\n\nUpdates the amount of a single fee.\n\nFeeNum: Required in the URL.\n\nAmount: Required. The amount of the fee.\n\nExample Request:\nPUT /fees/1793\n\n{\n\"Amount\": \"79.99\"\n}\n\nExample Response:\n{\n\"FeeNum\": 1793,\n\"Amount\": \"79.99\",\n\"FeeSched\": 264,\n\"CodeNum\": 643,\n\"ClinicNum\": 2,\n\"ProvNum\": 16,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-11-07\",\n\"SecDateTEdit\": \"2023-11-07 10:25:09\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nFees DELETE\nVersion Added: 23.3.11\n\nDeletes a fee.\n\nFeeNum: Required in the URL.\n\nExample Request:\nDELETE /fees/293\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.11",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Fees",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Fees",
+      "method": "DELETE",
+      "path": "/fees",
+      "versionAdded": "23.3.11",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /fees/293",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "293",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a fee."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-feeschedgroup",
+      "description": "API references database table feeschedgroup"
+    },
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

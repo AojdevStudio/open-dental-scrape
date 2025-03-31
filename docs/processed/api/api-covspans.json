@@ -1,0 +1,68 @@
+{
+  "id": "api-covspans",
+  "type": "api",
+  "title": "CovSpans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API CovSpans.txt",
+  "content": "API CovSpans\nSee API Specification\n\nCoverage Spans are specific procedure code ranges used by Insurance Categories. Also see API CovCats for more information.\n\nCovSpans GET (single)\nVersion Added: 24.1.19\n\nGets a single CovSpan.\n\nCovSpanNum: Required.\n\nExample Requests:\nGET /covspans/40\n\nExample Response:\n{\n\"CovSpanNum\": 40,\n\"CovCatNum\": 15,\n\"FromCode\": \"D4000\",\n\"ToCode\": \"D4999\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nCovSpans GET (multiple)\nVersion Added: 24.1.19\n\nGets a list of CovSpans.\n\nCovCatNum: Optional. FK to covcat.CovCatNum.\n\nExample Requests:\nGET /covspans\nGET /covspans?CovCatNum=10\n\nExample Response:\n[\n{\n\"CovSpanNum\": 32,\n\"CovCatNum\": 10,\n\"FromCode\": \"D0000\",\n\"ToCode\": \"D7999\"\n},\n{\n\"CovSpanNum\": 33,\n\"CovCatNum\": 10,\n\"FromCode\": \"D9000\",\n\"ToCode\": \"D9999\"\n}\n]\n\n200 OK\n404 NotFound (with explanation)\n\nCovSpans POST (create)\nVersion Added: 24.1.22\n\nCreates a CovSpan.\n\nCovCatNum: Required. FK to covcat.CovCatNum.\nFromCode: Required. Lower range of the span. Must be alphabetically less than ToCode. Does not need to be a valid code.\nToCode: Required. Upper range of the span. Must be alphabetically greater than FromCode. Does not need to be a valid code.\n\nExample Request:\nPOST /covspans\n\n{\n\"CovCatNum\": 37,\n\"FromCode\": \"D1400\",\n\"ToCode\": \"D1499\"\n}\n\nExample Response:\n{\n\"CovSpanNum\": 45,\n\"CovCatNum\": 37,\n\"FromCode\": \"D1400\",\n\"ToCode\": \"D1499\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nCovSpans PUT (update)\nVersion Added: 24.1.22\n\nUpdates a CovSpan.\n\nCovSpanNum: Required in the URL.\n\nFromCode: Lower range of the span. Must be alphabetically less than ToCode. Does not need to be a valid code.\nToCode: Upper range of the span. Must be alphabetically greater than FromCode. Does not need to be a valid code.\n\nExample Request:\nPUT /covspans/34\n\n{\n\"FromCode\": \"D1400\",\n\"ToCode\": \"D1499\"\n}\n\nExample Response:\n{\n\"CovSpanNum\": 34,\n\"CovCatNum\": 37,\n\"FromCode\": \"D1400\",\n\"ToCode\": \"D1499\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nCovSpans DELETE\nVersion Added: 24.1.22\n\nDeletes a CovSpan.\n\nCovSpanNum: Required in the URL.\n\nExample Requests:\nDELETE /covspans/13\n\nExample Responses:\n200 OK\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.1.22",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "CovSpans",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "CovSpans",
+      "method": "DELETE",
+      "path": "/covspans",
+      "versionAdded": "24.1.22",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /covspans/13",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a CovSpan."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-covcat",
+      "description": "API references database table covcat"
+    },
+    {
+      "type": "references",
+      "target": "db-covspan",
+      "description": "API references database table covspan"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

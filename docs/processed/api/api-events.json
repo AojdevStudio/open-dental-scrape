@@ -1,0 +1,111 @@
+{
+  "id": "api-events",
+  "type": "api",
+  "title": "Events",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Events.txt",
+  "content": "API Events\nSee API Specification\n\nAn API Event can fire from any workstation. The format is a webhook, which is a REST style call to an endpoint of your choice, so it's the reverse of a typical REST call you would make to the API. Two types of events exist: Database Events and UI Events. The elements sent by the event include the Customer Api Key in the Authorization header, name of the machine firing the event in the Workstation header (Added in version 22.4.28), and the event's type in the Event-Type header (Added in version 22.4.35). You manage which events you want to fire by using API Subscriptions.\n\nSee API Guide - Subscriptions and Events for more information.\n\nHow to Use:\n\n1. Subscribe to UI and/or Database Events with Subscriptions POST.\n2. Begin monitoring the location specified in Subscription.EndPointUrl.\n3a. Database Events will fire at the interval specified in Subscription.PollingSeconds.\n3b. UI Events will fire instantly for the workstations specified in Subscription.WorkStation.\n4. View, modify, or remove Event monitoring with Subscriptions GET, PUT, and DELETE.\n\nDatabase Event\nOpen Dental and the API Service generate these events by polling the database at the frequency you specify for any rows modified since the subscription's DateTimeStart. Each fired event has a maximum capacity of 1000 elements (Added in version 23.2.1). If an event contains more than 1000 elements, then the elements will be sent in batches of up to 1000 at a time. When an event is successfully sent to the endpoint, the DateTimeStart of the relevant subscription will be updated to the time at which it was polled.\n\nIf a subscription's Workstation is not running an instance of OpenDental.exe and/or OpenDentalAPIService.exe, such as if they are closed for a weekend, then that Workstation will not poll the database or send events. If an event is sent but is unsuccessful in reaching the subscription's endpoint, such as if it is offline, then the subscription's DateTimeStart will be unmodified. Upon the next successful connection to the endpoint, all changed rows of the specified WatchTable from up to the last three days will be included in the sent webhook, and the subscription's DateTimeStart will update as normal.\n\nTypes: The type is specified in the subscriptions.WatchTable field.\nAppointment\nAppointmentDeleted (Added in version 22.4.35)\nOperatory (Added in version 24.2.11)\nPatField (Added in version 22.4.8)\nPatient\nProvider (Added in version 24.2.11)\nSchedule (Added in version 24.2.11)\nToothInitial (Added in version T.B.A)\n\nExample:\nPOST https://myserver/apievents/appointmentevent\nAuthorization: VzkmZEaUWOjnQX2z\nWorkstation: MOLLYR\nEvent-Type: WatchTable: Appointment\n(there are other headers that can be ignored)\n\n[\n{\n\"AptNum\": 18,\n\"PatNum\": 17,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 3,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC1\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2020-07-31 08:30:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"Seal, Seal\",\n\"ClinicNum\": 0,\n\"IsHygiene\": \"false\",\n\"DateTStamp\":\"2021-05-03 08:30:12\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 3,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"SecDateTEntry\":\"2020-07-04 09:12:05\",\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"XX////XX\",\n\"ItemOrderPlanned\": 0\n},\netc...\n]\n\nUI Event\nOpen Dental fires these events immediately upon user action. They are usually intended for a localhost endpoint.\n\nUiEventTypes: Specified in the subscriptions.UiEventType field.\nPatientSelected - Occurs whenever a patient is selected (Patient Select window, Account Module, etc.).\n\nExample:\nPOST https://myserver/apievents/PatientSelected\nAuthorization: VzkmZEaUWOjnQX2z\nWorkstation: MOLLYR\nEvent-Type: UiEventType: PatientSelected\n(there are other headers that can be ignored)\n\n{\n\"PatNum\":28,\n\"LName\":\"Harrison\",\n\"FName\":\"Bradley\",\n\"MiddleI\":\"V\",\n\"Preferred\":\"Brad\",\n\"PatStatus\":\"Patient\",\n\"Gender\":\"Male\",\n\"Position\":\"Married\",\n\"Birthdate\":\"1986-11-06\",\n\"SSN\":\"\",\n\"Address\":\"201 S Burnett Ln\",\n\"Address2\":\"\",\n\"City\":\"Lakewood\",\n\"State\":\"Maine\",\n\"Zip\":\"12345\",\n\"HmPhone\":\"5552523366\",\n\"WkPhone\":\"\",\n\"WirelessPhone\":\"\",\n\"Guarantor\":27,\n\"Email\":\"\",\n\"EstBalance\":0,\n\"PriProv\":1,\n\"priProvAbbr\":\"DOC1\",\n\"SecProv\":0,\n\"secProvAbbr\":\"\",\n\"BillingType\":\"StandardAccount\",\n\"ImageFolder\":\"HarrisonBradley28\",\n\"ChartNumber\":\"\",\n\"MedicaidID\":\"\",\n\"BalTotal\":0,\n\"DateFirstVisit\": \"0001-01-01\",\n\"ClinicNum\":\"1\",\n\"clinicAbbr\":\"Southside\",\n\"PreferConfirmMethod\":\"None\",\n\"PreferContactMethod\":\"None\",\n\"PreferRecallMethod\":\"None\",\n\"Language\":\"\",\n\"siteDesc\":\"\",\n\"DateTStamp\":\"2022-04-21 11:46:19\",\n\"TxtMsgOk\":\"Unknown\",\n\"SecDateEntry\":\"2021-12-04\"\n}",
+  "metadata": {
+    "version": "",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Events",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-from",
+      "description": "References database table from"
+    },
+    {
+      "type": "references",
+      "target": "db-field",
+      "description": "References database table field"
+    },
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-patfield",
+      "description": "API references database table patfield"
+    },
+    {
+      "type": "references",
+      "target": "db-language",
+      "description": "API references database table language"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-toothinitial",
+      "description": "API references database table toothinitial"
+    },
+    {
+      "type": "references",
+      "target": "db-operatory",
+      "description": "API references database table operatory"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-appointmenttype",
+      "description": "API references database table appointmenttype"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    }
+  ]
+}

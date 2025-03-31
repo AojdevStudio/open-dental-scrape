@@ -1,0 +1,52 @@
+API Computers
+See API Specification
+
+See Computers for additional information.
+
+Computers GET
+Version Added: 23.1.30
+
+Gets a list of computers.
+
+LastHeartBeat indicates which computers are actively running. See Database Schema for additional information.
+
+Example Request:
+GET /computers
+
+Example Response:
+[
+{
+"ComputerNum": 1,
+"CompName": "JORDANS",
+"LastHeartBeat": "0001-01-01 00:00:00"
+},
+{
+"ComputerNum": 3,
+"CompName": "ROCHELLES",
+"LastHeartBeat": "0001-01-01 00:00:00"
+},
+{
+"ComputerNum": 5,
+"CompName": "SARAHL",
+"LastHeartBeat": "0001-01-01 00:00:00"
+},
+{
+"ComputerNum": 7,
+"CompName": "JUSTINE",
+"LastHeartBeat": "2023-06-28 14:55:25"
+},
+{
+"ComputerNum": 9,
+"CompName": "JTS",
+"LastHeartBeat": "0001-01-01 00:00:00"
+},
+{
+"ComputerNum": 11,
+"CompName": "DEREKR",
+"LastHeartBeat": "0001-01-01 00:00:00"
+},
+etc...
+]
+
+200 OK
+400 BadRequest

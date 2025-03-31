@@ -1,0 +1,40 @@
+{
+  "id": "db-orthochartlog",
+  "type": "database",
+  "title": "orthochartlog",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "orthochartlog",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "orthochartlog",
+    "description": "Table for orthochartlog data.",
+    "columns": [
+      {
+        "name": "orthochartlogNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "orthochartlogNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

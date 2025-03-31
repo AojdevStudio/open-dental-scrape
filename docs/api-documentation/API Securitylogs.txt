@@ -1,0 +1,53 @@
+API SecurityLogs
+See API Specification
+
+See Audit Trail for additional information.
+
+SecurityLogs GET
+Version Added: 23.1.33
+
+Gets all securitylogs for the API developer making the request.
+
+PermType: Optional. Filter responses by permission type. See Audit Trail Permissions for additional information.
+
+Example Requests:
+GET /securitylogs
+GET /securitylogs?PermType=PatientEdit
+
+Example Response:
+[
+{
+"SecurityLogNum": 21855,
+"PermType": "PatientCreate",
+"UserNum": 0,
+"LogDateTime": "7/6/2023 11:48:55 AM",
+"LogText": "Created by API Test Developer through API. ",
+"PatNum": 95,
+"CompName": "JUSTINE",
+"LogSource": "API"
+},
+{
+"SecurityLogNum": 21853,
+"PermType": "PatientEdit",
+"UserNum": 0,
+"LogDateTime": "7/6/2023 11:47:47 AM",
+"LogText": "Updated by API Test Developer through API. ",
+"PatNum": 86,
+"CompName": "JUSTINE",
+"LogSource": "API"
+},
+{
+"SecurityLogNum": 21845,
+"PermType": "PatientEdit",
+"UserNum": 0,
+"LogDateTime": "7/6/2023 11:42:49 AM",
+"LogText": "Updated by API Test Developer through API. ",
+"PatNum": 86,
+"CompName": "JUSTINE",
+"LogSource": "API"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)

@@ -1,0 +1,58 @@
+{
+  "id": "api-usergroups",
+  "type": "api",
+  "title": "userGroups",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API userGroups.txt",
+  "content": "API UserGroups\nSee API Specification\n\nSee User Edit for more information.\n\nUserGroups GET\nVersion Added: 23.2.21\n\nGets a list of user groups, which can include CEMT user groups. See User Groups.\n\nincludeCEMT: Optional. Either \"true\" or \"false\". Set to \"true\" to return usergroups that are designated as CEMT as well as those that are not. Default \"false\".\n\nExample Request:\nGET /usergroups\nGET /usergroups?includeCEMT=true\n\nExample Response:\n[\n{\n\"UserGroupNum\": 1,\n\"Description\": \"Admin\",\n\"UserGroupNumCEMT\": 0\n},\n{\n\"UserGroupNum\": 3,\n\"Description\": \"Security\",\n\"UserGroupNumCEMT\": 3\n},\n{\n\"UserGroupNum\": 4,\n\"Description\": \"HR\",\n\"UserGroupNumCEMT\": 0\n},\netc...\n]\n\n200 OK\n400 Bad Request (with explanation)",
+  "metadata": {
+    "version": "23.2.21",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "userGroups",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "UserGroups",
+      "method": "GET",
+      "path": "/usergroups",
+      "versionAdded": "23.2.21",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /usergroups\nGET /usergroups?includeCEMT=true",
+          "response": "[\n{\n\"UserGroupNum\": 1,\n\"Description\": \"Admin\",\n\"UserGroupNumCEMT\": 0\n},\n{\n\"UserGroupNum\": 3,\n\"Description\": \"Security\",\n\"UserGroupNumCEMT\": 3\n},\n{\n\"UserGroupNum\": 4,\n\"Description\": \"HR\",\n\"UserGroupNumCEMT\": 0\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of user groups, which can include CEMT user groups. See User Groups."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-usergroup",
+      "description": "API references database table usergroup"
+    }
+  ]
+}

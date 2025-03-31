@@ -1,0 +1,150 @@
+{
+  "id": "api-procstp",
+  "type": "api",
+  "title": "ProcsTP",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ProcsTP.txt",
+  "content": "API ProcTPs\nSee API Specification\n\nProcTPs are copies of procedures that are attached to Saved treatment plans. The ProcNumOrig points to the actual procedurelog row. For Active and Inactive treatment plans, use TreatPlanAttaches. See Treatment Plans for more information.\n\nProcTPs GET\nVersion Added: 22.4.17\n\nGet a list of ProcTPs by the TreatPlanNum. Before calling this method, use TreatPlans GET to find the TreatPlanNum of an existing TreatPlan.\n\nTreatPlanNum: Required. FK to TreatPlan.TreatPlanNum.\n\nExample Request:\nGET /proctps?TreatPlanNum=963\n\nExample Response:\n[\n{\n\"ProcTPNum\": 976,\n\"TreatPlanNum\": 963,\n\"PatNum\": 722,\n\"ProcNumOrig\": 1154,\n\"ItemOrder\": 0,\n\"Priority\": 0,\n\"priority\": \"\",\n\"ToothNumTP\": \"13\",\n\"Surf\": \"MOD\",\n\"ProcCode\": \"D2393\",\n\"Descript\": \"resin-based composite - three surfaces, posterior\",\n\"FeeAmt\": 204.0,\n\"PriInsAmt\": 80.0,\n\"SecInsAmt\": 0.0,\n\"PatAmt\": 70.0,\n\"Discount\": 54.0,\n\"Prognosis\": \"\",\n\"Dx\": \"\",\n\"ProcAbbr\": \"C3 (P)\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2023-01-24\",\n\"SecDateTEdit\": \"2023-01-24 09:33:46\",\n\"FeeAllowed\": 0.0,\n\"TaxAmt\": 0.0,\n\"ProvNum\": 11,\n\"DateTP\": \"2022-12-19\",\n\"ClinicNum\": 3,\n\"CatPercUCR\": 204.0\n},\n{\n\"ProcTPNum\": 977,\n\"TreatPlanNum\": 963,\n\"PatNum\": 722,\n\"ProcNumOrig\": 1167,\n\"ItemOrder\": 1,\n\"Priority\": 0,\n\"priority\": \"\",\n\"ToothNumTP\": \"\",\n\"Surf\": \"\",\n\"ProcCode\": \"D0140\",\n\"Descript\": \"Limited Exam\",\n\"FeeAmt\": 57.0,\n\"PriInsAmt\": 57.0,\n\"SecInsAmt\": 0.0,\n\"PatAmt\": 0.0,\n\"Discount\": 0.0,\n\"Prognosis\": \"\",\n\"Dx\": \"\",\n\"ProcAbbr\": \"LimEx\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2023-01-24\",\n\"SecDateTEdit\": \"2023-01-24 09:33:46\",\n\"FeeAllowed\": 0.0,\n\"TaxAmt\": 0.0,\n\"ProvNum\": 11,\n\"DateTP\": \"2022-12-19\",\n\"ClinicNum\": 3,\n\"CatPercUCR\": 57.0\n}\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcTPs PUT (update)\nVersion Added: 24.4.26\n\nUpdates a ProcTp. Only ProcTPs associated with an unsigned treatment plan can be updated.\n\nProcTPNum: Required in the URL.\n\nPriority: definition.DefNum where definition.Category=20.\nToothNumTP: The tooth number.\nSurf: Tooth surfaces or area.\nProcCode: Not a foreign key. Simply display text.\nDescript: Description of procedure.\nFeeAmt: The fee charged to the patient.\nPriInsAmt: The amount primary insurance is expected to pay.\nSecInsAmt: The amount secondary insurance is expected to pay.\nPatAmt: The amount the patient is expected to pay.\nDiscount: The amount of discount. Used for PPOs and procedure level discounts.\nPrognosis: Text for prognosis definition.\nDx: Text for diagnosis definition.\nProcAbbr: The procedure code abbreviation.\nFeeAllowed: The amount primary insurance allows.\n\nExample Request:\nPUT /proctps/1\n\n{\n\"Discount\": \"17.00\",\n}\n\nExample Response:\n{\n\"ProcTPNum\": 1,\n\"TreatPlanNum\": 1,\n\"PatNum\": 2040,\n\"ProcNumOrig\": 10052,\n\"ItemOrder\": 0,\n\"Priority\": 0,\n\"priority\": \"\",\n\"ToothNumTP\": \"\",\n\"Surf\": \"\",\n\"ProcCode\": \"D1110\",\n\"Descript\": \"Prophy- Adult\",\n\"FeeAmt\": 72.0,\n\"PriInsAmt\": 72.0,\n\"SecInsAmt\": 0.0,\n\"PatAmt\": 0.0,\n\"Discount\": 17.0,\n\"Prognosis\": \"\",\n\"Dx\": \"\",\n\"ProcAbbr\": \"Pro\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2022-09-29\",\n\"SecDateTEdit\": \"2022-09-29 11:45:57\",\n\"FeeAllowed\": 0.0,\n\"TaxAmt\": 0.0,\n\"ProvNum\": 0,\n\"DateTP\": \"0001-01-01\",\n\"ClinicNum\": 0,\n\"CatPercUCR\": 0.0\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcTPs DELETE\nVersion Added: 23.3.10\n\nDeletes a ProcTp. Only ProcTPs associated with an unsigned treatment plan can be deleted.\n\nProcTPNum: Required in the URL.\n\nExample Request:\nDELETE /proctps/293\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.26",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ProcsTP",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ProcTPs",
+      "method": "GET",
+      "path": "/proctps",
+      "versionAdded": "22.4.17",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /proctps?TreatPlanNum=963",
+          "response": "[\n{\n\"ProcTPNum\": 976,\n\"TreatPlanNum\": 963,\n\"PatNum\": 722,\n\"ProcNumOrig\": 1154,\n\"ItemOrder\": 0,\n\"Priority\": 0,\n\"priority\": \"\",\n\"ToothNumTP\": \"13\",\n\"Surf\": \"MOD\",\n\"ProcCode\": \"D2393\",\n\"Descript\": \"resin-based composite - three surfaces, posterior\",\n\"FeeAmt\": 204.0,\n\"PriInsAmt\": 80.0,\n\"SecInsAmt\": 0.0,\n\"PatAmt\": 70.0,\n\"Discount\": 54.0,\n\"Prognosis\": \"\",\n\"Dx\": \"\",\n\"ProcAbbr\": \"C3 (P)\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2023-01-24\",\n\"SecDateTEdit\": \"2023-01-24 09:33:46\",\n\"FeeAllowed\": 0.0,\n\"TaxAmt\": 0.0,\n\"ProvNum\": 11,\n\"DateTP\": \"2022-12-19\",\n\"ClinicNum\": 3,\n\"CatPercUCR\": 204.0\n},\n{\n\"ProcTPNum\": 977,\n\"TreatPlanNum\": 963,\n\"PatNum\": 722,\n\"ProcNumOrig\": 1167,\n\"ItemOrder\": 1,\n\"Priority\": 0,\n\"priority\": \"\",\n\"ToothNumTP\": \"\",\n\"Surf\": \"\",\n\"ProcCode\": \"D0140\",\n\"Descript\": \"Limited Exam\",\n\"FeeAmt\": 57.0,\n\"PriInsAmt\": 57.0,\n\"SecInsAmt\": 0.0,\n\"PatAmt\": 0.0,\n\"Discount\": 0.0,\n\"Prognosis\": \"\",\n\"Dx\": \"\",\n\"ProcAbbr\": \"LimEx\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2023-01-24\",\n\"SecDateTEdit\": \"2023-01-24 09:33:46\",\n\"FeeAllowed\": 0.0,\n\"TaxAmt\": 0.0,\n\"ProvNum\": 11,\n\"DateTP\": \"2022-12-19\",\n\"ClinicNum\": 3,\n\"CatPercUCR\": 57.0\n}\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "963",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Get a list of ProcTPs by the TreatPlanNum. Before calling this method, use TreatPlans GET to find the TreatPlanNum of an existing TreatPlan."
+    },
+    {
+      "resource": "ProcTPs",
+      "method": "DELETE",
+      "path": "/proctps",
+      "versionAdded": "23.3.10",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /proctps/293",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "293",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a ProcTp. Only ProcTPs associated with an unsigned treatment plan can be deleted."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-treatplan",
+      "description": "API references database table treatplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-proctp",
+      "description": "API references database table proctp"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-treatplanattach",
+      "description": "API references database table treatplanattach"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    }
+  ]
+}

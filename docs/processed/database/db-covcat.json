@@ -1,0 +1,61 @@
+{
+  "id": "db-covcat",
+  "type": "database",
+  "title": "covcat",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "covcat",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "covcat",
+    "description": "Table for covcat data.",
+    "columns": [
+      {
+        "name": "covcatNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "covcatNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-covspans",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-benefits",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-covcats",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

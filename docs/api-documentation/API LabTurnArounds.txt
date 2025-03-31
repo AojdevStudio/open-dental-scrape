@@ -1,0 +1,131 @@
+API LabTurnarounds
+See API Specification
+
+See Laboratories for more information.
+
+LabTurnarounds GET (single)
+Version Added: 24.2.29
+
+Gets a single labturnaround.
+
+LabTurnaroundNum: Required in URL.
+
+Example Request:
+GET /labturnarounds/23
+
+Example Response:
+{
+"LabTurnaroundNum": 23,
+"LaboratoryNum": 7,
+"Description": "Implant",
+"DaysPublished": 3,
+"DaysActual": 4
+}
+
+200 OK
+404 NotFound (with explanation)
+
+LabTurnarounds GET (multiple)
+Version Added: 24.2.29
+
+Gets a list of labturnarounds.
+
+LaboratoryNum: Optional. FK to laboratory.LaboratoryNum.
+
+Example Requests:
+GET /labturnarounds
+GET /labturnarounds?LaboratoryNum=7
+
+Example Response:
+[
+{
+"LabTurnaroundNum": 23,
+"LaboratoryNum": 7,
+"Description": "Implant",
+"DaysPublished": 3,
+"DaysActual": 4
+},
+{
+"LabTurnaroundNum": 24,
+"LaboratoryNum": 7,
+"Description": "Repair",
+"DaysPublished": 1,
+"DaysActual": 2
+},
+etc...
+]
+
+200 OK
+404 NotFound (with explanation)
+
+LabTurnarounds POST (create)
+Version Added: 24.4.13
+
+Creates a labturnaround for a laboratory.
+
+LaboratoryNum: Required. FK to laboratory.LaboratoryNum.
+Description: Required. The description of the service that the lab is performing.
+DaysActual: Required. The actual number of days.
+
+DaysPublished: Optional. The number of days that the lab publishes as the turnaround time for the service.
+
+Example Request:
+POST /labturnarounds
+
+{
+"LaboratoryNum": 6,
+"Description": "Implant",
+"DaysPublished": 3,
+"DaysActual": 4
+}
+
+Example Response:
+{
+"LabTurnaroundNum": 23,
+"LaboratoryNum": 6,
+"Description": "Implant",
+"DaysPublished": 3,
+"DaysActual": 4
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+LabTurnarounds PUT (update)
+Version Added: 24.4.13
+
+Updates a labturnaround for a laboratory.
+
+LabTurnaroundNum: Required in the URL.
+
+Description: Optional. The description of the service that the lab is performing. Overwrites existing description.
+DaysPublished: Optional. The number of days that the lab publishes as the turnaround time for the service.
+DaysActual: Optional. The actual number of days.
+
+Example Requests:
+PUT /labturnarounds/23
+
+{
+"Description": "Implant"
+}
+
+or
+
+{
+"DaysPublished": 3,
+"DaysActual": 4
+}
+
+Example Response:
+{
+"LabTurnaroundNum": 23,
+"LaboratoryNum": 6,
+"Description": "Implant",
+"DaysPublished": 3,
+"DaysActual": 4
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

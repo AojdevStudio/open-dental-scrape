@@ -1,0 +1,324 @@
+API Referrals
+See API Specification
+
+See Referral List for more information.
+
+Referrals GET (single)
+Version Added: 24.1.34
+
+Gets a single referral.
+
+Parameters:
+
+ReferralNum: Required in URL.
+
+Example Request:
+GET /referrals/1
+
+Example Response:
+{
+"ReferralNum": 1,
+"LName": "Davidson",
+"FName": "Norm",
+"MName": "",
+"SSN": "123456789",
+"UsingTIN": "true",
+"Specialty": 465,
+"specialty": "Endodontics",
+"ST": "OR",
+"Telephone": "",
+"Address": "163 Madison Loop",
+"Address2": "",
+"City": "Portland",
+"Zip": "54698",
+"Note": "",
+"Phone2": "",
+"IsHidden": "false",
+"NotPerson": "false",
+"Title": "DMD",
+"EMail": "",
+"PatNum": 0,
+"IsDoctor": "true",
+"DateTStamp": "2021-06-21 10:03:08",
+"IsPreferred": "true",
+"BusinessName": "",
+"DisplayNote": "",
+"isPatient": "false"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Referrals GET (multiple)
+Version Added: 21.4
+
+Gets a list of all referral sources. These can be either a provider, patient, or non-person. The description of non-patient sources is stored in the LName field.
+
+Parameters: All optional.
+
+IsHidden: (Added in version 24.1.34) Filter hidden responses. Either "true" or "false"
+NotPerson: (Added in version 24.1.34) Filter referrals that are marked NotPerson. Either "true" or "false".
+IsDoctor: (Added in version 24.1.34) Filter referrals that are marked IsDoctor. Either "true" or "false".
+IsPreferred: (Added in version 24.1.34) Filter referrals that are marked Preferred. Either "true" or "false"
+isPatient: (Added in version 24.1.34) Filter referrals that are marked isPatient. Either "true" or "false".
+BusinessName: (Added in version 24.4.19) Filter referrals by business name. Supports partial string matching.
+
+Example Requests:
+GET /referrals
+GET /referrals?IsPreferred=true
+GET /referrals?IsPreferred=true&isPatient=true
+GET /referrals?BusinessName=Facebook
+
+Example Response:
+[
+{
+"ReferralNum": 1,
+"LName": "Davidson",
+"FName": "Norm",
+"MName": "",
+"SSN": "123456789",
+"UsingTIN": "true",
+"Specialty": 465,
+"specialty": "Endodontics",
+"ST": "OR",
+"Telephone": "",
+"Address": "163 Madison Loop",
+"Address2": "",
+"City": "Portland",
+"Zip": "54698",
+"Note": "",
+"Phone2": "",
+"IsHidden": "false",
+"NotPerson": "false",
+"Title": "DMD",
+"EMail": "",
+"PatNum": 0,
+"IsDoctor": "true",
+"DateTStamp": "2021-06-21 10:03:08",
+"IsPreferred": "true",
+"BusinessName": "",
+"DisplayNote": "",
+"isPatient": "false"
+},
+{
+"ReferralNum": 2,
+"LName": "Facebook Ad",
+"FName": "",
+"MName": "",
+"SSN": "",
+"UsingTIN": "false",
+"Specialty": 0,
+"specialty": "",
+"ST": "",
+"Telephone": "",
+"Address": "",
+"Address2": "",
+"City": "",
+"Zip": "",
+"Note": "Ad active from 06/01/2021 to 09/01/2021",
+"Phone2": "",
+"IsHidden": "false",
+"NotPerson": "true",
+"Title": "",
+"EMail": "",
+"PatNum": 0,
+"IsDoctor": "false",
+"DateTStamp": "2021-07-21 11:03:08",
+"IsPreferred": "true",
+"BusinessName": "Facebook Ad",
+"DisplayNote": "",
+"isPatient": "false"
+},
+{
+"ReferralNum": 3,
+"LName": "Beringer",
+"FName": "Debbie",
+"MName": "L",
+"SSN": "111111111",
+"UsingTIN": "false",
+"Specialty": 0,
+"specialty": "",
+"ST": "OR",
+"Telephone": "5033635432",
+"Address": "",
+"Address2": "",
+"City": "Salem",
+"Zip": "",
+"Note": "",
+"Phone2": "",
+"IsHidden": "false",
+"NotPerson": "false",
+"Title": "",
+"EMail": "",
+"PatNum": 435,
+"IsDoctor": "false",
+"DateTStamp": "2021-09-21 12:03:08",
+"IsPreferred": "false",
+"BusinessName": "",
+"DisplayNote": "",
+"isPatient": "true"
+
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+
+Referrals POST (create)
+Version Added: 22.3
+
+Creates a new Referral. Referrals can be for patients (provide PatNum), providers (provide specialty) or non-persons (provide neither PatNum or specialty). In the last case, isPatient and IsDoctor will be set false automatically while NotPerson will be set to true. If you wish to create an associated RefAttach please see RefAttaches POST.
+
+LName: Required. The last name of a referral source or referral source description.
+PatNum: Optional. Only set this if the referral source is a patient. The provided LName must match the patient for whom the PatNum is given. This automatically populates the rest of the referral based on the given patient. If this is set, IsDoctor and NotPerson are set to "false", while isPatient will be true.
+FName: Optional. The referral source's first name.
+MName: Optional. The referral source's middle name or initial.
+SSN: (Added in version 24.4.16) Optional. SSN, or TIN if UsingTIN is true. No punctuation.
+UsingTIN: (Added in version 24.4.16) Optional. Either "true" or "false". Dictates whether SSN contains an SSN or TIN. Default "false".
+Specialty: Optional. definition.DefNum where definition.Category=35 (ProviderSpecialty). If set, NotPerson will default to "false", IsDoctor will default to "true", and isPatient will be false.
+specialty: Optional. Only set this if the Referral source is a Provider. This is a definition.ItemName where the DefCat is ProviderSpecialty(35). If this is set, IsDoctor will default to "true", NotPerson will default to "false", and isPatient will be false.
+ST: (Added in version 24.4.16) Optional. The referral source's state. Two characters maximum.
+Telephone: (Added in version 24.4.16) Optional. The referral source's phone number. Must be ten digits.
+Address: (Added in version 24.4.16) Optional. The referral source's mailing address.
+Address2: (Added in version 24.4.16) Optional. Additional info regarding the referral source's mailing address.
+City: (Added in version 24.4.16) Optional. The referral source's city.
+Zip: (Added in version 24.4.16) Optional. The referral source's ZIP code.
+Note: Optional.
+Phone2: (Added in version 24.4.16) Optional. Additional phone.
+NotPerson: (Added in version 24.4.16) Optional. Either "true" or "false". Default "false", unless neither PatNum nor Specialty were supplied.
+Title: Optional. The referral source's title.
+EMail: (Added in version 24.4.16) Optional. The email address for the referral.
+IsDoctor: (Added in version 24.4.16) Optional. Either "true" or "false". Default "false", unless a Specialty was supplied.
+BusinessName: (Added in version 24.4.16) Optional. Name of the business that the referral works for.
+DisplayNote: (Added in version 24.4.16) Optional. Shows in the Family Module's Patient Info grid.
+
+Example Request:
+POST /referrals
+{
+"LName": "Yellow Pages"
+}
+
+{
+"LName": "Smith",
+"PatNum": 435
+}
+
+{
+"LName": "Smith",
+"FName": "John",
+"specialty": "Surgery"
+}
+
+Example Response:
+{
+"ReferralNum": 314,
+"LName": "Smith",
+"FName": "James",
+"MName": "",
+"SSN": "",
+"UsingTIN": "false",
+"Specialty": 0,
+"specialty": "",
+"ST": "OR",
+"Telephone": "5033635432",
+"Address": "123 Gumtree Ln",
+"Address2": "",
+"City": "Salem",
+"Zip": "97304",
+"Note": "",
+"Phone2": "(503)363-5432",
+"IsHidden": "false",
+"NotPerson": "false",
+"Title": "Mr",
+"EMail": "name@site.com",
+"PatNum": 435,
+"IsDoctor": "false",
+"DateTStamp": "2021-06-21 10:03:08",
+"IsPreferred": "false",
+"BusinessName": "",
+"DisplayNote": "",
+"isPatient": "true"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Referrals PUT (update)
+Version Added: 22.4.24
+
+Updates an existing Referral. All fields are optional. Referrals for a patient can only have the Note and DisplayNote fields modified.
+
+LName: The last name of a referral source or referral source description.
+FName: The referral source's first name.
+MName: The referral source's middle name or initial.
+SSN: (Added in version 24.4.16) SSN, or TIN if UsingTIN is true.
+UsingTIN: (Added in version 24.4.16) Either "true" or "false". Dictates whether SSN contains an SSN or TIN.
+Specialty: definition.DefNum where definition.Category=35 (ProviderSpecialty). Use 0 to indicate None.
+ST: (Added in version 24.4.16) The referral source's state. Two characters maximum.
+Telephone: (Added in version 24.4.16) The referral source's phone number. Must be ten digits.
+Address: (Added in version 24.4.16) The referral source's mailing address.
+Address2: (Added in version 24.4.16) Additional info regarding the referral source's mailing address.
+City: (Added in version 24.4.16) The referral source's city.
+Zip: (Added in version 24.4.16) The referral source's ZIP code.
+Note: Overwrites existing note.
+Phone2: (Added in version 24.4.16) Additional phone.
+NotPerson: (Added in version 24.4.16) Either "true" or "false".
+Title: The referral source's title.
+EMail: (Added in version 24.4.16) The email address for the referral.
+IsDoctor: (Added in version 24.4.16) Either "true" or "false".
+BusinessName: (Added in version 24.4.16) Optional.
+DisplayNote: (Added in version 24.4.16) Overwrites existing DisplayNote.
+
+Example Requests:
+PUT /referrals/325
+
+{
+"Note": "Referral credit added to account on 08/21/2022"
+}
+
+or
+
+{
+"LName": "Smithers",
+"FName": "Jonathan",
+"MName": "C",
+"Title": "DDS",
+"Specialty": 272,
+"Note": "Out on Thursdays"
+}
+Example Response:
+{
+"ReferralNum": 325,
+"LName": "Smithers",
+"FName": "Jonathan",
+"MName": "C",
+"SSN": "11111",
+"UsingTIN": "true",
+"Specialty": 272,
+"specialty": "Surgery",
+"ST": "OR",
+"Telephone": "5033635432",
+"Address": "123 Gumtree Ln",
+"Address2": "",
+"City": "Salem",
+"Zip": "97304",
+"Note": "Out on Thursdays",
+"Phone2": "(536)265-8587",
+"IsHidden": "false",
+"NotPerson": "false",
+"Title": "DDS",
+"EMail": "name@site.com",
+"PatNum": 0,
+"IsDoctor": "true",
+"DateTStamp": "2021-06-21 10:03:08",
+"IsPreferred": "false",
+"BusinessName": "Surgery Center",
+"DisplayNote": "",
+"isPatient": "false"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

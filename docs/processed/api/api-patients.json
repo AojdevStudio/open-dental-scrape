@@ -1,0 +1,132 @@
+{
+  "id": "api-patients",
+  "type": "api",
+  "title": "Patients",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Patients.txt",
+  "content": "API Patients\nSee API Specification\n\nPatients are only able to be deleted from Open Dental and are not allowed to be deleted via the API. A deleted patient, and their associated resources, are not allowed to be modified in any way via the API.\n\nPatients GET (single)\nVersion Added: 21.1\n\nA unique patient is identified by a PatNum obtained from a previous search of some sort. Birthdate value can be 0001-01-01, which is equivalent to \"none\".\nEstBalance is a patient's individual balance. BalTotal is a family's total balance and will return 0 unless the patient is the guarantor.\nLanguage is the language used by the patient, typically in ISO 639-2 format, unless custom. Can be \"\" to indicate \"None\".\n\nURL Search Parameters:\nPatNum: In URL only.\n\nExample Request:\nGET /patients/48\n\nExample Response:\n{\n\"PatNum\": 48,\n\"LName\": \"Smith\",\n\"FName\": \"Jane\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Female\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"\",\n\"Address\": \"125 Satin Heights\",\n\"Address2\": \"\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)987-4822\",\n\"WirelessPhone\": \"(536)987-4822\",\n\"Guarantor\": 48,\n\"Email\": \"smithfam@yahoo.com\",\n\"EstBalance\": 0.0,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ImageFolder\": \"SmithJane48\",\n\"FamFinUrgNote\": \"CC on file expiring soon\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"\",\n\"BalTotal\": 111.9,\n\"EmployerNum\": 0,\n\"DateFirstVisit\": \"2021-12-16\",\n\"ClinicNum\": 0,\n\"clinicAbbr\": \"\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"None\",\n\"PreferContactMethod\": \"WirelessPh\",\n\"PreferRecallMethod\": \"TextMessage\",\n\"Language\": \"spa\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-12-08 15:34:34\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Unknown\",\n\"SecDateEntry\":\"2021-12-04\"\n}\n\nPatients GET Simple\nVersion Added: 21.2\n\nThis is used instead of GET (multiple) if you need to pass in DateTStamp to get recent changes, or if you need additional fields that are not included in GET (multiple).\n\nLName: Supports partial string matching and is case-insensitive.\nFName: Supports partial string matching and is case-insensitive.\nBirthdate: In \"yyyy-mm-dd\" format.\nClinicNum: A single ClinicNum. Leave blank if not using clinics or want results for all clinics.\nPatStatus: Either \"Patient\", \"NonPatient\", \"Inactive\", \"Archived\", \"Deceased\", or \"Prospective\".\nDateTStamp: In \"yyyy-mm-dd HH:mm:ss\" format.\nPriProv: (added in version 21.3) A single ProvNum. Leave blank if you want results for all primary providers.\nGender: (added in version 22.3.6) Either \"Male\", \"Female\", \"Unknown\", or \"Other\".\nPosition: (added in version 22.3.6) Either \"Single\", \"Married\", \"Child\", \"Widowed\", or \"Divorced\".\nGuarantor: (added in version 22.4.19) A single PatNum. The person responsible for the account.\nSuperFamily: (added in version 22.4.38) A single PatNum. The head of a SuperFamily.\nEmployerNum: (added in version 24.3.30) FK to employer.EmployerNum.\n\nAll parameters are optional. If you do not yet have a PatNum and are looking for a specific patient by name, you should generally use a combination of LName, FName, and Birthdate to help ensure uniqueness. Use the DateTStamp to filter results for patients updated in the database since that date. The serverDateTime is included in the response to use for subsequent requests.\nEstBalance is a patient's individual balance. BalTotal is a family's total balance and will return 0 unless the patient is the guarantor.\nLanguage is the language used by the patient, typically in ISO 639-2 format, unless custom. Can be \"\" to indicate \"None\".\n\nIf you are interested in getting specific patients by PK, see PUT queries/ShortQuery for an example query.\n\nExample Requests:\nGET /patients/Simple?Offset=700\nGET /patients/Simple?DateTStamp=2021-07-01%2005%3A30%3A00\nGET /patients/Simple?LName=smi&FName=eter&Birthdate=1976-05-24\nGET /patients/Simple?PatStatus=Inactive\n\nExample Response:\n[\n{\n\"serverDateTime\": \"2021-08-05 09:05:42\"\n\"PatNum\": 1,\n\"LName\": \"Smith\",\n\"FName\": \"John\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Male\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"\",\n\"Address\": \"123 Elm St\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"State\": \"OR\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"\",\n\"WkPhone\": \"(123)456-7890\",\n\"WirelessPhone\": \"\",\n\"Guarantor\": 1,\n\"Email\": \"name@web.com\",\n\"EstBalance\": 40.11,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC1\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ImageFolder\": \"SmithJohn1\",\n\"FamFinUrgNote\": \"\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"022419552\",\n\"BalTotal\": 40.11,\n\"EmployerNum\": 1,\n\"DateFirstVisit\": \"2021-08-19\",\n\"ClinicNum\": 1,\n\"clinicAbbr\": \"Southside\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"None\",\n\"PreferContactMethod\": \"None\",\n\"PreferRecallMethod\": \"None\",\n\"Language\": \"\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-07-26 14:22:55\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Yes\",\n\"SecDateEntry\":\"2021-01-04\"\n},\n{\n\"serverDateTime\": \"2021-08-05 09:05:42\"\n\"PatNum\": 2,\n\"LName\": \"Johnson\",\n\"FName\": \"Brody\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Male\",\n\"Position\": \"Single\",\n\"Birthdate\": \"0001-01-01\",\n\"SSN\": \"\",\n\"Address\": \"\",\n\"Address2\": \"\",\n\"City\": \"\",\n\"State\": \"\",\n\"Zip\": \"\",\n\"HmPhone\": \"\",\n\"WkPhone\": \"5035035030\",\n\"WirelessPhone\": \"\",\n\"Guarantor\": 2,\n\"Email\": \"\",\n\"EstBalance\": 0.0,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC1\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ImageFolder\": \"JohnsonBrody2\",\n\"FamFinUrgNote\": \"\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"052510275\",\n\"BalTotal\": 0.0,\n\"EmployerNum\": 0,\n\"DateFirstVisit\": \"2021-08-29\",\n\"ClinicNum\": 1,\n\"clinicAbbr\": \"Southside\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"None\",\n\"PreferContactMethod\": \"None\",\n\"PreferRecallMethod\": \"None\",\n\"Language\": \"\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-07-23 14:52:07\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Yes\",\n\"SecDateEntry\":\"2021-02-04\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPatients GET (multiple)\nVersion Added: 21.1\n\nYou can get a list of patients who meet a set of search criteria. Most string parameters support partial match and are not case sensitive. The parameters and results are very similar to the Patient Select window in Open Dental because it uses the same code. The results do not contain every possible patient field, just the ones that you might see in the Patient Select window. You can GET individual patients if you want more information.\n\nIf you do not yet have a PatNum and are looking for a specific patient by name, you should generally use a combination of LName, FName, and Birthdate to help ensure uniqueness.\n\nURL Search Parameters:\nLName, FName, Phone, Address, hideInactive, City, State, SSN, ChartNumber, guarOnly, showArchived, Birthdate, SiteNum, SubscriberId, Email, Country, clinicNums (comma separated list), clinicAbbr, invoiceNumber.\n\nExample Requests:\nGET /patients?Offset=700\nGET /patients?LName=smi\nGET /patients?LName=smi&FName=j&Birthdate=1976-05-24&hideInactive=true\n\nExample Response:\n[\n{\n\"PatNum\": 16,\n\"LName\": \"Smith\",\n\"FName\": \"Jane\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"632458956\",\n\"Address\": \"125 Satin Heights\",\n\"Address2\": \"\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": 90011,\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)987-4822\",\n\"WirelessPhone\": \"\",\n\"Email\": \"smithfam@yahoo.com\",\n\"priProvAbbr\": \"DOC1\",\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ChartNumber\": \"\",\n\"ClinicNum\": 0,\n\"clinicAbbr\": \"\",\n\"siteDesc\": \"\",\n\"TxtMsgOk\": \"Unknown\"\n},\n{\n\"PatNum\": 15,\n\"LName\": \"Smith\",\n\"FName\": \"John\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Birthdate\": \"1979-06-23\",\n\"SSN\": \"352664588\",\n\"Address\": \"125 Satin Heights\",\n\"Address2\": \"\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": 90011,\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)265-8587\",\n\"WirelessPhone\": \"(536)987-5621\",\n\"Email\": \"johns@hotmail.com\",\n\"priProvAbbr\": \"DOC1\",\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ChartNumber\": \"\",\n\"ClinicNum\": 0,\n\"clinicAbbr\": \"\",\n\"siteDesc\": \"\",\n\"TxtMsgOk\": \"Yes\"\n},\netc...\n]\n\nExample Response (No Results):\n[]\n\nPatients POST (create)\nVersion Added: 21.1\n\nThe only required fields are LName and FName. All other fields are optional. New patient information is compared against existing patient information (LName, FName, Birthdate, and Email or phone numbers) to prevent duplicates.\n\nLanguages are stored in ISO 639-2 format, unless custom, in the preference LanguagesUsedByPatients. Use Preferences GET or a query to find the list of languages.\n\nLName: Required. The patient's last name.\nFName: Required. The patient's first name.\n\nMiddleI: The patient's middle initial or name.\nPreferred: The patient's preferred name.\nPatStatus: Either \"Patient\", \"NonPatient\", \"Inactive\", \"Archived\", \"Deceased\", or \"Prospective\". Default is Patient.\nGender: Either \"Male\", \"Female\", or \"Unknown\". Default is Unknown.\nPosition: Marital status. Either \"Single\", \"Married\", \"Child\", \"Widowed\", or \"Divorced\". Default is Single.\nBirthdate: String in \"yyyy-mm-dd\" format.\nSSN: In the USA, 9 digits, no dashes. Any punctuation or format for other countries.\nAddress: The patient's address.\nAddress2: Second address line.\nCity: City\nState: Two capital character in USA. Province in Canada.\nZip: Postal code. Must be in format 12345, 12345-1234, or 123456789 (US) or A0A 0A0 (Canada, added in version 23.2.5).\nHmPhone: Home phone number including any punctuation.\nWkPhone: Work phone number including any punctuation.\nWirelessPhone: Wireless phone number including any punctuation.\nGuarantor: Head of household's PatNum. Only this or SuperFamily in a single request. Default is patient's PatNum.\nEmail: The patient's email address.\nPriProv: ProvNum of primary provider.\nSecProv: ProvNum of secondary provider.\nBillingType: Must be a definition.ItemName where definition.Category=4.\nFamFinUrgNote: (Added in version 23.2.5.0) Family financial urgent note. Only allowed to be set if this patient is a guarantor. Default empty string.\nChartNumber: Maximum of 15 character string. Usually set during conversion or when bridging to imaging software.\nMedicaidID: (Added in version 24.4.13) The Medicaid ID for this patient.\nEmployerNum: (Added in version 24.3.30) FK to employer.EmployerNum. Default 0.\nDateFirstVisit: (Added in version 22.4.42) String in \"yyyy-mm-dd\" format.\nClinicNum: Can be zero if not attached to a clinic or clinics are not set up.\nWard: (Added in version 24.1.12) Hospitals feature must be enabled.\nPreferConfirmMethod: Either \"None\", \"DoNotCall\", \"HmPhone\", \"WkPhone\", \"WirelessPh\", \"Email\", \"SeeNotes\", \"Mail\", or \"TextMessage\". Default is None.\nPreferContactMethod: Either \"None\", \"DoNotCall\", \"HmPhone\", \"WkPhone\", \"WirelessPh\", \"Email\", \"SeeNotes\", \"Mail\", or \"TextMessage\". Default is None.\nPreferRecallMethod: (Added in version 22.2) Either \"None\", \"DoNotCall\", \"HmPhone\", \"WkPhone\", \"WirelessPh\", \"Email\", \"SeeNotes\", \"Mail\", or \"TextMessage\". Default is None.\nLanguage: The language used by the patient. Typically eng=English, spa=Spanish, etc. Default is blank which indicates \"None\".\nAdmitDate: (Added in version 24.1.12) Hospitals feature must be enabled. String in \"yyyy-MM-dd\" format.\nSuperFamily: (Added in version 22.4.38) Head of SuperFamily's PatNum. Default is 0. Only this or Guarantor in a single request. Creates a new SuperFamily if one does not exist. Does not honor any Super Family preferences.\nTxtMsgOk: Either \"Unknown\", \"Yes\", or \"No\". Default is Unknown.\n\nExample Request:\nPOST /patients\n\n{\n\"LName\": \"Smith\",\n\"FName\": \"Jane\",\n\"Gender\": \"Female\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"Address\": \"125 Satin Heights\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)987-4822\",\n\"WirelessPhone\": \"\",\n\"Email\": \"smithfam@yahoo.com\",\n\"PreferConfirmMethod\": \"HmPhone\",\n\"Language\": \"spa\",\n\"TxtMsgOk\": \"Yes\"\n}\n\nExample Response:\n\n{\n\"PatNum\": 48,\n\"LName\": \"Smith\",\n\"FName\": \"Jane\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Female\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"\",\n\"Address\": \"125 Satin Heights\",\n\"Address2\": \"\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)987-4822\",\n\"WirelessPhone\": \"\",\n\"Guarantor\": 48,\n\"Email\": \"smithfam@yahoo.com\",\n\"EstBalance\": 0.0,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"FamFinUrgNote\": \"CC on file expiring soon\",\n\"ImageFolder\": \"SmithJane48\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"\",\n\"BalTotal\": 0.0,\n\"EmployerNum\": 0,\n\"DateFirstVisit\": \"0001-01-01\",\n\"ClinicNum\": 0,\n\"clinicAbbr\": \"\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"HmPhone\",\n\"PreferContactMethod\": \"None\",\n\"PreferRecallMethod\": \"None\",\n\"Language\": \"spa\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-10-20 09:05:48\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Unknown\",\n\"SecDateEntry\":\"2020-12-04\"\n}\n\nHeader \"location\": https://api.opendental.com/api/v1/patients/48\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPatients PUT (update)\nVersion Added: 21.2\n\nAll fields are optional, and it is common to only set one or two fields. If an empty string is sent for a string fields, then it will clear that field from the database, except for LName and FName.\nLanguages are stored in ISO 639-2 format, unless custom, in the preference LanguagesUsedByPatients. Use Preferences GET or a query to find the list of languages.\n\nPatNum: Required in the URL.\n\nLName: The patient's last name.\nFName: The patient's first name.\nMiddleI: The patient's middle initial or name.\nPreferred: The patient's preferred name.\nPatStatus: Either \"Patient\", \"NonPatient\", \"Inactive\", \"Archived\", \"Deceased\", or \"Prospective\".\nGender: Either \"Male\", \"Female\", or \"Unknown\".\nPosition: Marital status. Either \"Single\", \"Married\", \"Child\", \"Widowed\", or \"Divorced\".\nBirthdate: String in \"yyyy-mm-dd\" format.\nSSN: In the USA, 9 digits, no dashes. Any punctuation or format for other countries.\nAddress: The patient's address.\nAddress2: Second address line.\nCity: City\nState: Two capital character in USA. Province in Canada.\nZip: Postal code. Must be in format 12345, 12345-1234, or 123456789 (US) or A0A 0A0 (Canada, added in version 23.2.5).\nHmPhone: Home phone number including any punctuation.\nWkPhone: Work phone number including any punctuation.\nWirelessPhone: Wireless phone number including any punctuation.\nGuarantor: Head of household's PatNum. Only this or SuperFamily in a single request. Guarantor field cannot be updated to a different family member, unless the family's current guarantor is the patient being updated.\nEmail: The patient's email address.\nPriProv: ProvNum of primary provider.\nSecProv: ProvNum of secondary provider.\nBillingType: Must be a definition.ItemName where definition.Category=4.\nFamFinUrgNote: (Added in version 23.2.5.0) Family financial urgent note. Only allowed to be set if this patient is a guarantor.\nChartNumber: Maximum of 15 character string. Usually set during conversion or when bridging to imaging software.\nMedicaidID: (Added in version 24.4.13) The Medicaid ID for this patient.\nEmployerNum: (Added in version 24.3.30) FK to employer.EmployerNum.\nDateFirstVisit: (Added in version 22.4.42) String in \"yyyy-mm-dd\" format.\nClinicNum: Can be zero if not attached to a clinic or clinics are not set up.\nWard: (Added in version 24.1.12) Hospitals feature must be enabled.\nPreferConfirmMethod: Either \"None\", \"DoNotCall\", \"HmPhone\", \"WkPhone\", \"WirelessPh\", \"Email\", \"SeeNotes\", \"Mail\", or \"TextMessage\".\nPreferContactMethod: Either \"None\", \"DoNotCall\", \"HmPhone\", \"WkPhone\", \"WirelessPh\", \"Email\", \"SeeNotes\", \"Mail\", or \"TextMessage\".\nPreferRecallMethod: (Added in version 22.2) Either \"None\", \"DoNotCall\", \"HmPhone\", \"WkPhone\", \"WirelessPh\", \"Email\", \"SeeNotes\", \"Mail\", or \"TextMessage\".\nLanguage: The language used by the patient. Typically eng=English, spa=Spanish, etc.\nAdmitDate: (Added in version 24.1.12) Hospitals feature must be enabled. String in \"yyyy-MM-dd\" format.\nSuperFamily: (Added in version 22.4.38) Head of SuperFamily's PatNum. Only this or Guarantor in a single request. Creates a new SuperFamily if one does not exist. Set to 0 to remove this patient's family from current super family. If patient is in the SuperFamily head's family, 0 will disband the entire super family. Does not honor any Super Family preferences.\nTxtMsgOk: Either \"Unknown\", \"Yes\", or \"No\".\n\nExample Request:\nPUT /patients/48\n\n{\n\"LName\": \"Smith\",\n\"FName\": \"Jane\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Female\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"\",\n\"Address\": \"125 Satin Heights\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)987-4822\",\n\"WirelessPhone\": \"(536)987-4822\",\n\"Guarantor\": 48,\n\"Email\": \"smithfam@yahoo.com\",\n\"PreferContactMethod\": \"WirelessPh\",\n\"BillingType\": \"Standard Account\",\n\"EmployerNum\": 0,\n\"DateFirstVisit\": \"2023-04-25\",\n\"ClinicNum\": 0\n}\n\nExample Response:\n{\n\"PatNum\": 48,\n\"LName\": \"Smith\",\n\"FName\": \"Jane\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Female\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"\",\n\"Address\": \"125 Satin Heights\",\n\"Address2\": \"\",\n\"City\": \"San Jose\",\n\"State\": \"CA\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"(536)624-5871\",\n\"WkPhone\": \"(536)987-4822\",\n\"WirelessPhone\": \"(536)987-4822\",\n\"Guarantor\": 48,\n\"Email\": \"smithfam@yahoo.com\",\n\"EstBalance\": 0.0,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ImageFolder\": \"SmithJane48\",\n\"FamFinUrgNote\": \"CC on file expiring soon\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"\",\n\"BalTotal\": 111.9,\n\"EmployerNum\": 0,\n\"DateFirstVisit\": \"2023-04-25\",\n\"ClinicNum\": 0,\n\"clinicAbbr\": \"\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"None\",\n\"PreferContactMethod\": \"WirelessPh\",\n\"PreferRecallMethod\": \"TextMessage\",\n\"Language\": \"spa\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-12-08 15:34:34\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Unknown\",\n\"SecDateEntry\":\"2021-12-04\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "21.2",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Patients",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Patients",
+      "method": "GET",
+      "path": "/patients",
+      "versionAdded": "21.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /patients/Simple?Offset=700\nGET /patients/Simple?DateTStamp=2021-07-01%2005%3A30%3A00\nGET /patients/Simple?LName=smi&FName=eter&Birthdate=1976-05-24\nGET /patients/Simple?PatStatus=Inactive",
+          "response": "[\n{\n\"serverDateTime\": \"2021-08-05 09:05:42\"\n\"PatNum\": 1,\n\"LName\": \"Smith\",\n\"FName\": \"John\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Male\",\n\"Position\": \"Single\",\n\"Birthdate\": \"1976-05-24\",\n\"SSN\": \"\",\n\"Address\": \"123 Elm St\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"State\": \"OR\",\n\"Zip\": \"97301\",\n\"HmPhone\": \"\",\n\"WkPhone\": \"(123)456-7890\",\n\"WirelessPhone\": \"\",\n\"Guarantor\": 1,\n\"Email\": \"name@web.com\",\n\"EstBalance\": 40.11,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC1\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ImageFolder\": \"SmithJohn1\",\n\"FamFinUrgNote\": \"\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"022419552\",\n\"BalTotal\": 40.11,\n\"EmployerNum\": 1,\n\"DateFirstVisit\": \"2021-08-19\",\n\"ClinicNum\": 1,\n\"clinicAbbr\": \"Southside\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"None\",\n\"PreferContactMethod\": \"None\",\n\"PreferRecallMethod\": \"None\",\n\"Language\": \"\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-07-26 14:22:55\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Yes\",\n\"SecDateEntry\":\"2021-01-04\"\n},\n{\n\"serverDateTime\": \"2021-08-05 09:05:42\"\n\"PatNum\": 2,\n\"LName\": \"Johnson\",\n\"FName\": \"Brody\",\n\"MiddleI\": \"\",\n\"Preferred\": \"\",\n\"PatStatus\": \"Patient\",\n\"Gender\": \"Male\",\n\"Position\": \"Single\",\n\"Birthdate\": \"0001-01-01\",\n\"SSN\": \"\",\n\"Address\": \"\",\n\"Address2\": \"\",\n\"City\": \"\",\n\"State\": \"\",\n\"Zip\": \"\",\n\"HmPhone\": \"\",\n\"WkPhone\": \"5035035030\",\n\"WirelessPhone\": \"\",\n\"Guarantor\": 2,\n\"Email\": \"\",\n\"EstBalance\": 0.0,\n\"PriProv\": 1,\n\"priProvAbbr\": \"DOC1\",\n\"SecProv\": 0,\n\"secProvAbbr\": \"\",\n\"BillingType\": \"Standard Account\",\n\"ImageFolder\": \"JohnsonBrody2\",\n\"FamFinUrgNote\": \"\",\n\"ChartNumber\": \"\",\n\"MedicaidID\": \"052510275\",\n\"BalTotal\": 0.0,\n\"EmployerNum\": 0,\n\"DateFirstVisit\": \"2021-08-29\",\n\"ClinicNum\": 1,\n\"clinicAbbr\": \"Southside\",\n\"Ward\": \"\",\n\"PreferConfirmMethod\": \"None\",\n\"PreferContactMethod\": \"None\",\n\"PreferRecallMethod\": \"None\",\n\"Language\": \"\",\n\"AdmitDate\": \"0001-01-01\",\n\"siteDesc\": \"\",\n\"DateTStamp\": \"2021-07-23 14:52:07\",\n\"SuperFamily\": 0,\n\"TxtMsgOk\": \"Yes\",\n\"SecDateEntry\":\"2021-02-04\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "700",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "123",
+          "status": "Elm",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "This is used instead of GET (multiple) if you need to pass in DateTStamp to get recent changes, or if you need additional fields that are not included in GET (multiple)."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-language",
+      "description": "API references database table language"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-employer",
+      "description": "API references database table employer"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    },
+    {
+      "type": "referenced_by",
+      "target": "manual-module",
+      "description": "API referenced by manual section"
+    }
+  ]
+}

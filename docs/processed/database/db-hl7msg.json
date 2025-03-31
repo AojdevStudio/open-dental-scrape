@@ -1,0 +1,40 @@
+{
+  "id": "db-hl7msg",
+  "type": "database",
+  "title": "hl7msg",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "hl7msg",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "hl7msg",
+    "description": "Table for hl7msg data.",
+    "columns": [
+      {
+        "name": "hl7msgNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "hl7msgNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

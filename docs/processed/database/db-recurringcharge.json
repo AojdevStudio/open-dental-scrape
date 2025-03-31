@@ -1,0 +1,46 @@
+{
+  "id": "db-recurringcharge",
+  "type": "database",
+  "title": "recurringcharge",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "recurringcharge",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "recurringcharge",
+    "description": "Table for recurringcharge data.",
+    "columns": [
+      {
+        "name": "recurringchargeNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "recurringchargeNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-payments",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

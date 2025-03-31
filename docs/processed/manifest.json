@@ -1,0 +1,20 @@
+{
+  "processed_date": "2025-03-29 12:36:56",
+  "source_directories": {
+    "api": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation",
+    "database": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/database-documentation",
+    "manual": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/manual-documentation"
+  },
+  "output_directory": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/processed",
+  "scripts": {
+    "api": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/scripts/process_api_docs.py",
+    "database": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/scripts/process_db_docs_fixed.py",
+    "manual": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/scripts/process_manual_docs_fixed.py",
+    "relationships": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/scripts/generate_relationships.py"
+  },
+  "statistics": {
+    "api_files": 106,
+    "database_files": 411,
+    "manual_files": 2
+  }
+}

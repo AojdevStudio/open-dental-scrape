@@ -1,0 +1,40 @@
+{
+  "id": "db-mountitemdef",
+  "type": "database",
+  "title": "mountitemdef",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "mountitemdef",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "mountitemdef",
+    "description": "Table for mountitemdef data.",
+    "columns": [
+      {
+        "name": "mountitemdefNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "mountitemdefNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

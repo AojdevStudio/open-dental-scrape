@@ -1,0 +1,40 @@
+{
+  "id": "db-mobilenotification",
+  "type": "database",
+  "title": "mobilenotification",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "mobilenotification",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "mobilenotification",
+    "description": "Table for mobilenotification data.",
+    "columns": [
+      {
+        "name": "mobilenotificationNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "mobilenotificationNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

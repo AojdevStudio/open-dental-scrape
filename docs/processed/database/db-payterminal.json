@@ -1,0 +1,41 @@
+{
+  "id": "db-payterminal",
+  "type": "database",
+  "title": "payterminal",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "payterminal",
+      "Payment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "payterminal",
+    "description": "Table for payterminal data.",
+    "columns": [
+      {
+        "name": "payterminalNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "payterminalNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

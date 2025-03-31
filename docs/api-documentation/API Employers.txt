@@ -1,0 +1,111 @@
+API Employers
+See API Specification
+
+Employers GET (single)
+Version Added: 23.3.22
+
+Gets a single employer.
+
+Parameters:
+
+EmployerNum: Required in URL.
+
+Example Request:
+GET /employers/5
+
+Example Response:
+{
+"EmployerNum": 5,
+"EmpName": "Sergio and Sons Co"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Employers GET (multiple)
+Version Added: 23.3.22
+
+Gets a list of employers.
+
+Example Requests:
+GET /employers
+GET /employers?Offset=200
+
+[
+{
+"EmployerNum": 1,
+"EmpName": "Store Mart"
+},
+{
+"EmployerNum": 2,
+"EmpName": "Townville Hospital"
+},
+etc...
+]
+
+Example Response:
+200 OK
+
+Employers POST (create)
+Version Added: 21.4
+
+Creates a new employer.
+
+EmpName: Required. The employer's name.
+
+Example Request:
+POST /employers
+
+{
+"EmpName": "James Smith Confectionery Co."
+}
+
+Example Response:
+{
+"EmployerNum": 4,
+"EmpName": "James Smith Confectionery Co."
+}
+
+201 Created
+400 Bad Request (with explanation)
+
+Employers PUT (update)
+Version Added: 21.4
+
+Updates the employer's name.
+
+EmployerNum: Required in the URL.
+
+EmpName: Required. The Employer's name.
+
+Example Request:
+PUT /employers/4
+
+{
+"EmpName": "Jamie Smith Confectionery Co."
+}
+
+Example Response:
+{
+"EmployerNum": 4,
+"EmpName": "Jamie Smith Confectionery Co."
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Employers DELETE
+Version Added: 23.3.22
+
+Deletes an employer. Employers associated with a patient or an insurance plan cannot be deleted.
+
+EmployerNum: Required in the URL.
+
+Example Request:
+DELETE /employers/4
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

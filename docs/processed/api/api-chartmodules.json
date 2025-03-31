@@ -1,0 +1,212 @@
+{
+  "id": "api-chartmodules",
+  "type": "api",
+  "title": "ChartModules",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ChartModules.txt",
+  "content": "API ChartModules\nSee API Specification\n\nChartModules GET ProgNotes\nVersion Added: 21.4\n\nGets the Progress Notes for a patient, similarly to how it shows in the Chart Module. Use another API method or a query to get specific details about each object.\n\nPatNum: Required in the URL.\n\nReturned fields are detailed below:\n\nObjectType: The type of object being displayed: Appointment, Commlog, Task, Email, LabCase, Rx, or Sheet.\nPrimaryKey: Primary Key corresponding to the objectType. Example: AptNum=34.\nDate: Human readable date. Example 05/15/2021\nTime: Human readable time. Example 1:20p\nDateTime: Example 2021-12-21 10:00:00\nTh: ToothNum for a Procedure, otherwise blank.\nSurf: Tooth surface for the Procedure, otherwise blank.\nDx: Description of the Diagnosis.\nDescription: Description of the of the returned object.\nNote: Additional notes for the returned object.\nStat: Status of the Procedure, otherwise blank. Example TP.\nProv: Example Doc1.\nProvNum: Example: 3\nAmount: ProcFee for Procedure, otherwise blank. Example 53.50\nProcCode: ProcCode for Procedure, otherwise blank. Example D0220\nUser: Name of the user who created the Commlog, Email, or Rx. Otherwise blank.\nSigned: Will be \"Signed\" if there is a signature on the Procedure or Sheet. Otherwise blank.\nLength: Length of the appointment in HH:mm format. Example 0:30.\nAbbr: Abbreviation of the Procedure, otherwise blank.\nClinic: Clinic abbreviation. Example: Metro Office.\nClinicNum: Example: 4\n\nExample Request:\nGET /chartmodules/13/ProgNotes\nGET /chartmodules/13/ProgNotes?Offset=100\n\nExample Response:\n[\n{\n\"ObjectType\": \"Appointment\",\n\"PrimaryKey\": \"147\",\n\"Date\": \"12/21/2021\",\n\"Time\": \"11:40a\",\n\"DateTime\": \"12/21/2021 11:40:00 AM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Appointment - 11:40 AM PA\",\n\"note\": \"\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"0:10\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"3\"\n},\n{\n\"ObjectType\": \"Procedure\",\n\"PrimaryKey\": \"153\",\n\"Date\": \"12/21/2021\",\n\"Time\": \"\",\n\"DateTime\": \"12/21/2021 12:00:00 AM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"PA\",\n\"note\": \"\",\n\"Stat\": \"TP\",\n\"Prov\": \"Doc3\",\n\"ProvNum\": \"10\",\n\"Amount\": \"24.00\",\n\"ProcCode\": \"D0220\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"PA\",\n\"Clinic\": \"Downtown Office\",\n\"ClinicNum\": \"3\"\n},\n{\n\"ObjectType\": \"Commlog\",\n\"PrimaryKey\": \"122\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"3:18p\",\n\"DateTime\": \"2/8/2022 3:18:00 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Comm - ApptRelated\",\n\"note\": \"Confirmed upcoming appointment. Asked to arrive 15 minutes early for paperwork.\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"Admin\",\n\"Signed\": \"Signed\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Task\",\n\"PrimaryKey\": \"52\",\n\"Date\": \"2/8/2022\",\n\"Time\": \"3:25p\",\n\"DateTime\": \"2/8/2022 3:25:56 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Task - In List: People that will need a 1099\",\n\"note\": \"Admin - Example Task Description ==Admin - 2/8/2022 3:26 PM - Notes on the task.\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Email\",\n\"PrimaryKey\": \"212\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"3:22p\",\n\"DateTime\": \"2/8/2022 3:22:27 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Email - (unsent) Spring Newsletter\",\n\"note\": \" With warmer weather upon us...\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"Admin\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Rx\",\n\"PrimaryKey\": \"81\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"\",\n\"DateTime\": \"2/8/2022 12:00:00 AM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Rx - Cephalexin 500 mg - #40 Walmart Lancaster\",\n\"note\": \"\",\n\"Stat\": \"\",\n\"Prov\": \"HYG1\",\n\"ProvNum\": \"2\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Sheet\",\n\"PrimaryKey\": \"37\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"3:27p\",\n\"DateTime\": \"2/8/2022 3:27:00 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"PatientLetter\",\n\"note\": \"\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\netc...\n]\n\n200 OK\n404 Not Found (\"Patient not found\")\n\nChartModules GET PatientInfo\nVersion Added: 22.1\n\nGets Patient Info for a patient, similarly to how it shows in the Chart Module. Use another API method or a query to get specific details about returned elements.\n\nPatNum: Required in the URL.\n\nReturned field types are detailed below:\n\nAge: The age of the patient.\nABC0: Indicates the patient's credit rating or other personal attributes discreetly.\nBilling Type: The patient's billing type.\nReferred From: Indicates a patient's referral source.\nDate First Visit: The date of the patient's first visit.\nProv. (Pri, Sec): Comma separated abbreviations for the patient's primary provider and secondary provider, if they exist.\nPri Ins: The patient's primary insurance plan.\nSec Ins: The patient's secondary insurance plan.\nPayor Types: The system of payment (SOP code) that identifies this patient's payor status.\nPremedicate: Will only display for patients marked as 'Premed'. Displays any medications patients should take prior to appointments.\nProblems: A list of the patient's current and inactive problems. Will display as one entry with \"None\" as the content if no problems exist, or will display an entry for each of the patient's problems if at least one exists.\nMed Urgent: Any Med Urgent notes that have been entered for the patient will display here.\nMedical Summary: Any Medical Summary notes that have been entered for the patient will display here.\nService Notes: Will display any entered information that has been learned through discussions with the patient, such as whether they need a blanket or pillow, nervous behavior, whether they are on a strict budget, etc.\nMedications: Lists the patient's medications. Will display as one entry with \"None\" as the content if no medications exist, or will display an entry for each of the patient's medications if at least one exists.\nAllergies: Lists the patient's known allergies. Will display as one entry with \"None\" as the content if no allergies exist, or will display an entry for each allergy associated to the patient if at least one exists.\nPat Restrictions: Lists restrictions associated to the patient. Will display as one entry with \"None\" as the content if there are no restrictions, or will display an entry for each restriction's name/description if at least one exists.\n\nExample Request:\nGET /chartmodules/15/PatientInfo\n\nExample Response:\n[\n{\n\"Field\": \"Age\",\n\"Content\": \"42\"\n},\n{\n\"Field\": \"ABC0\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Billing Type\",\n\"Content\": \"Standard Account\"\n},\n{\n\"Field\": \"Referred From\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Date First Visit\",\n\"Content\": \"4/30/2009\"\n},\n{\n\"Field\": \"Prov. (Pri, Sec)\",\n\"Content\": \"DOC 1, HYG 1\"\n},\n{\n\"Field\": \"Pri Ins\",\n\"Content\": \"Metlife\"\n},\n{\n\"Field\": \"Sec Ins\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Payor Types\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Problem - Diabetes\",\n\"Content\": \"Type 2\"\n},\n{\n\"Field\": \"Problem - High Blood Pressure\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Med Urgent\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Medical Summary\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Service Notes\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Medication - Acetaminophen(Aspirin)\",\n\"Content\": \"One in the morning, one at night\"\n},\n{\n\"Field\": \"Allergy - Latex\",\n\"Content\": \"Induces itching\"\n},\n{\n\"Field\": \"Pat Restrictions\",\n\"Content\": \"None\"\n}\n]\n\n200 OK\n\nChartModules GET PlannedAppts\nVersion Added: 22.2\n\nGets Planned Appointments for a patient, similarly to how it shows in the Chart Module's Planned Appointments tab.\n\nPatNum: Required in the URL.\n\nReturned field types are detailed below:\n\nAptNum: The planned appointment's appointment.AptNum\nProvNum: The provider associated with the appointment.\nItemOrder: Order of the planned appointment.\nminutes: The length of the appointment in minutes.\nProcDescript: The procedure(s) attached to this appointment.\nNote: Appointment Note.\ndateSched: DateTime of the linked scheduled appointment.\nAptStatus: appointment.AptStatus.\n\nExample Request:\nGET /chartmodules/31/PlannedAppts\n\nExample Response:\n[\n{\n\"AptNum\": \"999\",\n\"ProvNum\": \"1\",\n\"ItemOrder\": \"1\",\n\"minutes\": \"50\",\n\"ProcDescript\": \"#1-MOD-C3(P)\",\n\"Note\": \"\",\n\"dateSched\": \"2022-06-20 00:00:00\",\n\"AptStatus\": \"Planned\"\n},\n{\n\"AptNum\": \"1000\",\n\"ProvNum\": \"3\",\n\"ItemOrder\": \"2\",\n\"minutes\": \"40\",\n\"ProcDescript\": \"#19-ML-C2(P)\",\n\"Note\": \"Pain in LL quadrant\",\n\"dateSched\": \"2022-06-21 00:00:00\",\n\"AptStatus\": \"Planned\"\n}\n]\n\n200 OK\n404 Not Found (\"Patient not found.\")",
+  "metadata": {
+    "version": "22.2",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ChartModules",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ChartModules",
+      "method": "GET",
+      "path": "/chartmodules",
+      "versionAdded": "21.4",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /chartmodules/13/ProgNotes\nGET /chartmodules/13/ProgNotes?Offset=100",
+          "response": "[\n{\n\"ObjectType\": \"Appointment\",\n\"PrimaryKey\": \"147\",\n\"Date\": \"12/21/2021\",\n\"Time\": \"11:40a\",\n\"DateTime\": \"12/21/2021 11:40:00 AM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Appointment - 11:40 AM PA\",\n\"note\": \"\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"0:10\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"3\"\n},\n{\n\"ObjectType\": \"Procedure\",\n\"PrimaryKey\": \"153\",\n\"Date\": \"12/21/2021\",\n\"Time\": \"\",\n\"DateTime\": \"12/21/2021 12:00:00 AM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"PA\",\n\"note\": \"\",\n\"Stat\": \"TP\",\n\"Prov\": \"Doc3\",\n\"ProvNum\": \"10\",\n\"Amount\": \"24.00\",\n\"ProcCode\": \"D0220\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"PA\",\n\"Clinic\": \"Downtown Office\",\n\"ClinicNum\": \"3\"\n},\n{\n\"ObjectType\": \"Commlog\",\n\"PrimaryKey\": \"122\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"3:18p\",\n\"DateTime\": \"2/8/2022 3:18:00 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Comm - ApptRelated\",\n\"note\": \"Confirmed upcoming appointment. Asked to arrive 15 minutes early for paperwork.\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"Admin\",\n\"Signed\": \"Signed\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Task\",\n\"PrimaryKey\": \"52\",\n\"Date\": \"2/8/2022\",\n\"Time\": \"3:25p\",\n\"DateTime\": \"2/8/2022 3:25:56 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Task - In List: People that will need a 1099\",\n\"note\": \"Admin - Example Task Description ==Admin - 2/8/2022 3:26 PM - Notes on the task.\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Email\",\n\"PrimaryKey\": \"212\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"3:22p\",\n\"DateTime\": \"2/8/2022 3:22:27 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Email - (unsent) Spring Newsletter\",\n\"note\": \" With warmer weather upon us...\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"Admin\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Rx\",\n\"PrimaryKey\": \"81\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"\",\n\"DateTime\": \"2/8/2022 12:00:00 AM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"Rx - Cephalexin 500 mg - #40 Walmart Lancaster\",\n\"note\": \"\",\n\"Stat\": \"\",\n\"Prov\": \"HYG1\",\n\"ProvNum\": \"2\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\n{\n\"ObjectType\": \"Sheet\",\n\"PrimaryKey\": \"37\",\n\"Date\": \"02/08/2022\",\n\"Time\": \"3:27p\",\n\"DateTime\": \"2/8/2022 3:27:00 PM\",\n\"Th\": \"\",\n\"Surf\": \"\",\n\"Dx\": \"\",\n\"Description\": \"PatientLetter\",\n\"note\": \"\",\n\"Stat\": \"\",\n\"Prov\": \"\",\n\"ProvNum\": \"\",\n\"Amount\": \"\",\n\"ProcCode\": \"\",\n\"User\": \"\",\n\"Signed\": \"\",\n\"Length\": \"\",\n\"Abbr\": \"\",\n\"Clinic\": \"\",\n\"ClinicNum\": \"0\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "021",
+          "status": "Time",
+          "description": ""
+        },
+        {
+          "code": "220",
+          "status": "User",
+          "description": ""
+        },
+        {
+          "code": "100",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "500",
+          "status": "mg",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "Not",
+          "description": ""
+        }
+      ],
+      "description": "Gets the Progress Notes for a patient, similarly to how it shows in the Chart Module. Use another API method or a query to get specific details about each object."
+    },
+    {
+      "resource": "ChartModules",
+      "method": "GET",
+      "path": "/chartmodules",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /chartmodules/15/PatientInfo",
+          "response": "[\n{\n\"Field\": \"Age\",\n\"Content\": \"42\"\n},\n{\n\"Field\": \"ABC0\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Billing Type\",\n\"Content\": \"Standard Account\"\n},\n{\n\"Field\": \"Referred From\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Date First Visit\",\n\"Content\": \"4/30/2009\"\n},\n{\n\"Field\": \"Prov. (Pri, Sec)\",\n\"Content\": \"DOC 1, HYG 1\"\n},\n{\n\"Field\": \"Pri Ins\",\n\"Content\": \"Metlife\"\n},\n{\n\"Field\": \"Sec Ins\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Payor Types\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Problem - Diabetes\",\n\"Content\": \"Type 2\"\n},\n{\n\"Field\": \"Problem - High Blood Pressure\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Med Urgent\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Medical Summary\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Service Notes\",\n\"Content\": \"\"\n},\n{\n\"Field\": \"Medication - Acetaminophen(Aspirin)\",\n\"Content\": \"One in the morning, one at night\"\n},\n{\n\"Field\": \"Allergy - Latex\",\n\"Content\": \"Induces itching\"\n},\n{\n\"Field\": \"Pat Restrictions\",\n\"Content\": \"None\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "Gets Patient Info for a patient, similarly to how it shows in the Chart Module. Use another API method or a query to get specific details about returned elements."
+    },
+    {
+      "resource": "ChartModules",
+      "method": "GET",
+      "path": "/chartmodules",
+      "versionAdded": "22.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /chartmodules/31/PlannedAppts",
+          "response": "[\n{\n\"AptNum\": \"999\",\n\"ProvNum\": \"1\",\n\"ItemOrder\": \"1\",\n\"minutes\": \"50\",\n\"ProcDescript\": \"#1-MOD-C3(P)\",\n\"Note\": \"\",\n\"dateSched\": \"2022-06-20 00:00:00\",\n\"AptStatus\": \"Planned\"\n},\n{\n\"AptNum\": \"1000\",\n\"ProvNum\": \"3\",\n\"ItemOrder\": \"2\",\n\"minutes\": \"40\",\n\"ProcDescript\": \"#19-ML-C2(P)\",\n\"Note\": \"Pain in LL quadrant\",\n\"dateSched\": \"2022-06-21 00:00:00\",\n\"AptStatus\": \"Planned\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "Not",
+          "description": ""
+        }
+      ],
+      "description": "Gets Planned Appointments for a patient, similarly to how it shows in the Chart Module's Planned Appointments tab."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-letter",
+      "description": "API references database table letter"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-labcase",
+      "description": "API references database table labcase"
+    },
+    {
+      "type": "references",
+      "target": "db-commlog",
+      "description": "API references database table commlog"
+    },
+    {
+      "type": "references",
+      "target": "db-sop",
+      "description": "API references database table sop"
+    },
+    {
+      "type": "references",
+      "target": "db-referral",
+      "description": "API references database table referral"
+    },
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-allergy",
+      "description": "API references database table allergy"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-task",
+      "description": "API references database table task"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}

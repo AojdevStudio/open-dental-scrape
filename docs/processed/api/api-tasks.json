@@ -1,0 +1,65 @@
+{
+  "id": "api-tasks",
+  "type": "api",
+  "title": "Tasks",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Tasks.txt",
+  "content": "API Tasks\nSee API Specification\n\nTasks are a way for intra-office communication, setting reminders, and more.\n\nTasks GET (single)\nVersion Added: 24.4.13\n\nGets a single task.\n\nTaskNum: Required in URL.\n\nExample Request:\nGET /tasks/1408\n\nExample Response:\n{\n\"TaskNum\": 1408,\n\"TaskListNum\": 14,\n\"DateTask\": \"0001-01-01\",\n\"KeyNum\": 33,\n\"Descript\": \"The attached patient has requested a call back regarding their upcoming appointment.\",\n\"TaskStatus\": \"New\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2024-12-10 13:08:47\",\n\"UserNum\": 1,\n\"DateTimeFinished\": \"0001-01-01 00:00:00\",\n\"PriorityDefNum\": 260,\n\"ReminderGroupId\": \"\",\n\"ReminderType\": \"NoReminder\",\n\"ReminderFrequency\": 0,\n\"DateTimeOriginal\": \"2024-12-10 13:08:47\",\n\"SecDateTEdit\": \"2024-12-10 13:09:02\",\n\"DescriptOverride\": \"\",\n\"IsReadOnly\": \"false\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nTasks GET (multiple)\nVersion Added: 22.3.16\n\nGet a list of tasks that meet a set of search criteria. To get a list of all patient or appointment tasks, use only the ObjectType. To get a list of tasks for a specific patient or appointment, use both the ObjectType and KeyNum.\n\nParameters: All optional.\n\nTaskListNum: Optional. tasklist.TaskListNum. Default all TaskLists.\nKeyNum: Optional. Either patient.PatNum or appointment.AptNum. Used when ObjectType is \"Patient\" or \"Appointment\". Default 0.\nObjectType: Optional, unless KeyNum is specified. Either \"None\", \"Patient\", or \"Appointment\". Default all ObjectTypes.\nTaskStatus: Optional. Either \"New\", \"Viewed\", or \"Done\". Default all TaskStatuses.\nDateTimeOriginal: Optional. Gets tasks created after this datetime. String in \"yyyy-MM-dd HH:mm:ss\" format. Default is the previous 14 days.\n\nExample Request:\nGET /tasks?ObjectType=Appointment&DateTimeOriginal=2022-07-01%2005%3A30%3A00\nGET /tasks?TaskStatus=New&TaskListNum=74\n\nExample Response:\n[\n{\n\"TaskNum\": 9004,\n\"TaskListNum\": 74,\n\"DateTask\": \"0001-01-01\",\n\"KeyNum\": 0,\n\"Descript\": \"Need to re-order general cleaning supplies by this next Friday.\",\n\"TaskStatus\": \"New\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"None\",\n\"DateTimeEntry\": \"2022-10-01 11:18:11\",\n\"UserNum\": 1,\n\"DateTimeFinished\": \"0001-01-01 00:00:00\",\n\"PriorityDefNum\": 358,\n\"ReminderGroupId\": \"\",\n\"ReminderType\": \"NoReminder\",\n\"ReminderFrequency\": 0,\n\"DateTimeOriginal\": \"2022-10-07 11:18:11\",\n\"SecDateTEdit\": \"2022-10-07 11:18:36\",\n\"DescriptOverride\": \"\",\n\"IsReadOnly\": \"false\"\n},\n{\n\"TaskNum\": 9027,\n\"TaskListNum\": 74,\n\"DateTask\": \"0001-01-01\",\n\"KeyNum\": 755,\n\"Descript\": \"Mr. Andersons Insurance needs to be verified before his next appointment.\",\n\"TaskStatus\": \"New\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Appointment\",\n\"DateTimeEntry\": \"2022-10-07 11:16:40\",\n\"UserNum\": 1,\n\"DateTimeFinished\": \"0001-01-01 00:00:00\",\n\"PriorityDefNum\": 358,\n\"ReminderGroupId\": \"\",\n\"ReminderType\": \"NoReminder\",\n\"ReminderFrequency\": 0,\n\"DateTimeOriginal\": \"2022-10-07 11:16:40\",\n\"SecDateTEdit\": \"2022-10-07 11:17:39\",\n\"DescriptOverride\": \"\",\n\"IsReadOnly\": \"false\"\n},\n{\n\"TaskNum\": 9093,\n\"TaskListNum\": 74,\n\"DateTask\": \"0001-01-01\",\n\"KeyNum\": 73,\n\"Descript\": \"Need to update Rebecca's contact information.\",\n\"TaskStatus\": \"New\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2022-10-07 11:17:41\",\n\"UserNum\": 1,\n\"DateTimeFinished\": \"0001-01-01 00:00:00\",\n\"PriorityDefNum\": 358,\n\"ReminderGroupId\": \"\",\n\"ReminderType\": \"NoReminder\",\n\"ReminderFrequency\": 0,\n\"DateTimeOriginal\": \"2022-10-07 11:17:41\",\n\"SecDateTEdit\": \"2022-10-07 11:17:59\",\n\"DescriptOverride\": \"\",\n\"IsReadOnly\": \"false\"\n}\netc...\n]\n\n200 OK\n400 Bad Request (Invalid fields, etc)\n404 NotFound (Patient not found, Appointment not found, etc)\n\nTasks POST (create)\nVersion Added: 22.3.17\n\nCreates a new task. See Task Window for more details on each field.\n\nTaskListNum: Required. tasklist.TaskListNum. Use TaskLists GET to find available TaskLists.\nDescript: Required. The description of this task.\nUserNum: Required. userod.UserNum. The user that created the task.\n\nKeyNum: Optional. Either patient.PatNum or appointment.AptNum. Used when ObjectType is \"Patient\" or \"Appointment\". Default 0.\nObjectType: Optional, unless KeyNum is specified. Either \"None\", \"Patient\", or \"Appointment\". Default \"None\".\nDateTimeEntry: Optional. The date and time that this task was added. String in \"yyyy-MM-dd HH:mm:ss\". Default to Now.\nPriorityDefNum: Optional. Definition.DefNum where Category=33. Default is the dental office's default, if set, or the first definition in that Category. See Definitions: Task Priorities.\nDescriptOverride: Optional. \"Short Descript\" in UI. Limited to 256 characters.\n\nExample Request:\nPOST /tasks\n\n{\n\"TaskListNum\": 3842,\n\"Descript\": \"Please attach the Insurance card and info for this patient.\",\n\"UserNum\": 12,\n\"KeyNum\": 73,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2022-10-12 08:00:00\",\n\"PriorityDefNum\": 90,\n\"DescriptOverride\": \"Patient insurance task\"\n}\n\nExample Response:\n{\n\"TaskNum\": 9093,\n\"TaskListNum\": 3842,\n\"DateTask\": \"0001-01-01\",\n\"KeyNum\": 73,\n\"Descript\": \"Please attach the Insurance card and info for this patient.\",\n\"TaskStatus\": \"New\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2022-10-12 08:00:00\",\n\"UserNum\": 1,\n\"DateTimeFinished\": \"0001-01-01 00:00:00\",\n\"PriorityDefNum\": 90,\n\"ReminderGroupId\": \"\",\n\"ReminderType\": \"NoReminder\",\n\"ReminderFrequency\": 0,\n\"DateTimeOriginal\": \"2022-10-12 07:34:41\",\n\"SecDateTEdit\": \"2022-10-12 07:34:41\",\n\"DescriptOverride\": \"Patient insurance task\",\n\"IsReadOnly\": \"false\"\n}\n\n201 Created\n400 Bad Request (Invalid fields, etc)\n404 NotFound (Patient not found, Appointment not found, etc)\n\nTasks PUT (update)\nVersion Added: 22.4.15\n\nUpdates an existing task by TaskNum. See Task Window for more details on each field.\n\nTaskNum: Required in the URL.\n\nDescript: Optional. The description of this task. Overwrites existing. Sets tasks with a TaskStatus of \"Done\" to \"Viewed\".\nTaskStatus: (Added in version 24.2.10) Optional. Either \"New\", \"Viewed\", or \"Done\".\nKeyNum: Optional. Either patient.PatNum or appointment.AptNum. Used when ObjectType is \"Patient\" or \"Appointment\".\nObjectType: Optional, unless KeyNum is specified. Either \"None\", \"Patient\", or \"Appointment\".\nDateTimeEntry: Optional. The date and time that this task was added. Also used for reminder tasks. String in \"yyyy-MM-dd HH:mm:ss\".\nPriorityDefNum: Optional. Definition.DefNum where Category=33.\nDescriptOverride: Optional. \"Short Descript\" in UI. Overwrites existing. Limited to 256 characters.\n\nExample Request:\nPUT /tasks/6857\n\n{\n\"TaskStatus\": \"Done\",\n\"DateTimeEntry\": \"2023-01-12 08:00:00\",\n\"PriorityDefNum\": 90\n}\n\nor\n\n{\n\"Descript\": \"Please attach the Insurance card and info for this patient.\",\n\"KeyNum\": 73,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2023-01-12 08:00:00\",\n\"PriorityDefNum\": 90,\n\"DescriptOverride\": \"Patient insurance task\"\n}\n\nExample Response:\n{\n\"TaskNum\": 6857,\n\"TaskListNum\": 3842,\n\"DateTask\": \"0001-01-01\",\n\"KeyNum\": 73,\n\"Descript\": \"Please attach the Insurance card and info for this patient.\",\n\"TaskStatus\": \"Done\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2023-01-12 08:00:00\",\n\"UserNum\": 1,\n\"DateTimeFinished\": \"2023-01-15 08:00:00\",\n\"PriorityDefNum\": 90,\n\"ReminderGroupId\": \"\",\n\"ReminderType\": \"NoReminder\",\n\"ReminderFrequency\": 0,\n\"DateTimeOriginal\": \"2023-01-10 08:23:36\",\n\"SecDateTEdit\": \"2023-01-11 07:34:41\",\n\"DescriptOverride\": \"Patient insurance task\",\n\"IsReadOnly\": \"false\"\n}\n\n200 OK\n400 Bad Request (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.13",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Tasks",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-userod",
+      "description": "API references database table userod"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    },
+    {
+      "type": "references",
+      "target": "db-tasklist",
+      "description": "API references database table tasklist"
+    },
+    {
+      "type": "references",
+      "target": "db-task",
+      "description": "API references database table task"
+    }
+  ]
+}

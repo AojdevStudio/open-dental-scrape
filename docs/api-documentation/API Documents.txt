@@ -1,0 +1,414 @@
+API Documents
+See API Specification
+
+This includes images, PDFs, etc. There are four ways a document can be inserted into Open Dental:
+
+1. Not using any API - Add a file to the patient folder. When the user later load the Imaging Module within Open Dental, any new files found are always recognized and entries are made in the database for them. By default, the new file will be dropped into the first category of images. If you want the new file to go to a specific category, then you can name it with a prefix of "_##_". Example: "_135_". The prefix number should be the DefNum of the category where the document belongs. To determine the DefNum, you will need to look in the database where definition.Category=18 and pick from that list somehow. Files with prefixes are processed to go into the specified category, and the prefix is removed.
+
+2. Documents POST SetByUrl.
+
+3. Documents POST Upload.
+
+4. Documents POST UploadSftp.
+
+Documents GET (single)
+Version Added: 24.2.32
+
+Gets a single document. The result does not include the actual document file. Those can be obtained using Documents POST DownloadSftp.
+
+DocNum: Required in URL.
+
+Example Request:
+GET /documents/7
+
+Example Response:
+{
+"DocNum": 7,
+"Description": "1-26-2009",
+"DateCreated": "2009-01-26 00:00:00",
+"DocCategory": 190,
+"docCategory": "Patient Pictures",
+"PatNum": 15,
+"FileName": "SmithJohn7.jpg",
+"ImgType": "Photo",
+"ToothNumbers": "",
+"DateTStamp": "2010-03-01 12:44:26",
+"ProvNum": 0,
+"PrintHeading": "false"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Documents GET (multiple)
+Version Added: 21.2
+
+PatNum is required. Gets all documents and mounts for the patient, ordered by DateCreated. If the file storage method is InDatabase, the returned filePath field will be blank. Mounts do not have a filePath, ToothNumbers, PrintHeading, or a DateTStamp. The result does not include the actual document files. Those can be obtained using Documents POST DownloadSftp.
+
+Example Request:
+GET /documents?PatNum=101
+
+Example Response:
+[
+{
+"DocNum": 34,
+"MountNum": 0,
+"filePath": "\\server\\OpenDentImages\\S\\SmithJohn15\\exampleimage.jpg",
+"Description": "Scanned image",
+"PatNum": "101",
+"Note": "",
+"DateCreated": "2021-04-08 08:12:21",
+"docCategory": "Lab Cases",
+"DocCategory": 14,
+"ToothNumbers": "1,2,3,4,5",
+"ProvNum": "0",
+"PrintHeading": "false",
+"DateTStamp": "2021-04-18 11:45:01",
+"serverDateTime": "2021-05-20 13:30:54"
+},
+{
+"DocNum": 0,
+"MountNum": 15,
+"filePath": "",
+"Description": " 5/11/2021: 4BW",
+"PatNum": "101",
+"Note": "Bitewings",
+"DateCreated": "2021-05-11 13:26:39",
+"docCategory": "Lab Cases",
+"DocCategory": 14,
+"ToothNumbers": "",
+"ProvNum": "0",
+"PrintHeading": "",
+"DateTStamp": "",
+"serverDateTime": "2021-05-20 13:30:54"
+}
+]
+
+200 OK
+400 BadRequest "PatNum is required"
+404 NotFound "Patient not found"
+
+Documents POST DownloadSftp
+Version Added: 21.2
+
+This will place a file on an SFTP site that you specify. After running this method, download the resulting file from your SFTP site. The user with the SFTP credentials must have write permission in this directory. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. If the SftpAddress does not contain a file name, the document.FileName will be used. All file storage options (LocalAtoZ, InDatabase, and Cloud) are supported.
+
+DocNum: This or MountNum is required.
+MountNum: This or DocNum is required.
+SftpAddress: Required. Specify the full path of the file (using /). The user with the SFTP credentials must have write permission in this directory.
+SftpUsername: Required.
+SftpPassword: Required.
+
+Example Requests:
+POST /documents/DownloadSftp
+
+{
+"DocNum": 389,
+"SftpAddress": "MySftpSite/myUsername/Documents/SmithJohn389.png",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+{
+"MountNum": 20,
+"SftpAddress": "MySftpSite/myUsername/Documents/FMX.jpg",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+Example Response:
+201 Created, "location": The full filepath of the saved file.
+400 BadRequest (Invalid fields, invalid file extension, and Sftp connection errors)
+404 NotFound "Document not found" and "Mount not found".
+
+Documents POST UploadSftp
+Version Added: 21.2
+
+Prior to running this method, upload a file to your own SFTP site. This method will then pull the uploaded file into the customer's AtoZ folder, database, or cloud storage. The filePath of the response object will either be the full filepath of the saved file (AtoZ or cloud) or blank (database).
+
+PatNum: Required.
+SftpAddress: Required. Specify the full path of the file. The user with the SFTP credentials must have read permission in this directory.
+SftpUsername: Required.
+SftpPassword: Required.
+
+Description: (Added in version 24.2.32) Optional. Default empty string.
+DateCreated: (Added in version 21.4) Optional. Defaults to today's date.
+DocCategory: Optional. Definition.DefNum where definition.Category=18. Defaults to the first definition in that category.
+ImgType: Optional. Either Document, Radiograph, Photo, File or Attachment. Default is Document.
+ToothNumbers: (Added in version 23.1.35) Optional. A string of numbers separated by commas and/or hyphen separated ranges.
+ProvNum: (Added in version 24.2.32) Optional. Default 0.
+PrintHeading: (Added in version 24.2.32) Optional. Default "false".
+
+Example Request:
+POST /documents/UploadSftp
+
+{
+"PatNum": 15,
+"DateCreated": "2021-05-26 08:16:46",
+"DocCategory": 14,
+"ImgType": "Photo",
+"ToothNumbers": "1-5,8",
+"SftpAddress": "MySftpSite/myUsername/Documents/SmithJRadiograph.png",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+Example Response:
+{
+"DocNum": 411,
+"filePath": "\\server\OpenDentImages\S\SmithJohn15\SmithJRadiograph.png",
+"Description": "SmithJRadiograph.png",
+"ToothNumbers": "1,2,3,4,5,8",
+"Note": "",
+"DateCreated": "2021-05-26 08:16:46",
+"DateTStamp": "2021-05-26 08:16:46",
+"DocCategory": 14,
+"docCategory": "Lab Cases",
+"serverDateTime": "2021-05-26 08:16:46"
+}
+
+201 Created
+400 BadRequest (missing fields and Sftp connection errors)
+404 NotFound "Patient not found"
+
+Documents POST Upload
+Version Added: 21.1
+
+Upload the actual file as rawBase64. Specify the extension of the file. Examples could include .pdf, .jpg, .dcm, .doc, etc. rawBase64 goes into the database in document.Note as "_rawBase64_:" followed by the extension and rawBase64. Example: "_rawBase64_:.jpg_errGEreRi3fWWtB+gWWEgg..." The customer never sees this text, but when they later click on the document, the file is created and the note removed.
+
+PatNum: Required.
+rawBase64: Required.
+extension: Required.
+
+Description: Optional.
+DateCreated: (Added in version 22.1) Optional. Default is today's date. String in "yyyy-MM-dd HH:mm:ss" format.
+DocCategory: Optional. FK to definition.ItemName, where definition.Category=18. Default is first in DocCategory.
+ImgType: Optional. Either Document, Radiograph, Photo, File or Attachment. Default is Document.
+ToothNumbers: (Added in version 23.1.35) Optional. A string of numbers separated by commas and/or hyphen separated ranges.
+ProvNum: (Added in version 24.2.32) Optional. Default 0.
+PrintHeading: (Added in version 24.2.32) Optional. Default "false".
+
+Example Request:
+POST /documents/Upload
+
+{
+"PatNum": 101,
+"rawBase64": "errGEreRi3fWWtB+gWWEgg...",
+"extension": ".jpg",
+"DocCategory": 47,
+"ImgType": "Photo",
+"Description": "Extraoral",
+"DateCreated": "2022-03-15 14:30:00",
+"ToothNumbers": "1-32"
+}
+
+Example Response:
+{
+"DocNum": 93,
+"Description": "Extraoral",
+"DateCreated": "2022-03-15 14:30:00",
+"DocCategory": 47,
+"docCategory": "Patient Pictures",
+"PatNum": 101,
+"FileName": "x",
+"ImgType": "Photo",
+"ToothNumbers": "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32",
+"DateTStamp": "2024-09-24 11:18:57",
+"ProvNum": 0,
+"PrintHeading": "false"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Documents POST Thumbnails
+Version Added: 21.2
+
+Prior to running this method, first call a GET /documents for the patient to see their list of documents. Only standard image files from this list can be made into thumbnails. Mounts and pdfs will be skipped. This method gets the thumbnails for all images for the patient, creating any that do not already exist as thumbnails. Created thumbnails will be 100 x 100 and will use the same filename as the original image.
+
+This will place files on an SFTP site that you specify. After running this method, download the resulting files from your SFTP site. The user with the SFTP credentials must have write permission in this directory. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. All file storage options (LocalAtoZ, InDatabase, and Cloud) are supported.
+
+PatNum: Required.
+SftpAddress: Required. Specify the full path of the file. The user with the SFTP credentials must have read permission in this directory.
+SftpUsername: Required.
+SftpPassword: Required.
+
+Example Request:
+POST /documents/Thumbnails
+
+{
+"PatNum": 15,
+"SftpAddress": "MySftpSite/myUsername/Thumbnails/",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+Example Responses:
+[
+{
+"DocNum": 440,
+"FileName": "SmithJohn440.gif"
+},
+{
+"DocNum": 441,
+"FileName": "SmithJohn441.gif"
+}
+]
+
+200 OK "No documents could be made into thumbnails."
+201 Created
+400 BadRequest (missing fields and Sftp connection errors)
+404 NotFound "Patient not found" and "No documents exist for this patient"
+
+Documents POST DownloadMount
+Version Added: 21.2
+
+You probably don't want to use this. Gets all the individual images for one mount, but there's no information about which position in the mount, flipping, rotation, etc. It is much more common to use Documents POST DownloadSftp to get a composite image for a mount instead of the individual images.
+
+Prior to running this method, first call a GET /documents for the patient to see their list of documents and mounts. Use the MountNum to run this method. All images in the mount will be downloaded to the specified folder. Created files will use the same filename as the original image.
+
+This will place files on an SFTP site that you specify. After running this method, download the resulting files from your SFTP site. The user with the SFTP credentials must have write permission in this directory. Directory will be created if it does not exist, and files already existing with the same name will be overwritten. All file storage options (LocalAtoZ, InDatabase, and Cloud) are supported.
+
+MountNum: Required.
+SftpAddress: Required. Specify the full path of the file. The user with the SFTP credentials must have read permission in this directory.
+SftpUsername: Required.
+SftpPassword: Required.
+
+Example Request:
+POST /documents/DownloadMount
+
+{
+"MountNum": 15,
+"SftpAddress": "MySftpSite/myUsername/Mounts/",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+Example Responses:
+[
+{
+"DocNum": 440,
+"FileName": "SmithJohn440.gif"
+},
+{
+"DocNum": 441,
+"FileName": "SmithJohn441.gif"
+}
+]
+
+200 OK "No mount images could be downloaded."
+201 Created
+400 BadRequest (missing fields and Sftp connection errors)
+404 NotFound "Mount not found."
+
+Documents POST SetByUrl
+Version Added: 21.1
+
+URL goes into the database in document.Note as "_download_:" followed by the URL. The customer never sees this text, but when they later click on the document, the URL is used to perform a download and the prefix is removed.
+
+PatNum: Required.
+url: Required.
+
+Description: Optional.
+DateCreated: (Added in version 24.2.32) Optional. Default is today's date. String in "yyyy-MM-dd HH:mm:ss" format.
+DocCategory: Optional. FK to definition.ItemName, where definition.Category=18. Default is first in DocCategory.
+ImgType: Optional. Either Document, Radiograph, Photo, File or Attachment. Default is Document.
+ToothNumbers: (Added in version 23.1.35) Optional. A string of numbers separated by commas and/or hyphen separated ranges.
+ProvNum: (Added in version 24.2.32) Optional. Default 0.
+PrintHeading: (Added in version 24.2.32) Optional. Default "false".
+
+Example Request:
+POST /documents/SetByUrl
+
+{
+"PatNum": 101,
+"url": "https://www.somesite.com/myimage.jpg",
+"DocCategory": 47,
+"Description": "Extraoral",
+"ImgType": "Photo",
+"ToothNumbers": "1,2"
+}
+
+Example Response:
+{
+"DocNum": 94,
+"Description": "Extraoral",
+"DateCreated": "2024-09-24 11:45:52",
+"DocCategory": 47,
+"docCategory": "Patient Pictures",
+"PatNum": 101,
+"FileName": "xx",
+"ImgType": "Photo",
+"ToothNumbers": "1,2",
+"DateTStamp": "2024-09-24 11:45:52",
+"ProvNum": 0,
+"PrintHeading": "false"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Documents PUT (update)
+Version Added: 24.2.32
+
+Updates Image Info of an existing document.
+
+DocNum: Required in URL.
+
+Description: Description that will show on the image category tree.
+DateCreated: String in "yyyy-MM-dd HH:mm:ss" format.
+DocCategory: definition.DefNum where definition.Category=18.
+ImgType: Either "Document", "Radiograph", "Photo", "File", or "Attachment".
+ToothNumbers: A string of numbers separated by commas and/or hyphen separated ranges.
+ProvNum: ProvNum of a non-hidden provider.
+PrintHeading: Either "true" or "false". If true, additional information will be displayed when this document is printed.
+
+Example Request:
+PUT /documents/27
+
+{
+"Description": "Pano",
+"DateCreated": "2024-01-25 07:45:35",
+"DocCategory": 190,
+"ImgType": "Radiograph",
+"ToothNumbers": "12-15,20,21",
+"ProvNum": 2,
+"PrintHeading": "true"
+}
+
+Example Response:
+{
+"DocNum": 27,
+"Description": "Pano",
+"DateCreated": "2024-01-25 07:45:35",
+"DocCategory": 190,
+"docCategory": "Xray",
+"PatNum": 11,
+"FileName": "AllowedAllenRadio.jpg",
+"ImgType": "Radiograph",
+"ToothNumbers": "12,13,14,15,20,21",
+"DateTStamp": "2024-08-20 15:58:13",
+"ProvNum": 2,
+"PrintHeading": "true"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Documents DELETE
+Version Added: 24.2.32
+
+Deletes a document. Deletes both the database row and any associated file from the A to Z folder.
+
+DocNum: Required in the URL.
+
+Example Request:
+DELETE /documents/27
+
+Example Responses:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

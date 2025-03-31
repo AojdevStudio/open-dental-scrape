@@ -1,0 +1,85 @@
+ˇAPI Implementation
+See API Specification
+Style
+Resources in the URL are lowercase plural. Example: /patients
+Resource identifiers are the database primary keys and are specified in the URL instead of as a parameter for individual resources. Example: /patients/421
+When creating a resource (POST) or retrieving a list, no identifier is used. Example: /patients
+All fields and parameters use Pascal casing, where the first letter is capitalized, and optional other letters are capitalized. This is different than the style of most other REST implementations, but it is far more consistent with our existing codebase and db schema.
+Fields can start with lower case whenever they are not standard database fields. See details below, in the Data Types section.
+Parameters are listed in this documentation in order of importance instead of db order. Fields returned in JSON files are generally in the same order as in the database.
+Some methods do not fall under the normal CRUD paradigm. Here are some examples: /claimprocs/InsAdjust /appointments/123/Confirm
+Pagination
+For any method that returns a list of items, you will need to use pagination to get chunks of up to 100 items at a time. Use Limit and Offset. Limit is usually not specified, and it defaults to the hard limit of 100 items for any request. With no Limit or Offset specified, results will include items 0 through 99.
+Example usage: GET /appointments?Offset=400
+This will return appointments 400 through 499. The risk of page drift, where another record is added to the database in the middle of a series of requests, is miniscule.
+The general strategy you should use is to first perform an ordinary GET without any offset or limit. If your result is exactly 100 rows, then perform sequential GETs with offsets until your result is less than 100 rows. The local API has an increased limit of 1000 items per request.
+Date Format
+Added in version 22.2.26
+For all methods that return a Date of format "yyyy-MM-dd", you have the ability to specify a Date format. Use DateFormatString, which is "yyyy-MM-dd" by default.
+Example usage: GET /procedurelogs?PatNum=52&DateFormatString=MM/dd/yyyy
+This will return Dates that have been formatted to match the input, e.g. "05/21/2022".
+DateTime Format
+Added in version 22.2.14
+For all methods that return a DateTime of format "yyyy-MM-dd HH:mm:ss", you have the ability to specify a DateTime format. Use DateTimeFormatString, which is "yyyy-MM-dd HH:mm:ss" by default.
+Example usage: GET /patients/Simple?DateTimeFormatString=dd/MM/yyyy HH:mm:ss zzz
+This will return DateTimes that have been formatted to match the input, e.g. "21/05/2022 14:30:00 -07:00".
+URL
+The current version of the API has the following endpoint: https://api.opendental.com/api/v1
+Example usage: GET https://api.opendental.com/api/v1/patients
+Our intent is to never change this URL, but if there is an important breaking change in the future, then we may create v2, etc. These version numbers do not correspond to versions of Open Dental. This API is intended to work smoothly with multiple versions of Open Dental. But the version of the customer database must be at least as high as the version that the method was added.
+URL Parameter Encoding
+Use percent encoding for all reserved characters in the URL query parameters. Quotes are not used in URL parameters. For example, De Angelo would be encoded as De%20Angelo.
+Headers
+All API requests require a Content-Type header of "application/json".
+Body
+In PUT and POST requests, the JSON body can have a maximum content length of 16.8M characters.
+Data Types
+This API documentation does not generally repeat information which can be found in the Database Schema. So we frequently just list out the fields available for a resource without further explanation.
+Enumerations: These are stored in the database as numbers, but this API uses the text equivalent. Example: "Male" instead of 0. Fields are still capitalized, just like the original.
+Booleans: Fields that are boolean in the database are string in the API, either "true" or "false".
+Dates: String with "yyyy-MM-dd" format by default. See Date Format.
+DateTime: String with "yyyy-MM-dd HH:mm:ss" format by default. See DateTime Format.
+Foreign Keys: These are stored in the database as numbers, but we frequently use a string version for parameters and fields. The string version field will start with a lower case letter to indicate that it's not a standard database field. The lower case letter versions are usually read-only and are not used to set values. Examples: ClinicNum=23 clinicAbbr="Monroe" appointment.Confirmed=145 (FK to definition.DefNum) appointment.confirmed="Called"
+Strings: The JSON serializer currently outputs carriage returns (\r\n) as spaces. There may be other issues with complex text as well.
+Returned Status Codes
+All API requests return one of the following HTTP Status Codes: 200 OK, 201 Created, 400 BadRequest, 401 Unauthorized, 404 NotFound, or 410 Gone. See the API resource documentation pages for status codes specific to each method. General API status codes are described below.
+400 BadRequest:
+eConnector issues - Including when the eConnector is not running or two eConnectors are attempting to use the same registration key
+Versioning - The version of the dental office is not high enough to use the specified API method
+Network Issues - Request timeouts and other dental office connectivity issues
+General API request formatting - Missing request headers, invalid Content-Types, and URL elements
+
+401 Unauthorized:
+Invalid Credentials - Either the Customer or Developer key is invalid, unassigned, or has been disabled
+Invalid Permissions - The Developer Key does not have the ApiPermission necessary to use the specified API method
+
+404 NotFound:
+The specified API resource does not exist (usually a typo)
+
+410 Gone:
+The specified API resource has been deprecated
+
+504 Gateway Time-out:
+The specified API resource did not complete processing within the 60 second time limit.
+
+Behavior
+The behavior of actions in the API are similar to when using the UI in Open Dental, but not identical. There tends to be a bit less automation. There are also no prompts for back and forth logic with user interaction. The advantage of the API is that it will not allow you to make changes that would corrupt the database, so it's safe. If you were to use similar direct queries to try to change the database, you would quickly corrupt it. The API also makes the appropriate security log entries and performs some housekeeping duties such as archival, synchronization, and hashing in certain tables. In contrast, direct queries that change the database are strictly forbidden and we use our Database Integrity feature to actively block such queries.
+API Signatures
+It is the sole responsibility of the third-party implementing this API to securely manage and retain the original signatures associated with digitally signed documents. The third-party utilizing this API must be capable of promptly presenting the original signatures corresponding to the digitally signed document. This includes providing the necessary information and evidence to verify the authenticity and integrity of the digital signatures.
+Throttling
+API developers who only have the ApiReadAll permission have their customers' requests throttled to one request per five seconds. This time includes the execution of the request itself. Throttling is relaxed to one request per one second if the API user possesses any other API permission (such as ApiComm, etc). This reduced throttle will apply to all API requests, even those falling under the ApiReadAll permission. Throttling occurs on a per customer key basis, not a per developer key basis.
+Most API requests take less than a second to complete. The exact time will vary with the complexity of the specific endpoint used. The API request data flow chain has several links. The request is sent to api.opendental.com, is routed to servers at Open Dental, its credentials validated, and sent to the dental office via their eConnector. After executing the API method on the dental office's server, the response travels back through the chain to the Developer who made the request. This full chain contains 10 hops start to finish.
+Requests made using the Local API or the API Service are not throttled at all. All requests are made locally at the dental office workstations and communicate with the running Open Dental Program. They do not need to travel through Open Dental servers, reducing execution time considerably. API key credentials are still verified via web call to HQ, but are valid for 6 hours. This allows the local API to continue functioning during periods of internet downtime.
+Network Abuse Policy
+Excessive Requests At Open Dental, we strive to provide a high-quality and reliable service to all our customers. We understand the importance of efficient network resource utilization and maintaining fair access for all users. To ensure the optimal functioning of our services, we have established guidelines for the responsible use of our network resources.
+Excessive Requests Definition Excessive requests are defined as any actions that result in a disproportionately high volume of requests to our services within a specified time frame. This includes, but is not limited to, the following activities:
+	1	Sending a high number of HTTP requests to our APIs within a short period.
+	2	Generating excessive traffic that negatively impacts the performance of our servers.
+	3	Conducting Distributed Denial of Service (DDoS) attacks or other malicious activities.
+Impact of Excessive Requests Excessive requests can have a detrimental effect on the quality of service we provide to all our customers. They may lead to network congestion, degradation of performance, and potential service disruptions. To maintain a reliable and fair environment for all users, we reserve the right to take action in response to excessive requests.
+Actions We May Take When we identify excessive requests from a customer's IP address or network, we may take the following actions:
+Temporary Suspension: In cases of severe abuse or potential network disruptions, we may temporarily suspend access to our services from the offending IP address or network. A notification will be sent to the customer with details of the suspension.
+Termination: If the abusive behavior continues after warnings or temporary suspensions, we reserve the right to terminate access to our services permanently. This decision will be made at our discretion.
+Open Dental Resellers and Distributors
+There are resellers of Open Dental that utilize Open Dental registration keys. The software is Open Dental, just billed through a third-party. These customers can utilize the API because they have standard Open Dental installed and have access to all of our services.
+Other entities have previously compiled Open Dental source code into their own custom version of Open Dental. It looks and acts very similar to Open Dental (depending on what they did or did not customize). These versions do not have components that are required for API functionality (for example, Open Dental's services to authenticate API keys and route traffic from our endpoint).

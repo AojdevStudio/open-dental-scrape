@@ -1,0 +1,42 @@
+API SheetFields
+See API Specification
+
+SheetFields GET
+Version Added: 22.1
+
+Gets all SheetFields for a single sheet.
+
+SheetNum: Required.
+
+Example Requests:
+GET /sheetfields?SheetNum=24
+GET /sheetfields?SheetNum=24&Offset=200
+
+Example Response:
+[
+{
+"SheetFieldNum": 1049,
+"SheetNum": 24,
+"FieldType": "InputField",
+"FieldName": "prov.nameFormal",
+"FieldValue": "John D. Smith",
+"IsRequired": "true",
+"ReportableName": "",
+"DateTimeSig": "0001-01-01 00:00:00"
+},
+{
+"SheetFieldNum": 3068,
+"SheetNum": 24,
+"FieldType": "SigBoxPractice",
+"FieldName": "",
+"FieldValue": "1FFFFFFFB59486...",
+"IsRequired": "false",
+"ReportableName": "",
+"DateTimeSig": "2023-07-17 13:38:27"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

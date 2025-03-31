@@ -1,0 +1,40 @@
+{
+  "id": "db-hl7deffield",
+  "type": "database",
+  "title": "hl7deffield",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "hl7deffield",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "hl7deffield",
+    "description": "Table for hl7deffield data.",
+    "columns": [
+      {
+        "name": "hl7deffieldNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "hl7deffieldNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

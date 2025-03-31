@@ -1,0 +1,51 @@
+{
+  "id": "db-clockevent",
+  "type": "database",
+  "title": "clockevent",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "clockevent",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "clockevent",
+    "description": "Table for clockevent data.",
+    "columns": [
+      {
+        "name": "clockeventNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "clockeventNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-clockevents",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

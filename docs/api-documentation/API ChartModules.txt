@@ -1,0 +1,358 @@
+API ChartModules
+See API Specification
+
+ChartModules GET ProgNotes
+Version Added: 21.4
+
+Gets the Progress Notes for a patient, similarly to how it shows in the Chart Module. Use another API method or a query to get specific details about each object.
+
+PatNum: Required in the URL.
+
+Returned fields are detailed below:
+
+ObjectType: The type of object being displayed: Appointment, Commlog, Task, Email, LabCase, Rx, or Sheet.
+PrimaryKey: Primary Key corresponding to the objectType. Example: AptNum=34.
+Date: Human readable date. Example 05/15/2021
+Time: Human readable time. Example 1:20p
+DateTime: Example 2021-12-21 10:00:00
+Th: ToothNum for a Procedure, otherwise blank.
+Surf: Tooth surface for the Procedure, otherwise blank.
+Dx: Description of the Diagnosis.
+Description: Description of the of the returned object.
+Note: Additional notes for the returned object.
+Stat: Status of the Procedure, otherwise blank. Example TP.
+Prov: Example Doc1.
+ProvNum: Example: 3
+Amount: ProcFee for Procedure, otherwise blank. Example 53.50
+ProcCode: ProcCode for Procedure, otherwise blank. Example D0220
+User: Name of the user who created the Commlog, Email, or Rx. Otherwise blank.
+Signed: Will be "Signed" if there is a signature on the Procedure or Sheet. Otherwise blank.
+Length: Length of the appointment in HH:mm format. Example 0:30.
+Abbr: Abbreviation of the Procedure, otherwise blank.
+Clinic: Clinic abbreviation. Example: Metro Office.
+ClinicNum: Example: 4
+
+Example Request:
+GET /chartmodules/13/ProgNotes
+GET /chartmodules/13/ProgNotes?Offset=100
+
+Example Response:
+[
+{
+"ObjectType": "Appointment",
+"PrimaryKey": "147",
+"Date": "12/21/2021",
+"Time": "11:40a",
+"DateTime": "12/21/2021 11:40:00 AM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "Appointment - 11:40 AM PA",
+"note": "",
+"Stat": "",
+"Prov": "",
+"ProvNum": "",
+"Amount": "",
+"ProcCode": "",
+"User": "",
+"Signed": "",
+"Length": "0:10",
+"Abbr": "",
+"Clinic": "",
+"ClinicNum": "3"
+},
+{
+"ObjectType": "Procedure",
+"PrimaryKey": "153",
+"Date": "12/21/2021",
+"Time": "",
+"DateTime": "12/21/2021 12:00:00 AM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "PA",
+"note": "",
+"Stat": "TP",
+"Prov": "Doc3",
+"ProvNum": "10",
+"Amount": "24.00",
+"ProcCode": "D0220",
+"User": "",
+"Signed": "",
+"Length": "",
+"Abbr": "PA",
+"Clinic": "Downtown Office",
+"ClinicNum": "3"
+},
+{
+"ObjectType": "Commlog",
+"PrimaryKey": "122",
+"Date": "02/08/2022",
+"Time": "3:18p",
+"DateTime": "2/8/2022 3:18:00 PM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "Comm - ApptRelated",
+"note": "Confirmed upcoming appointment. Asked to arrive 15 minutes early for paperwork.",
+"Stat": "",
+"Prov": "",
+"ProvNum": "",
+"Amount": "",
+"ProcCode": "",
+"User": "Admin",
+"Signed": "Signed",
+"Length": "",
+"Abbr": "",
+"Clinic": "",
+"ClinicNum": "0"
+},
+{
+"ObjectType": "Task",
+"PrimaryKey": "52",
+"Date": "2/8/2022",
+"Time": "3:25p",
+"DateTime": "2/8/2022 3:25:56 PM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "Task - In List: People that will need a 1099",
+"note": "Admin - Example Task Description ==Admin - 2/8/2022 3:26 PM - Notes on the task.",
+"Stat": "",
+"Prov": "",
+"ProvNum": "",
+"Amount": "",
+"ProcCode": "",
+"User": "",
+"Signed": "",
+"Length": "",
+"Abbr": "",
+"Clinic": "",
+"ClinicNum": "0"
+},
+{
+"ObjectType": "Email",
+"PrimaryKey": "212",
+"Date": "02/08/2022",
+"Time": "3:22p",
+"DateTime": "2/8/2022 3:22:27 PM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "Email - (unsent) Spring Newsletter",
+"note": " With warmer weather upon us...",
+"Stat": "",
+"Prov": "",
+"ProvNum": "",
+"Amount": "",
+"ProcCode": "",
+"User": "Admin",
+"Signed": "",
+"Length": "",
+"Abbr": "",
+"Clinic": "",
+"ClinicNum": "0"
+},
+{
+"ObjectType": "Rx",
+"PrimaryKey": "81",
+"Date": "02/08/2022",
+"Time": "",
+"DateTime": "2/8/2022 12:00:00 AM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "Rx - Cephalexin 500 mg - #40 Walmart Lancaster",
+"note": "",
+"Stat": "",
+"Prov": "HYG1",
+"ProvNum": "2",
+"Amount": "",
+"ProcCode": "",
+"User": "",
+"Signed": "",
+"Length": "",
+"Abbr": "",
+"Clinic": "",
+"ClinicNum": "0"
+},
+{
+"ObjectType": "Sheet",
+"PrimaryKey": "37",
+"Date": "02/08/2022",
+"Time": "3:27p",
+"DateTime": "2/8/2022 3:27:00 PM",
+"Th": "",
+"Surf": "",
+"Dx": "",
+"Description": "PatientLetter",
+"note": "",
+"Stat": "",
+"Prov": "",
+"ProvNum": "",
+"Amount": "",
+"ProcCode": "",
+"User": "",
+"Signed": "",
+"Length": "",
+"Abbr": "",
+"Clinic": "",
+"ClinicNum": "0"
+},
+etc...
+]
+
+200 OK
+404 Not Found ("Patient not found")
+
+ChartModules GET PatientInfo
+Version Added: 22.1
+
+Gets Patient Info for a patient, similarly to how it shows in the Chart Module. Use another API method or a query to get specific details about returned elements.
+
+PatNum: Required in the URL.
+
+Returned field types are detailed below:
+
+Age: The age of the patient.
+ABC0: Indicates the patient's credit rating or other personal attributes discreetly.
+Billing Type: The patient's billing type.
+Referred From: Indicates a patient's referral source.
+Date First Visit: The date of the patient's first visit.
+Prov. (Pri, Sec): Comma separated abbreviations for the patient's primary provider and secondary provider, if they exist.
+Pri Ins: The patient's primary insurance plan.
+Sec Ins: The patient's secondary insurance plan.
+Payor Types: The system of payment (SOP code) that identifies this patient's payor status.
+Premedicate: Will only display for patients marked as 'Premed'. Displays any medications patients should take prior to appointments.
+Problems: A list of the patient's current and inactive problems. Will display as one entry with "None" as the content if no problems exist, or will display an entry for each of the patient's problems if at least one exists.
+Med Urgent: Any Med Urgent notes that have been entered for the patient will display here.
+Medical Summary: Any Medical Summary notes that have been entered for the patient will display here.
+Service Notes: Will display any entered information that has been learned through discussions with the patient, such as whether they need a blanket or pillow, nervous behavior, whether they are on a strict budget, etc.
+Medications: Lists the patient's medications. Will display as one entry with "None" as the content if no medications exist, or will display an entry for each of the patient's medications if at least one exists.
+Allergies: Lists the patient's known allergies. Will display as one entry with "None" as the content if no allergies exist, or will display an entry for each allergy associated to the patient if at least one exists.
+Pat Restrictions: Lists restrictions associated to the patient. Will display as one entry with "None" as the content if there are no restrictions, or will display an entry for each restriction's name/description if at least one exists.
+
+Example Request:
+GET /chartmodules/15/PatientInfo
+
+Example Response:
+[
+{
+"Field": "Age",
+"Content": "42"
+},
+{
+"Field": "ABC0",
+"Content": ""
+},
+{
+"Field": "Billing Type",
+"Content": "Standard Account"
+},
+{
+"Field": "Referred From",
+"Content": ""
+},
+{
+"Field": "Date First Visit",
+"Content": "4/30/2009"
+},
+{
+"Field": "Prov. (Pri, Sec)",
+"Content": "DOC 1, HYG 1"
+},
+{
+"Field": "Pri Ins",
+"Content": "Metlife"
+},
+{
+"Field": "Sec Ins",
+"Content": ""
+},
+{
+"Field": "Payor Types",
+"Content": ""
+},
+{
+"Field": "Problem - Diabetes",
+"Content": "Type 2"
+},
+{
+"Field": "Problem - High Blood Pressure",
+"Content": ""
+},
+{
+"Field": "Med Urgent",
+"Content": ""
+},
+{
+"Field": "Medical Summary",
+"Content": ""
+},
+{
+"Field": "Service Notes",
+"Content": ""
+},
+{
+"Field": "Medication - Acetaminophen(Aspirin)",
+"Content": "One in the morning, one at night"
+},
+{
+"Field": "Allergy - Latex",
+"Content": "Induces itching"
+},
+{
+"Field": "Pat Restrictions",
+"Content": "None"
+}
+]
+
+200 OK
+
+ChartModules GET PlannedAppts
+Version Added: 22.2
+
+Gets Planned Appointments for a patient, similarly to how it shows in the Chart Module's Planned Appointments tab.
+
+PatNum: Required in the URL.
+
+Returned field types are detailed below:
+
+AptNum: The planned appointment's appointment.AptNum
+ProvNum: The provider associated with the appointment.
+ItemOrder: Order of the planned appointment.
+minutes: The length of the appointment in minutes.
+ProcDescript: The procedure(s) attached to this appointment.
+Note: Appointment Note.
+dateSched: DateTime of the linked scheduled appointment.
+AptStatus: appointment.AptStatus.
+
+Example Request:
+GET /chartmodules/31/PlannedAppts
+
+Example Response:
+[
+{
+"AptNum": "999",
+"ProvNum": "1",
+"ItemOrder": "1",
+"minutes": "50",
+"ProcDescript": "#1-MOD-C3(P)",
+"Note": "",
+"dateSched": "2022-06-20 00:00:00",
+"AptStatus": "Planned"
+},
+{
+"AptNum": "1000",
+"ProvNum": "3",
+"ItemOrder": "2",
+"minutes": "40",
+"ProcDescript": "#19-ML-C2(P)",
+"Note": "Pain in LL quadrant",
+"dateSched": "2022-06-21 00:00:00",
+"AptStatus": "Planned"
+}
+]
+
+200 OK
+404 Not Found ("Patient not found.")

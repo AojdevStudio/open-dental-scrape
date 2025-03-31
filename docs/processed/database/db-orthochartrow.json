@@ -1,0 +1,40 @@
+{
+  "id": "db-orthochartrow",
+  "type": "database",
+  "title": "orthochartrow",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "orthochartrow",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "orthochartrow",
+    "description": "Table for orthochartrow data.",
+    "columns": [
+      {
+        "name": "orthochartrowNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "orthochartrowNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

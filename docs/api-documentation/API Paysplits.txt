@@ -1,0 +1,12 @@
+API PaySplits
+See API Specification
+PaySplits GET
+Version Added: 22.4.16
+Get a list of paysplits.
+Parameters:
+PatNum: (Optional after version 24.4.24) Get all PaySplits for a single patient. PayNum: (Optional after version 24.4.24) Get all PaySplits for a single payment. ProcNum: (Added in version 24.4.24) Optional. Get all PaySplits attached to a specific procedure.
+Example Requests: GET /paysplits GET /paysplits?PayNum=8567 GET /paysplits?PatNum=407&ProcNum=8
+Example Response:
+[ { "SplitNum": 116, "SplitAmt": 140, "PatNum": 407, "PayNum": 8567, "ProvNum": 1, "PayPlanNum": 0, "DatePay": "2023-01-27", "ProcNum": 9, "DateEntry": "2023-01-27", "UnearnedType": 0, "unearnedType": "", "ClinicNum": 1, "SecDateTEdit": "2023-01-27", "AdjNum": 0, "PayPlanChargeNum": 0, "PayPlanDebitType": "Unknown" }, { "SplitNum": 115, "SplitAmt": 140, "PatNum": 407, "PayNum": 8567, "ProvNum": 1, "PayPlanNum": 0, "DatePay": "2023-01-27", "ProcNum": 8, "DateEntry": "2023-01-27", "UnearnedType": 0, "unearnedType": "", "ClinicNum": 1, "SecDateTEdit": "2023-01-27", "AdjNum": 0, "PayPlanChargeNum": 0, "PayPlanDebitType": "Unknown" }, etc... ]
+
+200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)

@@ -1,0 +1,77 @@
+{
+  "id": "db-recall",
+  "type": "database",
+  "title": "recall",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "recall",
+      "Recall",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "recall",
+    "description": "Table for recall data.",
+    "columns": [
+      {
+        "name": "recallNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "recallNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-preferences",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-patients",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-events",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-recalls",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-appointments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-recalltypes",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

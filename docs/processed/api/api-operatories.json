@@ -1,0 +1,38 @@
+{
+  "id": "api-operatories",
+  "type": "api",
+  "title": "Operatories",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Operatories.txt",
+  "content": "API Operatories\nSee API Specification\n\nOperatories GET (single)\nVersion Added: 24.1.10\n\nGets a single operatory.\n\nOperatoryNum: Required in URL.\n\nExample Request:\nGET /operatories/1\n\nExample Response:\n{\n\"OperatoryNum\": 1,\n\"OpName\": \"Dr. Brian Albert\",\n\"Abbrev\": \"OP-1\",\n\"ItemOrder\": 0,\n\"IsHidden\": \"false\",\n\"ProvDentist\": 1,\n\"ProvHygienist\": 0,\n\"IsHygiene\": \"false\",\n\"ClinicNum\": 2,\n\"SetProspective\": \"false\",\n\"IsWebSched\": \"false\"\n\"OperatoryType\": 0,\n\"operatoryType\": \"\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nOperatories GET (multiple)\nVersion Added: 21.1\n\nGets a list of all operatories.\n\nClinicNum: Optional.\n\nExample Requests:\nGET /operatories\nGET /operatories?ClinicNum=2\n\nExample Response:\n[\n{\n\"OperatoryNum\": 1,\n\"OpName\": \"Dr. Brian Albert\",\n\"Abbrev\": \"OP-1\",\n\"ItemOrder\": 0,\n\"IsHidden\": \"false\",\n\"ProvDentist\": 1,\n\"ProvHygienist\": 0,\n\"IsHygiene\": \"false\",\n\"ClinicNum\": 0,\n\"SetProspective\": \"false\",\n\"IsWebSched\": \"false\"\n\"OperatoryType\": 0,\n\"operatoryType\": \"\"\n},\n{\n\"OperatoryNum\": 2,\n\"OpName\": \"Dr. Sarah Lexington\",\n\"Abbrev\": \"OP-2\",\n\"ItemOrder\": 1,\n\"IsHidden\": \"false\",\n\"ProvDentist\": 3,\n\"ProvHygienist\": 0,\n\"IsHygiene\": \"false\",\n\"ClinicNum\": 0,\n\"SetProspective\": \"false\",\n\"IsWebSched\": \"false\"\n\"OperatoryType\": 0,\n\"operatoryType\": \"\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation) ",
+  "metadata": {
+    "version": "24.1.10",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Operatories",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-operatory",
+      "description": "API references database table operatory"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "db-eroutingactiondef",
+  "type": "database",
+  "title": "eroutingactiondef",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "eroutingactiondef",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "eroutingactiondef",
+    "description": "Table for eroutingactiondef data.",
+    "columns": [
+      {
+        "name": "eroutingactiondefNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "eroutingactiondefNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

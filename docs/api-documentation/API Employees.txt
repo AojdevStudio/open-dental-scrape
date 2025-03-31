@@ -1,0 +1,83 @@
+API Employees
+See API Specification
+
+Employees GET (single)
+Version Added: 23.3.22
+
+Gets a single employee.
+
+Parameters:
+
+EmployeeNum: Required in URL.
+
+Example Request:
+GET /employees/17
+
+Example Response:
+{
+"EmployeeNum": 17,
+"LName": "Elser",
+"FName": "Sierra",
+"MiddleI": "O",
+"IsHidden": "false",
+"ClockStatus": "Working",
+"PayrollID": "",
+"WirelessPhone": "(555)012-4816",
+"EmailWork": "ElserS@email.net",
+"EmailPersonal": "",
+"IsFurloughed": "false",
+"ReportsTo": 0
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Employees GET (multiple)
+Version Added: 23.3.22
+
+Gets a list of employees.
+
+Parameters:
+
+ReportsTo: Optional. FK to employee.EmployeeNum.
+
+Example Requests:
+GET /employees
+GET /employees?ReportsTo=0
+GET /employees?ReportsTo=17
+
+[
+{
+"EmployeeNum": 34,
+"LName": "Bell",
+"FName": "Sharron",
+"MiddleI": "J",
+"IsHidden": "false",
+"ClockStatus": "Working",
+"PayrollID": "",
+"WirelessPhone": "(022)920-2325",
+"EmailWork": "SharronB@email.net",
+"EmailPersonal": "",
+"IsFurloughed": "false",
+"ReportsTo": 17
+},
+{
+"EmployeeNum": 52,
+"LName": "Grayson",
+"FName": "Fiona",
+"MiddleI": "D",
+"IsHidden": "false",
+"ClockStatus": "Home",
+"PayrollID": "",
+"WirelessPhone": "(555)122-9202",
+"EmailWork": "GraysonF@email.net",
+"EmailPersonal": "",
+"IsFurloughed": "false",
+"ReportsTo": 17
+}
+]
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

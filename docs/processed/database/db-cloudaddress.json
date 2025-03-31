@@ -1,0 +1,40 @@
+{
+  "id": "db-cloudaddress",
+  "type": "database",
+  "title": "cloudaddress",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "cloudaddress",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "cloudaddress",
+    "description": "Table for cloudaddress data.",
+    "columns": [
+      {
+        "name": "cloudaddressNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "cloudaddressNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

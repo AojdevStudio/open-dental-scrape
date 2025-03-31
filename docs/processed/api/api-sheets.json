@@ -1,0 +1,168 @@
+{
+  "id": "api-sheets",
+  "type": "api",
+  "title": "Sheets",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Sheets.txt",
+  "content": "API Sheets\nSee API Specification\n\nSheets GET\nVersion Added: 21.4\n\nGets all Sheets for a single patient.\n\nPatNum: Required.\n\nExample Request:\nGET /sheets?PatNum=123\nGET /sheets?PatNum=123&Offset=400\n\nExample Response:\n[\n{\n\"SheetNum\": 45,\n\"SheetType\": \"PatientLetter\",\n\"PatNum\": 123,\n\"DateTimeSheet\": \"2021-11-16 02:45:38\",\n\"InternalNote\": \"\",\n\"Description\": \"Custom Patient Letter\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 25,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2022-01-23 08:33:02\"\n},\n{\n\"SheetNum\": 47,\n\"SheetType\": \"MedicalHistory\",\n\"PatNum\": 123,\n\"DateTimeSheet\": \"2021-11-16 12:21:03\",\n\"InternalNote\": \"\",\n\"Description\": \"Medical History Simple\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 24,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2022-11-23 04:20:12\"\n},\n{\n\"SheetNum\": 50,\n\"SheetType\": \"ExamSheet\",\n\"PatNum\": 123,\n\"DateTimeSheet\": \"2022-03-07 10:25:00\",\n\"InternalNote\": \"\",\n\"Description\": \"Exam\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 20,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2022-03-07 10:25:22\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nSheets POST\nVersion Added: 23.1.32\n\nCreates a Sheet with SheetFields using an existing SheetDef for a patient. Only SheetDefs of SheetType \"Consent\", \"PatientLetter\", \"PatientForm\", \"MedicalHistory\", and \"ExamSheet\" are supported.\n\nSheetDefNum: Required. FK to sheetdef.SheetDefNum.\nPatNum: Required.\nInternalNote: Optional.\n\nExample Request:\nPOST /sheets\n\n{\n\"SheetDefNum\": 25,\n\"PatNum\": 465\n}\n\nExample Response:\n{\n\"SheetNum\": 70,\n\"SheetType\": \"PatientLetter\",\n\"PatNum\": 465,\n\"DateTimeSheet\": \"2023-06-21 15:24:52\",\n\"InternalNote\": \"\",\n\"Description\": \"Patient Letter\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 25,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2023-06-21 15:24:52\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nSheets POST DownloadSftp\nVersion Added: 22.1\n\nConverts a sheet to a PDF, then downloads it to an SFTP site that you specify. After running this method, download the resulting file from your SFTP site. The user with the SFTP credentials must have write permission in this directory. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. If no file name is specified, the file will be titled \"sheet.pdf\".\n\nSheetNum: Required.\nSftpAddress: Required.\nSftpUsername: Required.\nSftpPassword: Required.\n\nExample Request:\nPOST /sheets/DownloadSftp\n\n{\n\"SheetNum\": 50,\n\"SftpAddress\": \"MySftpSite/myUsername/Sheets/ExamSheetJones.pdf\",\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}\n\nExample Response:\n\n201 Created, \"location\": The full filepath of the saved file.\n400 BadRequest (Invalid fields, invalid file extension, and Sftp connection errors).\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.1.32",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Sheets",
+      "GET",
+      "POST",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Sheets",
+      "method": "GET",
+      "path": "/sheets",
+      "versionAdded": "21.4",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /sheets?PatNum=123\nGET /sheets?PatNum=123&Offset=400",
+          "response": "[\n{\n\"SheetNum\": 45,\n\"SheetType\": \"PatientLetter\",\n\"PatNum\": 123,\n\"DateTimeSheet\": \"2021-11-16 02:45:38\",\n\"InternalNote\": \"\",\n\"Description\": \"Custom Patient Letter\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 25,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2022-01-23 08:33:02\"\n},\n{\n\"SheetNum\": 47,\n\"SheetType\": \"MedicalHistory\",\n\"PatNum\": 123,\n\"DateTimeSheet\": \"2021-11-16 12:21:03\",\n\"InternalNote\": \"\",\n\"Description\": \"Medical History Simple\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 24,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2022-11-23 04:20:12\"\n},\n{\n\"SheetNum\": 50,\n\"SheetType\": \"ExamSheet\",\n\"PatNum\": 123,\n\"DateTimeSheet\": \"2022-03-07 10:25:00\",\n\"InternalNote\": \"\",\n\"Description\": \"Exam\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 20,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2022-03-07 10:25:22\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "123",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all Sheets for a single patient."
+    },
+    {
+      "resource": "Sheets",
+      "method": "POST",
+      "path": "/sheets",
+      "versionAdded": "23.1.32",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /sheets\n\n{\n\"SheetDefNum\": 25,\n\"PatNum\": 465\n}",
+          "response": "{\n\"SheetNum\": 70,\n\"SheetType\": \"PatientLetter\",\n\"PatNum\": 465,\n\"DateTimeSheet\": \"2023-06-21 15:24:52\",\n\"InternalNote\": \"\",\n\"Description\": \"Patient Letter\",\n\"IsWebForm\": \"false\",\n\"SheetDefNum\": 25,\n\"DocNum\": 0,\n\"ClinicNum\": 0,\n\"DateTSheetEdited\": \"2023-06-21 15:24:52\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a Sheet with SheetFields using an existing SheetDef for a patient. Only SheetDefs of SheetType \"Consent\", \"PatientLetter\", \"PatientForm\", \"MedicalHistory\", and \"ExamSheet\" are supported."
+    },
+    {
+      "resource": "Sheets",
+      "method": "POST",
+      "path": "/sheets",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /sheets/DownloadSftp\n\n{\n\"SheetNum\": 50,\n\"SftpAddress\": \"MySftpSite/myUsername/Sheets/ExamSheetJones.pdf\",\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Invalid fields, invalid file extension, and Sftp connection errors"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Converts a sheet to a PDF, then downloads it to an SFTP site that you specify. After running this method, download the resulting file from your SFTP site. The user with the SFTP credentials must have write permission in this directory. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. If no file name is specified, the file will be titled \"sheet.pdf\"."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-sheetdef",
+      "description": "API references database table sheetdef"
+    },
+    {
+      "type": "references",
+      "target": "db-letter",
+      "description": "API references database table letter"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-sheetfield",
+      "description": "API references database table sheetfield"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}

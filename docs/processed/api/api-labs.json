@@ -1,0 +1,47 @@
+{
+  "id": "api-labs",
+  "type": "api",
+  "title": "Labs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Labs.txt",
+  "content": "API Laboratories\nSee API Specification\n\nSee Laboratories for more information.\n\nLaboratories GET (single)\nVersion Added: 24.2.33\n\nGets a single laboratory.\n\nLaboratoryNum: Required in URL.\n\nExample Request:\nGET /laboratories/1\n\nExample Response:\n{\n\"LaboratoryNum\": 1,\n\"Description\": \"Go Smiles Lab\",\n\"Phone\": \"(503)240-1910\",\n\"Notes\": \"\",\n\"Slip\": 0,\n\"Address\": \"231 Hoyt Rd\",\n\"City\": \"Glendale\",\n\"State\": \"OR\",\n\"Zip\": \"91124\",\n\"Email\": \"\",\n\"WirelessPhone\": \"\",\n\"IsHidden\": \"false\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nLaboratories GET (multiple)\nVersion Added: 24.2.33\n\nGets a list of laboratories.\n\nExample Request:\nGET /laboratories\n\nExample Responses:\n[\n{\n\"LaboratoryNum\": 1,\n\"Description\": \"Go Smiles Lab\",\n\"Phone\": \"(503)240-1910\",\n\"Notes\": \"\",\n\"Slip\": 0,\n\"Address\": \"231 Hoyt Rd\",\n\"City\": \"Glendale\",\n\"State\": \"OR\",\n\"Zip\": \"91124\",\n\"Email\": \"\",\n\"WirelessPhone\": \"\",\n\"IsHidden\": \"false\"\n},\n{\n\"LaboratoryNum\": 2,\n\"Description\": \"Lab\",\n\"Phone\": \"(503)555-1810\",\n\"Notes\": \"\",\n\"Slip\": 0,\n\"Address\": \"\",\n\"City\": \"\",\n\"State\": \"\",\n\"Zip\": \"\",\n\"Email\": \"\",\n\"WirelessPhone\": \"\",\n\"IsHidden\": \"false\"\n},\netc...\n]\n\n200 OK\n\nLaboratories POST (create)\nVersion Added: 24.4.22\n\nCreates a Laboratory.\n\nDescription: Required. Description of lab.\n\nPhone: Optional.\nNotes: Optional.\nSlip: Optional. FK to sheetdef.SheetDefNum. Lab slips can be set for individual laboratories. If 0, then the default internal lab slip will be used instead of a custom lab slip. Default 0.\nAddress: Optional. The laboratory's address.\nCity: Optional. City.\nState: Optional. Two capital character in USA. Province in Canada.\nZip: Optional. Postal code. Must be in format 12345, 12345-1234, or 123456789 (US) or A0A 0A0 (CA).\nEmail: Optional. The laboratory's email address.\nWirelessPhone: Optional.\nIsHidden: Optional. Set \"true\" for laboratories no longer in use. Default \"false\".\n\nExample Request:\nPOST /laboratories\n\n{\n\"Description\": \"Go Smiles Lab\",\n\"Phone\": \"(503)240-1910\",\n\"Notes\": \"Implants.\",\n\"Slip\": 0,\n\"Address\": \"231 Hoyt Rd\",\n\"City\": \"Glendale\",\n\"State\": \"OR\",\n\"Zip\": \"91124\",\n\"Email\": \"GoSmilesLab@mail.com\",\n\"WirelessPhone\": \"(503)981-5555\",\n\"IsHidden\": \"false\"\n}\n\nExample Response:\n{\n\"LaboratoryNum\": 1,\n\"Description\": \"Go Smiles Lab\",\n\"Phone\": \"(503)240-1910\",\n\"Notes\": \"Implants.\",\n\"Slip\": 0,\n\"Address\": \"231 Hoyt Rd\",\n\"City\": \"Glendale\",\n\"State\": \"OR\",\n\"Zip\": \"91124\",\n\"Email\": \"GoSmilesLab@mail.com\",\n\"WirelessPhone\": \"(503)981-5555\",\n\"IsHidden\": \"false\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nLaboratories PUT (update)\nVersion Added: 24.4.23\n\nUpdates a laboratory.\n\nLaboratoryNum: Required in the URL.\n\nDescription: Name of laboratory.\nPhone: Contact phone number.\nNotes: Overwrites existing note.\nSlip: FK to sheetdef.SheetDefNum. Set to 0 to use the default internal lab slip.\nAddress: The laboratory's address.\nCity: City.\nState: Two capital character in USA. Province in Canada.\nZip: Postal code. Must be in format 12345, 12345-1234, or 123456789 (US) or A0A 0A0 (CA).\nEmail: Email address for laboratory.\nWirelessPhone: Additional contact phone number.\nIsHidden: Set \"true\" for laboratories no longer in use.\n\nExample Request:\nPUT /laboratories/1\n\n{\n\"Notes\": \"Implant Specialists.\",\n\"Email\": \"GoSmilesImplantSpecialists@mail.com\"\n}\n\nExample Response:\n{\n\"LaboratoryNum\": 1,\n\"Description\": \"Go Smiles Lab\",\n\"Phone\": \"(503)240-1910\",\n\"Notes\": \"Implant Specialists.\",\n\"Slip\": 2,\n\"Address\": \"231 Hoyt Rd\",\n\"City\": \"Glendale\",\n\"State\": \"OR\",\n\"Zip\": \"91124\",\n\"Email\": \"GoSmilesImplantSpecialists@mail.com\",\n\"WirelessPhone\": \"(503)981-5555\",\n\"IsHidden\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.23",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Labs",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-sheetdef",
+      "description": "API references database table sheetdef"
+    },
+    {
+      "type": "references",
+      "target": "db-laboratory",
+      "description": "API references database table laboratory"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}

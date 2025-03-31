@@ -1,0 +1,40 @@
+{
+  "id": "db-orthoschedule",
+  "type": "database",
+  "title": "orthoschedule",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "orthoschedule",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "orthoschedule",
+    "description": "Table for orthoschedule data.",
+    "columns": [
+      {
+        "name": "orthoscheduleNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "orthoscheduleNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

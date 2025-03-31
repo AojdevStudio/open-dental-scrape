@@ -1,0 +1,57 @@
+API PatientNotes
+See API Specification
+
+PatientNotes GET
+Version Added: 21.2
+
+PatientNotes have a 1:1 relationship to Patients and contain additional information about the patient. The PatNum must be included in the URL.
+
+Example Request:
+GET /patientnotes/15
+
+Example Response:
+{
+"Medical": "Diabetes.",
+"ICEName": "Carolyn Wright",
+"ICEPhone": "(820) 202-1134",
+"Service": "No flo"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+PatientNotes PUT
+Version Added: 21.2
+
+Include the PatNum in the URL. All JSON fields are optional. If you want to append a note instead of replace, then use PatientNotes GET, and do your own concatenation before calling PUT.
+
+Medical: Replace existing medical history note.
+ICEName: Replaces existing ICEName.
+ICEPhone: String. Replaces existing ICEPhone.
+Service (added in version 21.4): String. Replaces existing service note.
+
+Example Requests:
+PUT /patientnotes/15
+
+{
+"Medical": "Unknown family history."
+}
+
+or
+
+{
+"ICEName": "Herbert Grayson",
+"ICEPhone": "(134) 721-1321"
+}
+
+Example Response:
+{
+"Medical": "Diabetes.",
+"ICEName": "Carolyn Wright",
+"ICEPhone": "(820) 202-1134",
+"Service": "No flo"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

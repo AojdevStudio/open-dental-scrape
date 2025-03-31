@@ -1,0 +1,212 @@
+{
+  "id": "api-claimpayments",
+  "type": "api",
+  "title": "Claimpayments",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Claimpayments.txt",
+  "content": "API ClaimPayments\nSee API Specification\n\nClaimPayments are complex. They are used to finalize the payments received by insurance for a claim. See Claim, Receive Claim, and Finalize Insurance Payment for more details.\n\nClaimPayments GET (single)\nVersion Added: 23.2.15\n\nGets a single claimpayment.\n\nParameters:\n\nClaimPaymentNum: Required in URL.\n\nExample Request:\nGET /claimpayments/1822\n\nExample Response:\n{\n\"ClaimPaymentNum\": 1822,\n\"CheckDate\": \"2023-08-16\",\n\"CheckAmt\": \"300\",\n\"CheckNum\": \"2468657\",\n\"BankBranch\": \"Southwest Federal Bank\",\n\"Note\": \"\",\n\"ClinicNum\": 3,\n\"DepositNum\": 9867,\n\"CarrierName\": \"ODS Oregon Dental Service\",\n\"DateIssued\": \"2023-08-16\",\n\"IsPartial\": \"false\",\n\"PayType\": 356,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2023-08-16\",\n\"SecDateTEdit\": \"2023-08-21 13:00:37\",\n\"PayGroup\": 451,\n\"payGroup\": \"Lockbox 1\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nClaimPayments GET (multiple)\nVersion Added: 23.2.15\n\nGets a list of claimpayments.\n\nParameters: All Optional.\n\nSecDateTEdit: The last date the ClaimPayment was edited. Returns all ClaimPayments on or after this date. String in \"yyyy-MM-dd HH:mm:ss\" format.\n\nExample Requests:\nGET /claimpayments?SecDateTEdit=2023-08-15%2010%3A30%3A00\n\nExample Response:\n[\n{\n\"ClaimPaymentNum\": 5822,\n\"CheckDate\": \"2023-08-16\",\n\"CheckAmt\": \"300\",\n\"CheckNum\": \"2468657\",\n\"BankBranch\": \"Southwest Federal Bank\",\n\"Note\": \"\",\n\"ClinicNum\": 3,\n\"DepositNum\": 9867,\n\"CarrierName\": \"ODS Oregon Dental Service\",\n\"DateIssued\": \"2023-08-16\",\n\"IsPartial\": \"false\",\n\"PayType\": 356,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2023-08-16\",\n\"SecDateTEdit\": \"2023-08-21 13:00:37\",\n\"PayGroup\": 451,\n\"payGroup\": \"Lockbox 1\"\n},\n{\n\"ClaimPaymentNum\": 5823,\n\"CheckDate\": \"2023-08-18\",\n\"CheckAmt\": \"1500.99\",\n\"CheckNum\": \"9876\",\n\"BankBranch\": \"4567-89654\",\n\"Note\": \"Received in Mail\",\n\"ClinicNum\": 3,\n\"DepositNum\": 0,\n\"CarrierName\": \"BCBS\",\n\"DateIssued\": \"2023-08-14\",\n\"IsPartial\": \"false\",\n\"PayType\": 356,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 11,\n\"SecDateEntry\": \"2023-08-18\",\n\"SecDateTEdit\": \"2023-08-19 12:53:39\",\n\"PayGroup\": 452,\n\"payGroup\": \"Lockbox 2\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nClaimPayments POST\nVersion Added: 22.4.8\n\nFinalize a claimpayment for a single Claim. Cannot use this method if the dental office has the preference ClaimPaymentBatchOnly set to true. Does not link Deposits or Attach EOBs.\n\nPrior to running this method, use ClaimProcs PUT (update) to update the Status to either \"Received\" or \"Supplemental\", and finalize the InsPayAmt. ClaimProc.InsPayAmt cannot be updated when there is already a ClaimPayment attached. Then use Claims PUT (update) to update the Claim ClaimStatus to \"R\" (Received).\n\nclaimNum: Required. FK to Claim.ClaimNum that is receiving the payment.\nCheckAmt: Required. The amount of the check. Must match the total of the ClaimProcs' InsPayAmt for all of the ClaimProcs attached to the Claim that have a ClaimPaymentNum of 0.\n\nCheckDate: Optional. Date the check was entered into this system, not the date on the check. String in \"yyyy-MM-dd\" format. Default today's date.\nCheckNum: Optional. The check number.\nBankBranch: Optional. Bank and branch.\nNote: Optional. Note for this check if needed.\nClinicNum: Optional. Default is the ClinicNum of the Claim.\nCarrierName: Optional. Default is the CarrierName attached to the InsPlan that is attached to the Claim.\nDateIssued: Optional. Date that the carrier issued the check. Date on the check. String in \"yyyy-MM-dd\" format.\nPayType: Optional. Definition.DefNum where category=32. See also Definitions: Insurance Payment Types. Default is the first definition in that Category.\nPayGroup: Optional. Definition.DefNum where category=40. See also Definitions: Claim Payment Groups. Default is the first definition in that Category.\n\nExample Requests:\nPOST /claimpayments\n\n{\n\"claimNum\": 3567,\n\"CheckAmt\": \"567.42\"\n}\n\nor\n\n{\n\"claimNum\": 3567,\n\"CheckAmt\": \"567.42\",\n\"CheckDate\": \"2022-10-25\",\n\"CheckNum\": \"1234\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 3,\n\"CarrierName\": \"Great Insurance\",\n\"DateIssued\": \"2022-10-20\",\n\"PayType\": 386,\n\"PayGroup\": 394\n}\n\nExample Response:\n{\n\"ClaimPaymentNum\": 897,\n\"CheckDate\": \"2022-10-25\",\n\"CheckAmt\": \"567.42\",\n\"CheckNum\": \"1234\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 3,\n\"DepositNum\": 0,\n\"CarrierName\": \"Great Insurance\",\n\"DateIssued\": \"2022-10-20\",\n\"IsPartial\": \"false\",\n\"PayType\": 386,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2022-10-25\",\n\"SecDateTEdit\": \"2022-10-11 12:54:48\",\n\"PayGroup\": 394,\n\"payGroup\": \"Default\"\n}\n\n201 Created\n400 BadRequest (with explaination)\n404 NotFound (with explaination)\n\nClaimPayments POST Batch\nVersion Added: 24.2.18\n\nCreate a batch claimpayment. Creates an Auto Deposit if the dental office has the preference ShowAutoDeposit set to true. Does not attach EOBs. See Batch Insurance Payment.\n\nPrior to running this method, use ClaimProcs PUT (update) to update the Status to either \"Received\" or \"Supplemental\", and finalize the InsPayAmt. ClaimProc.InsPayAmt cannot be updated when there is already a ClaimPayment attached. Then use Claims PUT (update) to update the Claim ClaimStatus to \"R\" (Received).\n\nclaimNums: Required. An array of ClaimNums that are receiving the payment, in [1,2,3] format.\nCheckAmt: Required. The amount of the check. If the amount differs from the total of the ClaimProcs' InsPayAmt for all of the ClaimProcs attached to the Claim that have a ClaimPaymentNum of 0, then this ClaimPayment will be marked as partial.\n\nCheckDate: Optional. Date the check was entered into this system, not the date on the check. String in \"yyyy-MM-dd\" format. Default today's date.\nCheckNum: Optional. The check number.\nBankBranch: Optional. Bank and branch.\nNote: Optional. Note for this payment.\nClinicNum: Optional. Default 0.\nCarrierName: Optional. Default is the CarrierName attached to the InsPlan that is attached to the first Claim in the claimNums list.\nDateIssued: Optional. Date that the carrier issued the payment. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\nPayType: Optional. definition.DefNum where category=32. See also Definitions: Insurance Payment Types. Default is the first definition in that Category.\nPayGroup: Optional. definition.DefNum where category=40. See also Definitions: Claim Payment Groups. Default is the first definition in that Category.\n\nExample Requests:\nPOST /claimpayments/Batch\n\n{\n\"claimNums\": [2547, 2568, 2591],\n\"CheckAmt\": \"350.35\"\n}\n\nor\n\n{\n\"claimNums\": [2547, 2568, 2591],\n\"CheckAmt\": \"350.35\",\n\"CheckDate\": \"2024-05-25\",\n\"CheckNum\": \"5678\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 2,\n\"CarrierName\": \"Greater Insurance\",\n\"DateIssued\": \"2024-05-10\",\n\"PayType\": 386,\n\"PayGroup\": 394\n}\n\nExample Response:\n{\n\"ClaimPaymentNum\": 905,\n\"CheckDate\": \"2024-05-25\",\n\"CheckAmt\": \"350.35\",\n\"CheckNum\": \"5678\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 2,\n\"DepositNum\": 0,\n\"CarrierName\": \"Greater Insurance\",\n\"DateIssued\": \"2024-05-10\",\n\"IsPartial\": \"true\",\n\"PayType\": 386,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2024-05-25\",\n\"SecDateTEdit\": \"2024-05-25 10:03:37\",\n\"PayGroup\": 394,\n\"payGroup\": \"Default\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nClaimPayments PUT\nVersion Added: 23.2.15\n\nUpdates an existing claimpayment by ClaimPaymentNum. See Finalize Insurance Payment.\n\nClaimPaymentNum: Required in the URL.\n\nCheckNum: Optional. The check number.\nBankBranch: Optional. Bank and branch.\nNote: Optional. Note for this check if needed. Replaces existing Note.\nCarrierName: Optional. Descriptive name of the carrier just for reporting purposes.\nPayType: Optional. Definition.DefNum where definition.Category=32. See also Definitions: Insurance Payment Types.\nPayGroup: Optional. Definition.DefNum where definition.Category=40. See also Definitions: Claim Payment Groups.\n\nExample Request:\nPUT /claimpayments/1434\n\n{\n\"CheckNum\": \"758946\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"CarrierName\": \"ODS Oregon Dental Service\",\n\"PayType\": 356,\n\"PayGroup\": 412\n}\n\nExample Response:\n{\n\"ClaimPaymentNum\": 1434,\n\"CheckDate\": \"2023-08-16\",\n\"CheckAmt\": \"567.42\",\n\"CheckNum\": \"758946\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 3,\n\"DepositNum\": 0,\n\"CarrierName\": \"ODS Oregon Dental Service\",\n\"DateIssued\": \"2023-08-14\",\n\"IsPartial\": \"false\",\n\"PayType\": 356\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-08-16\",\n\"SecDateTEdit\": \"2023-08-17 12:53:39\",\n\"PayGroup\": 412,\n\"payGroup\": \"Default\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nClaimPayments DELETE\nVersion Added: 24.3.13\n\nDeletes a claimpayment. Cannot delete a claimpayment if it is associated with an EOB or a deposit.\n\nClaimPaymentNum: Required in the URL.\n\nExample Request:\nDELETE /claimpayments/124\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.3.13",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Claimpayments",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ClaimPayments",
+      "method": "POST",
+      "path": "/claimpayments",
+      "versionAdded": "22.4.8",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /claimpayments\n\n{\n\"claimNum\": 3567,\n\"CheckAmt\": \"567.42\"\n}\n\nor\n\n{\n\"claimNum\": 3567,\n\"CheckAmt\": \"567.42\",\n\"CheckDate\": \"2022-10-25\",\n\"CheckNum\": \"1234\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 3,\n\"CarrierName\": \"Great Insurance\",\n\"DateIssued\": \"2022-10-20\",\n\"PayType\": 386,\n\"PayGroup\": 394\n}",
+          "response": "{\n\"ClaimPaymentNum\": 897,\n\"CheckDate\": \"2022-10-25\",\n\"CheckAmt\": \"567.42\",\n\"CheckNum\": \"1234\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 3,\n\"DepositNum\": 0,\n\"CarrierName\": \"Great Insurance\",\n\"DateIssued\": \"2022-10-20\",\n\"IsPartial\": \"false\",\n\"PayType\": 386,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2022-10-25\",\n\"SecDateTEdit\": \"2022-10-11 12:54:48\",\n\"PayGroup\": 394,\n\"payGroup\": \"Default\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explaination"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explaination"
+        }
+      ],
+      "description": "Finalize a claimpayment for a single Claim. Cannot use this method if the dental office has the preference ClaimPaymentBatchOnly set to true. Does not link Deposits or Attach EOBs."
+    },
+    {
+      "resource": "ClaimPayments",
+      "method": "POST",
+      "path": "/claimpayments",
+      "versionAdded": "24.2.18",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /claimpayments/Batch\n\n{\n\"claimNums\": [2547, 2568, 2591],\n\"CheckAmt\": \"350.35\"\n}\n\nor\n\n{\n\"claimNums\": [2547, 2568, 2591],\n\"CheckAmt\": \"350.35\",\n\"CheckDate\": \"2024-05-25\",\n\"CheckNum\": \"5678\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 2,\n\"CarrierName\": \"Greater Insurance\",\n\"DateIssued\": \"2024-05-10\",\n\"PayType\": 386,\n\"PayGroup\": 394\n}",
+          "response": "{\n\"ClaimPaymentNum\": 905,\n\"CheckDate\": \"2024-05-25\",\n\"CheckAmt\": \"350.35\",\n\"CheckNum\": \"5678\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 2,\n\"DepositNum\": 0,\n\"CarrierName\": \"Greater Insurance\",\n\"DateIssued\": \"2024-05-10\",\n\"IsPartial\": \"true\",\n\"PayType\": 386,\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2024-05-25\",\n\"SecDateTEdit\": \"2024-05-25 10:03:37\",\n\"PayGroup\": 394,\n\"payGroup\": \"Default\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Create a batch claimpayment. Creates an Auto Deposit if the dental office has the preference ShowAutoDeposit set to true. Does not attach EOBs. See Batch Insurance Payment."
+    },
+    {
+      "resource": "ClaimPayments",
+      "method": "PUT",
+      "path": "/claimpayments",
+      "versionAdded": "23.2.15",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /claimpayments/1434\n\n{\n\"CheckNum\": \"758946\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"CarrierName\": \"ODS Oregon Dental Service\",\n\"PayType\": 356,\n\"PayGroup\": 412\n}",
+          "response": "{\n\"ClaimPaymentNum\": 1434,\n\"CheckDate\": \"2023-08-16\",\n\"CheckAmt\": \"567.42\",\n\"CheckNum\": \"758946\",\n\"BankBranch\": \"124-85425\",\n\"Note\": \"Check was lost in mail, but envelope is dated appropriately.\",\n\"ClinicNum\": 3,\n\"DepositNum\": 0,\n\"CarrierName\": \"ODS Oregon Dental Service\",\n\"DateIssued\": \"2023-08-14\",\n\"IsPartial\": \"false\",\n\"PayType\": 356\n\"payType\": \"Check\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-08-16\",\n\"SecDateTEdit\": \"2023-08-17 12:53:39\",\n\"PayGroup\": 412,\n\"payGroup\": \"Default\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates an existing claimpayment by ClaimPaymentNum. See Finalize Insurance Payment."
+    },
+    {
+      "resource": "ClaimPayments",
+      "method": "DELETE",
+      "path": "/claimpayments",
+      "versionAdded": "24.3.13",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /claimpayments/124",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "124",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a claimpayment. Cannot delete a claimpayment if it is associated with an EOB or a deposit."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-carrier",
+      "description": "API references database table carrier"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-claimpayment",
+      "description": "API references database table claimpayment"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-claimproc",
+      "description": "API references database table claimproc"
+    },
+    {
+      "type": "references",
+      "target": "db-deposit",
+      "description": "API references database table deposit"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    }
+  ]
+}

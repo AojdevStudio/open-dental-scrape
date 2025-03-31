@@ -1,0 +1,85 @@
+API ProcNotes
+See API Specification
+
+See Procedure Notes for additional information.
+
+ProcNotes GET
+Version Added: 24.2.29
+
+Gets a list of procnotes ordered by most recent. When a procnote is edited in Open Dental, a new procnote is created. No existing procnote can EVER be edited or deleted.
+
+PatNum: Optional. FK to patient.PatNum.
+ProcNum: Optional. FK to procedure.ProcNum.
+
+Example Requests:
+GET /procnotes?PatNum=426
+GET /procnotes?PatNum=426&ProcNum=1234
+
+Example Response:
+[
+{
+"ProcNoteNum": 17591,
+"PatNum": 426,
+"ProcNum": 1234,
+"EntryDateTime": "2024-09-10 11:56:29",
+"UserNum": 1,
+"Note": "Review med hx \nPt chief complaint: Bleeding, swelling \nDue Date: \"\"\nBP taken: BP: 118 / 72 Pulse: 83 \n Follow up",
+"SigIsTopaz": "false",
+"isSigned": "true"
+},
+{
+"ProcNoteNum": 17390,
+"PatNum": 426,
+"ProcNum": 1234,
+"EntryDateTime": "2024-09-03 11:45:48",
+"UserNum": 1,
+"Note": "Review med hx \nPt chief complaint: Bleeding, swelling \nDue Date: \"\"\nBP taken: BP: 118 / 72 Pulse: 83 \n Follow up",
+"SigIsTopaz": "false",
+"isSigned": "false"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+ProcNotes POST
+Version Added: 22.2
+
+Creates a new note that is associated with a procedure. If the Procedure Note contains 50 or more consecutive blank lines, they will be removed. The new procnote will always replace the existing procnote. Every change is recorded with an archived note history, which can be viewed in the Chart Module under Show Tab > Audit.
+
+To sign a procnote set isSigned to true. The signature that appears on the procnote will be shown as the following: "Digitally Signed by [API DeveloperName] Date Signed: ["MM/dd/yyyy HH:mm:ss tt"]". See API Implementation for more information on API Signatures.
+
+PatNum: Required.
+ProcNum: Required. ProcNum of the procedure.
+Note: Required. The actual note.
+isSigned: (added in version 24.2.29) Optional. Either "true" or "false". If "true", will digitally sign the procnote. Default "false".
+doAppendNote: (added in version 24.2.29) Optional. Either "true" or "false". If "true", will prepend the Note field with the most recent procnote.Note value followed by two newlines. Default "false".
+
+Example Request:
+POST /procnotes
+
+{
+"PatNum": 74,
+"ProcNum": 868,
+"Note": "Signed on behalf of Doctor Joe Smith.",
+"isSigned": "true",
+"doAppendNote": "true"
+}
+
+Example Response:
+{
+"ProcNoteNum": 591,
+"PatNum": 74,
+"ProcNum": 868,
+"EntryDateTime": "2024-09-10 11:56:29",
+"UserNum": 0,
+"Note": "Review med hx \nPt chief complaint: Bleeding, swelling \nDue Date: \"\"\nBP taken: BP: 118 / 72 Pulse: 83 \n Follow up\r\n\r\nSigned on behalf of Doctor Joe Smith.",
+"SigIsTopaz": "false",
+"isSigned": "true"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

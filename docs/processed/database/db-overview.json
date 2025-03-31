@@ -1,0 +1,2484 @@
+{
+  "id": "db-overview",
+  "type": "database",
+  "title": "Database Overview",
+  "metadata": {
+    "category": [
+      "Database",
+      "Overview"
+    ],
+    "tags": [
+      "Schema",
+      "Structure",
+      "Tables"
+    ]
+  },
+  "database": {
+    "tableCount": 410,
+    "foreignKeyCount": 6,
+    "tableList": [
+      "account",
+      "accountingautopay",
+      "activeinstance",
+      "adjustment",
+      "alertcategory",
+      "alertcategorylink",
+      "alertitem",
+      "alertread",
+      "alertsub",
+      "allergy",
+      "allergydef",
+      "apikey",
+      "apisubscription",
+      "appointment",
+      "appointmentrule",
+      "appointmenttype",
+      "apptfield",
+      "apptfielddef",
+      "apptgeneralmessagesent",
+      "apptnewpatthankyousent",
+      "apptreminderrule",
+      "apptremindersent",
+      "apptthankyousent",
+      "apptview",
+      "apptviewitem",
+      "asapcomm",
+      "autocode",
+      "autocodecond",
+      "autocodeitem",
+      "autocommexcludedate",
+      "automation",
+      "automationcondition",
+      "autonote",
+      "autonotecontrol",
+      "benefit",
+      "canadiannetwork",
+      "carecreditwebresponse",
+      "carrier",
+      "cdcrec",
+      "cdspermission",
+      "centralconnection",
+      "cert",
+      "certemployee",
+      "chartview",
+      "claim",
+      "claimattach",
+      "claimcondcodelog",
+      "claimform",
+      "claimformitem",
+      "claimpayment",
+      "claimproc",
+      "claimsnapshot",
+      "claimtracking",
+      "claimvalcodelog",
+      "clearinghouse",
+      "clinic",
+      "clinicerx",
+      "clinicpref",
+      "clockevent",
+      "cloudaddress",
+      "codegroup",
+      "codesystem",
+      "commlog",
+      "commoptout",
+      "computer",
+      "computerpref",
+      "confirmationrequest",
+      "connectiongroup",
+      "conngroupattach",
+      "contact",
+      "county",
+      "covcat",
+      "covspan",
+      "cpt",
+      "creditcard",
+      "custrefentry",
+      "custreference",
+      "cvx",
+      "dashboardar",
+      "dashboardcell",
+      "dashboardlayout",
+      "databasemaintenance",
+      "dbmlog",
+      "definition",
+      "deflink",
+      "deletedobject",
+      "deposit",
+      "dictcustom",
+      "discountplan",
+      "discountplansub",
+      "disease",
+      "diseasedef",
+      "displayfield",
+      "displayreport",
+      "dispsupply",
+      "document",
+      "documentmisc",
+      "drugmanufacturer",
+      "drugunit",
+      "dunning",
+      "ebill",
+      "eclipboardimagecapture",
+      "eclipboardimagecapturedef",
+      "eclipboardsheetdef",
+      "eduresource",
+      "eform",
+      "eformdef",
+      "eformfield",
+      "eformfielddef",
+      "eformimportrule",
+      "ehramendment",
+      "ehraptobs",
+      "ehrcareplan",
+      "ehrlab",
+      "ehrlabclinicalinfo",
+      "ehrlabimage",
+      "ehrlabnote",
+      "ehrlabresult",
+      "ehrlabresultscopyto",
+      "ehrlabspecimen",
+      "ehrlabspecimencondition",
+      "ehrlabspecimenrejectreason",
+      "ehrmeasure",
+      "ehrmeasureevent",
+      "ehrnotperformed",
+      "ehrpatient",
+      "ehrprovkey",
+      "ehrquarterlykey",
+      "ehrsummaryccd",
+      "ehrtrigger",
+      "electid",
+      "emailaddress",
+      "emailattach",
+      "emailautograph",
+      "emailhostingtemplate",
+      "emailmessage",
+      "emailmessageuid",
+      "emailsecure",
+      "emailsecureattach",
+      "emailtemplate",
+      "employee",
+      "employer",
+      "encounter",
+      "entrylog",
+      "eobattach",
+      "equipment",
+      "erouting",
+      "eroutingaction",
+      "eroutingactiondef",
+      "eroutingdef",
+      "eroutingdeflink",
+      "erxlog",
+      "eservicelog",
+      "eserviceshortguid",
+      "eservicesignal",
+      "etrans",
+      "etrans835",
+      "etrans835attach",
+      "etransmessagetext",
+      "evaluation",
+      "evaluationcriterion",
+      "evaluationcriteriondef",
+      "evaluationdef",
+      "famaging",
+      "familyhealth",
+      "fee",
+      "feesched",
+      "feeschedgroup",
+      "feeschednote",
+      "fhircontactpoint",
+      "fhirsubscription",
+      "fielddeflink",
+      "formpat",
+      "gradingscale",
+      "gradingscaleitem",
+      "grouppermission",
+      "guardian",
+      "hcpcs",
+      "hieclinic",
+      "hiequeue",
+      "histappointment",
+      "hl7def",
+      "hl7deffield",
+      "hl7defmessage",
+      "hl7defsegment",
+      "hl7msg",
+      "hl7procattach",
+      "icd10",
+      "icd9",
+      "imagedraw",
+      "imagingdevice",
+      "insbluebook",
+      "insbluebooklog",
+      "insbluebookrule",
+      "inseditlog",
+      "inseditpatlog",
+      "insfilingcode",
+      "insfilingcodesubtype",
+      "insplan",
+      "insplanpreference",
+      "inssub",
+      "installmentplan",
+      "insverify",
+      "insverifyhist",
+      "intervention",
+      "journalentry",
+      "labcase",
+      "laboratory",
+      "labpanel",
+      "labresult",
+      "labturnaround",
+      "language",
+      "languageforeign",
+      "languagepat",
+      "letter",
+      "lettermerge",
+      "lettermergefield",
+      "limitedbetafeature",
+      "loginattempt",
+      "loinc",
+      "medicalorder",
+      "medication",
+      "medicationpat",
+      "medlab",
+      "medlabfacattach",
+      "medlabfacility",
+      "medlabresult",
+      "medlabspecimen",
+      "mobileappdevice",
+      "mobilebrandingprofile",
+      "mobiledatabyte",
+      "mobilenotification",
+      "mount",
+      "mountdef",
+      "mountitem",
+      "mountitemdef",
+      "msgtopaysent",
+      "oidexternal",
+      "oidinternal",
+      "operatory",
+      "orionproc",
+      "orthocase",
+      "orthochart",
+      "orthochartlog",
+      "orthochartrow",
+      "orthocharttab",
+      "orthocharttablink",
+      "orthohardware",
+      "orthohardwarespec",
+      "orthoplanlink",
+      "orthoproclink",
+      "orthorx",
+      "orthoschedule",
+      "patfield",
+      "patfielddef",
+      "patfieldpickitem",
+      "patient",
+      "patientlink",
+      "patientnote",
+      "patientportalinvite",
+      "patientrace",
+      "patplan",
+      "patrestriction",
+      "payconnectresponseweb",
+      "payment",
+      "payortype",
+      "payperiod",
+      "payplan",
+      "payplancharge",
+      "payplanlink",
+      "payplantemplate",
+      "paysplit",
+      "payterminal",
+      "pearlrequest",
+      "perioexam",
+      "periomeasure",
+      "pharmacy",
+      "pharmclinic",
+      "phonenumber",
+      "popup",
+      "preference",
+      "printer",
+      "procapptcolor",
+      "procbutton",
+      "procbuttonitem",
+      "procbuttonquick",
+      "proccodenote",
+      "procedurecode",
+      "procedurelog",
+      "procgroupitem",
+      "procmultivisit",
+      "procnote",
+      "proctp",
+      "program",
+      "programproperty",
+      "promotion",
+      "promotionlog",
+      "provider",
+      "providerclinic",
+      "providercliniclink",
+      "providererx",
+      "providerident",
+      "queryfilter",
+      "question",
+      "questiondef",
+      "quickpastecat",
+      "quickpastenote",
+      "reactivation",
+      "recall",
+      "recalltrigger",
+      "recalltype",
+      "reconcile",
+      "recurringcharge",
+      "refattach",
+      "referral",
+      "referralcliniclink",
+      "registrationkey",
+      "reminderrule",
+      "repeatcharge",
+      "replicationserver",
+      "reqneeded",
+      "reqstudent",
+      "requiredfield",
+      "requiredfieldcondition",
+      "rxalert",
+      "rxdef",
+      "rxnorm",
+      "rxpat",
+      "schedule",
+      "scheduledprocess",
+      "scheduleop",
+      "schoolclass",
+      "schoolcourse",
+      "screen",
+      "screengroup",
+      "screenpat",
+      "securitylog",
+      "securityloghash",
+      "sessiontoken",
+      "sheet",
+      "sheetdef",
+      "sheetfield",
+      "sheetfielddef",
+      "sigbutdef",
+      "sigelementdef",
+      "sigmessage",
+      "signalod",
+      "site",
+      "smsblockphone",
+      "smsfrommobile",
+      "smsphone",
+      "smstomobile",
+      "snomed",
+      "sop",
+      "stateabbr",
+      "statement",
+      "statementprod",
+      "stmtlink",
+      "substitutionlink",
+      "supplier",
+      "supply",
+      "supplyneeded",
+      "supplyorder",
+      "supplyorderitem",
+      "task",
+      "taskancestor",
+      "taskattachment",
+      "taskhist",
+      "tasklist",
+      "tasknote",
+      "tasksubscription",
+      "taskunread",
+      "terminalactive",
+      "timeadjust",
+      "timecardrule",
+      "toolbutitem",
+      "toothgridcell",
+      "toothgridcol",
+      "toothgriddef",
+      "toothinitial",
+      "transaction",
+      "transactioninvoice",
+      "treatplan",
+      "treatplanattach",
+      "treatplanparam",
+      "tsitranslog",
+      "ucum",
+      "updatehistory",
+      "userclinic",
+      "usergroup",
+      "usergroupattach",
+      "userod",
+      "userodapptview",
+      "userodpref",
+      "userquery",
+      "userweb",
+      "utm",
+      "vaccinedef",
+      "vaccineobs",
+      "vaccinepat",
+      "vitalsign",
+      "webschedcarrierrule",
+      "webschedrecall",
+      "wikilistheaderwidth",
+      "wikilisthist",
+      "wikipage",
+      "wikipagehist",
+      "xchargetransaction",
+      "xwebresponse",
+      "zipcode"
+    ]
+  },
+  "relationships": [
+    {
+      "type": "contains",
+      "target": "db-account",
+      "description": "Contains table account"
+    },
+    {
+      "type": "contains",
+      "target": "db-accountingautopay",
+      "description": "Contains table accountingautopay"
+    },
+    {
+      "type": "contains",
+      "target": "db-activeinstance",
+      "description": "Contains table activeinstance"
+    },
+    {
+      "type": "contains",
+      "target": "db-adjustment",
+      "description": "Contains table adjustment"
+    },
+    {
+      "type": "contains",
+      "target": "db-alertcategory",
+      "description": "Contains table alertcategory"
+    },
+    {
+      "type": "contains",
+      "target": "db-alertcategorylink",
+      "description": "Contains table alertcategorylink"
+    },
+    {
+      "type": "contains",
+      "target": "db-alertitem",
+      "description": "Contains table alertitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-alertread",
+      "description": "Contains table alertread"
+    },
+    {
+      "type": "contains",
+      "target": "db-alertsub",
+      "description": "Contains table alertsub"
+    },
+    {
+      "type": "contains",
+      "target": "db-allergy",
+      "description": "Contains table allergy"
+    },
+    {
+      "type": "contains",
+      "target": "db-allergydef",
+      "description": "Contains table allergydef"
+    },
+    {
+      "type": "contains",
+      "target": "db-apikey",
+      "description": "Contains table apikey"
+    },
+    {
+      "type": "contains",
+      "target": "db-apisubscription",
+      "description": "Contains table apisubscription"
+    },
+    {
+      "type": "contains",
+      "target": "db-appointment",
+      "description": "Contains table appointment"
+    },
+    {
+      "type": "contains",
+      "target": "db-appointmentrule",
+      "description": "Contains table appointmentrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-appointmenttype",
+      "description": "Contains table appointmenttype"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptfield",
+      "description": "Contains table apptfield"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptfielddef",
+      "description": "Contains table apptfielddef"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptgeneralmessagesent",
+      "description": "Contains table apptgeneralmessagesent"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptnewpatthankyousent",
+      "description": "Contains table apptnewpatthankyousent"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptreminderrule",
+      "description": "Contains table apptreminderrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptremindersent",
+      "description": "Contains table apptremindersent"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptthankyousent",
+      "description": "Contains table apptthankyousent"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptview",
+      "description": "Contains table apptview"
+    },
+    {
+      "type": "contains",
+      "target": "db-apptviewitem",
+      "description": "Contains table apptviewitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-asapcomm",
+      "description": "Contains table asapcomm"
+    },
+    {
+      "type": "contains",
+      "target": "db-autocode",
+      "description": "Contains table autocode"
+    },
+    {
+      "type": "contains",
+      "target": "db-autocodecond",
+      "description": "Contains table autocodecond"
+    },
+    {
+      "type": "contains",
+      "target": "db-autocodeitem",
+      "description": "Contains table autocodeitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-autocommexcludedate",
+      "description": "Contains table autocommexcludedate"
+    },
+    {
+      "type": "contains",
+      "target": "db-automation",
+      "description": "Contains table automation"
+    },
+    {
+      "type": "contains",
+      "target": "db-automationcondition",
+      "description": "Contains table automationcondition"
+    },
+    {
+      "type": "contains",
+      "target": "db-autonote",
+      "description": "Contains table autonote"
+    },
+    {
+      "type": "contains",
+      "target": "db-autonotecontrol",
+      "description": "Contains table autonotecontrol"
+    },
+    {
+      "type": "contains",
+      "target": "db-benefit",
+      "description": "Contains table benefit"
+    },
+    {
+      "type": "contains",
+      "target": "db-canadiannetwork",
+      "description": "Contains table canadiannetwork"
+    },
+    {
+      "type": "contains",
+      "target": "db-carecreditwebresponse",
+      "description": "Contains table carecreditwebresponse"
+    },
+    {
+      "type": "contains",
+      "target": "db-carrier",
+      "description": "Contains table carrier"
+    },
+    {
+      "type": "contains",
+      "target": "db-cdcrec",
+      "description": "Contains table cdcrec"
+    },
+    {
+      "type": "contains",
+      "target": "db-cdspermission",
+      "description": "Contains table cdspermission"
+    },
+    {
+      "type": "contains",
+      "target": "db-centralconnection",
+      "description": "Contains table centralconnection"
+    },
+    {
+      "type": "contains",
+      "target": "db-cert",
+      "description": "Contains table cert"
+    },
+    {
+      "type": "contains",
+      "target": "db-certemployee",
+      "description": "Contains table certemployee"
+    },
+    {
+      "type": "contains",
+      "target": "db-chartview",
+      "description": "Contains table chartview"
+    },
+    {
+      "type": "contains",
+      "target": "db-claim",
+      "description": "Contains table claim"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimattach",
+      "description": "Contains table claimattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimcondcodelog",
+      "description": "Contains table claimcondcodelog"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimform",
+      "description": "Contains table claimform"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimformitem",
+      "description": "Contains table claimformitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimpayment",
+      "description": "Contains table claimpayment"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimproc",
+      "description": "Contains table claimproc"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimsnapshot",
+      "description": "Contains table claimsnapshot"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimtracking",
+      "description": "Contains table claimtracking"
+    },
+    {
+      "type": "contains",
+      "target": "db-claimvalcodelog",
+      "description": "Contains table claimvalcodelog"
+    },
+    {
+      "type": "contains",
+      "target": "db-clearinghouse",
+      "description": "Contains table clearinghouse"
+    },
+    {
+      "type": "contains",
+      "target": "db-clinic",
+      "description": "Contains table clinic"
+    },
+    {
+      "type": "contains",
+      "target": "db-clinicerx",
+      "description": "Contains table clinicerx"
+    },
+    {
+      "type": "contains",
+      "target": "db-clinicpref",
+      "description": "Contains table clinicpref"
+    },
+    {
+      "type": "contains",
+      "target": "db-clockevent",
+      "description": "Contains table clockevent"
+    },
+    {
+      "type": "contains",
+      "target": "db-cloudaddress",
+      "description": "Contains table cloudaddress"
+    },
+    {
+      "type": "contains",
+      "target": "db-codegroup",
+      "description": "Contains table codegroup"
+    },
+    {
+      "type": "contains",
+      "target": "db-codesystem",
+      "description": "Contains table codesystem"
+    },
+    {
+      "type": "contains",
+      "target": "db-commlog",
+      "description": "Contains table commlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-commoptout",
+      "description": "Contains table commoptout"
+    },
+    {
+      "type": "contains",
+      "target": "db-computer",
+      "description": "Contains table computer"
+    },
+    {
+      "type": "contains",
+      "target": "db-computerpref",
+      "description": "Contains table computerpref"
+    },
+    {
+      "type": "contains",
+      "target": "db-confirmationrequest",
+      "description": "Contains table confirmationrequest"
+    },
+    {
+      "type": "contains",
+      "target": "db-connectiongroup",
+      "description": "Contains table connectiongroup"
+    },
+    {
+      "type": "contains",
+      "target": "db-conngroupattach",
+      "description": "Contains table conngroupattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-contact",
+      "description": "Contains table contact"
+    },
+    {
+      "type": "contains",
+      "target": "db-county",
+      "description": "Contains table county"
+    },
+    {
+      "type": "contains",
+      "target": "db-covcat",
+      "description": "Contains table covcat"
+    },
+    {
+      "type": "contains",
+      "target": "db-covspan",
+      "description": "Contains table covspan"
+    },
+    {
+      "type": "contains",
+      "target": "db-cpt",
+      "description": "Contains table cpt"
+    },
+    {
+      "type": "contains",
+      "target": "db-creditcard",
+      "description": "Contains table creditcard"
+    },
+    {
+      "type": "contains",
+      "target": "db-custrefentry",
+      "description": "Contains table custrefentry"
+    },
+    {
+      "type": "contains",
+      "target": "db-custreference",
+      "description": "Contains table custreference"
+    },
+    {
+      "type": "contains",
+      "target": "db-cvx",
+      "description": "Contains table cvx"
+    },
+    {
+      "type": "contains",
+      "target": "db-dashboardar",
+      "description": "Contains table dashboardar"
+    },
+    {
+      "type": "contains",
+      "target": "db-dashboardcell",
+      "description": "Contains table dashboardcell"
+    },
+    {
+      "type": "contains",
+      "target": "db-dashboardlayout",
+      "description": "Contains table dashboardlayout"
+    },
+    {
+      "type": "contains",
+      "target": "db-databasemaintenance",
+      "description": "Contains table databasemaintenance"
+    },
+    {
+      "type": "contains",
+      "target": "db-dbmlog",
+      "description": "Contains table dbmlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-definition",
+      "description": "Contains table definition"
+    },
+    {
+      "type": "contains",
+      "target": "db-deflink",
+      "description": "Contains table deflink"
+    },
+    {
+      "type": "contains",
+      "target": "db-deletedobject",
+      "description": "Contains table deletedobject"
+    },
+    {
+      "type": "contains",
+      "target": "db-deposit",
+      "description": "Contains table deposit"
+    },
+    {
+      "type": "contains",
+      "target": "db-dictcustom",
+      "description": "Contains table dictcustom"
+    },
+    {
+      "type": "contains",
+      "target": "db-discountplan",
+      "description": "Contains table discountplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-discountplansub",
+      "description": "Contains table discountplansub"
+    },
+    {
+      "type": "contains",
+      "target": "db-disease",
+      "description": "Contains table disease"
+    },
+    {
+      "type": "contains",
+      "target": "db-diseasedef",
+      "description": "Contains table diseasedef"
+    },
+    {
+      "type": "contains",
+      "target": "db-displayfield",
+      "description": "Contains table displayfield"
+    },
+    {
+      "type": "contains",
+      "target": "db-displayreport",
+      "description": "Contains table displayreport"
+    },
+    {
+      "type": "contains",
+      "target": "db-dispsupply",
+      "description": "Contains table dispsupply"
+    },
+    {
+      "type": "contains",
+      "target": "db-document",
+      "description": "Contains table document"
+    },
+    {
+      "type": "contains",
+      "target": "db-documentmisc",
+      "description": "Contains table documentmisc"
+    },
+    {
+      "type": "contains",
+      "target": "db-drugmanufacturer",
+      "description": "Contains table drugmanufacturer"
+    },
+    {
+      "type": "contains",
+      "target": "db-drugunit",
+      "description": "Contains table drugunit"
+    },
+    {
+      "type": "contains",
+      "target": "db-dunning",
+      "description": "Contains table dunning"
+    },
+    {
+      "type": "contains",
+      "target": "db-ebill",
+      "description": "Contains table ebill"
+    },
+    {
+      "type": "contains",
+      "target": "db-eclipboardimagecapture",
+      "description": "Contains table eclipboardimagecapture"
+    },
+    {
+      "type": "contains",
+      "target": "db-eclipboardimagecapturedef",
+      "description": "Contains table eclipboardimagecapturedef"
+    },
+    {
+      "type": "contains",
+      "target": "db-eclipboardsheetdef",
+      "description": "Contains table eclipboardsheetdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-eduresource",
+      "description": "Contains table eduresource"
+    },
+    {
+      "type": "contains",
+      "target": "db-eform",
+      "description": "Contains table eform"
+    },
+    {
+      "type": "contains",
+      "target": "db-eformdef",
+      "description": "Contains table eformdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-eformfield",
+      "description": "Contains table eformfield"
+    },
+    {
+      "type": "contains",
+      "target": "db-eformfielddef",
+      "description": "Contains table eformfielddef"
+    },
+    {
+      "type": "contains",
+      "target": "db-eformimportrule",
+      "description": "Contains table eformimportrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehramendment",
+      "description": "Contains table ehramendment"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehraptobs",
+      "description": "Contains table ehraptobs"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrcareplan",
+      "description": "Contains table ehrcareplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlab",
+      "description": "Contains table ehrlab"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabclinicalinfo",
+      "description": "Contains table ehrlabclinicalinfo"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabimage",
+      "description": "Contains table ehrlabimage"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabnote",
+      "description": "Contains table ehrlabnote"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabresult",
+      "description": "Contains table ehrlabresult"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabresultscopyto",
+      "description": "Contains table ehrlabresultscopyto"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabspecimen",
+      "description": "Contains table ehrlabspecimen"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabspecimencondition",
+      "description": "Contains table ehrlabspecimencondition"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrlabspecimenrejectreason",
+      "description": "Contains table ehrlabspecimenrejectreason"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrmeasure",
+      "description": "Contains table ehrmeasure"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrmeasureevent",
+      "description": "Contains table ehrmeasureevent"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrnotperformed",
+      "description": "Contains table ehrnotperformed"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrpatient",
+      "description": "Contains table ehrpatient"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrprovkey",
+      "description": "Contains table ehrprovkey"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrquarterlykey",
+      "description": "Contains table ehrquarterlykey"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrsummaryccd",
+      "description": "Contains table ehrsummaryccd"
+    },
+    {
+      "type": "contains",
+      "target": "db-ehrtrigger",
+      "description": "Contains table ehrtrigger"
+    },
+    {
+      "type": "contains",
+      "target": "db-electid",
+      "description": "Contains table electid"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailaddress",
+      "description": "Contains table emailaddress"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailattach",
+      "description": "Contains table emailattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailautograph",
+      "description": "Contains table emailautograph"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailhostingtemplate",
+      "description": "Contains table emailhostingtemplate"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailmessage",
+      "description": "Contains table emailmessage"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailmessageuid",
+      "description": "Contains table emailmessageuid"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailsecure",
+      "description": "Contains table emailsecure"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailsecureattach",
+      "description": "Contains table emailsecureattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-emailtemplate",
+      "description": "Contains table emailtemplate"
+    },
+    {
+      "type": "contains",
+      "target": "db-employee",
+      "description": "Contains table employee"
+    },
+    {
+      "type": "contains",
+      "target": "db-employer",
+      "description": "Contains table employer"
+    },
+    {
+      "type": "contains",
+      "target": "db-encounter",
+      "description": "Contains table encounter"
+    },
+    {
+      "type": "contains",
+      "target": "db-entrylog",
+      "description": "Contains table entrylog"
+    },
+    {
+      "type": "contains",
+      "target": "db-eobattach",
+      "description": "Contains table eobattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-equipment",
+      "description": "Contains table equipment"
+    },
+    {
+      "type": "contains",
+      "target": "db-erouting",
+      "description": "Contains table erouting"
+    },
+    {
+      "type": "contains",
+      "target": "db-eroutingaction",
+      "description": "Contains table eroutingaction"
+    },
+    {
+      "type": "contains",
+      "target": "db-eroutingactiondef",
+      "description": "Contains table eroutingactiondef"
+    },
+    {
+      "type": "contains",
+      "target": "db-eroutingdef",
+      "description": "Contains table eroutingdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-eroutingdeflink",
+      "description": "Contains table eroutingdeflink"
+    },
+    {
+      "type": "contains",
+      "target": "db-erxlog",
+      "description": "Contains table erxlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-eservicelog",
+      "description": "Contains table eservicelog"
+    },
+    {
+      "type": "contains",
+      "target": "db-eserviceshortguid",
+      "description": "Contains table eserviceshortguid"
+    },
+    {
+      "type": "contains",
+      "target": "db-eservicesignal",
+      "description": "Contains table eservicesignal"
+    },
+    {
+      "type": "contains",
+      "target": "db-etrans",
+      "description": "Contains table etrans"
+    },
+    {
+      "type": "contains",
+      "target": "db-etrans835",
+      "description": "Contains table etrans835"
+    },
+    {
+      "type": "contains",
+      "target": "db-etrans835attach",
+      "description": "Contains table etrans835attach"
+    },
+    {
+      "type": "contains",
+      "target": "db-etransmessagetext",
+      "description": "Contains table etransmessagetext"
+    },
+    {
+      "type": "contains",
+      "target": "db-evaluation",
+      "description": "Contains table evaluation"
+    },
+    {
+      "type": "contains",
+      "target": "db-evaluationcriterion",
+      "description": "Contains table evaluationcriterion"
+    },
+    {
+      "type": "contains",
+      "target": "db-evaluationcriteriondef",
+      "description": "Contains table evaluationcriteriondef"
+    },
+    {
+      "type": "contains",
+      "target": "db-evaluationdef",
+      "description": "Contains table evaluationdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-famaging",
+      "description": "Contains table famaging"
+    },
+    {
+      "type": "contains",
+      "target": "db-familyhealth",
+      "description": "Contains table familyhealth"
+    },
+    {
+      "type": "contains",
+      "target": "db-fee",
+      "description": "Contains table fee"
+    },
+    {
+      "type": "contains",
+      "target": "db-feesched",
+      "description": "Contains table feesched"
+    },
+    {
+      "type": "contains",
+      "target": "db-feeschedgroup",
+      "description": "Contains table feeschedgroup"
+    },
+    {
+      "type": "contains",
+      "target": "db-feeschednote",
+      "description": "Contains table feeschednote"
+    },
+    {
+      "type": "contains",
+      "target": "db-fhircontactpoint",
+      "description": "Contains table fhircontactpoint"
+    },
+    {
+      "type": "contains",
+      "target": "db-fhirsubscription",
+      "description": "Contains table fhirsubscription"
+    },
+    {
+      "type": "contains",
+      "target": "db-fielddeflink",
+      "description": "Contains table fielddeflink"
+    },
+    {
+      "type": "contains",
+      "target": "db-formpat",
+      "description": "Contains table formpat"
+    },
+    {
+      "type": "contains",
+      "target": "db-gradingscale",
+      "description": "Contains table gradingscale"
+    },
+    {
+      "type": "contains",
+      "target": "db-gradingscaleitem",
+      "description": "Contains table gradingscaleitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-grouppermission",
+      "description": "Contains table grouppermission"
+    },
+    {
+      "type": "contains",
+      "target": "db-guardian",
+      "description": "Contains table guardian"
+    },
+    {
+      "type": "contains",
+      "target": "db-hcpcs",
+      "description": "Contains table hcpcs"
+    },
+    {
+      "type": "contains",
+      "target": "db-hieclinic",
+      "description": "Contains table hieclinic"
+    },
+    {
+      "type": "contains",
+      "target": "db-hiequeue",
+      "description": "Contains table hiequeue"
+    },
+    {
+      "type": "contains",
+      "target": "db-histappointment",
+      "description": "Contains table histappointment"
+    },
+    {
+      "type": "contains",
+      "target": "db-hl7def",
+      "description": "Contains table hl7def"
+    },
+    {
+      "type": "contains",
+      "target": "db-hl7deffield",
+      "description": "Contains table hl7deffield"
+    },
+    {
+      "type": "contains",
+      "target": "db-hl7defmessage",
+      "description": "Contains table hl7defmessage"
+    },
+    {
+      "type": "contains",
+      "target": "db-hl7defsegment",
+      "description": "Contains table hl7defsegment"
+    },
+    {
+      "type": "contains",
+      "target": "db-hl7msg",
+      "description": "Contains table hl7msg"
+    },
+    {
+      "type": "contains",
+      "target": "db-hl7procattach",
+      "description": "Contains table hl7procattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-icd10",
+      "description": "Contains table icd10"
+    },
+    {
+      "type": "contains",
+      "target": "db-icd9",
+      "description": "Contains table icd9"
+    },
+    {
+      "type": "contains",
+      "target": "db-imagedraw",
+      "description": "Contains table imagedraw"
+    },
+    {
+      "type": "contains",
+      "target": "db-imagingdevice",
+      "description": "Contains table imagingdevice"
+    },
+    {
+      "type": "contains",
+      "target": "db-insbluebook",
+      "description": "Contains table insbluebook"
+    },
+    {
+      "type": "contains",
+      "target": "db-insbluebooklog",
+      "description": "Contains table insbluebooklog"
+    },
+    {
+      "type": "contains",
+      "target": "db-insbluebookrule",
+      "description": "Contains table insbluebookrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-inseditlog",
+      "description": "Contains table inseditlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-inseditpatlog",
+      "description": "Contains table inseditpatlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-insfilingcode",
+      "description": "Contains table insfilingcode"
+    },
+    {
+      "type": "contains",
+      "target": "db-insfilingcodesubtype",
+      "description": "Contains table insfilingcodesubtype"
+    },
+    {
+      "type": "contains",
+      "target": "db-insplan",
+      "description": "Contains table insplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-insplanpreference",
+      "description": "Contains table insplanpreference"
+    },
+    {
+      "type": "contains",
+      "target": "db-inssub",
+      "description": "Contains table inssub"
+    },
+    {
+      "type": "contains",
+      "target": "db-installmentplan",
+      "description": "Contains table installmentplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-insverify",
+      "description": "Contains table insverify"
+    },
+    {
+      "type": "contains",
+      "target": "db-insverifyhist",
+      "description": "Contains table insverifyhist"
+    },
+    {
+      "type": "contains",
+      "target": "db-intervention",
+      "description": "Contains table intervention"
+    },
+    {
+      "type": "contains",
+      "target": "db-journalentry",
+      "description": "Contains table journalentry"
+    },
+    {
+      "type": "contains",
+      "target": "db-labcase",
+      "description": "Contains table labcase"
+    },
+    {
+      "type": "contains",
+      "target": "db-laboratory",
+      "description": "Contains table laboratory"
+    },
+    {
+      "type": "contains",
+      "target": "db-labpanel",
+      "description": "Contains table labpanel"
+    },
+    {
+      "type": "contains",
+      "target": "db-labresult",
+      "description": "Contains table labresult"
+    },
+    {
+      "type": "contains",
+      "target": "db-labturnaround",
+      "description": "Contains table labturnaround"
+    },
+    {
+      "type": "contains",
+      "target": "db-language",
+      "description": "Contains table language"
+    },
+    {
+      "type": "contains",
+      "target": "db-languageforeign",
+      "description": "Contains table languageforeign"
+    },
+    {
+      "type": "contains",
+      "target": "db-languagepat",
+      "description": "Contains table languagepat"
+    },
+    {
+      "type": "contains",
+      "target": "db-letter",
+      "description": "Contains table letter"
+    },
+    {
+      "type": "contains",
+      "target": "db-lettermerge",
+      "description": "Contains table lettermerge"
+    },
+    {
+      "type": "contains",
+      "target": "db-lettermergefield",
+      "description": "Contains table lettermergefield"
+    },
+    {
+      "type": "contains",
+      "target": "db-limitedbetafeature",
+      "description": "Contains table limitedbetafeature"
+    },
+    {
+      "type": "contains",
+      "target": "db-loginattempt",
+      "description": "Contains table loginattempt"
+    },
+    {
+      "type": "contains",
+      "target": "db-loinc",
+      "description": "Contains table loinc"
+    },
+    {
+      "type": "contains",
+      "target": "db-medicalorder",
+      "description": "Contains table medicalorder"
+    },
+    {
+      "type": "contains",
+      "target": "db-medication",
+      "description": "Contains table medication"
+    },
+    {
+      "type": "contains",
+      "target": "db-medicationpat",
+      "description": "Contains table medicationpat"
+    },
+    {
+      "type": "contains",
+      "target": "db-medlab",
+      "description": "Contains table medlab"
+    },
+    {
+      "type": "contains",
+      "target": "db-medlabfacattach",
+      "description": "Contains table medlabfacattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-medlabfacility",
+      "description": "Contains table medlabfacility"
+    },
+    {
+      "type": "contains",
+      "target": "db-medlabresult",
+      "description": "Contains table medlabresult"
+    },
+    {
+      "type": "contains",
+      "target": "db-medlabspecimen",
+      "description": "Contains table medlabspecimen"
+    },
+    {
+      "type": "contains",
+      "target": "db-mobileappdevice",
+      "description": "Contains table mobileappdevice"
+    },
+    {
+      "type": "contains",
+      "target": "db-mobilebrandingprofile",
+      "description": "Contains table mobilebrandingprofile"
+    },
+    {
+      "type": "contains",
+      "target": "db-mobiledatabyte",
+      "description": "Contains table mobiledatabyte"
+    },
+    {
+      "type": "contains",
+      "target": "db-mobilenotification",
+      "description": "Contains table mobilenotification"
+    },
+    {
+      "type": "contains",
+      "target": "db-mount",
+      "description": "Contains table mount"
+    },
+    {
+      "type": "contains",
+      "target": "db-mountdef",
+      "description": "Contains table mountdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-mountitem",
+      "description": "Contains table mountitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-mountitemdef",
+      "description": "Contains table mountitemdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-msgtopaysent",
+      "description": "Contains table msgtopaysent"
+    },
+    {
+      "type": "contains",
+      "target": "db-oidexternal",
+      "description": "Contains table oidexternal"
+    },
+    {
+      "type": "contains",
+      "target": "db-oidinternal",
+      "description": "Contains table oidinternal"
+    },
+    {
+      "type": "contains",
+      "target": "db-operatory",
+      "description": "Contains table operatory"
+    },
+    {
+      "type": "contains",
+      "target": "db-orionproc",
+      "description": "Contains table orionproc"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthocase",
+      "description": "Contains table orthocase"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthochart",
+      "description": "Contains table orthochart"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthochartlog",
+      "description": "Contains table orthochartlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthochartrow",
+      "description": "Contains table orthochartrow"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthocharttab",
+      "description": "Contains table orthocharttab"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthocharttablink",
+      "description": "Contains table orthocharttablink"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthohardware",
+      "description": "Contains table orthohardware"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthohardwarespec",
+      "description": "Contains table orthohardwarespec"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthoplanlink",
+      "description": "Contains table orthoplanlink"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthoproclink",
+      "description": "Contains table orthoproclink"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthorx",
+      "description": "Contains table orthorx"
+    },
+    {
+      "type": "contains",
+      "target": "db-orthoschedule",
+      "description": "Contains table orthoschedule"
+    },
+    {
+      "type": "contains",
+      "target": "db-patfield",
+      "description": "Contains table patfield"
+    },
+    {
+      "type": "contains",
+      "target": "db-patfielddef",
+      "description": "Contains table patfielddef"
+    },
+    {
+      "type": "contains",
+      "target": "db-patfieldpickitem",
+      "description": "Contains table patfieldpickitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-patient",
+      "description": "Contains table patient"
+    },
+    {
+      "type": "contains",
+      "target": "db-patientlink",
+      "description": "Contains table patientlink"
+    },
+    {
+      "type": "contains",
+      "target": "db-patientnote",
+      "description": "Contains table patientnote"
+    },
+    {
+      "type": "contains",
+      "target": "db-patientportalinvite",
+      "description": "Contains table patientportalinvite"
+    },
+    {
+      "type": "contains",
+      "target": "db-patientrace",
+      "description": "Contains table patientrace"
+    },
+    {
+      "type": "contains",
+      "target": "db-patplan",
+      "description": "Contains table patplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-patrestriction",
+      "description": "Contains table patrestriction"
+    },
+    {
+      "type": "contains",
+      "target": "db-payconnectresponseweb",
+      "description": "Contains table payconnectresponseweb"
+    },
+    {
+      "type": "contains",
+      "target": "db-payment",
+      "description": "Contains table payment"
+    },
+    {
+      "type": "contains",
+      "target": "db-payortype",
+      "description": "Contains table payortype"
+    },
+    {
+      "type": "contains",
+      "target": "db-payperiod",
+      "description": "Contains table payperiod"
+    },
+    {
+      "type": "contains",
+      "target": "db-payplan",
+      "description": "Contains table payplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-payplancharge",
+      "description": "Contains table payplancharge"
+    },
+    {
+      "type": "contains",
+      "target": "db-payplanlink",
+      "description": "Contains table payplanlink"
+    },
+    {
+      "type": "contains",
+      "target": "db-payplantemplate",
+      "description": "Contains table payplantemplate"
+    },
+    {
+      "type": "contains",
+      "target": "db-paysplit",
+      "description": "Contains table paysplit"
+    },
+    {
+      "type": "contains",
+      "target": "db-payterminal",
+      "description": "Contains table payterminal"
+    },
+    {
+      "type": "contains",
+      "target": "db-pearlrequest",
+      "description": "Contains table pearlrequest"
+    },
+    {
+      "type": "contains",
+      "target": "db-perioexam",
+      "description": "Contains table perioexam"
+    },
+    {
+      "type": "contains",
+      "target": "db-periomeasure",
+      "description": "Contains table periomeasure"
+    },
+    {
+      "type": "contains",
+      "target": "db-pharmacy",
+      "description": "Contains table pharmacy"
+    },
+    {
+      "type": "contains",
+      "target": "db-pharmclinic",
+      "description": "Contains table pharmclinic"
+    },
+    {
+      "type": "contains",
+      "target": "db-phonenumber",
+      "description": "Contains table phonenumber"
+    },
+    {
+      "type": "contains",
+      "target": "db-popup",
+      "description": "Contains table popup"
+    },
+    {
+      "type": "contains",
+      "target": "db-preference",
+      "description": "Contains table preference"
+    },
+    {
+      "type": "contains",
+      "target": "db-printer",
+      "description": "Contains table printer"
+    },
+    {
+      "type": "contains",
+      "target": "db-procapptcolor",
+      "description": "Contains table procapptcolor"
+    },
+    {
+      "type": "contains",
+      "target": "db-procbutton",
+      "description": "Contains table procbutton"
+    },
+    {
+      "type": "contains",
+      "target": "db-procbuttonitem",
+      "description": "Contains table procbuttonitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-procbuttonquick",
+      "description": "Contains table procbuttonquick"
+    },
+    {
+      "type": "contains",
+      "target": "db-proccodenote",
+      "description": "Contains table proccodenote"
+    },
+    {
+      "type": "contains",
+      "target": "db-procedurecode",
+      "description": "Contains table procedurecode"
+    },
+    {
+      "type": "contains",
+      "target": "db-procedurelog",
+      "description": "Contains table procedurelog"
+    },
+    {
+      "type": "contains",
+      "target": "db-procgroupitem",
+      "description": "Contains table procgroupitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-procmultivisit",
+      "description": "Contains table procmultivisit"
+    },
+    {
+      "type": "contains",
+      "target": "db-procnote",
+      "description": "Contains table procnote"
+    },
+    {
+      "type": "contains",
+      "target": "db-proctp",
+      "description": "Contains table proctp"
+    },
+    {
+      "type": "contains",
+      "target": "db-program",
+      "description": "Contains table program"
+    },
+    {
+      "type": "contains",
+      "target": "db-programproperty",
+      "description": "Contains table programproperty"
+    },
+    {
+      "type": "contains",
+      "target": "db-promotion",
+      "description": "Contains table promotion"
+    },
+    {
+      "type": "contains",
+      "target": "db-promotionlog",
+      "description": "Contains table promotionlog"
+    },
+    {
+      "type": "contains",
+      "target": "db-provider",
+      "description": "Contains table provider"
+    },
+    {
+      "type": "contains",
+      "target": "db-providerclinic",
+      "description": "Contains table providerclinic"
+    },
+    {
+      "type": "contains",
+      "target": "db-providercliniclink",
+      "description": "Contains table providercliniclink"
+    },
+    {
+      "type": "contains",
+      "target": "db-providererx",
+      "description": "Contains table providererx"
+    },
+    {
+      "type": "contains",
+      "target": "db-providerident",
+      "description": "Contains table providerident"
+    },
+    {
+      "type": "contains",
+      "target": "db-queryfilter",
+      "description": "Contains table queryfilter"
+    },
+    {
+      "type": "contains",
+      "target": "db-question",
+      "description": "Contains table question"
+    },
+    {
+      "type": "contains",
+      "target": "db-questiondef",
+      "description": "Contains table questiondef"
+    },
+    {
+      "type": "contains",
+      "target": "db-quickpastecat",
+      "description": "Contains table quickpastecat"
+    },
+    {
+      "type": "contains",
+      "target": "db-quickpastenote",
+      "description": "Contains table quickpastenote"
+    },
+    {
+      "type": "contains",
+      "target": "db-reactivation",
+      "description": "Contains table reactivation"
+    },
+    {
+      "type": "contains",
+      "target": "db-recall",
+      "description": "Contains table recall"
+    },
+    {
+      "type": "contains",
+      "target": "db-recalltrigger",
+      "description": "Contains table recalltrigger"
+    },
+    {
+      "type": "contains",
+      "target": "db-recalltype",
+      "description": "Contains table recalltype"
+    },
+    {
+      "type": "contains",
+      "target": "db-reconcile",
+      "description": "Contains table reconcile"
+    },
+    {
+      "type": "contains",
+      "target": "db-recurringcharge",
+      "description": "Contains table recurringcharge"
+    },
+    {
+      "type": "contains",
+      "target": "db-refattach",
+      "description": "Contains table refattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-referral",
+      "description": "Contains table referral"
+    },
+    {
+      "type": "contains",
+      "target": "db-referralcliniclink",
+      "description": "Contains table referralcliniclink"
+    },
+    {
+      "type": "contains",
+      "target": "db-registrationkey",
+      "description": "Contains table registrationkey"
+    },
+    {
+      "type": "contains",
+      "target": "db-reminderrule",
+      "description": "Contains table reminderrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-repeatcharge",
+      "description": "Contains table repeatcharge"
+    },
+    {
+      "type": "contains",
+      "target": "db-replicationserver",
+      "description": "Contains table replicationserver"
+    },
+    {
+      "type": "contains",
+      "target": "db-reqneeded",
+      "description": "Contains table reqneeded"
+    },
+    {
+      "type": "contains",
+      "target": "db-reqstudent",
+      "description": "Contains table reqstudent"
+    },
+    {
+      "type": "contains",
+      "target": "db-requiredfield",
+      "description": "Contains table requiredfield"
+    },
+    {
+      "type": "contains",
+      "target": "db-requiredfieldcondition",
+      "description": "Contains table requiredfieldcondition"
+    },
+    {
+      "type": "contains",
+      "target": "db-rxalert",
+      "description": "Contains table rxalert"
+    },
+    {
+      "type": "contains",
+      "target": "db-rxdef",
+      "description": "Contains table rxdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-rxnorm",
+      "description": "Contains table rxnorm"
+    },
+    {
+      "type": "contains",
+      "target": "db-rxpat",
+      "description": "Contains table rxpat"
+    },
+    {
+      "type": "contains",
+      "target": "db-schedule",
+      "description": "Contains table schedule"
+    },
+    {
+      "type": "contains",
+      "target": "db-scheduledprocess",
+      "description": "Contains table scheduledprocess"
+    },
+    {
+      "type": "contains",
+      "target": "db-scheduleop",
+      "description": "Contains table scheduleop"
+    },
+    {
+      "type": "contains",
+      "target": "db-schoolclass",
+      "description": "Contains table schoolclass"
+    },
+    {
+      "type": "contains",
+      "target": "db-schoolcourse",
+      "description": "Contains table schoolcourse"
+    },
+    {
+      "type": "contains",
+      "target": "db-screen",
+      "description": "Contains table screen"
+    },
+    {
+      "type": "contains",
+      "target": "db-screengroup",
+      "description": "Contains table screengroup"
+    },
+    {
+      "type": "contains",
+      "target": "db-screenpat",
+      "description": "Contains table screenpat"
+    },
+    {
+      "type": "contains",
+      "target": "db-securitylog",
+      "description": "Contains table securitylog"
+    },
+    {
+      "type": "contains",
+      "target": "db-securityloghash",
+      "description": "Contains table securityloghash"
+    },
+    {
+      "type": "contains",
+      "target": "db-sessiontoken",
+      "description": "Contains table sessiontoken"
+    },
+    {
+      "type": "contains",
+      "target": "db-sheet",
+      "description": "Contains table sheet"
+    },
+    {
+      "type": "contains",
+      "target": "db-sheetdef",
+      "description": "Contains table sheetdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-sheetfield",
+      "description": "Contains table sheetfield"
+    },
+    {
+      "type": "contains",
+      "target": "db-sheetfielddef",
+      "description": "Contains table sheetfielddef"
+    },
+    {
+      "type": "contains",
+      "target": "db-sigbutdef",
+      "description": "Contains table sigbutdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-sigelementdef",
+      "description": "Contains table sigelementdef"
+    },
+    {
+      "type": "contains",
+      "target": "db-sigmessage",
+      "description": "Contains table sigmessage"
+    },
+    {
+      "type": "contains",
+      "target": "db-signalod",
+      "description": "Contains table signalod"
+    },
+    {
+      "type": "contains",
+      "target": "db-site",
+      "description": "Contains table site"
+    },
+    {
+      "type": "contains",
+      "target": "db-smsblockphone",
+      "description": "Contains table smsblockphone"
+    },
+    {
+      "type": "contains",
+      "target": "db-smsfrommobile",
+      "description": "Contains table smsfrommobile"
+    },
+    {
+      "type": "contains",
+      "target": "db-smsphone",
+      "description": "Contains table smsphone"
+    },
+    {
+      "type": "contains",
+      "target": "db-smstomobile",
+      "description": "Contains table smstomobile"
+    },
+    {
+      "type": "contains",
+      "target": "db-snomed",
+      "description": "Contains table snomed"
+    },
+    {
+      "type": "contains",
+      "target": "db-sop",
+      "description": "Contains table sop"
+    },
+    {
+      "type": "contains",
+      "target": "db-stateabbr",
+      "description": "Contains table stateabbr"
+    },
+    {
+      "type": "contains",
+      "target": "db-statement",
+      "description": "Contains table statement"
+    },
+    {
+      "type": "contains",
+      "target": "db-statementprod",
+      "description": "Contains table statementprod"
+    },
+    {
+      "type": "contains",
+      "target": "db-stmtlink",
+      "description": "Contains table stmtlink"
+    },
+    {
+      "type": "contains",
+      "target": "db-substitutionlink",
+      "description": "Contains table substitutionlink"
+    },
+    {
+      "type": "contains",
+      "target": "db-supplier",
+      "description": "Contains table supplier"
+    },
+    {
+      "type": "contains",
+      "target": "db-supply",
+      "description": "Contains table supply"
+    },
+    {
+      "type": "contains",
+      "target": "db-supplyneeded",
+      "description": "Contains table supplyneeded"
+    },
+    {
+      "type": "contains",
+      "target": "db-supplyorder",
+      "description": "Contains table supplyorder"
+    },
+    {
+      "type": "contains",
+      "target": "db-supplyorderitem",
+      "description": "Contains table supplyorderitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-task",
+      "description": "Contains table task"
+    },
+    {
+      "type": "contains",
+      "target": "db-taskancestor",
+      "description": "Contains table taskancestor"
+    },
+    {
+      "type": "contains",
+      "target": "db-taskattachment",
+      "description": "Contains table taskattachment"
+    },
+    {
+      "type": "contains",
+      "target": "db-taskhist",
+      "description": "Contains table taskhist"
+    },
+    {
+      "type": "contains",
+      "target": "db-tasklist",
+      "description": "Contains table tasklist"
+    },
+    {
+      "type": "contains",
+      "target": "db-tasknote",
+      "description": "Contains table tasknote"
+    },
+    {
+      "type": "contains",
+      "target": "db-tasksubscription",
+      "description": "Contains table tasksubscription"
+    },
+    {
+      "type": "contains",
+      "target": "db-taskunread",
+      "description": "Contains table taskunread"
+    },
+    {
+      "type": "contains",
+      "target": "db-terminalactive",
+      "description": "Contains table terminalactive"
+    },
+    {
+      "type": "contains",
+      "target": "db-timeadjust",
+      "description": "Contains table timeadjust"
+    },
+    {
+      "type": "contains",
+      "target": "db-timecardrule",
+      "description": "Contains table timecardrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-toolbutitem",
+      "description": "Contains table toolbutitem"
+    },
+    {
+      "type": "contains",
+      "target": "db-toothgridcell",
+      "description": "Contains table toothgridcell"
+    },
+    {
+      "type": "contains",
+      "target": "db-toothgridcol",
+      "description": "Contains table toothgridcol"
+    },
+    {
+      "type": "contains",
+      "target": "db-toothgriddef",
+      "description": "Contains table toothgriddef"
+    },
+    {
+      "type": "contains",
+      "target": "db-toothinitial",
+      "description": "Contains table toothinitial"
+    },
+    {
+      "type": "contains",
+      "target": "db-transaction",
+      "description": "Contains table transaction"
+    },
+    {
+      "type": "contains",
+      "target": "db-transactioninvoice",
+      "description": "Contains table transactioninvoice"
+    },
+    {
+      "type": "contains",
+      "target": "db-treatplan",
+      "description": "Contains table treatplan"
+    },
+    {
+      "type": "contains",
+      "target": "db-treatplanattach",
+      "description": "Contains table treatplanattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-treatplanparam",
+      "description": "Contains table treatplanparam"
+    },
+    {
+      "type": "contains",
+      "target": "db-tsitranslog",
+      "description": "Contains table tsitranslog"
+    },
+    {
+      "type": "contains",
+      "target": "db-ucum",
+      "description": "Contains table ucum"
+    },
+    {
+      "type": "contains",
+      "target": "db-updatehistory",
+      "description": "Contains table updatehistory"
+    },
+    {
+      "type": "contains",
+      "target": "db-userclinic",
+      "description": "Contains table userclinic"
+    },
+    {
+      "type": "contains",
+      "target": "db-usergroup",
+      "description": "Contains table usergroup"
+    },
+    {
+      "type": "contains",
+      "target": "db-usergroupattach",
+      "description": "Contains table usergroupattach"
+    },
+    {
+      "type": "contains",
+      "target": "db-userod",
+      "description": "Contains table userod"
+    },
+    {
+      "type": "contains",
+      "target": "db-userodapptview",
+      "description": "Contains table userodapptview"
+    },
+    {
+      "type": "contains",
+      "target": "db-userodpref",
+      "description": "Contains table userodpref"
+    },
+    {
+      "type": "contains",
+      "target": "db-userquery",
+      "description": "Contains table userquery"
+    },
+    {
+      "type": "contains",
+      "target": "db-userweb",
+      "description": "Contains table userweb"
+    },
+    {
+      "type": "contains",
+      "target": "db-utm",
+      "description": "Contains table utm"
+    },
+    {
+      "type": "contains",
+      "target": "db-vaccinedef",
+      "description": "Contains table vaccinedef"
+    },
+    {
+      "type": "contains",
+      "target": "db-vaccineobs",
+      "description": "Contains table vaccineobs"
+    },
+    {
+      "type": "contains",
+      "target": "db-vaccinepat",
+      "description": "Contains table vaccinepat"
+    },
+    {
+      "type": "contains",
+      "target": "db-vitalsign",
+      "description": "Contains table vitalsign"
+    },
+    {
+      "type": "contains",
+      "target": "db-webschedcarrierrule",
+      "description": "Contains table webschedcarrierrule"
+    },
+    {
+      "type": "contains",
+      "target": "db-webschedrecall",
+      "description": "Contains table webschedrecall"
+    },
+    {
+      "type": "contains",
+      "target": "db-wikilistheaderwidth",
+      "description": "Contains table wikilistheaderwidth"
+    },
+    {
+      "type": "contains",
+      "target": "db-wikilisthist",
+      "description": "Contains table wikilisthist"
+    },
+    {
+      "type": "contains",
+      "target": "db-wikipage",
+      "description": "Contains table wikipage"
+    },
+    {
+      "type": "contains",
+      "target": "db-wikipagehist",
+      "description": "Contains table wikipagehist"
+    },
+    {
+      "type": "contains",
+      "target": "db-xchargetransaction",
+      "description": "Contains table xchargetransaction"
+    },
+    {
+      "type": "contains",
+      "target": "db-xwebresponse",
+      "description": "Contains table xwebresponse"
+    },
+    {
+      "type": "contains",
+      "target": "db-zipcode",
+      "description": "Contains table zipcode"
+    }
+  ]
+}

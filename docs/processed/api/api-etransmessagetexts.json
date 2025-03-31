@@ -1,0 +1,37 @@
+{
+  "id": "api-etransmessagetexts",
+  "type": "api",
+  "title": "EtransmessageTexts",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API EtransmessageTexts.txt",
+  "content": "API EtransMessageTexts\nSee API Specification\n\nEtransMessageTexts GET (single)\nVersion Added: 23.2.11\n\nGets a single EtransTextMessage. For more information, see Etrans Edit.\n\nParameters:\n\nEtransMessageTextNum: Required in URL.\n\nExample Request:\nGET /etransmessagetexts/45\n\nExample Response:\n{\n\"EtransMessageTextNum\": 45,\n\"MessageText\": \"ISA*00* *00* *30*330989922 *30*330989922 *171003*0802*U*00401*000000000*0*P*:~...\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.2.11",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "EtransmessageTexts",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-etransmessagetext",
+      "description": "API references database table etransmessagetext"
+    },
+    {
+      "type": "references",
+      "target": "db-etrans",
+      "description": "API references database table etrans"
+    }
+  ]
+}

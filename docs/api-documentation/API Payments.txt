@@ -1,0 +1,53 @@
+API Payments
+See API Specification
+Payments GET
+Version Added: 22.2.32
+Get a list of payments for a patient.
+Parameters: All optional.
+PayType: (Added in version 23.3.11) definition.DefNum where definition.Category=10. PatNum: (Optional after version 23.3.11) FK to patient.PatNum. DateEntry: String in "yyyy-MM-dd" format. Gets all payments made on or after a certain date.
+Example Requests: GET /payments?PatNum=1337 GET /payments?PatNum=1337&DateEntry=2022-06-24
+Example Response: [ { "PayNum": 56734, "PayType": 69, "payType": "Check", "PayDate": "2022-06-24", "PayAmt": "339", "CheckNum": "12798", "BankBranch": "20-6", "PayNote": "", "PatNum": 1337, "ClinicNum": "0", "DateEntry": "2022-06-24", "DepositNum": 0, "Receipt": "", "IsRecurringCC": "true", "SecUserNumEntry": 0, "SecDateTEdit": "2022-06-24 07:34:31", "PaymentSource": "None", "ProcessStatus": "OfficeProcessed", "RecurringChargeDate": "0001-01-01", "IsCcCompleted": "false", "serverDateTime": "2022-08-26 11:55:44" }, { "PayNum": 56952, "PayType": 69, "payType": "Check", "PayDate": "2022-07-24", "PayAmt": "239", "CheckNum": "12816", "BankBranch": "20-6", "PayNote": "", "PatNum": 1337, "ClinicNum": "0", "DateEntry": "2022-07-24", "DepositNum": 0, "Receipt": "", "IsRecurringCC": "true", "SecUserNumEntry": 0, "SecDateTEdit": "2022-07-24 07:34:31", "PaymentSource": "API", "ProcessStatus": "OfficeProcessed", "RecurringChargeDate": "0001-01-01", "IsCcCompleted": "false", "serverDateTime": "2022-08-26 11:55:44" } ]
+200 OK 400 BadRequest (Missing or invalid fields) 404 NotFound (Patient not found)
+Payments POST (create)
+Version Added: 21.2
+Creates a payment for a patient. Does not support insurance payments or income transfers. Payments apply to outstanding charges in a FIFO order. Overpayments are inserted as unearned income.
+Payments will be applied to the patient's payment plan, if one is eligible. The oldest plan will be chosen if there is more than one eligible plan. By marking the payment as a prepayment and supplying a payPlanNum, patients are able to prepay on a specific Dynamic Payment Plan for its future charges. If needed, the user can later detach the payment from the plan within the Edit Payment Plan window by editing the split and unchecking "Attach to Payment Plan". They can also attach to a different plan in the same manner.
+This method also creates appropriate paysplits according to the payment allocation preferences from Setup > Allocations within Open Dental.
+PayAmt: Required. PatNum: Required.  PayType: (Added in version 23.1.27) Optional. definition.DefNum where definition.Category=10. Defaults to the ApiPaymentType preference. PayDate: Optional. String in "yyyy-MM-dd" format. Defaults to today's date. Follows the office's preference to allow future-dated payments. CheckNum: Optional. PayNote: Optional. BankBranch: Optional. ClinicNum: Optional. Defaults to patient.ClinicNum isPatientPreferred: Optional. When entering a payment through Open Dental directly, there is a checkbox for this option. This API field allows the same functionality. It causes the splits to go to the patient instead of being split among family members on a FIFO basis. Default "false". isPrepayment: (Added in version 22.4.8) Optional. Creates a single paysplit using the default unearned type for unallocated paysplits stored in the PrepaymentUnearnedType preference. See also Unearned / Prepayment. Default "false". procNums: (Added in version 22.4.16) Optional. An array of ProcNums, in [1,2,3] format to apply this Payment to. Procedures are paid by Procedure.ProcDate on a FIFO basis. Procedures not in the Patient's family will be silently ignored. Ignored if isPrepayment is set to "true". Default is an empty array. payPlanNum: (Added in version 23.1.31) Optional. FK to payplan.PayPlanNum for a Dynamic Payment Plan. Only allowed if isPrepayment is "true" prior to version 23.3.4. Default 0.
+Example Requests: POST /payments
+{ "PayAmt": "129.99", "PatNum": 1568 }
+or
+{ "PayAmt": "129.99", "PatNum": 1568, "PayDate": "2021-07-05", "CheckNum": "2058", "PayNote": "Check payment through website", "BankBranch": "19-7076", "ClinicNum": "3", "isPatientPreferred": "true", "isPrepayment": "true", "procNums": [13,14,18] }
+or
+{ "PayAmt": "129.99", "PatNum": 1568, "isPrepayment": "true", "payPlanNum": 12 }
+Example Response: { "PayNum": 56734, "PayType": 383, "payType": "Check", "PayDate": "2021-07-05", "PayAmt": "129.99", "CheckNum": "2058", "BankBranch": "19-7076", "PayNote": "Check payment through website", "PatNum": 1568, "ClinicNum": "3", "DateEntry": "2021-07-05", "DepositNum": 0, "Receipt": "", "IsRecurringCC": "true", "SecUserNumEntry": 0, "SecDateTEdit": "2021-07-05 07:34:31", "PaymentSource": "API", "ProcessStatus": "OfficeProcessed", "RecurringChargeDate": "0001-01-01", "IsCcCompleted": "false", "serverDateTime": "" }
+201 Created 400 BadRequest (Missing or invalid fields) 404 NotFound (Patient not found)
+Payments POST Refund
+Version Added: 24.4.28
+Creates a refund payment. Cannot refund payments that are attached to payment plans or have negative paysplits.
+Example Requests: POST /payments/Refund
+{ "PayNum": 178 }
+Example Response: { "PayNum": 231, "PayType": 383, "payType": "Check", "PayDate": "2025-01-05", "PayAmt": "-129.99", "CheckNum": "2058", "BankBranch": "19-7076", "PayNote": "Check payment through website", "PatNum": 1568, "ClinicNum": "3", "DateEntry": "2025-01-05", "DepositNum": 0, "Receipt": "", "IsRecurringCC": "true", "SecUserNumEntry": 0, "SecDateTEdit": "2025-02-26 07:34:31", "PaymentSource": "None", "ProcessStatus": "OfficeProcessed", "RecurringChargeDate": "0001-01-01", "IsCcCompleted": "false", "serverDateTime": "" }
+201 Created 400 BadRequest (with explanation) 404 NotFound (with explanation)
+Payments PUT (update)
+Version Added: 23.3.11
+Updates a payment.
+PayNum: Required in the URL.  PayType: definition.DefNum where definition.Category=10. CheckNum: Check number. Overwrites existing value. BankBranch: Bank-branch code for checks. Overwrites existing value. PayNote: Note on payment. Overwrites existing value. ProcessStatus: (Added in version 24.3.26) Indicates whether a payment came from in office or online, and if the online payment is processed or pending. Either "OnlineProcessed" or "OnlinePending".
+Example Requests: PUT /payments/56734
+{ "ProcessStatus": "OnlineProcessed" }
+or
+{ "PayType": 449, "CheckNum": "7492", "BankBranch": "98-795", "PayNote": "12 months - 10% discount." }
+Example Response: { "PayNum": 56734, "PayType": 449, "payType": "API Payment Processed", "PayDate": "2022-06-24", "PayAmt": "339", "CheckNum": "7492", "BankBranch": "98-795", "PayNote": "12 months - 10% discount.", "PatNum": 1337, "ClinicNum": "0", "DateEntry": "2022-06-24", "DepositNum": 0, "Receipt": "", "IsRecurringCC": "true", "SecUserNumEntry": 0, "SecDateTEdit": "2022-06-24 07:34:31", "PaymentSource": "API", "ProcessStatus": "OfficeProcessed", "RecurringChargeDate": "0001-01-01", "IsCcCompleted": "false", "serverDateTime": "" }
+200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)
+Payments PUT Partial
+Version Added: 25.1.11
+Rarely used. Before calling this method, a payment must be made via Open Dental UI or Payments POST. Afterwards, use PaySplits GET to obtain the new paysplits.
+Deletes all existing paysplits for the payment and inserts new ones created for the passed in procedures.
+PayNum: Required in the URL.  procNumsAndAmounts: Required. One or many pairs of ProcNums and Amounts. The sum of all Amounts must equate to the PayAmt of the payment.
+ProcNum: FK to procedure.ProcNum. Procedure must have an outstanding charge, and be for the patient or a family member.
+Amount: Amount to allocate to the ProcNum's procedure.
+
+Example Request: PUT /payments/40143/Partial
+{ "procNumsAndAmounts": [ {"ProcNum": 271, "Amount": 50}, {"ProcNum": 402, "Amount": 25} ] }
+Example Response: { "PayNum": 40143, "PayType": 383, "payType": "Check", "PayDate": "2025-02-14", "PayAmt": "75", "CheckNum": "", "BankBranch": "", "PayNote": "", "PatNum": 654, "ClinicNum": "0", "DateEntry": "2025-02-14", "DepositNum": 0, "Receipt": "", "IsRecurringCC": "false", "SecUserNumEntry": 1, "SecDateTEdit": "2025-02-14 09:25:48", "PaymentSource": "None", "ProcessStatus": "OfficeProcessed", "RecurringChargeDate": "0001-01-01", "IsCcCompleted": "false", "serverDateTime": "" }
+200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)

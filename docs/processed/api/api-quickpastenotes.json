@@ -1,0 +1,46 @@
+{
+  "id": "api-quickpastenotes",
+  "type": "api",
+  "title": "Quickpastenotes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Quickpastenotes.txt",
+  "content": "API QuickPasteNotes\nSee\u00a0API Specification\nQuickPasteNotes are used to easily replace abbreviated text with longer notes. See\u00a0Quick Paste Notes Setup.\nQuickPasteNotes GET (single)\nVersion Added: 22.3.24\nGets the QuickPasteNote corresponding to a passed in QuickPasteNoteNum.\nExample Request:\u2028GET /quickpastenotes/25\nExample Response:\u2028{\u2028\"QuickPasteNoteNum\": 25,\u2028\"QuickPasteCatNum\": 3,\u2028\"ItemOrder\": 0,\u2028\"Note\": \"Patient called to cancel upcoming appointment on DATE.\",\u2028\"Abbreviation\": \"cancel\"\u2028}\n200 OK\u2028404 NotFound \"QuickPasteNote not found.\"\nQuickPasteNotes GET (multiple)\nVersion Added: 22.3.24\nGets a list of QuickPasteNotes.\nParameters:\nQuickPasteCatNum:\u00a0Optional. FK to quickpastecat.QuickPasteCatNum.\nExample Requests:\u2028GET /quickpastenotes\u2028GET /quickpastenotes?QuickPasteCatNum=3\nExample Response:\u2028[\u2028{\u2028\"QuickPasteNoteNum\": 25,\u2028\"QuickPasteCatNum\": 3,\u2028\"ItemOrder\": 0,\u2028\"Note\": \"Patient called to cancel upcoming appointment on DATE.\",\u2028\"Abbreviation\": \"cancel\"\u2028},\u2028{\u2028\"QuickPasteNoteNum\": 26,\u2028\"QuickPasteCatNum\": 3,\u2028\"ItemOrder\": 1,\u2028\"Note\": \"Called patient to discuss:\",\u2028\"Abbreviation\": \"call\"\u2028},\u2028{\u2028\"QuickPasteNoteNum\": 27,\u2028\"QuickPasteCatNum\": 3,\u2028\"ItemOrder\": 2,\u2028\"Note\": \"Scanned insurance card into Imaging Module. Insurance entered into Family Module.\",\u2028\"Abbreviation\": \"ins\"\u2028},\u2028etc...\u2028]\n200 OK\n",
+  "metadata": {
+    "version": "22.3.24",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Quickpastenotes",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-quickpastenote",
+      "description": "API references database table quickpastenote"
+    },
+    {
+      "type": "references",
+      "target": "db-quickpastecat",
+      "description": "API references database table quickpastecat"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    }
+  ]
+}

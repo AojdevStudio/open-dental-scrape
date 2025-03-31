@@ -1,0 +1,15 @@
+API QuickPasteCats
+See API Specification
+QuickPasteCats are used to organize Quick Paste Notes of a similar type, for more information see Quick Paste Category.
+QuickPasteCats GET (single)
+Version Added: 22.3.26
+Gets a QuickPasteCat corresponding to a passed in QuickPasteCatNum.
+Example Request: GET /quickpastecats/2
+Example Response: { "QuickPasteCatNum": 2, "Description": "Medical Summary", "ItemOrder": 1, "DefaultForTypes": "MedicalSummary" }
+200 OK 404 NotFound
+QuickPasteCats GET (multiple)
+Version Added: 22.3.26
+Gets a list of QuickPasteCats.
+Example Request: GET /quickpastecats GET /quickpastecats?Limit=20&Offset=50
+Example Response: [ { "QuickPasteCatNum": 1, "Description": "Medical Urgent", "ItemOrder": 0, "DefaultForTypes": "" }, { "QuickPasteCatNum": 2, "Description": "Medical Summary", "ItemOrder": 1, "DefaultForTypes": "MedicalSummary" }, { "QuickPasteCatNum": 3, "Description": "Notes", "ItemOrder": 2, "DefaultForTypes": "ServiceNotes,PatAddressNote,FinancialNotes,AutoNote" }, etc... ]
+200 OK 400 BadRequest

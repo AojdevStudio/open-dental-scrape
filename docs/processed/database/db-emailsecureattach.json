@@ -1,0 +1,40 @@
+{
+  "id": "db-emailsecureattach",
+  "type": "database",
+  "title": "emailsecureattach",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "emailsecureattach",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "emailsecureattach",
+    "description": "Table for emailsecureattach data.",
+    "columns": [
+      {
+        "name": "emailsecureattachNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "emailsecureattachNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

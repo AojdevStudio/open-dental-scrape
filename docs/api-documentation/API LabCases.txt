@@ -1,0 +1,235 @@
+API LabCases
+See API Specification
+
+See Lab Case for more information.
+
+LabCases GET (single)
+Version Added: 24.2.28
+
+Gets a single labcase.
+
+LabCaseNum: Required in URL.
+
+Example Request:
+GET /labcases/1
+
+Example Response:
+{
+"LabCaseNum": 1,
+"PatNum": 33,
+"LaboratoryNum": 1,
+"AptNum": 6994,
+"PlannedAptNum": 0,
+"DateTimeDue": "0001-01-01 00:00:00",
+"DateTimeCreated": "0001-01-01 00:00:00",
+"DateTimeSent": "2000-01-01 00:00:00",
+"DateTimeRecd": "2000-01-01 00:00:00",
+"DateTimeChecked": "0001-01-01 00:00:00",
+"ProvNum": 1,
+"Instructions": "",
+"LabFee": 0.0,
+"DateTStamp": "2022-09-30 14:23:12",
+"InvoiceNum": ""
+}
+
+200 OK
+404 NotFound (with explanation)
+
+LabCases GET (multiple)
+Version Added: 24.2.28
+
+Gets a list of labcases.
+
+Parameters: All optional.
+
+PatNum: FK to patient.PatNum.
+LaboratoryNum: FK to laboratory.LaboratoryNum. The lab that the case gets sent to.
+AptNum: FK to appointment.AptNum.
+PlannedAptNum: FK to appointment.AptNum.
+ProvNum : FK to provider.ProvNum.
+
+Example Requests:
+GET /labcases
+GET /labcases?PatNum=1
+GET /labcases?LaboratoryNum=5
+GET /labcases?AptNum=143
+GET /labcases?PlannedAptNum=357
+GET /labcases?AptNum=143&ProvNum=3
+
+Example Responses:
+[
+{
+"LabCaseNum": 226,
+"PatNum": 33,
+"LaboratoryNum": 1,
+"AptNum": 143,
+"PlannedAptNum": 0,
+"DateTimeDue": "0001-01-01 00:00:00",
+"DateTimeCreated": "2022-09-30 14:23:12",
+"DateTimeSent": "2022-10-03 14:24:12",
+"DateTimeRecd": "2022-10-04 14:24:12",
+"DateTimeChecked": "2022-10-05 14:24:12",
+"ProvNum": 3,
+"Instructions": "Repair clasps on Max partial",
+"LabFee": 0.0,
+"DateTStamp": "2022-10-05 14:24:12",
+"InvoiceNum": ""
+},
+{
+"LabCaseNum": 227,
+"PatNum": 33,
+"LaboratoryNum": 1,
+"AptNum": 143,
+"PlannedAptNum": 0,
+"DateTimeDue": "0001-01-01 00:00:00",
+"DateTimeCreated": "2022-09-30 14:24:12",
+"DateTimeSent": "2022-09-30 14:24:12",
+"DateTimeRecd": "2022-10-03 14:24:12",
+"DateTimeChecked": "2022-10-04 14:24:12",
+"ProvNum": 3,
+"Instructions": "",
+"LabFee": 0.0,
+"DateTStamp": "2022-10-04 14:24:12",
+"InvoiceNum": ""
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+LabCases POST (create)
+Version Added: 24.4.19
+
+Creates a labcase.
+
+PatNum: Required. FK to patient.PatNum.
+LaboratoryNum: Required. FK to laboratory.LaboratoryNum. The lab that the case gets sent to.
+ProvNum: Required. FK to provider.ProvNum.
+
+AptNum: Optional. FK to appointment.AptNum where appointment.AptStatus=Scheduled.
+PlannedAptNum: Optional. FK to appointment.AptNum where appointment.AptStatus=Planned.
+DateTimeDue: Optional. The due date that is put on the labslip. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeCreated: Optional. When the labcase was created. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeSent: Optional. The time that the labcase actually went out to the lab. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeRecd: Optional. Date/time received back from the lab. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeChecked: Optional. Date/time that quality was checked. String in "yyyy-MM-dd HH:mm:ss" format.
+Instructions: Optional. The text instructions for this labcase.
+LabFee: Optional. This is used for tracking and informational purposes only. The fee is not used in any calculation.
+InvoiceNum: Optional. This is an optional invoice number used for tracking and informational purposes only.
+
+Example Request:
+POST /labcases
+
+{
+"PatNum": 33,
+"LaboratoryNum": 1,
+"AptNum": 143,
+"PlannedAptNum": 0,
+"DateTimeDue": "2022-10-04 14:23:12",
+"DateTimeCreated": "2022-09-30 14:23:12",
+"DateTimeSent": "2022-10-03 14:24:12",
+"DateTimeRecd": "2022-10-04 14:24:12",
+"DateTimeChecked": "2022-10-05 14:24:12",
+"ProvNum": 3,
+"Instructions": "Repair clasps on Max partial",
+"LabFee": 0.0,
+"InvoiceNum": ""
+}
+
+Example Response:
+{
+"LabCaseNum": 226,
+"PatNum": 33,
+"LaboratoryNum": 1,
+"AptNum": 143,
+"PlannedAptNum": 0,
+"DateTimeDue": "2022-10-04 14:23:12",
+"DateTimeCreated": "2022-09-30 14:23:12",
+"DateTimeSent": "2022-10-03 14:24:12",
+"DateTimeRecd": "2022-10-04 14:24:12",
+"DateTimeChecked": "2022-10-05 14:24:12",
+"ProvNum": 3,
+"Instructions": "Repair clasps on Max partial",
+"LabFee": 0.0,
+"DateTStamp": "2022-10-05 14:24:12",
+"InvoiceNum": ""
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+LabCases PUT (update)
+Version Added: 24.4.19
+
+Updates a labcase.
+
+LabCaseNum: Required in the URL.
+
+LaboratoryNum: FK to laboratory.LaboratoryNum. The lab that the case gets sent to.
+AptNum: FK to appointment.AptNum where appointment.AptStatus=Scheduled.
+PlannedAptNum: FK to appointment.AptNum where appointment.AptStatus=Planned.
+DateTimeDue: The due date that is put on the labslip. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeCreated: When the labcase was created. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeSent: The time that the labcase actually went out to the lab. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeRecd: Date/time received back from the lab. String in "yyyy-MM-dd HH:mm:ss" format.
+DateTimeChecked: Date/time that quality was checked. String in "yyyy-MM-dd HH:mm:ss" format.
+ProvNum: FK to provider.ProvNum.
+Instructions: The instructions for this labcase.
+LabFee: This is used for tracking and informational purposes only. The fee is not used in any calculation.
+InvoiceNum: This is an optional invoice number used for tracking and informational purposes only.
+
+Example Request:
+PUT /labcases/226
+
+{
+"DateTimeDue": "2022-12-05 09:30:00",
+"DateTimeCreated": "2022-11-30 12:00:00",
+"DateTimeSent": "2022-12-01 16:15:00",
+"DateTimeRecd": "2022-12-05 09:45:00",
+"DateTimeChecked": "2022-12-06 10:00:00",
+"ProvNum": 4,
+"Instructions": "PFM crown #28. Shade A1",
+"LabFee": 17.50,
+"InvoiceNum": "271828"
+}
+
+Example Response:
+{
+"LabCaseNum": 226,
+"PatNum": 33,
+"LaboratoryNum": 1,
+"AptNum": 143,
+"PlannedAptNum": 0,
+"DateTimeDue": "2022-12-05 09:30:00",
+"DateTimeCreated": "2022-11-30 12:00:00",
+"DateTimeSent": "2022-12-01 16:15:00",
+"DateTimeRecd": "2022-12-05 09:45:00",
+"DateTimeChecked": "2022-12-06 10:00:00",
+"ProvNum": 4,
+"Instructions": "PFM crown #28. Shade A1",
+"LabFee": 17.50,
+"DateTStamp": "2022-12-07 10:24:53",
+"InvoiceNum": "271828"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+LabCases DELETE
+Version Added: 24.4.19
+
+Deletes a labcase.
+
+LabCaseNum: Required in URL.
+
+Example Request:
+DELETE /labcases/5
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

@@ -1,0 +1,259 @@
+API Tasks
+See API Specification
+
+Tasks are a way for intra-office communication, setting reminders, and more.
+
+Tasks GET (single)
+Version Added: 24.4.13
+
+Gets a single task.
+
+TaskNum: Required in URL.
+
+Example Request:
+GET /tasks/1408
+
+Example Response:
+{
+"TaskNum": 1408,
+"TaskListNum": 14,
+"DateTask": "0001-01-01",
+"KeyNum": 33,
+"Descript": "The attached patient has requested a call back regarding their upcoming appointment.",
+"TaskStatus": "New",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Patient",
+"DateTimeEntry": "2024-12-10 13:08:47",
+"UserNum": 1,
+"DateTimeFinished": "0001-01-01 00:00:00",
+"PriorityDefNum": 260,
+"ReminderGroupId": "",
+"ReminderType": "NoReminder",
+"ReminderFrequency": 0,
+"DateTimeOriginal": "2024-12-10 13:08:47",
+"SecDateTEdit": "2024-12-10 13:09:02",
+"DescriptOverride": "",
+"IsReadOnly": "false"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Tasks GET (multiple)
+Version Added: 22.3.16
+
+Get a list of tasks that meet a set of search criteria. To get a list of all patient or appointment tasks, use only the ObjectType. To get a list of tasks for a specific patient or appointment, use both the ObjectType and KeyNum.
+
+Parameters: All optional.
+
+TaskListNum: Optional. tasklist.TaskListNum. Default all TaskLists.
+KeyNum: Optional. Either patient.PatNum or appointment.AptNum. Used when ObjectType is "Patient" or "Appointment". Default 0.
+ObjectType: Optional, unless KeyNum is specified. Either "None", "Patient", or "Appointment". Default all ObjectTypes.
+TaskStatus: Optional. Either "New", "Viewed", or "Done". Default all TaskStatuses.
+DateTimeOriginal: Optional. Gets tasks created after this datetime. String in "yyyy-MM-dd HH:mm:ss" format. Default is the previous 14 days.
+
+Example Request:
+GET /tasks?ObjectType=Appointment&DateTimeOriginal=2022-07-01%2005%3A30%3A00
+GET /tasks?TaskStatus=New&TaskListNum=74
+
+Example Response:
+[
+{
+"TaskNum": 9004,
+"TaskListNum": 74,
+"DateTask": "0001-01-01",
+"KeyNum": 0,
+"Descript": "Need to re-order general cleaning supplies by this next Friday.",
+"TaskStatus": "New",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "None",
+"DateTimeEntry": "2022-10-01 11:18:11",
+"UserNum": 1,
+"DateTimeFinished": "0001-01-01 00:00:00",
+"PriorityDefNum": 358,
+"ReminderGroupId": "",
+"ReminderType": "NoReminder",
+"ReminderFrequency": 0,
+"DateTimeOriginal": "2022-10-07 11:18:11",
+"SecDateTEdit": "2022-10-07 11:18:36",
+"DescriptOverride": "",
+"IsReadOnly": "false"
+},
+{
+"TaskNum": 9027,
+"TaskListNum": 74,
+"DateTask": "0001-01-01",
+"KeyNum": 755,
+"Descript": "Mr. Andersons Insurance needs to be verified before his next appointment.",
+"TaskStatus": "New",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Appointment",
+"DateTimeEntry": "2022-10-07 11:16:40",
+"UserNum": 1,
+"DateTimeFinished": "0001-01-01 00:00:00",
+"PriorityDefNum": 358,
+"ReminderGroupId": "",
+"ReminderType": "NoReminder",
+"ReminderFrequency": 0,
+"DateTimeOriginal": "2022-10-07 11:16:40",
+"SecDateTEdit": "2022-10-07 11:17:39",
+"DescriptOverride": "",
+"IsReadOnly": "false"
+},
+{
+"TaskNum": 9093,
+"TaskListNum": 74,
+"DateTask": "0001-01-01",
+"KeyNum": 73,
+"Descript": "Need to update Rebecca's contact information.",
+"TaskStatus": "New",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Patient",
+"DateTimeEntry": "2022-10-07 11:17:41",
+"UserNum": 1,
+"DateTimeFinished": "0001-01-01 00:00:00",
+"PriorityDefNum": 358,
+"ReminderGroupId": "",
+"ReminderType": "NoReminder",
+"ReminderFrequency": 0,
+"DateTimeOriginal": "2022-10-07 11:17:41",
+"SecDateTEdit": "2022-10-07 11:17:59",
+"DescriptOverride": "",
+"IsReadOnly": "false"
+}
+etc...
+]
+
+200 OK
+400 Bad Request (Invalid fields, etc)
+404 NotFound (Patient not found, Appointment not found, etc)
+
+Tasks POST (create)
+Version Added: 22.3.17
+
+Creates a new task. See Task Window for more details on each field.
+
+TaskListNum: Required. tasklist.TaskListNum. Use TaskLists GET to find available TaskLists.
+Descript: Required. The description of this task.
+UserNum: Required. userod.UserNum. The user that created the task.
+
+KeyNum: Optional. Either patient.PatNum or appointment.AptNum. Used when ObjectType is "Patient" or "Appointment". Default 0.
+ObjectType: Optional, unless KeyNum is specified. Either "None", "Patient", or "Appointment". Default "None".
+DateTimeEntry: Optional. The date and time that this task was added. String in "yyyy-MM-dd HH:mm:ss". Default to Now.
+PriorityDefNum: Optional. Definition.DefNum where Category=33. Default is the dental office's default, if set, or the first definition in that Category. See Definitions: Task Priorities.
+DescriptOverride: Optional. "Short Descript" in UI. Limited to 256 characters.
+
+Example Request:
+POST /tasks
+
+{
+"TaskListNum": 3842,
+"Descript": "Please attach the Insurance card and info for this patient.",
+"UserNum": 12,
+"KeyNum": 73,
+"ObjectType": "Patient",
+"DateTimeEntry": "2022-10-12 08:00:00",
+"PriorityDefNum": 90,
+"DescriptOverride": "Patient insurance task"
+}
+
+Example Response:
+{
+"TaskNum": 9093,
+"TaskListNum": 3842,
+"DateTask": "0001-01-01",
+"KeyNum": 73,
+"Descript": "Please attach the Insurance card and info for this patient.",
+"TaskStatus": "New",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Patient",
+"DateTimeEntry": "2022-10-12 08:00:00",
+"UserNum": 1,
+"DateTimeFinished": "0001-01-01 00:00:00",
+"PriorityDefNum": 90,
+"ReminderGroupId": "",
+"ReminderType": "NoReminder",
+"ReminderFrequency": 0,
+"DateTimeOriginal": "2022-10-12 07:34:41",
+"SecDateTEdit": "2022-10-12 07:34:41",
+"DescriptOverride": "Patient insurance task",
+"IsReadOnly": "false"
+}
+
+201 Created
+400 Bad Request (Invalid fields, etc)
+404 NotFound (Patient not found, Appointment not found, etc)
+
+Tasks PUT (update)
+Version Added: 22.4.15
+
+Updates an existing task by TaskNum. See Task Window for more details on each field.
+
+TaskNum: Required in the URL.
+
+Descript: Optional. The description of this task. Overwrites existing. Sets tasks with a TaskStatus of "Done" to "Viewed".
+TaskStatus: (Added in version 24.2.10) Optional. Either "New", "Viewed", or "Done".
+KeyNum: Optional. Either patient.PatNum or appointment.AptNum. Used when ObjectType is "Patient" or "Appointment".
+ObjectType: Optional, unless KeyNum is specified. Either "None", "Patient", or "Appointment".
+DateTimeEntry: Optional. The date and time that this task was added. Also used for reminder tasks. String in "yyyy-MM-dd HH:mm:ss".
+PriorityDefNum: Optional. Definition.DefNum where Category=33.
+DescriptOverride: Optional. "Short Descript" in UI. Overwrites existing. Limited to 256 characters.
+
+Example Request:
+PUT /tasks/6857
+
+{
+"TaskStatus": "Done",
+"DateTimeEntry": "2023-01-12 08:00:00",
+"PriorityDefNum": 90
+}
+
+or
+
+{
+"Descript": "Please attach the Insurance card and info for this patient.",
+"KeyNum": 73,
+"ObjectType": "Patient",
+"DateTimeEntry": "2023-01-12 08:00:00",
+"PriorityDefNum": 90,
+"DescriptOverride": "Patient insurance task"
+}
+
+Example Response:
+{
+"TaskNum": 6857,
+"TaskListNum": 3842,
+"DateTask": "0001-01-01",
+"KeyNum": 73,
+"Descript": "Please attach the Insurance card and info for this patient.",
+"TaskStatus": "Done",
+"IsRepeating": "false",
+"DateType": "None",
+"FromNum": 0,
+"ObjectType": "Patient",
+"DateTimeEntry": "2023-01-12 08:00:00",
+"UserNum": 1,
+"DateTimeFinished": "2023-01-15 08:00:00",
+"PriorityDefNum": 90,
+"ReminderGroupId": "",
+"ReminderType": "NoReminder",
+"ReminderFrequency": 0,
+"DateTimeOriginal": "2023-01-10 08:23:36",
+"SecDateTEdit": "2023-01-11 07:34:41",
+"DescriptOverride": "Patient insurance task",
+"IsReadOnly": "false"
+}
+
+200 OK
+400 Bad Request (with explanation)
+404 NotFound (with explanation)

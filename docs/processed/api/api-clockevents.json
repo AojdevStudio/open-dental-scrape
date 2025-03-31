@@ -1,0 +1,43 @@
+{
+  "id": "api-clockevents",
+  "type": "api",
+  "title": "ClockEvents",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ClockEvents.txt",
+  "content": "API ClockEvents\nSee API Specification\n\nSee TimeCard for more information.\n\nClockEvents GET (single)\nVersion Added: 24.1.11\n\nGets a single clockevent.\n\nClockEventNum: Required in the URL.\n\nExample Request:\nGET /clockevents/19123\n\nExample Response:\n{\n\"ClockEventNum\": 19123,\n\"EmployeeNum\": 13,\n\"TimeEntered1\": \"2024-01-23 10:55:37\",\n\"TimeDisplayed1\": \"2024-01-23 08:00:00\",\n\"ClockStatus\": \"Home\",\n\"Note\": \"Forgot to clock in this morning.\",\n\"TimeEntered2\": \"2024-01-23 16:01:16\",\n\"TimeDisplayed2\": \"2024-01-23 16:01:16\",\n\"OTimeHours\": \"-01:00:00\",\n\"OTimeAuto\": \"00:00:00\",\n\"Adjust\": \"00:00:00\",\n\"AdjustAuto\": \"00:00:00\",\n\"AdjustIsOverridden\": \"false\",\n\"Rate2Hours\": \"-01:00:00\",\n\"Rate2Auto\": \"00:00:00\",\n\"ClinicNum\": 0,\n\"Rate3Hours\": \"-01:00:00\",\n\"Rate3Auto\": \"00:00:00\",\n\"IsWorkingHome\": \"false\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nClockEvents GET (multiple)\nVersion Added: 24.1.11\n\nGets a list of clockevents.\n\nParameters: All optional.\n\nEmployeeNum: FK to employee.EmployeeNum.\nClockStatus: Either \"Home\", \"Lunch\", or \"Break\".\nClinicNum: FK to clinic.ClinicNum.\ndate: For a single day. String in \"yyyy-MM-dd\" format.\ndateStart: Only return clockevents with a TimeDisplayed1 on or after this date. String in \"yyyy-MM-dd\" format.\ndateEnd: Only return clockevents with a TimeDisplayed1 before this date. String in \"yyyy-MM-dd\" format.\n\nExample Requests:\nGET /clockevents?EmployeeNum=13\nGET /clockevents?ClockStatus=Home&date=2024-01-23\nGET /clockevents?EmployeeNum=13&dateStart=2024-02-26&dateEnd=2024-03-11\n\nExample Response:\n[\n{\n\"ClockEventNum\": 19123,\n\"EmployeeNum\": 13,\n\"TimeEntered1\": \"2024-02-26 10:55:37\",\n\"TimeDisplayed1\": \"2024-02-26 08:00:00\",\n\"ClockStatus\": \"Home\",\n\"Note\": \"Forgot to clock in this morning.\",\n\"TimeEntered2\": \"2024-02-26 16:01:16\",\n\"TimeDisplayed2\": \"2024-02-26 16:01:16\",\n\"OTimeHours\": \"-01:00:00\",\n\"OTimeAuto\": \"00:00:00\",\n\"Adjust\": \"00:00:00\",\n\"AdjustAuto\": \"00:00:00\",\n\"AdjustIsOverridden\": \"false\",\n\"Rate2Hours\": \"-01:00:00\",\n\"Rate2Auto\": \"00:00:00\",\n\"ClinicNum\": 0,\n\"Rate3Hours\": \"-01:00:00\",\n\"Rate3Auto\": \"00:00:00\",\n\"IsWorkingHome\": \"false\"\n},\n{\n\"ClockEventNum\": 19124,\n\"EmployeeNum\": 13,\n\"TimeEntered1\": \"2024-02-26 12:00:25\",\n\"TimeDisplayed1\": \"2024-02-26 12:00:05\",\n\"ClockStatus\": \"Break\",\n\"Note\": \"Forgot to clock in this morning.\",\n\"TimeEntered2\": \"2024-02-26 12:33:18\",\n\"TimeDisplayed2\": \"2024-02-26 12:33:18\",\n\"OTimeHours\": \"-01:00:00\",\n\"OTimeAuto\": \"00:00:00\",\n\"Adjust\": \"00:00:00\",\n\"AdjustAuto\": \"00:03:13\",\n\"AdjustIsOverridden\": \"false\",\n\"Rate2Hours\": \"-01:00:00\",\n\"Rate2Auto\": \"00:00:00\",\n\"ClinicNum\": 0,\n\"Rate3Hours\": \"-01:00:00\",\n\"Rate3Auto\": \"00:00:00\",\n\"IsWorkingHome\": \"false\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.1.11",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ClockEvents",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-clockevent",
+      "description": "API references database table clockevent"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

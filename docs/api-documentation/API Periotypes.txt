@@ -1,0 +1,42 @@
+API PerioExams
+See API Specification
+PerioExams GET (single)
+Version Added: 22.4.36
+Gets a single perioexam.
+PerioExamNum: Required in the URL.
+Example Request: GET /perioexams/171
+Example Response: { "PerioExamNum": 171, "PatNum": 236, "ExamDate": "2023-04-01", "ProvNum": 2, "DateTMeasureEdit": "2023-04-01 05:25:46", "Note": "" }
+200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)
+PerioExams GET (multiple)
+Version Added: 22.4.36
+Gets a list of perioexams.
+Parameters: All optional.  PatNum: FK to patient.PatNum. ExamDate: String in "yyyy-MM-dd" format. Gets all PerioExams made on or after a certain date.
+Example Request: GET /perioexams?PatNum=236 GET /perioexams?ExamDate=2023-04-01
+Example Response: [ { "PerioExamNum": 171, "PatNum": 236, "ExamDate": "2023-04-01", "ProvNum": 2, "DateTMeasureEdit": "2023-04-01 05:25:46", "Note": "" }, etc... ]
+200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)
+PerioExams POST
+Version Added: 23.1.20
+Inserts a new perioexam for a patient. For more information, see Perio Chart.
+Rarely used. If UpperFacial, UpperLingual, LowerLingual, and/or LowerFacial are passed in, then corresponding PerioMeasures will be created and inserted along with the new PerioExam. Values strings are parsed left to right and will traverse surfaces in that region from the right side of the mouth to the left side (AutoAdvance Left in UI). Each integer (0-9) functions as a Probing measurement for a new surface.
+Any bleeding flag characters (b,s,p,c) following the integer sets Bleeding, Suppuration, Plaque, and Calculus respectively for the same surface. Any other characters are ignored. After the region is fully measured, all further characters are ignored.
+For example, "UpperFacial":"323b" will insert a PerioMeasure for ToothNum 1 with DB, B, MB values of 3,2,and 3, and a PerioMeasure for ToothNum 1 with a bleeding flag on MB. Use PerioMeasures GET to retrieve any created PerioMeasures.
+PatNum: Required. FK to patient.PatNum.
+UpperFacial: Optional, string. Probing and Bleeding values for facial surfaces of upper teeth (1-16). Defaults to empty string. UpperLingual: Optional, string. Probing and Bleeding values for lingual surfaces of upper teeth (1-16). Defaults to empty string. LowerLingual: Optional, string. Probing and Bleeding values for lingual surfaces of lower teeth (17-32). Defaults to empty string. LowerFacial: Optional, string. Probing and Bleeding values for facial surfaces of lower teeth (17-32). Defaults to empty string. ExamDate: (Added in version 23.3.27) Optional. String in "yyyy-MM-dd" format. Default today. ProvNum: (Added in version 23.3.27) Optional. Defaults to the patient's primary provider. Note: (Added in version 23.3.27) Optional. Note for the exam.
+Example Request: POST /perioexams  { "PatNum": 20, "UpperFacial": "32b4b32432332332332bs132332331342c3c3253233223p2c3p22b3b343", "UpperLingual": "323,323,322,222,232,222,212,212,212,212,232,323,323,323,343,343", "LowerLingual": "3b2b4b 424 323 323 323 321 323 323.313 42c3c 325 323 322 3p2c3p 22b3b 343c", "LowerFacial": "4 3b 2s 4bs 4p 2bp 4sp 3bsp 2c 3bc 3sc 2bsc 3pc 3bpc 2spc 3bspc" }
+Example Response: { "PerioExamNum": 31, "PatNum": 20, "ExamDate": "2023-05-12", "ProvNum": 3, "DateTMeasureEdit": "2023-05-12 13:21:48", "Note": "" }
+201 Created 400 BadRequest (with explanation) 404 NotFound (with explanation)
+PerioExams PUT (update)
+Version Added: 23.3.27
+Updates a perioexam.
+PerioExamNum: Required in the URL.
+ExamDate: Optional. String in "yyyy-MM-dd" format. ProvNum: Optional. FK to provider.ProvNum. Note: Optional. Note for the exam. Overwrites existing note.
+Example Request: PUT /perioexams/31
+{ "ExamDate": "2023-06-15", "ProvNum": 2, "Note": "Overall improvement!" }
+Example Response: { "PerioExamNum": 31, "PatNum": 20, "ExamDate": "2023-06-15", "ProvNum": 2, "DateTMeasureEdit": "2023-06-15 09:43:54", "Note": "Overall improvement!" }
+200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)
+PerioExams DELETE
+Version Added: 23.3.27
+Deletes a perioexam. Also deletes all associated periomeasures.
+PerioExamNum: Required in the URL.
+Example Request: DELETE /perioexams/31
+Example Responses: 200 OK 400 BadRequest (with explanation) 404 NotFound (with explanation)

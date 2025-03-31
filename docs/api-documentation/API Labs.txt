@@ -1,0 +1,178 @@
+API Laboratories
+See API Specification
+
+See Laboratories for more information.
+
+Laboratories GET (single)
+Version Added: 24.2.33
+
+Gets a single laboratory.
+
+LaboratoryNum: Required in URL.
+
+Example Request:
+GET /laboratories/1
+
+Example Response:
+{
+"LaboratoryNum": 1,
+"Description": "Go Smiles Lab",
+"Phone": "(503)240-1910",
+"Notes": "",
+"Slip": 0,
+"Address": "231 Hoyt Rd",
+"City": "Glendale",
+"State": "OR",
+"Zip": "91124",
+"Email": "",
+"WirelessPhone": "",
+"IsHidden": "false"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Laboratories GET (multiple)
+Version Added: 24.2.33
+
+Gets a list of laboratories.
+
+Example Request:
+GET /laboratories
+
+Example Responses:
+[
+{
+"LaboratoryNum": 1,
+"Description": "Go Smiles Lab",
+"Phone": "(503)240-1910",
+"Notes": "",
+"Slip": 0,
+"Address": "231 Hoyt Rd",
+"City": "Glendale",
+"State": "OR",
+"Zip": "91124",
+"Email": "",
+"WirelessPhone": "",
+"IsHidden": "false"
+},
+{
+"LaboratoryNum": 2,
+"Description": "Lab",
+"Phone": "(503)555-1810",
+"Notes": "",
+"Slip": 0,
+"Address": "",
+"City": "",
+"State": "",
+"Zip": "",
+"Email": "",
+"WirelessPhone": "",
+"IsHidden": "false"
+},
+etc...
+]
+
+200 OK
+
+Laboratories POST (create)
+Version Added: 24.4.22
+
+Creates a Laboratory.
+
+Description: Required. Description of lab.
+
+Phone: Optional.
+Notes: Optional.
+Slip: Optional. FK to sheetdef.SheetDefNum. Lab slips can be set for individual laboratories. If 0, then the default internal lab slip will be used instead of a custom lab slip. Default 0.
+Address: Optional. The laboratory's address.
+City: Optional. City.
+State: Optional. Two capital character in USA. Province in Canada.
+Zip: Optional. Postal code. Must be in format 12345, 12345-1234, or 123456789 (US) or A0A 0A0 (CA).
+Email: Optional. The laboratory's email address.
+WirelessPhone: Optional.
+IsHidden: Optional. Set "true" for laboratories no longer in use. Default "false".
+
+Example Request:
+POST /laboratories
+
+{
+"Description": "Go Smiles Lab",
+"Phone": "(503)240-1910",
+"Notes": "Implants.",
+"Slip": 0,
+"Address": "231 Hoyt Rd",
+"City": "Glendale",
+"State": "OR",
+"Zip": "91124",
+"Email": "GoSmilesLab@mail.com",
+"WirelessPhone": "(503)981-5555",
+"IsHidden": "false"
+}
+
+Example Response:
+{
+"LaboratoryNum": 1,
+"Description": "Go Smiles Lab",
+"Phone": "(503)240-1910",
+"Notes": "Implants.",
+"Slip": 0,
+"Address": "231 Hoyt Rd",
+"City": "Glendale",
+"State": "OR",
+"Zip": "91124",
+"Email": "GoSmilesLab@mail.com",
+"WirelessPhone": "(503)981-5555",
+"IsHidden": "false"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Laboratories PUT (update)
+Version Added: 24.4.23
+
+Updates a laboratory.
+
+LaboratoryNum: Required in the URL.
+
+Description: Name of laboratory.
+Phone: Contact phone number.
+Notes: Overwrites existing note.
+Slip: FK to sheetdef.SheetDefNum. Set to 0 to use the default internal lab slip.
+Address: The laboratory's address.
+City: City.
+State: Two capital character in USA. Province in Canada.
+Zip: Postal code. Must be in format 12345, 12345-1234, or 123456789 (US) or A0A 0A0 (CA).
+Email: Email address for laboratory.
+WirelessPhone: Additional contact phone number.
+IsHidden: Set "true" for laboratories no longer in use.
+
+Example Request:
+PUT /laboratories/1
+
+{
+"Notes": "Implant Specialists.",
+"Email": "GoSmilesImplantSpecialists@mail.com"
+}
+
+Example Response:
+{
+"LaboratoryNum": 1,
+"Description": "Go Smiles Lab",
+"Phone": "(503)240-1910",
+"Notes": "Implant Specialists.",
+"Slip": 2,
+"Address": "231 Hoyt Rd",
+"City": "Glendale",
+"State": "OR",
+"Zip": "91124",
+"Email": "GoSmilesImplantSpecialists@mail.com",
+"WirelessPhone": "(503)981-5555",
+"IsHidden": "false"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

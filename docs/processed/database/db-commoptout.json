@@ -1,0 +1,40 @@
+{
+  "id": "db-commoptout",
+  "type": "database",
+  "title": "commoptout",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "commoptout",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "commoptout",
+    "description": "Table for commoptout data.",
+    "columns": [
+      {
+        "name": "commoptoutNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "commoptoutNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

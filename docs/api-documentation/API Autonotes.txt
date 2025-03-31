@@ -1,0 +1,114 @@
+API AutoNotes
+See API Specification
+
+Auto Notes are templates used to insert frequently-used, large, or complex notes.
+
+AutoNotes GET
+Version Added: 22.3.22
+
+Gets a list of Auto Notes.
+
+Parameters:
+
+Category: Optional. definition.DefNum where definition.Category=41.
+
+Example Requests:
+GET /autonotes
+GET /autonotes?Category=340
+
+Example Response:
+[
+{
+"AutoNoteNum": 7,
+"AutoNoteName": "SOAP",
+"MainText": "Subjective:\r\nPatient Presents with:[Prompt:\"Chief Complaint\"]\r\nMedical history:\r\nReviewed today's procedure:[Prompt:\"Responsible party\"] [Prompt:\"Patient Response\"]\r\nObjective:\r\nVitals: \r\nExtraoral: [Prompt:\"Extraoral\"]\r\nIntraoral:) [Prompt:\"Intraoral\"]\r\nRadiology:[Prompt:\"Radiology\"]\r\nAssessment:[Prompt:\"Assess\"]\r\nPlan:[Prompt:\"Plan\"]\r\nPARQ\r\nNV",
+"Category": 0,
+"category": ""
+},
+{
+"AutoNoteNum": 8,
+"AutoNoteName": "SRP- Kelli",
+"MainText": "Review med hx\r\nPt chief complaint\r\nBP taken: [Prompt:\"BP Pulse\"]\r\nQuad/s: [Prompt:\"Quad\"]\r\nAnesth: [Prompt:\"Anesth\"]\r\nCapules: [Prompt:\"Carps\"]\r\nNV\r\nIn",
+"Category": 0,
+"category": ""
+},
+{
+"AutoNoteNum": 9,
+"AutoNoteName": "TMJ Consult",
+"MainText": "Reviewed Med HX:\r\nPt's Chief concern:\r\nBP Taken: [Prompt:\"BP Pulse\"]\r\nPain: [Prompt:\"Pain\"]\r\nPano and Ceph and I/O photos taken.\r\nMuscle: Left: [Prompt:\"Left Muscle\"] Right: [Prompt:\"Right Muscle\"]\r\nDeviation: [Prompt:\"Deviation\"]",
+"Category": 340,
+"category": "Exams"
+},
+etc...
+]
+
+200 OK
+
+AutoNotes POST (create)
+Version Added: 22.3.33
+
+Inserts an Auto Note. For information on how Auto Notes are categorized, see Definitions: Auto Note Categories. When including Prompts in MainText, they must be formatted as [Prompt:\"autonotecontrol.Descript\"]. To obtain the Descript, see AutoNoteControls GET.
+
+AutoNoteName: Required. Identifying name of the Auto Note.
+MainText: Required. Can include static text and Prompts (Auto Note Controls).
+Category: Optional. definition.DefNum where definition.Category=41. Use 0 to indicate Uncategorized. Default is 0.
+
+Example Requests:
+POST /autonotes
+
+{
+"AutoNoteName": "Allergens",
+"MainText": "Allergies: [Prompt:\"Allergies\"]",
+"Category": 399
+}
+
+Example Response:
+{
+"AutoNoteNum": 10,
+"AutoNoteName": "Allergens",
+"MainText": "Allergies: [Prompt:\"Allergies\"]",
+"Category": 399,
+"category": "Patient Information"
+}
+
+201 Created
+400 BadRequest (Missing or invalid fields)
+
+AutoNotes PUT (update)
+Version Added: 22.3.33
+
+Updates an Auto Note. For information on how Auto Notes are categorized, see Definitions: Auto Note Categories. When including Prompts in MainText, they must be formatted as [Prompt:\"autonotecontrol.Descript\"]. To obtain the Descript, see AutoNoteControls GET.
+
+AutoNoteNum: Required in the URL.
+
+AutoNoteName: Optional. Identifying name of the Auto Note.
+MainText: Optional. Can include static text and Prompts (Auto Note Controls).
+Category: Optional. definition.DefNum where definition.Category=41. Use 0 to indicate Uncategorized.
+
+Example Requests:
+PUT /autonotes/5
+
+{
+"AutoNoteName": "Filling",
+"MainText": "Pt presents with:\r\nAnesthetic: [Prompt:\"Anesth\"]\r\nCarpules: [Prompt:\"Carps\"]",
+"Category": 425
+}
+
+or
+
+{
+"Category": 0
+}
+
+Example Response:
+{
+"AutoNoteNum": 5,
+"AutoNoteName": "Filling",
+"MainText": "Pt presents with:\r\nAnesthetic: [Prompt:\"Anesth\"]\r\nCarpules: [Prompt:\"Carps\"]",
+"Category": 425,
+"category": "Restorative"
+}
+
+200 OK
+400 BadRequest (Missing or invalid fields)
+404 NotFound

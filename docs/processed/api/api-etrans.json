@@ -1,0 +1,64 @@
+{
+  "id": "api-etrans",
+  "type": "api",
+  "title": "Etrans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Etrans.txt",
+  "content": "API Etrans\nSee API Specification\n\nEtrans POST\nVersion Added: Plan to add to 21.2\n\nCreates one Etrans of the type ERA 835.\n\nExample Request:\nPOST /etrans\n\n{\n\"DateTimeTrans\": \"2021-05-26 08:16:46\",\n\"HqClearinghouseNum\": 3,\n\"MessageText\": \"ISA*00* 00* *30*330989922\u00e2\u20ac\u00a6\",\n\"UserNum\": 4\n}\n\nExample Response:\n201 Created\n(no \"location\" Header or object because we don't support GET single inssubs)",
+  "metadata": {
+    "version": "",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Etrans",
+      "POST",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Etrans",
+      "method": "POST",
+      "path": "/etrans",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /etrans\n\n{\n\"DateTimeTrans\": \"2021-05-26 08:16:46\",\n\"HqClearinghouseNum\": 3,\n\"MessageText\": \"ISA*00* 00* *30*330989922\u00e2\u20ac\u00a6\",\n\"UserNum\": 4\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": "no \"location\" Header or object because we don't support GET single inssubs"
+        }
+      ],
+      "description": "Creates one Etrans of the type ERA 835."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-clearinghouse",
+      "description": "API references database table clearinghouse"
+    },
+    {
+      "type": "references",
+      "target": "db-etrans",
+      "description": "API references database table etrans"
+    }
+  ]
+}

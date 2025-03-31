@@ -1,0 +1,64 @@
+{
+  "id": "api-preferences",
+  "type": "api",
+  "title": "Preferences",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Preferences.txt",
+  "content": "API Preferences\nSee\u00a0API Specification\nPreferences GET\nVersion Added: 21.1\nPrefName is optional. Otherwise you end up with all ~1000 preferences, paginated.\nExample Requests:\u2028GET /preferences?PrefName=RecallDaysPast\u2028GET /preferences?Offset=200\nExample Response:\u2028[\u2028{\u2028\"PrefNum\": 14,\u2028\"PrefName\": \"PracticeDefaultBillType\",\u2028\"ValueString\": \"40\"\u2028},\u2028{\u2028\"PrefNum\": 15,\u2028\"PrefName\": \"RecallDaysPast\",\u2028\"ValueString\": \"365\"\u2028},\u2028{\u2028\"PrefNum\": 16,\u2028\"PrefName\": \"RecallDaysFuture\",\u2028\"ValueString\": \"7\"\u2028},\u2028etc...\u2028]\n e",
+  "metadata": {
+    "version": "21.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Preferences",
+      "GET",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Preferences",
+      "method": "GET",
+      "path": "/preferences",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /preferences?PrefName=RecallDaysPast\u2028GET /preferences?Offset=200",
+          "response": "[\u2028{\u2028\"PrefNum\": 14,\u2028\"PrefName\": \"PracticeDefaultBillType\",\u2028\"ValueString\": \"40\"\u2028},\u2028{\u2028\"PrefNum\": 15,\u2028\"PrefName\": \"RecallDaysPast\",\u2028\"ValueString\": \"365\"\u2028},\u2028{\u2028\"PrefNum\": 16,\u2028\"PrefName\": \"RecallDaysFuture\",\u2028\"ValueString\": \"7\"\u2028},\u2028etc...\u2028]\n e"
+        }
+      ],
+      "responses": [
+        {
+          "code": "000",
+          "status": "preferences",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "Example",
+          "description": ""
+        }
+      ],
+      "description": "PrefName is optional. Otherwise you end up with all ~1, paginated.\n200\n365\"\u2028},\u2028{\u2028\"PrefNum\": 16,\u2028\"PrefName\": \"RecallDaysFuture\",\u2028\"ValueString\": \"7\"\u2028},\u2028etc...\u2028]\n e"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    }
+  ]
+}

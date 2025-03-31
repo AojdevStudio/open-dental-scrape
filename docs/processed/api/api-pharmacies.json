@@ -1,0 +1,33 @@
+{
+  "id": "api-pharmacies",
+  "type": "api",
+  "title": "Pharmacies",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Pharmacies.txt",
+  "content": "API Pharmacies\nSee API Specification\n\nSee Pharmacies for more information.\n\nPharmacies GET (single)\nVersion Added: 24.2.35\n\nGets a single pharmacy\n\nPharmacyNum : Required in URL.\n\nExample Request:\nGET /pharmacies/13\n\nExample Response:\n{\n\"PharmacyNum\": 13,\n\"StoreName\": \"Salem Local Pharmacy\",\n\"Phone\": \"(503)555-5489\",\n\"Fax\": \"(503)555-5489\",\n\"Address\": \"409 W North St Unit 1\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"State\": \"OR\",\n\"Zip\": \"97301\",\n\"Note\": \"\",\n\"DateTStamp\": \"2011-12-07 10:53:32\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nPharmacies GET (multiple)\nVersion Added: 24.2.35\n\nGets a list of all pharmacies.\n\nExample Request:\nGET /pharmacies\n\nExample Response:\n[\n{\n\"PharmacyNum\": 1,\n\"StoreName\": \"Cost+\",\n\"Phone\": \"\",\n\"Fax\": \"\",\n\"Address\": \"\",\n\"Address2\": \"\",\n\"City\": \"\",\n\"State\": \"\",\n\"Zip\": \"\",\n\"Note\": \"Online pharmacy\",\n\"DateTStamp\": \"2011-12-07 10:53:32\"\n},\n{\n\"PharmacyNum\": 2,\n\"StoreName\": \"Safemart Pharmacy\",\n\"Phone\": \"(503)555-4445\",\n\"Fax\": \"(503)555-4445\",\n\"Address\": \"4866 Main St\",\n\"Address2\": \"\",\n\"City\": \"Stayton\",\n\"State\": \"OR\",\n\"Zip\": \"97383\",\n\"Note\": \"\",\n\"DateTStamp\": \"2011-12-07 10:57:18\"\n},\netc...\n]\n\n200 OK",
+  "metadata": {
+    "version": "24.2.35",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Pharmacies",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-pharmacy",
+      "description": "API references database table pharmacy"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

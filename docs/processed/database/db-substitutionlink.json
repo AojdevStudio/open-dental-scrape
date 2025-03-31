@@ -1,0 +1,51 @@
+{
+  "id": "db-substitutionlink",
+  "type": "database",
+  "title": "substitutionlink",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "substitutionlink",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "substitutionlink",
+    "description": "Table for substitutionlink data.",
+    "columns": [
+      {
+        "name": "substitutionlinkNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "substitutionlinkNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-substituionlinks",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

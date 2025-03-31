@@ -1,0 +1,97 @@
+{
+  "id": "api-userods",
+  "type": "api",
+  "title": "Userods",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Userods.txt",
+  "content": "API Userods\nSee API Specification\n\nSee User Edit for more information.\n\nUserods GET\nVersion Added: 21.3\n\nGets a list of users (called userod since \"user\" is a reserved word in mysql). Users are separate entities from Providers and Employees, although they can be linked. A user can be a provider, an employee, both, or neither. CEMT users are not included.\n\nincludeHidden: (Added in version 22.4.24) Optional. Either \"true\" or \"false\". Set to \"true\" to return userods marked as hidden alongside those who are not hidden. Default \"false\".\nincludeCEMT: (Added in version 25.1.10) Optional. Either \"true\" or \"false\". Set to \"true\" to return userods that are designated as CEMT as well as those that are not. Default \"false\".\n\nReturned fields are detailed below:\n\nuserGroupNums: (Added in version 25.1.10) An array of UserGroupNums, in [1,2,3] format.\nEmployeeNum: Contains the employeeNum if the user is a employee. Otherwise, 0.\nemployeeName: The first and last name of the employee. Blank if user is not an employee.\nProviderNum: Contains the provNum if the user is a provider. Otherwise, 0.\nproviderName: The full name of the provider, including suffix. Blank if user is not a provider.\n\nExample Requests:\nGET /userods\nGET /userods?includeHidden=true\n\nExample Response:\n[\n{\n\"UserNum\": 1,\n\"UserName\": \"Lynda\",\n\"userGroupNums\": [2],\n\"EmployeeNum\": 0,\n\"employeeName\": \"\",\n\"ClinicNum\": 1,\n\"ProviderNum\": 9,\n\"providerName\": \"Lynda Larson, DMD\",\n\"emailAddress\": \"LyndaLarson@email.com\",\n\"IsHidden\": \"false\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"false\"\n},\n{\n\"UserNum\": 2,\n\"UserName\": \"Charlie\",\n\"userGroupNums\": [1,5,7],\n\"EmployeeNum\": 3,\n\"employeeName\": \"Charles Sorenson\",\n\"ProviderNum\": 0,\n\"providerName\": \"\",\n\"ClinicNum\": 1,\n\"emailAddress\": \"Chuck@hotmail.com\",\n\"IsHidden\": \"true\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"false\"\n},\n{\n\"UserNum\": 3,\n\"UserName\": \"Becca\",\n\"userGroupNums\": [3,4],\n\"EmployeeNum\": 4,\n\"employeeName\": \"Becca Alexandria\",\n\"ProviderNum\": 6,\n\"providerName\": \"Becca Alexandria\",\n\"ClinicNum\": 2,\n\"emailAddress\": \"BAlexandria@gmail.com\",\n\"IsHidden\": \"false\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"true\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nUserods POST (create)\nVersion Added: 22.1\n\nUserName: Required. Must be unique. Cannot end with whitespace.\nUserGroupNum: Required. Obtain this separately with UserGroups GET. In the response, only the UserGroupNum used in the POST is returned even though users can belong to multiple user groups.\nPassword: Required. Strong password is required, so it must be at least 8 characters and have at least one number, one uppercase letter, and one lowercase letter. If the office preference is turned on for requiring special characters, it must also contain a symbol such as $, #, >.\nIsPasswordResetRequired: (Added in version 25.1.10) Optional. Either \"true\" or \"false\". Default is \"false\".\n\nExample Request:\nPOST /userods\n\n{\n\"UserName\": \"Sally\",\n\"UserGroupNum\": 2,\n\"Password\": \"My1password\"\n}\n\nExample Response:\n{\n\"UserNum\": 7,\n\"UserName\": \"Sally\",\n\"EmployeeNum\": 0,\n\"employeeName\": \"\",\n\"ProviderNum\": 0,\n\"providerName\": \"\",\n\"ClinicNum\": 0,\n\"emailAddress\": \"\",\n\"IsHidden\": \"false\",\n\"UserGroupNum\": 2,\n\"Password\": \"My1password\",\n\"IsPasswordResetRequired\": \"false\"\n}\n\n201 Created\n400 Bad Request (with explanation)\n404 Not Found (with explanation)\n\nUserods PUT (update)\nVersion Added: 22.4.20\n\nUpdates an existing user.\n\nUserNum: Required in the URL.\nuserGroupNums: (Added in version 25.1.10) Optional. An array of UserGroupNums, in [1,2,3] format.\nEmployeeNum: Optional. EmployeeNum for an employee.\nProviderNum: Optional. ProvNum for a provider.\nClinicNum: Optional. ClinicNum for a clinic.\nIsHidden: Optional. Either \"true\" or \"false\".\nIsPasswordResetRequired: (Added in version 25.1.10) Optional. Either \"true\" or \"false\".\n\nExample Requests:\nPUT /userods/2\n\n{\n\"IsHidden\": \"true\"\n}\n\nor\n\n{\n\"userGroupNums\": [2,4,8],\n\"EmployeeNum\": 3,\n\"ProviderNum\": 2,\n\"ClinicNum\": 1,\n\"IsHidden\": \"false\"\n}\n\nExample Response:\n{\n\"UserNum\": 2,\n\"UserName\": \"User\",\n\"userGroupNums\": [2,4,8],\n\"EmployeeNum\": 3,\n\"employeeName\": \"Beth Assistant\",\n\"ProviderNum\": 2,\n\"providerName\": \"Tina Jones\",\n\"ClinicNum\": 1,\n\"emailAddress\": \"\",\n\"IsHidden\": \"false\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.4.20",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Userods",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Userods",
+      "method": "GET",
+      "path": "/userods",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /userods\nGET /userods?includeHidden=true",
+          "response": "[\n{\n\"UserNum\": 1,\n\"UserName\": \"Lynda\",\n\"userGroupNums\": [2],\n\"EmployeeNum\": 0,\n\"employeeName\": \"\",\n\"ClinicNum\": 1,\n\"ProviderNum\": 9,\n\"providerName\": \"Lynda Larson, DMD\",\n\"emailAddress\": \"LyndaLarson@email.com\",\n\"IsHidden\": \"false\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"false\"\n},\n{\n\"UserNum\": 2,\n\"UserName\": \"Charlie\",\n\"userGroupNums\": [1,5,7],\n\"EmployeeNum\": 3,\n\"employeeName\": \"Charles Sorenson\",\n\"ProviderNum\": 0,\n\"providerName\": \"\",\n\"ClinicNum\": 1,\n\"emailAddress\": \"Chuck@hotmail.com\",\n\"IsHidden\": \"true\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"false\"\n},\n{\n\"UserNum\": 3,\n\"UserName\": \"Becca\",\n\"userGroupNums\": [3,4],\n\"EmployeeNum\": 4,\n\"employeeName\": \"Becca Alexandria\",\n\"ProviderNum\": 6,\n\"providerName\": \"Becca Alexandria\",\n\"ClinicNum\": 2,\n\"emailAddress\": \"BAlexandria@gmail.com\",\n\"IsHidden\": \"false\",\n\"UserNumCEMT\": 0,\n\"IsPasswordResetRequired\": \"true\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of users (called userod since \"user\" is a reserved word in mysql). Users are separate entities from Providers and Employees, although they can be linked. A user can be a provider, an employee, both, or neither. CEMT users are not included."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-letter",
+      "description": "API references database table letter"
+    },
+    {
+      "type": "references",
+      "target": "db-userod",
+      "description": "API references database table userod"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-emailaddress",
+      "description": "API references database table emailaddress"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-usergroup",
+      "description": "API references database table usergroup"
+    }
+  ]
+}

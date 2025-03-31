@@ -1,0 +1,64 @@
+{
+  "id": "api-asapcomms",
+  "type": "api",
+  "title": "AsapComms",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API AsapComms.txt",
+  "content": "API AsapComms\nSee API Specification\n\nThe AsapComm table is used by the Web Sched ASAP feature to quickly send text messages to patients on the ASAP List about last minute appointment openings. See Web Sched ASAP, Web Sched ASAP History, and Web Sched ASAP: What Patient Sees for more information.\n\nAsapComms GET (single)\nVersion Added: 23.3.3\n\nGets a single asapcomm.\n\nParameters:\n\nAsapCommNum: Required in the URL.\n\nExample Request:\nGET /asapcomms/192\n\nExample Response:\n{\n\"AsapCommNum\": 192,\n\"FKey\": 539,\n\"FKeyType\": \"ScheduledAppt\",\n\"ScheduleNum\": 3523,\n\"PatNum\": 1771,\n\"ClinicNum\": 1,\n\"DateTimeEntry\": \"2023-08-24 10:04:14\",\n\"DateTimeExpire\": \"2023-09-20 09:00:00\",\n\"DateTimeSmsScheduled\": \"2023-09-14 10:04:14\",\n\"SmsSendStatus\": \"SendSuccessful\",\n\"DateTimeSmsSent\": \"2023-09-14 10:04:14\",\n\"ResponseStatus\": \"PendingRsvp\",\n\"DateTimeOrig\": \"2023-09-26 10:00:00\",\n\"TemplateText\": \"[NameF], an appointment opening has become available on 08/28/2023 at 2:00 PM at SouthSide Dental. Visit [AsapURL] to reserve it.\",\n\"Note\": \"\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nAsapComms GET (multiple)\nVersion Added: 23.3.3\n\nGets a list of asapcomms.\n\nParameters: All Optional.\n\nClinicNum: FK to clinic.ClinicNum. The clinic that is sending the ASAP text.\ndate: For a single day. String in \"yyyy-mm-dd\" format.\ndateStart: Only return asapcomms with a DateTimeEntry on or after this date. String in \"yyyy-mm-dd\" format. Default is the last 7 days.\ndateEnd: Only return asapcomms with a DateTimeEntry before this date. String in \"yyyy-mm-dd\" format. Default is today at midnight.\n\nExample Request:\nGET /asapcomms?ClinicNum=4\nGET /asapcomms?ClinicNum=4&date=2023-09-14\nGET /asapcomms?ClinicNum=4&dateStart=2023-09-01&dateEnd=2023-09-14\n\nExample Response:\n[\n{\n\"AsapCommNum\": 1224,\n\"FKey\": 11543,\n\"FKeyType\": \"ScheduledAppt\",\n\"ScheduleNum\": 13651,\n\"PatNum\": 11775,\n\"ClinicNum\": 4,\n\"DateTimeEntry\": \"2023-09-01 10:04:25\",\n\"DateTimeExpire\": \"2023-09-08 10:00:00\",\n\"DateTimeSmsScheduled\": \"0001-01-01 00:00:00\",\n\"SmsSendStatus\": \"DoNotSend\",\n\"DateTimeSmsSent\": \"0001-01-01 00:00:00\",\n\"ResponseStatus\": \"UnableToSend\",\n\"DateTimeOrig\": \"2023-09-24 10:00:00\",\n\"TemplateText\": \"[NameF], an appointment opening has become available on 09/04/2023 at 2:00 PM at NorthSide Dental. Visit [AsapURL] to reserve it.\",\n\"Note\": \"Not sending text because the patient has opted out of automated messaging.\"\n},\n{\n\"AsapCommNum\": 1225,\n\"FKey\": 11642,\n\"FKeyType\": \"UnscheduledAppt\",\n\"ScheduleNum\": 13619,\n\"PatNum\": 11774,\n\"ClinicNum\": 4,\n\"DateTimeEntry\": \"2023-09-01 10:04:25\",\n\"DateTimeExpire\": \"2023-09-08 10:00:00\",\n\"DateTimeSmsScheduled\": \"2023-09-01 10:04:25\",\n\"SmsSendStatus\": \"SendSuccessful\",\n\"DateTimeSmsSent\": \"2023-09-01 10:04:25\",\n\"ResponseStatus\": \"PendingRsvp\",\n\"DateTimeOrig\": \"2023-10-25 09:00:00\",\n\"TemplateText\": \"[NameF], an appointment opening has become available on 09/04/2023 at 2:00 PM at NorthSide Dental. Visit [AsapURL] to reserve it.\",\n\"Note\": \"\"\n},\n{\n\"AsapCommNum\": 1226,\n\"FKey\": 11836,\n\"FKeyType\": \"PlannedAppt\",\n\"ScheduleNum\": 3459,\n\"PatNum\": 11768,\n\"ClinicNum\": 4,\n\"DateTimeEntry\": \"2023-09-01 10:04:25\",\n\"DateTimeExpire\": \"2023-09-08 10:00:00\",\n\"DateTimeSmsScheduled\": \"2023-09-01 10:06:25\",\n\"SmsSendStatus\": \"DoNotSend\",\n\"DateTimeSmsSent\": \"2023-09-01 10:06:25\",\n\"ResponseStatus\": \"Failed\",\n\"DateTimeOrig\": \"2023-10-21 10:00:00\",\n\"TemplateText\": \"[NameF], an appointment opening has become available on 09/04/2023 at 2:00 PM at NorthSide Dental. Visit [AsapURL] to reserve it.\",\n\"Note\": \"Not sending because the time slot has been taken by another appointment.\"\n},\netc.\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAsapComms POST (Insert)\nVersion Added: 23.3.3\n\nRarely used. Dental office must be subscribed to the following eServices: WebSched ASAP and Integrated Texting Feature. Only sends sms text messages.\n\nCreates an AsapComm, and a Web Sched ASAP Blockout. See Web Sched ASAP, and ASAP Message Setup for more information. The End Time is calculated from the pattern of the appointment. Will not schedule if the new appointment would overlap with an existing appointment or blockout that does not allow overlap.\n\nPrior to running this method, obtain the aptNum of the appointment with Appointments GET ASAP. Then use Appointments GET Slots or Appointments GET (multiple) along with Schedules GET (multiple) to obtain an available time slot for the dateTimeStart and op for the ASAP Appointment.\n\nop: Required. FK to operatory.OperatoryNum.\naptNum: Required. FK to appointment.AptNum. Appointment.Priority must be 1 (ASAP).\ndateTimeStart: Required. The Start Time of the appointment. String in \"yyyy-MM-dd HH:mm:ss\" format.\n\nExample Request:\nPOST /asapcomms\n\n{\n\"op\": 2,\n\"aptNum\": 11939,\n\"dateTimeStart\": \"2023-10-18 14:00:00\"\n}\n\nExample Response:\n{\n\"AsapCommNum\": 2374,\n\"FKey\": 11939,\n\"FKeyType\": \"Broken\",\n\"ScheduleNum\": 52527,\n\"PatNum\": 6522,\n\"ClinicNum\": 4,\n\"DateTimeEntry\": \"2023-10-16 09:01:25\",\n\"DateTimeExpire\": \"2023-10-25 14:00:00\",\n\"DateTimeSmsScheduled\": \"2023-10-16 09:01:25\",\n\"SmsSendStatus\": \"SendNotAttempted\",\n\"DateTimeSmsSent\": \"0001-01-01 00:00:00\",\n\"ResponseStatus\": \"AwaitingTransmit\",\n\"DateTimeOrig\": \"2023-10-31 16:00:00\",\n\"TemplateText\": \"[NameF], an appointment opening has become available on 10/18/2023 at 2:00 PM at Southern Office. Visit [AsapURL] to reserve it.\",\n\"Note\": \"\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.3",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "AsapComms",
+      "GET",
+      "POST",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-is",
+      "description": "References database table is"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-asapcomm",
+      "description": "API references database table asapcomm"
+    },
+    {
+      "type": "references",
+      "target": "db-operatory",
+      "description": "API references database table operatory"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    }
+  ]
+}

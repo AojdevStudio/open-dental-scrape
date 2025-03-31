@@ -1,0 +1,47 @@
+{
+  "id": "db-apptgeneralmessagesent",
+  "type": "database",
+  "title": "apptgeneralmessagesent",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "apptgeneralmessagesent",
+      "Appointment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "apptgeneralmessagesent",
+    "description": "Table for apptgeneralmessagesent data.",
+    "columns": [
+      {
+        "name": "apptgeneralmessagesentNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "apptgeneralmessagesentNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "related_concept",
+      "target": "manual-module",
+      "description": "Related by concept: appointment"
+    }
+  ]
+}

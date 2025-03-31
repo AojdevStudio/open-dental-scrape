@@ -1,0 +1,97 @@
+API DiscountPlanSubs
+See API Specification
+
+See Discount Plan for more information.
+
+DiscountPlanSubs GET
+Version Added: 21.3
+
+Gets a DiscountPlanSub from a patient that is subscribed to a Discount Plan.
+
+PatNum: Required.
+
+Example Request:
+GET /discountplansubs?PatNum=56
+
+Example Response:
+{
+"DiscountSubNum": 32,
+"DiscountPlanNum": 8,
+"PatNum": 56,
+"DateEffective": "2021-01-01",
+"DateTerm": "2022-01-01",
+"SubNote": ""
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+DiscountPlanSubs POST
+Version Added: 21.3
+
+Subscribes a patient to an existing DiscountPlan.
+
+DiscountPlanNum: Required.
+PatNum: Required.
+
+DateEffective: Optional. String in "yyyy-MM-dd" format. The date when the plan will start impacting procedure fees. Default "0001-01-01" to indicate the beginning of the current calendar year.
+DateTerm: Optional. String in "yyyy-MM-dd" format. The date when the plan will no longer impact procedure fees. Default "0001-01-01" to indicate no end date.
+SubNote: Optional. Subscriber note.
+
+Example Request:
+POST /discountplansubs
+
+{
+"DiscountPlanNum": 6,
+"PatNum": 67,
+"DateEffective": "2021-01-01",
+"DateTerm": "2022-01-01"
+}
+
+Example Response:
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+DiscountPlanSubs PUT
+Version Added: 22.3.13
+
+Updates an existing DiscountPlanSub. Updating SubNote will overwrite the existing subscriber note.
+
+DiscountSubNum: Required in the URL.
+PatNum: Required. The PatNum attached to the DiscountPlanSub.
+
+DateEffective: Optional. String in "yyyy-MM-dd" format.
+DateTerm: Optional. String in "yyyy-MM-dd" format.
+SubNote: Optional. Subscriber note.
+
+Example Request:
+PUT /discountplansubs/14
+
+{
+"PatNum": 23,
+"DateEffective": "2022-09-16",
+"DateTerm": "2024-12-31",
+"SubNote": "25% discount to services."
+}
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+DiscountPlanSubs DELETE
+Version Added: 23.1.12
+
+Deletes an existing DiscountPlanSub.
+
+DiscountSubNum: Required in URL.
+
+Example Request:
+DELETE /discountplansubs/14
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

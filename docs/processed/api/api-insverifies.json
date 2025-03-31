@@ -1,0 +1,91 @@
+{
+  "id": "api-insverifies",
+  "type": "api",
+  "title": "InsVerifies",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API InsVerifies.txt",
+  "content": "API InsVerifies\nSee API Specification\n\nInsVerifies GET (single)\nVersion Added: 23.2.23\n\nGets a single insurance verification.\n\nInsVerifyNum: Required in the URL.\n\nExample Request:\nGET /insverifies/12\n\nExample Response:\n{\n\"InsVerifyNum\": 12,\n\"DateLastVerified\": \"2022-11-07\",\n\"UserNum\": 0,\n\"VerifyType\": \"InsuranceBenefit\",\n\"FKey\": 45,\n\"DefNum\": 0,\n\"Note\": \"\",\n\"DateLastAssigned\": \"0001-01-01\",\n\"SecDateTEdit\": \"2022-11-07 09:39:54\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nInsVerifies GET (multiple)\nVersion Added: 23.2.23\n\nGets insurance verifications.\n\nParameters: All optional.\n\nVerifyType: Required if FKey is specified. Either \"PatientEnrollment\" to verify a patient's insurance eligibility, or \"InsuranceBenefit\" to verify an insurance plan's benefits.\nFKey: (Added in version 24.4.17) FK to patplan.PatPlanNum or FK to insplan.PlanNum depending on the VerifyType.\nSecDateTEdit: Only include InsVerifies with a SecDateTEdit altered after the specified date and time. String in \"yyyy-MM-dd HH:mm:ss\" format.\n\nExample Requests:\nGET /insverifies\nGET /insverifies?VerifyType=PatientEnrollment&FKey=10\nGET /insverifies?VerifyType=InsuranceBenefit&SecDateTEdit=2024-03-25%2005%3A30%3A00\n\nExample Response:\n[\n{\n\"InsVerifyNum\": 12,\n\"DateLastVerified\": \"2022-11-07\",\n\"UserNum\": 0,\n\"VerifyType\": \"InsuranceBenefit\",\n\"FKey\": 45,\n\"DefNum\": 789,\n\"Note\": \"Need additional pat info\",\n\"DateLastAssigned\": \"2024-03-26\",\n\"SecDateTEdit\": \"2024-03-26 09:39:54\"\n},\n{\n\"InsVerifyNum\": 13,\n\"DateLastVerified\": \"2024-03-27\",\n\"UserNum\": 0,\n\"VerifyType\": \"InsuranceBenefit\",\n\"FKey\": 325,\n\"DefNum\": 0,\n\"Note\": \"\",\n\"DateLastAssigned\": \"0001-01-01\",\n\"SecDateTEdit\": \"2022-09-29 11:09:13\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nInsVerifies PUT\nVersion Added: 21.1\n\nUpdates an insurance verification. DateLastVerified sets the 'Eligibility Last Verified' or 'Benefits Last Verified' fields as seen on the Insurance Plan window . As with all insverify entries in our database, historical entries are always retained in the insverifyhist table. See Insurance Verification List for more information on insurance verification.\n\nDateLastVerified: (Optional after version 24.1.17) String in \"yyyy-MM-dd\" format.\nVerifyType: Required. Can be either \"PatientEnrollment\" to verify a patient's insurance eligibility, or \"InsuranceBenefit\" to verify an insurance plan's benefits.\nFKey: Required. If \"PatientEnrollment\" was passed in for VerifyType, then FKey must be a valid patplan.PatPlanNum. If \"InsuranceBenefit\" was passed in for VerifyType, FKey must be a valid insplan.PlanNum.\nDefNum: Optional. Must be a valid DefNum where definition.Category=38.\nNote: (Added in version 24.1.17) Optional. Status note for this insurance verification.\n\nExample Request:\nPUT /insverifies\n\n{\n\"DateLastVerified\": \"2024-03-27\",\n\"VerifyType\": \"PatientEnrollment\",\n\"FKey\": 325,\n\"DefNum\": 721,\n\"Note\": \"Need additional pat info\"\n}\n\nExample Response:\n{\n\"InsVerifyNum\": 1234,\n\"DateLastVerified\": \"2024-03-27\",\n\"UserNum\": 0,\n\"VerifyType\": \"PatientEnrollment\",\n\"FKey\": 325,\n\"DefNum\": 0,\n\"Note\": \"\",\n\"DateLastAssigned\": \"0001-01-01\",\n\"SecDateTEdit\": \"2024-03-27 09:39:54\"\n}\n\n200 OK\n400 BadRequest (with explanation)",
+  "metadata": {
+    "version": "23.2.23",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "InsVerifies",
+      "GET",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "InsVerifies",
+      "method": "PUT",
+      "path": "/insverifies",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /insverifies\n\n{\n\"DateLastVerified\": \"2024-03-27\",\n\"VerifyType\": \"PatientEnrollment\",\n\"FKey\": 325,\n\"DefNum\": 721,\n\"Note\": \"Need additional pat info\"\n}",
+          "response": "{\n\"InsVerifyNum\": 1234,\n\"DateLastVerified\": \"2024-03-27\",\n\"UserNum\": 0,\n\"VerifyType\": \"PatientEnrollment\",\n\"FKey\": 325,\n\"DefNum\": 0,\n\"Note\": \"\",\n\"DateLastAssigned\": \"0001-01-01\",\n\"SecDateTEdit\": \"2024-03-27 09:39:54\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates an insurance verification. DateLastVerified sets the 'Eligibility Last Verified' or 'Benefits Last Verified' fields as seen on the Insurance Plan window . As with all insverify entries in our database, historical entries are always retained in the insverifyhist table. See Insurance Verification List for more information on insurance verification."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-insverifyhist",
+      "description": "API references database table insverifyhist"
+    },
+    {
+      "type": "references",
+      "target": "db-insverify",
+      "description": "API references database table insverify"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

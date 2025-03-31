@@ -1,0 +1,56 @@
+{
+  "id": "db-deposit",
+  "type": "database",
+  "title": "deposit",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "deposit",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "deposit",
+    "description": "Table for deposit data.",
+    "columns": [
+      {
+        "name": "depositNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "depositNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-patfields",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-payments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-claimpayments",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

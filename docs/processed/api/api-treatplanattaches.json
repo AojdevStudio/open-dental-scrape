@@ -1,0 +1,154 @@
+{
+  "id": "api-treatplanattaches",
+  "type": "api",
+  "title": "TreatPlanAttaches",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API TreatPlanAttaches.txt",
+  "content": "API TreatPlanAttaches\nSee API Specification\n\nUsed to show Procedures attached to a TreatPlan with TPStatus of either Active or Inactive. For Saved treatment plans, use ProcTPs. See Treatment Plans for more information.\n\nTreatPlanAttaches GET\nVersion Added: 22.4.16\n\nGets a list of treatplanattaches associated to a specified treatplan. Use TreatPlans GET to find the TreatPlanNum of an existing treatplan.\n\nTreatPlanNum: Required in the URL. FK to treatplan.TreatPlanNum.\n\nExample Request:\nGET /treatplanattaches?TreatPlanNum=1845\n\nExample Response:\n[\n{\n\"TreatPlanAttachNum\": 3211,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 1977,\n\"Priority\": 151,\n\"priority\": \"1\"\n},\n{\n\"TreatPlanAttachNum\": 3222,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 11018,\n\"Priority\": 159,\n\"priority\": \"Recmend\"\n},\n{\n\"TreatPlanAttachNum\": 3223,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 11017,\n\"Priority\": 148,\n\"priority\": \"Wait\"\n},\n{\n\"TreatPlanAttachNum\": 3234,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 11005,\n\"Priority\": 0,\n\"priority\": \"\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTreatPlanAttaches POST\nVersion Added: 23.2.17\n\nCreates an association between a treatment plan and a procedure.\n\nTreatPlanNum: Required. FK to treatplan.TreatPlanNum.\nProcNum: Required. FK to procedurelog.ProcNum.\n\nPriority: Optional. definition.DefNum where definition.Category=20. Default 0.\n\nExample Request:\nPOST /treatplanattaches\n\n{\n\"TreatPlanNum\": 9,\n\"ProcNum\": 132,\n\"Priority\": 148\n}\n\nExample Response:\n{\n\"TreatPlanAttachNum\": 70,\n\"TreatPlanNum\": 9,\n\"ProcNum\": 132,\n\"Priority\": 148,\n\"priority\": \"Wait\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTreatPlanAttaches PUT\nVersion Added: 23.2.17\n\nUpdates the Priority on a treatplanattach.\n\nTreatPlanAttachNum: Required in the URL.\n\nPriority: definition.DefNum where definition.Category=20.\n\nExample Request:\nPUT /treatplanattaches/70\n\n{\n\"Priority\": 149\n}\n\nExample Response:\n{\n\"TreatPlanAttachNum\": 70,\n\"TreatPlanNum\": 9,\n\"ProcNum\": 132,\n\"Priority\": 149,\n\"priority\": \"Low\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n",
+  "metadata": {
+    "version": "23.2.17",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "TreatPlanAttaches",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "TreatPlanAttaches",
+      "method": "GET",
+      "path": "/treatplanattaches",
+      "versionAdded": "22.4.16",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /treatplanattaches?TreatPlanNum=1845",
+          "response": "[\n{\n\"TreatPlanAttachNum\": 3211,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 1977,\n\"Priority\": 151,\n\"priority\": \"1\"\n},\n{\n\"TreatPlanAttachNum\": 3222,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 11018,\n\"Priority\": 159,\n\"priority\": \"Recmend\"\n},\n{\n\"TreatPlanAttachNum\": 3223,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 11017,\n\"Priority\": 148,\n\"priority\": \"Wait\"\n},\n{\n\"TreatPlanAttachNum\": 3234,\n\"TreatPlanNum\": 1845,\n\"ProcNum\": 11005,\n\"Priority\": 0,\n\"priority\": \"\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "845",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of treatplanattaches associated to a specified treatplan. Use TreatPlans GET to find the TreatPlanNum of an existing treatplan."
+    },
+    {
+      "resource": "TreatPlanAttaches",
+      "method": "POST",
+      "path": "/treatplanattaches",
+      "versionAdded": "23.2.17",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /treatplanattaches\n\n{\n\"TreatPlanNum\": 9,\n\"ProcNum\": 132,\n\"Priority\": 148\n}",
+          "response": "{\n\"TreatPlanAttachNum\": 70,\n\"TreatPlanNum\": 9,\n\"ProcNum\": 132,\n\"Priority\": 148,\n\"priority\": \"Wait\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates an association between a treatment plan and a procedure."
+    },
+    {
+      "resource": "TreatPlanAttaches",
+      "method": "PUT",
+      "path": "/treatplanattaches",
+      "versionAdded": "23.2.17",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /treatplanattaches/70\n\n{\n\"Priority\": 149\n}",
+          "response": "{\n\"TreatPlanAttachNum\": 70,\n\"TreatPlanNum\": 9,\n\"ProcNum\": 132,\n\"Priority\": 149,\n\"priority\": \"Low\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates the Priority on a treatplanattach."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-treatplan",
+      "description": "API references database table treatplan"
+    },
+    {
+      "type": "references",
+      "target": "db-proctp",
+      "description": "API references database table proctp"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-treatplanattach",
+      "description": "API references database table treatplanattach"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    }
+  ]
+}

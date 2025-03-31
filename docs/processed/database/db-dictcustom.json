@@ -1,0 +1,40 @@
+{
+  "id": "db-dictcustom",
+  "type": "database",
+  "title": "dictcustom",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "dictcustom",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "dictcustom",
+    "description": "Table for dictcustom data.",
+    "columns": [
+      {
+        "name": "dictcustomNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "dictcustomNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

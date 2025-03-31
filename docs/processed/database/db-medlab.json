@@ -1,0 +1,40 @@
+{
+  "id": "db-medlab",
+  "type": "database",
+  "title": "medlab",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "medlab",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "medlab",
+    "description": "Table for medlab data.",
+    "columns": [
+      {
+        "name": "medlabNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "medlabNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

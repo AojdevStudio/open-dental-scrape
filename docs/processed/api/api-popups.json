@@ -1,0 +1,76 @@
+{
+  "id": "api-popups",
+  "type": "api",
+  "title": "Popups",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Popups.txt",
+  "content": "API Popups\nSee API Specification\n\nPopups GET\nVersion Added: 21.4\n\nGets active and disabled popups for a patient and associated Family and SuperFamily. For versions 22.2 and later, the IsDisabled field is deprecated and may give unreliable information. DateTimeDisabled, also introduced in 22.2, should be referenced instead.\n\nExample Request:\nGET /popups?PatNum=10\n\nExample Response:\n[\n{\n\"PopupNum\": 1,\n\"PatNum\": 10,\n\"Description\": \"Needs to fill out paperwork.\",\n\"PopupLevel\": \"Patient\",\n\"IsDisabled\": \"false\",\n\"DateTimeDisabled\": \"1/1/0001 12:00:00 AM\"\n},\n{\n\"PopupNum\": 2,\n\"PatNum\": 10,\n\"Description\": \"Verify cell phone number is accurate.\",\n\"PopupLevel\": \"Family\",\n\"IsDisabled\": \"false\",\n\"DateTimeDisabled\": \"8/22/2023 8:00:00 AM\"\n},\n{\n\"PopupNum\": 5,\n\"PatNum\": 35,\n\"Description\": \"Ask about medications.\",\n\"PopupLevel\": \"SuperFamily\",\n\"IsDisabled\": \"false\",\n\"DateTimeDisabled\": \"5/22/2022 8:30:00 AM\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPopups POST (create)\nVersion Added: 21.1\n\nBe careful. Popups tend to be annoying to users and are usually reserved for more important notes.\n\nPatNum: Required.\nDescription: Required.\nPopupLevel: Optional. \"Patient\", triggered when patient is selected in Open Dental. \"Family\", triggered when any member of the patient's family is selected in Open Dental. \"SuperFamily\", triggered when any member of the patient's super family is selected in Open Dental. The patient must be part of a SuperFamily for this option to be available. Default is \"Patient\".\n\nExample Request:\nPOST /popups\n\n{\n\"PatNum\": \"15\",\n\"Description\":\"Needs to fill out paperwork\",\n\"PopupLevel\":\"Patient\"\n}\n\nExample Response:\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "21.4",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Popups",
+      "GET",
+      "POST",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Popups",
+      "method": "GET",
+      "path": "/popups",
+      "versionAdded": "21.4",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /popups?PatNum=10",
+          "response": "[\n{\n\"PopupNum\": 1,\n\"PatNum\": 10,\n\"Description\": \"Needs to fill out paperwork.\",\n\"PopupLevel\": \"Patient\",\n\"IsDisabled\": \"false\",\n\"DateTimeDisabled\": \"1/1/0001 12:00:00 AM\"\n},\n{\n\"PopupNum\": 2,\n\"PatNum\": 10,\n\"Description\": \"Verify cell phone number is accurate.\",\n\"PopupLevel\": \"Family\",\n\"IsDisabled\": \"false\",\n\"DateTimeDisabled\": \"8/22/2023 8:00:00 AM\"\n},\n{\n\"PopupNum\": 5,\n\"PatNum\": 35,\n\"Description\": \"Ask about medications.\",\n\"PopupLevel\": \"SuperFamily\",\n\"IsDisabled\": \"false\",\n\"DateTimeDisabled\": \"5/22/2022 8:30:00 AM\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets active and disabled popups for a patient and associated Family and SuperFamily. For versions 22.2 and later, the IsDisabled field is deprecated and may give unreliable information. DateTimeDisabled, also introduced in 22.2, should be referenced instead."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-popup",
+      "description": "API references database table popup"
+    },
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

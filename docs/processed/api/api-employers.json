@@ -1,0 +1,73 @@
+{
+  "id": "api-employers",
+  "type": "api",
+  "title": "Employers",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Employers.txt",
+  "content": "API Employers\nSee API Specification\n\nEmployers GET (single)\nVersion Added: 23.3.22\n\nGets a single employer.\n\nParameters:\n\nEmployerNum: Required in URL.\n\nExample Request:\nGET /employers/5\n\nExample Response:\n{\n\"EmployerNum\": 5,\n\"EmpName\": \"Sergio and Sons Co\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nEmployers GET (multiple)\nVersion Added: 23.3.22\n\nGets a list of employers.\n\nExample Requests:\nGET /employers\nGET /employers?Offset=200\n\n[\n{\n\"EmployerNum\": 1,\n\"EmpName\": \"Store Mart\"\n},\n{\n\"EmployerNum\": 2,\n\"EmpName\": \"Townville Hospital\"\n},\netc...\n]\n\nExample Response:\n200 OK\n\nEmployers POST (create)\nVersion Added: 21.4\n\nCreates a new employer.\n\nEmpName: Required. The employer's name.\n\nExample Request:\nPOST /employers\n\n{\n\"EmpName\": \"James Smith Confectionery Co.\"\n}\n\nExample Response:\n{\n\"EmployerNum\": 4,\n\"EmpName\": \"James Smith Confectionery Co.\"\n}\n\n201 Created\n400 Bad Request (with explanation)\n\nEmployers PUT (update)\nVersion Added: 21.4\n\nUpdates the employer's name.\n\nEmployerNum: Required in the URL.\n\nEmpName: Required. The Employer's name.\n\nExample Request:\nPUT /employers/4\n\n{\n\"EmpName\": \"Jamie Smith Confectionery Co.\"\n}\n\nExample Response:\n{\n\"EmployerNum\": 4,\n\"EmpName\": \"Jamie Smith Confectionery Co.\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nEmployers DELETE\nVersion Added: 23.3.22\n\nDeletes an employer. Employers associated with a patient or an insurance plan cannot be deleted.\n\nEmployerNum: Required in the URL.\n\nExample Request:\nDELETE /employers/4\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.22",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Employers",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Employers",
+      "method": "DELETE",
+      "path": "/employers",
+      "versionAdded": "23.3.22",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /employers/4",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes an employer. Employers associated with a patient or an insurance plan cannot be deleted."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-employer",
+      "description": "API references database table employer"
+    }
+  ]
+}

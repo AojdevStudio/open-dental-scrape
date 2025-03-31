@@ -1,0 +1,130 @@
+{
+  "id": "api-patplans",
+  "type": "api",
+  "title": "Patplans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Patplans.txt",
+  "content": "API PatPlans\nSee API Specification\n\nA PatPlan row in the database indicates coverage aka eligibility. If there is no patplan row, then the patient does not have coverage. So eligibility can be set by adding or removing PatPlan rows.\n\nPatPlans GET\nVersion Added: 22.4.27\n\nGets a list of PatPlans that meet a set of search criteria.\n\nParameters: All optional.\n\nPatNum: FK to patient.PatNum.\nInsSubNum: FK to inssub.InsSubNum\n\nExample Request\nGET /patplans?PatNum=1897&InsSubNum=697\nGET /patplans?PatNum=1897\n\nExample Response:\n[\n{\n\"PatPlanNum\": 1228,\n\"PatNum\": 1897,\n\"Ordinal\": 1,\n\"IsPending\": \"false\",\n\"Relationship\": \"Self\",\n\"PatID\": \"\",\n\"InsSubNum\": 369,\n\"OrthoAutoFeeBilledOverride\": -1.0,\n\"OrthoAutoNextClaimDate\": \"0001-01-01\",\n\"SecDateTEntry\": \"2021-01-26 14:54:04\",\n\"SecDateTEdit\": \"2021-02-16 13:42:33\"\n},\n{\n\"PatPlanNum\": 1232,\n\"PatNum\": 1897,\n\"Ordinal\": 2,\n\"IsPending\": \"false\",\n\"Relationship\": \"SignifOther\",\n\"PatID\": \"\",\n\"InsSubNum\": 393,\n\"OrthoAutoFeeBilledOverride\": -1.0,\n\"OrthoAutoNextClaimDate\": \"0001-01-01\",\n\"SecDateTEntry\": \"2021-02-15 15:47:07\",\n\"SecDateTEdit\": \"2021-02-16 13:42:33\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPatPlans POST (create)\nVersion Added: 21.1\n\nThis adds a PatPlan row to the database.\n\nPatNum: Required.\nInsSubNum: Required. This requires that a valid InsSub is already in place. You can obtain the InsSubNum from FamilyModules GET Insurance, or you can obtain it from an InsSubs POST. If this plan is already linked to this InsSub, then response will be BadRequest.\n\nOrdinal: Optional with a default of 1. This is a single digit numeric field (example: 1, 2, 3...). It represents the primary insurance, secondary insurance, etc. 0 is not used. If Ordinal is set to1, and there is already primary insurance, the other insurance will get bumped to Ordinal 2.\nRelationship: Optional. Default is Self. Values can be \"Self\", \"Spouse\", \"Child\", \"Employee\", \"HandicapDep\", \"SignifOther\", \"InjuredPlantiff\", \"LifePartner\" or \"Dependent\".\nPatID: Added in 21.4. Optional. A patient ID which will override the subscriber ID on eclaims. Also used for Canada.\n\nExample Request:\nPOST /patplans\n\n{\n\"PatNum\": 15,\n\"Ordinal\": 1,\n\"Relationship\": \"Self\",\n\"InsSubNum\": 101\n}\n\nExample Response:\n{\n\"PatPlanNum\": 62,\n\"PatNum\": 15,\n\"Ordinal\": 1,\n\"IsPending\": \"false\",\n\"Relationship\": \"Self,\n\"PatID\": \"\",\n\"InsSubNum\": 101,\n\"OrthoAutoFeeBilledOverride\": -1.0,\n\"OrthoAutoNextClaimDate\": \"0001-01-01\",\n\"SecDateTEntry\": \"2021-02-15 15:47:07\",\n\"SecDateTEdit\": \"2021-02-16 13:42:33\"\n}\n\n201 Created\n400 (Missing or invalid fields)\n404 NotFound \"Patient does not exist\"\n\nPatPlans PUT (update)\nVersion Added: 21.4\n\nThis updates an existing PatPlan row in the database. PatNum cannot be updated. Instead, drop the PatPlan and then recreate it.\n\nPatPlanNum: Required in URL.\n\nInsSubNum: This corresponds to the Change button in the Subscriber Information section of the Insurance Plan window.\nOrdinal: This is a single digit numeric field (example: 1, 2, 3...). It represents the primary insurance, secondary insurance, etc. 0 is not used. If Ordinal is set to1, and there is already primary insurance, the other insurance will get bumped to Ordinal 2.\nRelationship: Values can be \"Self\", \"Spouse\", \"Child\", \"Employee\", \"HandicapDep\", \"SignifOther\", \"InjuredPlantiff\", \"LifePartner\" or \"Dependent\".\nPatID: A patient ID which will override the subscriber ID on eclaims. Also used for Canada.\n\nExample Request:\nPUT /patplans/12\n\n{\n\"Ordinal\": 1,\n\"Relationship\": \"Self\",\n\"PatID\": \"\"\n}\n\nExample Response:\n{\n\"PatPlanNum\": 12,\n\"PatNum\": 1245,\n\"Ordinal\": 1,\n\"IsPending\": \"false\",\n\"Relationship\": \"Self,\n\"PatID\": \"\",\n\"InsSubNum\": 101,\n\"OrthoAutoFeeBilledOverride\": -1.0,\n\"OrthoAutoNextClaimDate\": \"0001-01-01\",\n\"SecDateTEntry\": \"2021-02-15 15:47:07\",\n\"SecDateTEdit\": \"2021-02-16 13:42:33\"\n}\n\n200 OK\n400 (Missing or invalid fields)\n404 \"InsSub does not exist\"\n\nPatPlans DELETE\nVersion Added: 21.1\n\nThis is called \"Drop\" in the Open Dental UI. This removes a PatPlan row from the database, indicating no coverage, but does not affect the InsPlan itself.\n\nPatPlanNum: Required in URL.\n\nExample Request:\nDELETE /patplans/251\n\nExample Response:\n200 OK",
+  "metadata": {
+    "version": "22.4.27",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Patplans",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PatPlans",
+      "method": "GET",
+      "path": "/patplans",
+      "versionAdded": "22.4.27",
+      "parameters": [],
+      "examples": [],
+      "responses": [
+        {
+          "code": "697",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "897",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of PatPlans that meet a set of search criteria."
+    },
+    {
+      "resource": "PatPlans",
+      "method": "DELETE",
+      "path": "/patplans",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /patplans/251",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "251",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "This is called \"Drop\" in the Open Dental UI. This removes a PatPlan row from the database, indicating no coverage, but does not affect the InsPlan itself."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-ebill",
+      "description": "API references database table ebill"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    }
+  ]
+}

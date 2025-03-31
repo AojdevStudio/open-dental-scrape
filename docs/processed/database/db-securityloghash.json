@@ -1,0 +1,40 @@
+{
+  "id": "db-securityloghash",
+  "type": "database",
+  "title": "securityloghash",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "securityloghash",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "securityloghash",
+    "description": "Table for securityloghash data.",
+    "columns": [
+      {
+        "name": "securityloghashNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "securityloghashNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

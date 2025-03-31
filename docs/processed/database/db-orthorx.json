@@ -1,0 +1,40 @@
+{
+  "id": "db-orthorx",
+  "type": "database",
+  "title": "orthorx",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "orthorx",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "orthorx",
+    "description": "Table for orthorx data.",
+    "columns": [
+      {
+        "name": "orthorxNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "orthorxNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

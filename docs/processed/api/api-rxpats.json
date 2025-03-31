@@ -1,0 +1,58 @@
+{
+  "id": "api-rxpats",
+  "type": "api",
+  "title": "RxPats",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API RxPats.txt",
+  "content": "API RxPats\nSee API Specification\n\nSee Rx / Prescription for more information.\n\nRxPats GET (single)\nVersion Added: 24.2.35\n\nGets a single rxpat.\n\nRxNum: Required in URL.\n\nExample Request:\nGET /rxpats/13\n\nExample Response:\n{\n\"RxNum\": 13,\n\"PatNum\": 125,\n\"RxDate\": \"2024-09-26\",\n\"Drug\": \"Amoxicillin 500 mg\",\n\"Sig\": \"Take 4 caps 1 hour prior to dental appointment.\",\n\"Disp\": \"4\",\n\"Refills\": \"0\",\n\"ProvNum\": 13,\n\"Notes\": \"\",\n\"PharmacyNum\": 2,\n\"IsControlled\": \"false\",\n\"DateTStamp\": \"2024-09-26 14:43:42\",\n\"SendStatus\": \"Unsent\",\n\"IsErxOld\": \"false\",\n\"IsProcRequired\": \"false\",\n\"ProcNum\": 0,\n\"DaysOfSupply\": 0.0,\n\"PatientInstruction\": \"Take all 4 caps 1 hour prior to dental appointment.\",\n\"ClinicNum\": 3\n}\n\n200 OK\n404 NotFound (with explanation)\n\nRxPats GET (multiple)\nVersion Added: 24.2.35\n\nGets a list of rxpats.\n\nPatNum: Optional. FK to patient.PatNum.\n\nExample Requests:\nGET /rxpats\nGET /rxpats?PatNum=458\n\nExample Response:\n[\n{\n\"RxNum\": 60,\n\"PatNum\": 458,\n\"RxDate\": \"2024-09-26\",\n\"Drug\": \"Amoxicillin 500 mg\",\n\"Sig\": \"Take 2 tablets prior to dental appointment.\",\n\"Disp\": \"2\",\n\"Refills\": \"0\",\n\"ProvNum\": 13,\n\"Notes\": \"\",\n\"PharmacyNum\": 12,\n\"IsControlled\": \"false\",\n\"DateTStamp\": \"2024-09-26 14:43:42\",\n\"SendStatus\": \"Unsent\",\n\"IsErxOld\": \"false\",\n\"IsProcRequired\": \"false\",\n\"ProcNum\": 0,\n\"DaysOfSupply\": 0.0,\n\"PatientInstruction\": \"Take 2 tablets prior to dental appointment.\",\n\"ClinicNum\": 10\n},\n{\n\"RxNum\": 62,\n\"PatNum\": 458,\n\"RxDate\": \"2024-09-26\",\n\"Drug\": \"Percocet 5\",\n\"Sig\": \"Take 1 tablet every 4 hours as needed for pain.\",\n\"Disp\": \"24\",\n\"Refills\": \"0\",\n\"ProvNum\": 13,\n\"Notes\": \"\",\n\"PharmacyNum\": 12,\n\"IsControlled\": \"true\",\n\"DateTStamp\": \"2024-09-26 14:44:12\",\n\"SendStatus\": \"Unsent\",\n\"IsErxOld\": \"false\",\n\"IsProcRequired\": \"true\",\n\"ProcNum\": 1587,\n\"DaysOfSupply\": 7.0,\n\"PatientInstruction\": \"Take 1 tablet every 4 hours as needed for pain.\",\n\"ClinicNum\": 10\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.35",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "RxPats",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-pharmacy",
+      "description": "API references database table pharmacy"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-rxpat",
+      "description": "API references database table rxpat"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-supply",
+      "description": "API references database table supply"
+    }
+  ]
+}

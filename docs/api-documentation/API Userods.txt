@@ -1,0 +1,161 @@
+API Userods
+See API Specification
+
+See User Edit for more information.
+
+Userods GET
+Version Added: 21.3
+
+Gets a list of users (called userod since "user" is a reserved word in mysql). Users are separate entities from Providers and Employees, although they can be linked. A user can be a provider, an employee, both, or neither. CEMT users are not included.
+
+includeHidden: (Added in version 22.4.24) Optional. Either "true" or "false". Set to "true" to return userods marked as hidden alongside those who are not hidden. Default "false".
+includeCEMT: (Added in version 25.1.10) Optional. Either "true" or "false". Set to "true" to return userods that are designated as CEMT as well as those that are not. Default "false".
+
+Returned fields are detailed below:
+
+userGroupNums: (Added in version 25.1.10) An array of UserGroupNums, in [1,2,3] format.
+EmployeeNum: Contains the employeeNum if the user is a employee. Otherwise, 0.
+employeeName: The first and last name of the employee. Blank if user is not an employee.
+ProviderNum: Contains the provNum if the user is a provider. Otherwise, 0.
+providerName: The full name of the provider, including suffix. Blank if user is not a provider.
+
+Example Requests:
+GET /userods
+GET /userods?includeHidden=true
+
+Example Response:
+[
+{
+"UserNum": 1,
+"UserName": "Lynda",
+"userGroupNums": [2],
+"EmployeeNum": 0,
+"employeeName": "",
+"ClinicNum": 1,
+"ProviderNum": 9,
+"providerName": "Lynda Larson, DMD",
+"emailAddress": "LyndaLarson@email.com",
+"IsHidden": "false",
+"UserNumCEMT": 0,
+"IsPasswordResetRequired": "false"
+},
+{
+"UserNum": 2,
+"UserName": "Charlie",
+"userGroupNums": [1,5,7],
+"EmployeeNum": 3,
+"employeeName": "Charles Sorenson",
+"ProviderNum": 0,
+"providerName": "",
+"ClinicNum": 1,
+"emailAddress": "Chuck@hotmail.com",
+"IsHidden": "true",
+"UserNumCEMT": 0,
+"IsPasswordResetRequired": "false"
+},
+{
+"UserNum": 3,
+"UserName": "Becca",
+"userGroupNums": [3,4],
+"EmployeeNum": 4,
+"employeeName": "Becca Alexandria",
+"ProviderNum": 6,
+"providerName": "Becca Alexandria",
+"ClinicNum": 2,
+"emailAddress": "BAlexandria@gmail.com",
+"IsHidden": "false",
+"UserNumCEMT": 0,
+"IsPasswordResetRequired": "true"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+
+Userods POST (create)
+Version Added: 22.1
+
+UserName: Required. Must be unique. Cannot end with whitespace.
+UserGroupNum: Required. Obtain this separately with UserGroups GET. In the response, only the UserGroupNum used in the POST is returned even though users can belong to multiple user groups.
+Password: Required. Strong password is required, so it must be at least 8 characters and have at least one number, one uppercase letter, and one lowercase letter. If the office preference is turned on for requiring special characters, it must also contain a symbol such as $, #, >.
+IsPasswordResetRequired: (Added in version 25.1.10) Optional. Either "true" or "false". Default is "false".
+
+Example Request:
+POST /userods
+
+{
+"UserName": "Sally",
+"UserGroupNum": 2,
+"Password": "My1password"
+}
+
+Example Response:
+{
+"UserNum": 7,
+"UserName": "Sally",
+"EmployeeNum": 0,
+"employeeName": "",
+"ProviderNum": 0,
+"providerName": "",
+"ClinicNum": 0,
+"emailAddress": "",
+"IsHidden": "false",
+"UserGroupNum": 2,
+"Password": "My1password",
+"IsPasswordResetRequired": "false"
+}
+
+201 Created
+400 Bad Request (with explanation)
+404 Not Found (with explanation)
+
+Userods PUT (update)
+Version Added: 22.4.20
+
+Updates an existing user.
+
+UserNum: Required in the URL.
+userGroupNums: (Added in version 25.1.10) Optional. An array of UserGroupNums, in [1,2,3] format.
+EmployeeNum: Optional. EmployeeNum for an employee.
+ProviderNum: Optional. ProvNum for a provider.
+ClinicNum: Optional. ClinicNum for a clinic.
+IsHidden: Optional. Either "true" or "false".
+IsPasswordResetRequired: (Added in version 25.1.10) Optional. Either "true" or "false".
+
+Example Requests:
+PUT /userods/2
+
+{
+"IsHidden": "true"
+}
+
+or
+
+{
+"userGroupNums": [2,4,8],
+"EmployeeNum": 3,
+"ProviderNum": 2,
+"ClinicNum": 1,
+"IsHidden": "false"
+}
+
+Example Response:
+{
+"UserNum": 2,
+"UserName": "User",
+"userGroupNums": [2,4,8],
+"EmployeeNum": 3,
+"employeeName": "Beth Assistant",
+"ProviderNum": 2,
+"providerName": "Tina Jones",
+"ClinicNum": 1,
+"emailAddress": "",
+"IsHidden": "false",
+"UserNumCEMT": 0,
+"IsPasswordResetRequired": "false"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

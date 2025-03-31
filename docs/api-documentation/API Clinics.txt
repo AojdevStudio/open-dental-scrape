@@ -1,0 +1,83 @@
+API Clinics
+See API Specification
+
+Clinics GET
+Version Added: 21.1
+
+Gets all non-hidden clinics. An empty list indicates the dental office does not utilize the Clinics feature.
+
+Example Request:
+GET /clinics
+
+Example Response:
+[
+{
+"ClinicNum": 1,
+"Description": "Clinic1",
+"Address": "333 Blackwood St",
+"Address2": "",
+"City": "Salem",
+"State": "Oregon",
+"Zip": "97301",
+"BillingAddress": "333 Blackwood St ",
+"BillingAddress2": "",
+"BillingCity": " Salem ",
+"BillingState": " Oregon ",
+"BillingZip": "97301",
+"PayToAddress": "",
+"PayToAddress2": "",
+"PayToCity": "",
+"PayToState": "",
+"PayToZip": "",
+"Phone": "5105552005",
+"Abbr": "Clinic1",
+"IsHidden": "false"
+}
+]
+
+Clinics PUT (update)
+Version Added: 21.4
+
+Updates general contact and billing information for a clinic.
+
+ClinicNum: Required in the URL.
+
+Description: Clinic Name. Will show on statements, letters, etc.
+Phone: Clinic phone number. Exactly 10 digits. Does not include punctuation.
+BillingAddress: The billing address used on claims if different than physical treating address. This address will be used on claims if "Use on Claims" is checked. If checked, the address cannot be a PO Box for e-claims.
+BillingAddress2: Second BillingAddress line.
+BillingCity: City.
+BillingState: State.
+BillingZip: Postal Code.
+PayToAddress: The address where insurance payments will go if different than physical treating address. This can be a PO Box. It will be used as the billing address on claims. If the billing address is also entered, and "Use on Claims" is checked, the pay to address is sent with the address on e-claims but overrides the billing address on printed claims.
+PayToAddress2: Second PayToAddress line.
+PayToCity: City.
+PayToState: State.
+PayToZip: Postal Code.
+Abbr: Abbreviation for the Clinic's description. Will show in dropdowns and pick lists throughout Open Dental.
+IsHidden: Indicates whether or not the clinic is hidden. Clinic cannot be hidden if patients are attached. Either "true" or "false".
+
+Example Request:
+PUT /clinics/5
+
+{
+"Description":"Clinic 5",
+"Phone":"5418675309",
+"BillingAddress":"123 Main St",
+"BillingAddress2":"",
+"BillingCity":" Austin",
+"BillingState":"TX",
+"BillingZip":"78701",
+"PayToAddress": "456 Main St",
+"PayToAddress2": "",
+"PayToCity": "Austin",
+"PayToState": "TX",
+"PayToZip":"78702",
+"Abbr":"Clinic Five",
+"IsHidden":"false"
+}
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

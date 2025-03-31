@@ -1,0 +1,190 @@
+{
+  "id": "api-claims",
+  "type": "api",
+  "title": "Claims",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Claims.txt",
+  "content": "API Claims\nSee API Specification\n\nSee Claims for additional information.\n\nClaims GET (single)\nVersion Added: 23.3.11\n\nGets a single claim.\n\nParameters:\n\nClaimNum: Required in URL.\n\nExample Request:\nGET /claims/1\n\nExample Response:\n{\n\"ClaimNum\": 1,\n\"PatNum\": 23,\n\"DateService\": \"2022-07-16\",\n\"DateSent\": \"2022-07-18\",\n\"ClaimStatus\": \"R\",\n\"DateReceived\": \"2022-07-29\",\n\"PlanNum\": 19,\n\"ProvTreat\": 1,\n\"ClaimFee\": 250.0,\n\"InsPayEst\": 200.0,\n\"InsPayAmt\": 200.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"0001-01-01\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"Insurance payment of $200\",\n\"ClaimType\": \"P\",\n\"ProvBill\": 1,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"\",\n\"AccidentDate\": \"0001-01-01\",\n\"AccidentST\": \"\",\n\"IsOrtho\": \"True\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"2021-03-10\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 0,\n\"PatRelat2\": \"Self\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"4\",\n\"InsSubNum\": 24,\n\"InsSubNum2\": 0,\n\"PriorAuthorizationNumber\": \"\",\n\"CustomTracking\": 363,\n\"customTracking\": \"review\",\n\"OrthoTotalM\": 20,\n\"SecDateTEdit\": \"2022-07-29 11:55:44\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nClaims GET (multiple)\nVersion Added: 22.2\n\nGets a list of claims.\n\nParameters:\n\nPatNum: (Optional after version 23.3.11) FK to patient.PatNum.\nClaimStatus: (Added in version 23.3.11) Single character. \"U\" for Unsent, \"H\" for Hold until pri received, \"W\" for Waiting in queue, \"S\" for Sent, \"R\" for Received or \"I\" for Hold for In Process.\nSecDateTEdit: (Added in version 23.3.11) In \"yyyy-mm-dd HH:mm:ss\" format. The date the claim was last edited. Returns all claims on or after this date.\n\nExample Request:\nGET /claims?PatNum=23\nGET /claims?ClaimStatus=S\nGET /claims?SecDateTEdit=2022-03-30 00:00:00\n\nExample Response:\n[\n{\n\"ClaimNum\": 1,\n\"PatNum\": 23,\n\"DateService\": \"2022-07-16\",\n\"DateSent\": \"2022-07-18\",\n\"ClaimStatus\": \"R\",\n\"DateReceived\": \"2022-07-29\",\n\"PlanNum\": 19,\n\"ProvTreat\": 1,\n\"ClaimFee\": 250.0,\n\"InsPayEst\": 200.0,\n\"InsPayAmt\": 200.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"0001-01-01\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"Insurance payment of $200\",\n\"ClaimType\": \"P\",\n\"ProvBill\": 1,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"\",\n\"AccidentDate\": \"0001-01-01\",\n\"AccidentST\": \"\",\n\"IsOrtho\": \"True\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"2021-03-10\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 0,\n\"PatRelat2\": \"Self\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"4\",\n\"InsSubNum\": 24,\n\"InsSubNum2\": 0,\n\"PriorAuthorizationNumber\": \"\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 20,\n\"SecDateTEdit\": \"2022-07-29 11:55:44\"\n},\n{\n\"ClaimNum\": 2,\n\"PatNum\": 23,\n\"DateService\": \"2022-07-16\",\n\"DateSent\": \"0001-01-01\",\n\"ClaimStatus\": \"W\",\n\"DateReceived\": \"0001-01-01\",\n\"PlanNum\": 19,\n\"ProvTreat\": 1,\n\"ClaimFee\": 90.0,\n\"InsPayEst\": 0.0,\n\"InsPayAmt\": 0.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"0001-01-01\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"\",\n\"ClaimType\": \"P\",\n\"ProvBill\": 5,\n\"PlaceService\": \"OtherLocation\",\n\"AccidentRelated\": \"A\",\n\"AccidentDate\": \"2022-05-20\",\n\"AccidentST\": \"OR\",\n\"IsOrtho\": \"False\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"0001-01-01\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 0,\n\"PatRelat2\": \"Self\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"4\",\n\"InsSubNum\": 24,\n\"InsSubNum2\": 0,\n\"PriorAuthorizationNumber\": \"6128612926\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 0,\n\"SecDateTEdit\": \"2022-07-16 11:55:44\"\n},\n{\n\"ClaimNum\": 3,\n\"PatNum\": 23,\n\"DateService\": \"2022-07-16\",\n\"DateSent\": \"0001-01-01\",\n\"ClaimStatus\": \"S\",\n\"DateReceived\": \"0001-01-01\",\n\"PlanNum\": 19,\n\"ProvTreat\": 2,\n\"ClaimFee\": 49.5,\n\"InsPayEst\": 0.0,\n\"InsPayAmt\": 0.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"R\",\n\"PriorDate\": \"2016-01-15\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"\",\n\"ClaimType\": \"P\",\n\"ProvBill\": 1,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"\",\n\"AccidentDate\": \"0001-01-01\",\n\"AccidentST\": \"\",\n\"IsOrtho\": \"False\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"0001-01-01\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 0,\n\"PatRelat2\": \"Self\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"4\",\n\"InsSubNum\": 24,\n\"InsSubNum2\": 0,\n\"PriorAuthorizationNumber\": \"\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 0,\n\"SecDateTEdit\": \"2022-07-16 11:55:44\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound \"Patient not found.\"\n\nClaims POST (create)\nVersion Added: 23.2.5\n\nCreates a new claim. See Claims, Preauthorization, and Insurance Plan for more information. Use Claims PUT to modify additional fields on the claim. Use ClaimProcs PUT to modify the Claim Procedures ( claimprocs ) attached to the claim.\n\nThe insurance plan specified must be associated with the patient. Creating a primary or secondary claim will use the patient's primary or secondary insurance respectively.\n\nPatNum: Required. FK to patient.PatNum.\nprocNums: Required. An array of ProcNums, in [1,2,3] format to attach to this Claim.\nClaimType: Required. Either \"P\" for primary, \"S\" for secondary, or \"PreAuth\" for preauthorization.\nInsSubNum: Required only when ClaimType is \"PreAuth\". FK to inssub.InsSubNum. The insurance plan used for the claim. Default to the patient's primary or secondary insurance on file when creating a primary or secondary claim.\nInsSubNum2: Optional. FK to inssub.InsSubNum. The \"Other Coverage\" insurance for the claim. Default to 0.\nPatRelat: Required only when ClaimType is \"PreAuth\". Either \"Self\", \"Spouse\", \"Child\", \"Employee\", \"HandicapDep\", \"SignifOther\", \"InjuredPlaintiff\", \"LifePartner\", or \"Dependent\". Default to the patient's relationship to the plan's subscriber for primary and secondary claims.\nPatRelat2: Optional. Either \"Self\", \"Spouse\", \"Child\", \"Employee\", \"HandicapDep\", \"SignifOther\", \"InjuredPlaintiff\", \"LifePartner\", or \"Dependent\". If using InsSubNum2, will default to the patient's relationship to the plan's subscriber.\nDateService: Optional. String in \"yyyy-MM-dd\" format. Default to same date as earliest procedure from procNums array. Ignored if ClaimType is \"PreAuth\".\nDateSent: Optional. String in \"yyyy-MM-dd\" format. Default to today.\nClaimForm: Optional. FK to claimform.ClaimFormNum. Default to ClaimForm attached to Insurance Plan.\nProvTreat: Optional. FK to provider.ProvNum. Default to same treating provider when creating a claim in Open Dental.\nProvBill: Optional. FK to provider.ProvNum. Default to same billing provider when creating a claim in Open Dental.\n\nExample Request:\nPOST /claims\n\n{\n\"PatNum\": 1337,\n\"procNums\": [12857, 12859, 12952],\n\"ClaimType\": \"P\"\n}\n\nor\n\n{\n\"PatNum\": 1337,\n\"procNums\": [12857, 12859, 12952],\n\"ClaimType\": \"PreAuth\",\n\"InsSubNum\": 894,\n\"PatRelat\": \"Employee\"\n}\n\nor\n\n{\n\"PatNum\": 1337,\n\"procNums\": [12857, 12859, 12952],\n\"ClaimType\": \"PreAuth\",\n\"InsSubNum\": 894,\n\"InsSubNum2\": 856,\n\"PatRelat\": \"Self\",\n\"PatRelat2\": \"Spouse\",\n\"DateService\": \"2023-05-19\",\n\"DateSent\": \"2023-05-21\",\n\"ClaimForm\": 19,\n\"ProvTreat\": 8,\n\"ProvBill\": 2\n}\n\nExample Response:\n{\n\"ClaimNum\": 35879\n\"PatNum\": 1337,\n\"DateService\": \"0001-01-01\",\n\"DateSent\": \"2023-05-21\",\n\"ClaimStatus\": \"W\",\n\"DateReceived\": \"0001-01-01\",\n\"PlanNum\": 31,\n\"ProvTreat\": 8,\n\"ClaimFee\": 295.5,\n\"InsPayEst\": 220.0,\n\"InsPayAmt\": 0.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"0001-01-01\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"\",\n\"ClaimType\": \"PreAuth\",\n\"ProvBill\": 2,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"\",\n\"AccidentDate\": \"0001-01-01\",\n\"AccidentST\": \"\",\n\"IsOrtho\": \"False\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"0001-01-01\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 28,\n\"PatRelat2\": \"Spouse\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"19\",\n\"InsSubNum\": 894,\n\"InsSubNum2\": 856,\n\"PriorAuthorizationNumber\": \"\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 0,\n\"SecDateTEdit\": \"2023-05-21 10:25:44\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nClaims PUT (update)\nVersion Added: 21.4\n\nAll fields are optional and it is common to only set one or two fields.\n\nClaimNum: Required in the URL.\n\nClaimStatus: Single character. \"U\" for Unsent, \"H\" for Hold until pri received, \"W\" for Waiting in queue, \"S\" for Sent or \"R\" for Received.\nDateReceived: Date the claim was received. String in \"yyyy-MM-dd\" format.\nProvTreat: ProvNum of treating provider for dental claims.\nIsProsthesis: Single character. \"N\" for No, \"I\" for Initial or \"R\" for Replacement.\nPriorDate: Date prior prosthesis was placed. This is only for paper claims. E-claims have a date field on each individual procedure. String in \"yyyy-MM-dd\" format.\nClaimNote: Note to be sent to insurance. E-Claims have notes on each procedure. Will overwrite existing note.\nReasonUnderPaid: (Added in version 22.3.31) Note on a patient's statement explaining why the insurance does not pay as much as expected. Will overwrite existing note.\nProvBill: ProvNum of billing provider.\nPlaceService: Service location. Usually \"Office\". See Database Schema for other options.\nAccidentRelated: Type of accident. \"No\" for No, \"A\" for Auto, \"E\" for Employment, or \"O\" for Other.\nAccidentDate: (Added in version 22.1) Date of accident. String in \"yyyy-MM-dd\" format.\nAccidentST: Accident state. Two characters.\nIsOrtho: Either \"true\" or \"false\".\nOrthoRemainM: (Added in version 23.2.18) Remaining months of ortho. Valid values are 1-36.\nOrthoDate: Date the ortho appliance was placed. Cannot change date if \"Use the first ortho procedure date as Date of Placement\" pref is enabled during Ortho Setup. String in \"yyyy-MM-dd\" format.\nPatRelat: (Added in version 24.4.35) Optional. Either \"Self\", \"Spouse\", \"Child\", \"Employee\", \"HandicapDep\", \"SignifOther\", \"InjuredPlaintiff\", \"LifePartner\", or \"Dependent\". The relationship to the subscriber of the insurance plan on this claim.\nPatRelat2: (Added in version 24.4.35) Optional. Either \"Self\", \"Spouse\", \"Child\", \"Employee\", \"HandicapDep\", \"SignifOther\", \"InjuredPlaintiff\", \"LifePartner\", or \"Dependent\". The relationship to the subscriber for \"Other Coverage\" on this claim.\nClaimForm: FK to claimform.ClaimFormNum. Is 0 if not assigned to use the claimform for the insplan.\nInsSubNum2: (Added in version 24.4.35) Optional. FK to inssub.InsSubNum. The \"Other Coverage\" insurance for the claim.\nPriorAuthorizationNumber: (Rare) Also called the preauthorization number. Typically used for medical claims. This is NOT the predetermination of benefits number.\nOrthoTotalM: Estimated months of ortho. Valid values are 1-36.\n\nExample Request:\nPUT /claims/21\n\n{\n\"ClaimStatus\": \"R\",\n\"DateReceived\": \"2021-05-25\",\n\"ProvTreat\": 1,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"2020-06-26\",\n\"ClaimNote\": \"Existing RCT from 2019-05-14.\",\n\"ProvBill\": 1,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"O\",\n\"AccidentDate\": \"2021-05-15\",\n\"AccidentST\": \"MO\",\n\"IsOrtho\": \"true\",\n\"OrthoRemainM\": 12,\n\"OrthoDate\": \"2021-05-25\",\n\"PatRelat2\": \"Spouse\",\n\"ClaimForm\": 0,\n\"InsSubNum2\": 856,\n\"PriorAuthorizationNumber\": \"6549848516\",\n\"OrthoTotalM\": 36\n}\n\nExample Response:\n{\n\"ClaimNum\": 21\n\"PatNum\": 1337,\n\"DateService\": \"0001-01-01\",\n\"DateSent\": \"2021-04-13\",\n\"ClaimStatus\": \"R\",\n\"DateReceived\": \"2021-05-25\",\n\"PlanNum\": 31,\n\"ProvTreat\": 1,\n\"ClaimFee\": 295.5,\n\"InsPayEst\": 220.0,\n\"InsPayAmt\": 0.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"2020-06-26\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"\",\n\"ClaimType\": \"PreAuth\",\n\"ProvBill\": 2,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"O\",\n\"AccidentDate\": \"2021-05-15\",\n\"AccidentST\": \"MO\",\n\"IsOrtho\": \"True\",\n\"OrthoRemainM\": 12,\n\"OrthoDate\": \"2021-05-25\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 28,\n\"PatRelat2\": \"Spouse\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"0\",\n\"InsSubNum\": 894,\n\"InsSubNum2\": 856,\n\"PriorAuthorizationNumber\": \"6549848516\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 36,\n\"SecDateTEdit\": \"2023-05-21 10:25:44\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nClaims PUT Status\nVersion Added: 21.3\n\nRarely used. Probably just use Claims PUT instead.\n\nSets the ClaimStatus of a claim to \"Sent\" and automatically creates an Etrans entry.\n\nClaimNum: Required in the URL.\nDateSent: Required. Date the claim was most recently sent. String in \"yyyy-MM-dd\" format.\"\nDateSentOrig: Optional. String in \"yyyy-MM-dd\" format. Defaults to DateSent. Will be ignored for claims that have been marked as \"Sent\" previously.\n\nExample Requests:\nPUT /claims/26/Status\n\n{\n\"DateSent\": \"2021-09-13\"\n}\n\n{\n\"DateSent\": \"2021-09-13\",\n\"DateSentOrig\": \"2021-09-01\"\n}\n\nExample Response:\n{\n\"ClaimNum\": 35879\n\"PatNum\": 1337,\n\"DateService\": \"0001-01-01\",\n\"DateSent\": \"2021-09-13\",\n\"ClaimStatus\": \"W\",\n\"DateReceived\": \"0001-01-01\",\n\"PlanNum\": 31,\n\"ProvTreat\": 8,\n\"ClaimFee\": 295.5,\n\"InsPayEst\": 220.0,\n\"InsPayAmt\": 0.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"0001-01-01\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"\",\n\"ClaimType\": \"PreAuth\",\n\"ProvBill\": 2,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"\",\n\"AccidentDate\": \"0001-01-01\",\n\"AccidentST\": \"\",\n\"IsOrtho\": \"False\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"0001-01-01\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 28,\n\"PatRelat2\": \"Spouse\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"19\",\n\"InsSubNum\": 894,\n\"InsSubNum2\": 856,\n\"PriorAuthorizationNumber\": \"\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 0,\n\"SecDateTEdit\": \"2023-05-21 10:25:44\"\n}\n\n200 OK\n400 BadRequest (Missing or invalid fields)\n404 NotFound \"Claim not found\"\n\nClaims PUT Split\nVersion Added: 22.1\n\nSplits an existing claim. Moves the specified procedure(s) sent with the request from the original claim to a newly created one. Use Claims GET and ClaimProcs GET to obtain ClaimNum and ProcNums of desired procedures.\n\nClaimNum: Required in the URL.\nProcNums: Required. An array of ProcNums, in [1,2,3] format.\n\nExample Requests:\nPUT /claims/26/Split\n\n{\n\"ProcNums\": [153, 154, 155]\n}\n\nExample Response:\n\n{\n\"ClaimNum\": 27,\n\"ProcNums\": [153, 154, 155]\n}\n\n201 Created\n400 BadRequest (Missing or invalid fields)\n404 NotFound\nClaims DELETE\nVersion Added: 22.1\n\nDeletes a claim. Will not delete claims with insurance payments/checks attached or have a status of Received. If the claim is attached to at least one ERA it will unassociate from the ERA(s) before deleting.\n\nClaimNum: Required in the URL.\n\nExample Requests:\nDELETE /claims/26\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound",
+  "metadata": {
+    "version": "23.3.11",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Claims",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Claims",
+      "method": "PUT",
+      "path": "/claims",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /claims/26/Status\n\n{\n\"DateSent\": \"2021-09-13\"\n}\n\n{\n\"DateSent\": \"2021-09-13\",\n\"DateSentOrig\": \"2021-09-01\"\n}",
+          "response": "{\n\"ClaimNum\": 35879\n\"PatNum\": 1337,\n\"DateService\": \"0001-01-01\",\n\"DateSent\": \"2021-09-13\",\n\"ClaimStatus\": \"W\",\n\"DateReceived\": \"0001-01-01\",\n\"PlanNum\": 31,\n\"ProvTreat\": 8,\n\"ClaimFee\": 295.5,\n\"InsPayEst\": 220.0,\n\"InsPayAmt\": 0.0,\n\"DedApplied\": 0.0,\n\"IsProsthesis\": \"N\",\n\"PriorDate\": \"0001-01-01\",\n\"ReasonUnderPaid\": \"\",\n\"ClaimNote\": \"\",\n\"ClaimType\": \"PreAuth\",\n\"ProvBill\": 2,\n\"PlaceService\": \"Office\",\n\"AccidentRelated\": \"\",\n\"AccidentDate\": \"0001-01-01\",\n\"AccidentST\": \"\",\n\"IsOrtho\": \"False\",\n\"OrthoRemainM\": 0,\n\"OrthoDate\": \"0001-01-01\",\n\"PatRelat\": \"Self\",\n\"PlanNum2\": 28,\n\"PatRelat2\": \"Spouse\",\n\"WriteOff\": 0.0,\n\"ClaimForm\": \"19\",\n\"InsSubNum\": 894,\n\"InsSubNum2\": 856,\n\"PriorAuthorizationNumber\": \"\",\n\"CustomTracking\": 0,\n\"customTracking\": \"\",\n\"OrthoTotalM\": 0,\n\"SecDateTEdit\": \"2023-05-21 10:25:44\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Rarely used. Probably just use Claims PUT instead."
+    },
+    {
+      "resource": "Claims",
+      "method": "PUT",
+      "path": "/claims",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /claims/26/Split\n\n{\n\"ProcNums\": [153, 154, 155]\n}",
+          "response": "{\n\"ClaimNum\": 27,\n\"ProcNums\": [153, 154, 155]\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Splits an existing claim. Moves the specified procedure(s) sent with the request from the original claim to a newly created one. Use Claims GET and ClaimProcs GET to obtain ClaimNum and ProcNums of desired procedures."
+    },
+    {
+      "resource": "Claims",
+      "method": "DELETE",
+      "path": "/claims",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /claims/26",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Deletes a claim. Will not delete claims with insurance payments/checks attached or have a status of Received. If the claim is attached to at least one ERA it will unassociate from the ERA(s) before deleting."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-statement",
+      "description": "API references database table statement"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-claimproc",
+      "description": "API references database table claimproc"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-claimform",
+      "description": "API references database table claimform"
+    },
+    {
+      "type": "references",
+      "target": "db-etrans",
+      "description": "API references database table etrans"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

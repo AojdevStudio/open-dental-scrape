@@ -1,0 +1,105 @@
+API MedicationPats
+See API Specification
+
+MedicationPats GET
+Version Added: 21.3
+
+Gets a list of all medications for a given patient.
+
+Example Request:
+GET /medicationpats?PatNum=234
+
+Example Response:
+[
+{
+"MedicationPatNum": 45,
+"PatNum": "234",
+"medName": "Metformin",
+"MedicationNum": 12,
+"PatNote": "500mg, taken twice a day.",
+"DateStart": "2000-06-20",
+"DateStop": "0001-01-01",
+"ProvNum": 1
+},
+etc...
+]
+
+MedicationPats POST
+Version Added: 21.3
+
+Attaches a medication to a patient.
+
+PatNum: Required.
+medName: Required. Tries to match to an existing medication. If a new medication must be created, it will be assumed to be generic rather than brand. For more control, use medication POST.
+MedicationNum: Rarely used. Just use medName instead, which handles insertion of a Medication automatically. If MedicationNum is used, then medName is not required.
+
+PatNote: Optional.
+DateStart: Optional. String in "yyyy-MM-dd" format. Default "0001-01-01".
+DateStop: Optional. String in "yyyy-MM-dd" format. Default "0001-01-01".
+ProvNum: Optional. Default is 0.
+
+Example Requests:
+POST /medicationpats
+
+{
+"PatNum": 234,
+"medName": "Metformin"
+}
+
+or
+
+{
+"PatNum": 234,
+"medName": "Metformin",
+"PatNote": "500mg, taken twice a day.",
+"DateStart": "2006-02-01",
+"DateStop": "0001-01-01",
+"ProvNum": 1
+}
+
+Example Response:
+201 Created
+400 BadRequest (Missing or Invalid fields)
+404 NotFound "Patient not found", "Provider not found" or "Medication not found"
+
+MedicationPats PUT
+Version Added: 22.1
+
+Updates the medication associated with a patient.
+
+MedicationPatNum: Required in the URL.
+
+PatNote: Optional. String for notes specific to this patient's medication.
+DateStart: Optional. String in "yyyy-MM-dd" format. Set to an empty string to reset to default of "0001-01-01".
+DateStop: Optional. String in "yyyy-MM-dd" format. Set to an empty string to reset to default of "0001-01-01".
+ProvNum: Optional.
+
+Example Requests:
+PUT /medicationpats/212
+
+{
+"PatNote": "500mg, taken twice a day.",
+"DateStart": "2006-02-01",
+"DateStop": "2022-05-11",
+"ProvNum": 1
+}
+
+Example Response:
+200 OK
+400 BadRequest (Missing or Invalid fields)
+404 NotFound "Provider not found", "Provider not found" or "MedicationPat not found"
+
+MedicationPats DELETE
+Version Added: 22.1
+
+Deletes a MedicationPat by MedicationPatNum.
+
+MedicationPatNum: Required in URL.
+
+Example Request:
+DELETE /medicationpats/5
+
+Example Response:
+200 OK
+400 BadRequest "MedicationPatNum is required."
+404 NotFound "MedicationPat not found."

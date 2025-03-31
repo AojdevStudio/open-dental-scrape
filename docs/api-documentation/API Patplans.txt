@@ -1,0 +1,147 @@
+API PatPlans
+See API Specification
+
+A PatPlan row in the database indicates coverage aka eligibility. If there is no patplan row, then the patient does not have coverage. So eligibility can be set by adding or removing PatPlan rows.
+
+PatPlans GET
+Version Added: 22.4.27
+
+Gets a list of PatPlans that meet a set of search criteria.
+
+Parameters: All optional.
+
+PatNum: FK to patient.PatNum.
+InsSubNum: FK to inssub.InsSubNum
+
+Example Request
+GET /patplans?PatNum=1897&InsSubNum=697
+GET /patplans?PatNum=1897
+
+Example Response:
+[
+{
+"PatPlanNum": 1228,
+"PatNum": 1897,
+"Ordinal": 1,
+"IsPending": "false",
+"Relationship": "Self",
+"PatID": "",
+"InsSubNum": 369,
+"OrthoAutoFeeBilledOverride": -1.0,
+"OrthoAutoNextClaimDate": "0001-01-01",
+"SecDateTEntry": "2021-01-26 14:54:04",
+"SecDateTEdit": "2021-02-16 13:42:33"
+},
+{
+"PatPlanNum": 1232,
+"PatNum": 1897,
+"Ordinal": 2,
+"IsPending": "false",
+"Relationship": "SignifOther",
+"PatID": "",
+"InsSubNum": 393,
+"OrthoAutoFeeBilledOverride": -1.0,
+"OrthoAutoNextClaimDate": "0001-01-01",
+"SecDateTEntry": "2021-02-15 15:47:07",
+"SecDateTEdit": "2021-02-16 13:42:33"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+PatPlans POST (create)
+Version Added: 21.1
+
+This adds a PatPlan row to the database.
+
+PatNum: Required.
+InsSubNum: Required. This requires that a valid InsSub is already in place. You can obtain the InsSubNum from FamilyModules GET Insurance, or you can obtain it from an InsSubs POST. If this plan is already linked to this InsSub, then response will be BadRequest.
+
+Ordinal: Optional with a default of 1. This is a single digit numeric field (example: 1, 2, 3...). It represents the primary insurance, secondary insurance, etc. 0 is not used. If Ordinal is set to1, and there is already primary insurance, the other insurance will get bumped to Ordinal 2.
+Relationship: Optional. Default is Self. Values can be "Self", "Spouse", "Child", "Employee", "HandicapDep", "SignifOther", "InjuredPlantiff", "LifePartner" or "Dependent".
+PatID: Added in 21.4. Optional. A patient ID which will override the subscriber ID on eclaims. Also used for Canada.
+
+Example Request:
+POST /patplans
+
+{
+"PatNum": 15,
+"Ordinal": 1,
+"Relationship": "Self",
+"InsSubNum": 101
+}
+
+Example Response:
+{
+"PatPlanNum": 62,
+"PatNum": 15,
+"Ordinal": 1,
+"IsPending": "false",
+"Relationship": "Self,
+"PatID": "",
+"InsSubNum": 101,
+"OrthoAutoFeeBilledOverride": -1.0,
+"OrthoAutoNextClaimDate": "0001-01-01",
+"SecDateTEntry": "2021-02-15 15:47:07",
+"SecDateTEdit": "2021-02-16 13:42:33"
+}
+
+201 Created
+400 (Missing or invalid fields)
+404 NotFound "Patient does not exist"
+
+PatPlans PUT (update)
+Version Added: 21.4
+
+This updates an existing PatPlan row in the database. PatNum cannot be updated. Instead, drop the PatPlan and then recreate it.
+
+PatPlanNum: Required in URL.
+
+InsSubNum: This corresponds to the Change button in the Subscriber Information section of the Insurance Plan window.
+Ordinal: This is a single digit numeric field (example: 1, 2, 3...). It represents the primary insurance, secondary insurance, etc. 0 is not used. If Ordinal is set to1, and there is already primary insurance, the other insurance will get bumped to Ordinal 2.
+Relationship: Values can be "Self", "Spouse", "Child", "Employee", "HandicapDep", "SignifOther", "InjuredPlantiff", "LifePartner" or "Dependent".
+PatID: A patient ID which will override the subscriber ID on eclaims. Also used for Canada.
+
+Example Request:
+PUT /patplans/12
+
+{
+"Ordinal": 1,
+"Relationship": "Self",
+"PatID": ""
+}
+
+Example Response:
+{
+"PatPlanNum": 12,
+"PatNum": 1245,
+"Ordinal": 1,
+"IsPending": "false",
+"Relationship": "Self,
+"PatID": "",
+"InsSubNum": 101,
+"OrthoAutoFeeBilledOverride": -1.0,
+"OrthoAutoNextClaimDate": "0001-01-01",
+"SecDateTEntry": "2021-02-15 15:47:07",
+"SecDateTEdit": "2021-02-16 13:42:33"
+}
+
+200 OK
+400 (Missing or invalid fields)
+404 "InsSub does not exist"
+
+PatPlans DELETE
+Version Added: 21.1
+
+This is called "Drop" in the Open Dental UI. This removes a PatPlan row from the database, indicating no coverage, but does not affect the InsPlan itself.
+
+PatPlanNum: Required in URL.
+
+Example Request:
+DELETE /patplans/251
+
+Example Response:
+200 OK

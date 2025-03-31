@@ -1,0 +1,58 @@
+{
+  "id": "api-signalods",
+  "type": "api",
+  "title": "SignalOds",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API SignalOds.txt",
+  "content": "API Signalods\nSee API Specification\n\nSignalods GET\nVersion Added: 21.2\n\nSigDateTime is a required parameter. If any Signalods exist after the given dateTime, they will be returned. If a matching Signalod does not exist, it returns an empty list. Store serverDateTime that gets returned and use it to run the next GET.\n\nExample Request\nGET /signalods?SigDateTime=2021-02-02%2005%3A05%3A00\n\nExample Response:\n[\n{\n\"SignalNum\": 71,\n\"DateViewing\": \"0001-01-01\",\n\"SigDateTime\": \"2021-04-15 08:01:46\",\n\"FKey\": 0,\n\"FKeyType\": \"Undefined\",\n\"IType\": \"Security\",\n\"RemoteRole\": \"ClientDirect\",\n\"MsgValue\": \"\",\n\"serverDateTime\": \"2021-05-25 08:01:46\"\n},\netc...\n]\n\n200 OK\n404 Not Found (with reason)\n400 Bad Request (with reason)",
+  "metadata": {
+    "version": "21.2",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "SignalOds",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Signalods",
+      "method": "GET",
+      "path": "/signalods",
+      "versionAdded": "21.2",
+      "parameters": [],
+      "examples": [],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "Not",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        }
+      ],
+      "description": "SigDateTime is a required parameter. If any Signalods exist after the given dateTime, they will be returned. If a matching Signalod does not exist, it returns an empty list. Store serverDateTime that gets returned and use it to run the next GET."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-signalod",
+      "description": "API references database table signalod"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "id": "api-apptfields",
+  "type": "api",
+  "title": "ApptFields",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ApptFields.txt",
+  "content": "API ApptFields\nSee API Specification\n\nAn ApptField is a highly customizable field that shows on appointments. For example, the office might have an ApptField called \"Ins Verified\", and you might use the API to set it to \"Yes\" for a specific appointment. There is some prep work that you must do with the office ahead of time. From within the Open Dental UI at the office, you must first add the field under Setup, Appointments, Appointment Field Defs. There would be additional work to make it also show in the Appt Views and/or Appt Bubble.\n\nApptFields GET\nVersion Added: 21.1\n\nIf an ApptField exists for the appointment, it gets the value. If an ApptField does not exist, it returns an empty string.\n\nAptNum: Required.\nFieldName: Required.\n\nExample Request\nGET /apptfields?AptNum=101&FieldName=Ins%20Verified\n\nExample Response:\n{\n\"FieldName\": \"Ins Verified\",\n\"AptNum\":101,\n\"FieldValue\":\"Yes\"\n}\n\nApptFields PUT\nVersion Added: 21.1\n\nIf an ApptField already exists for the appointment, it gets set to the new value, overwriting the old value. If an ApptField does not yet exist for the appointment, then an ApptField gets inserted into the database.\n\nAptNum: Required.\nFieldName: Required.\nFieldValue: Required.\n\nExample Request:\nPUT /apptfields\n\n{\n\"FieldName\": \"Ins Verified\",\n\"AptNum\":101,\n\"FieldValue\":\"Yes\"\n}\n\nExample Response:\n200 OK\n400 Bad Request (with explanation)",
+  "metadata": {
+    "version": "21.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ApptFields",
+      "GET",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ApptFields",
+      "method": "GET",
+      "path": "/apptfields",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "If an ApptField exists for the appointment, it gets the value. If an ApptField does not exist, it returns an empty string."
+    },
+    {
+      "resource": "ApptFields",
+      "method": "PUT",
+      "path": "/apptfields",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /apptfields\n\n{\n\"FieldName\": \"Ins Verified\",\n\"AptNum\":101,\n\"FieldValue\":\"Yes\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        }
+      ],
+      "description": "If an ApptField already exists for the appointment, it gets set to the new value, overwriting the old value. If an ApptField does not yet exist for the appointment, then an ApptField gets inserted into the database."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-apptfield",
+      "description": "API references database table apptfield"
+    }
+  ]
+}

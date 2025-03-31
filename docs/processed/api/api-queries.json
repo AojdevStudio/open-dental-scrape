@@ -1,0 +1,142 @@
+{
+  "id": "api-queries",
+  "type": "api",
+  "title": "Queries",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Queries.txt",
+  "content": "API Queries\nSee API Specification\n\nRuns a custom query against the database. Queries are screened to be read-only. Temporary tables are allowed. Any command that would change the database will not be run. The Audit Trail for these requests includes the command that was run.\n\nRarely, an office will insist on higher security for queries. There is a OpenDentalWebConfig.xml file in the eConnector installation folder. This config file has two tags that are normally empty: <UserLow> and <PasswordLow>. You can set up a different MySQL that has more restrictive permissions than the MySQL user used for all the other API methods. Once this MySQL user is set up, enter their username and password into <UserLow> and <PasswordLow>, and that user will be used here for queries. If those tags are blank, then the regular MySQL user will be used. Don't remove those tags, or the eConnector won't start.\n\nQueries POST\nVersion Added: 21.1\n\nThe results of the query are written to a file and saved to the SFTP site specified in the JSON. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. Query results are written in comma-delimited CSV format. If there are no results, then the file will only contain \"OK\".\n\nSqlCommand: Required.\nSftpAddress: Required. Specify the full path of the file (using /). The user with the SFTP credentials must have write permission in this directory.\nSftpUsername: Required.\nSftpPassword: Required.\n\nSftpPort: Optional. Default port 22.\nIsAsync: (Added in version 23.3.26) Optional. Either \"true\" or \"false\". When \"true\" the request will return once the SqlCommand is complete and then only the file transfer will continue asynchronously. Default \"false\".\n\nExample Requests:\nPOST /queries\n\n{\n\"SqlCommand\": \"SELECT PatPlanNum, PatNum, InsSubNum FROM patplan\",\n\"SftpAddress\": \"MySftpSite/myUsername/Patient Plans/PatPlans-35.csv\",\n\"SftpPort\": 25,\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}\n\nor\n\n{\n\"SqlCommand\": \" SELECT * FROM patient WHERE Birthdate LIKE '%-06-22' \",\n\"SftpAddress\": \"MySftpSite/myUsername/Birthdays/Jun22.csv\",\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}\n\nor\n\n{\n\"SqlCommand\": \"SELECT * FROM InsSub WHERE DateTerm < '2021-01-01'\",\n\"SftpAddress\": \"MySftpSite/myUsername/Insurance Subscriptions/Expired2021.csv\",\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}\n\nExample Response:\n201 Created\n400 BadRequest (SQL syntax and Sftp connection errors)\n401 Unauthorized (Query is not read-only or is not executing on temporary tables)\n\nQueries PUT ShortQuery\nVersion Added: 21.2\n\nReturning at most 100 rows. The results of the query are returned as a data table in the JSON. While pagination is supported for results that return over 100 rows, it is recommended to instead use Queries POST for longer results.\n\nExample Requests:\nPUT /queries/ShortQuery\nPUT /queries/ShortQuery?Offset=200\n\n{\n\"SqlCommand\": \"SELECT LName, FName, HmPhone, WkPhone, WirelessPhone, Email\nFROM patient\nWHERE PatNum IN(876,2456,3892,5713,1234,6987,4321,7542,1890,5678,9012,3456)\"\n}\n\nor\n\n{\n\"SqlCommand\": \"SELECT clinic.Description, COUNT(*) AS NumberOfPatients\nFROM patient,clinic\nWHERE patient.ClinicNum=clinic.ClinicNum\nGROUP BY clinic.ClinicNum\"\n}\n\nor\n\n{\n\"SqlCommand\": \"SELECT * FROM payperiod\"\n}\n\nExample Responses:\n[\n{\n\"PayPeriodNum\": 200,\n\"DateStart\": \"2021-05-01T00:00:00\",\n\"DateStop\": \"2021-05-31T00:00:00\",\n\"DatePaycheck\": \"2021-06-04T00:00:00\"\n},\n{\n\"PayPeriodNum\": 201,\n\"DateStart\": \"2021-06-01T00:00:00\",\n\"DateStop\": \"2021-06-30T00:00:00\",\n\"DatePaycheck\": \"2021-07-05T00:00:00\"\n}\n]\n200 OK\n400 BadRequest (SQL syntax errors)\n401 Unauthorized (Query is not read-only or is not executing on temporary tables)",
+  "metadata": {
+    "version": "21.2",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Queries",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Queries",
+      "method": "POST",
+      "path": "/queries",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /queries\n\n{\n\"SqlCommand\": \"SELECT PatPlanNum, PatNum, InsSubNum FROM patplan\",\n\"SftpAddress\": \"MySftpSite/myUsername/Patient Plans/PatPlans-35.csv\",\n\"SftpPort\": 25,\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}\n\nor\n\n{\n\"SqlCommand\": \" SELECT * FROM patient WHERE Birthdate LIKE '%-06-22' \",\n\"SftpAddress\": \"MySftpSite/myUsername/Birthdays/Jun22.csv\",\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}\n\nor\n\n{\n\"SqlCommand\": \"SELECT * FROM InsSub WHERE DateTerm < '2021-01-01'\",\n\"SftpAddress\": \"MySftpSite/myUsername/Insurance Subscriptions/Expired2021.csv\",\n\"SftpUsername\": \"myUsername\",\n\"SftpPassword\": \"myPassword\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "SQL syntax and Sftp connection errors"
+        },
+        {
+          "code": "401",
+          "status": "Unauthorized",
+          "description": "Query is not read-only or is not executing on temporary tables"
+        }
+      ],
+      "description": "The results of the query are written to a file and saved to the SFTP site specified in the JSON. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. Query results are written in comma-delimited CSV format. If there are no results, then the file will only contain \"OK\"."
+    },
+    {
+      "resource": "Queries",
+      "method": "PUT",
+      "path": "/queries",
+      "versionAdded": "21.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /queries/ShortQuery\nPUT /queries/ShortQuery?Offset=200\n\n{\n\"SqlCommand\": \"SELECT LName, FName, HmPhone, WkPhone, WirelessPhone, Email\nFROM patient\nWHERE PatNum IN(876,2456,3892,5713,1234,6987,4321,7542,1890,5678,9012,3456)\"\n}\n\nor\n\n{\n\"SqlCommand\": \"SELECT clinic.Description, COUNT(*) AS NumberOfPatients\nFROM patient,clinic\nWHERE patient.ClinicNum=clinic.ClinicNum\nGROUP BY clinic.ClinicNum\"\n}\n\nor\n\n{\n\"SqlCommand\": \"SELECT * FROM payperiod\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "100",
+          "status": "rows",
+          "description": ""
+        },
+        {
+          "code": "100",
+          "status": "rows",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "SQL syntax errors"
+        },
+        {
+          "code": "401",
+          "status": "Unauthorized",
+          "description": "Query is not read-only or is not executing on temporary tables"
+        }
+      ],
+      "description": "Returning at most . The results of the query are returned as a data table in the JSON. While pagination is supported for results that return over , it is recommended to instead use Queries POST for longer results."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-in",
+      "description": "References database table in"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-screen",
+      "description": "API references database table screen"
+    },
+    {
+      "type": "references",
+      "target": "db-payperiod",
+      "description": "API references database table payperiod"
+    }
+  ]
+}

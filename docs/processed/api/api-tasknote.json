@@ -1,0 +1,42 @@
+{
+  "id": "api-tasknote",
+  "type": "api",
+  "title": "Tasknote",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Tasknote.txt",
+  "content": "API TaskNotes\nSee API Specification\n\nTaskNotes are written by users in the Task Window.\n\nTaskNotes GET (single)\nVersion Added: 24.4.22.0\n\nGets a single tasknote.\n\nTaskNoteNum: Required in URL.\n\nExample Request:\nGET /tasknotes/563\n\nExample Response:\n{\n\"TaskNoteNum\": 563,\n\"TaskNum\": 64,\n\"UserNum\": 8,\n\"DateTimeNote\": \"2025-01-15 12:46:34\",\n\"Note\": \"Sending to Dr. Smith's list.\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nTaskNotes GET (multiple)\nVersion Added: 24.4.22.0\n\nGet a list of tasknotes.\n\nParameters:\n\nTaskNum: Optional. FK to task.TaskNum.\nUserNum: Optional. FK to userod.UserNum.\n\nExample Request:\nGET /tasknotes?TaskNum=64\n\nExample Response:\n[\n{\n\"TaskNoteNum\": 563,\n\"TaskNum\": 64,\n\"UserNum\": 8,\n\"DateTimeNote\": \"2025-01-15 12:46:34\",\n\"Note\": \"Sending to Dr. Smith's list.\"\n},\n{\n\"TaskNoteNum\": 567,\n\"TaskNum\": 64,\n\"UserNum\": 4,\n\"DateTimeNote\": \"2025-01-15 13:27:12\",\n\"Note\": \"Got it, thanks.\"\n}\n]\n\n200 OK\n404 NotFound (with explanation)\n\nTaskNotes POST (create)\nVersion Added: 24.4.22.0\n\nCreates a new tasknote.\n\nTaskNum: Required. FK to task.TaskNum.\nUserNum: Required. FK to userod.UserNum.\nNote: Required. Cannot be blank.\n\nExample Request:\nPOST /tasknotes\n\n{\n\"TaskNum\": 64,\n\"UserNum\": 4,\n\"Note\": \"Sending back to mark done.\"\n}\n\nExample Response:\n{\n\"TaskNoteNum\": 582,\n\"TaskNum\": 64,\n\"UserNum\": 4,\n\"DateTimeNote\": \"2025-01-16 08:29:51\",\n\"Note\": \"Sending back to mark done.\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTaskNotes PUT (update)\nVersion Added: 24.4.22.0\n\nUpdates an existing tasknote.\n\nTaskNoteNum: Required in the URL.\n\nDateTimeNote: String in \"yyyy-MM-dd HH:mm:ss\" format.\nNote: Overwrites existing note. Cannot be blank.\n\nExample Request:\nPUT /tasknotes/582\n\n{\n\"DateTimeNote\": \"2025-01-16 09:12:00\",\n\"Note\": \"Sending back to mark done. Edit: Actually, I still need this open.\"\n}\n\nExample Response:\n{\n\"TaskNoteNum\": 582,\n\"TaskNum\": 64,\n\"UserNum\": 8,\n\"DateTimeNote\": \"2025-01-16 09:12:00\",\n\"Note\": \"Sending back to mark done. Edit: Actually, I still need this open.\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.22",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Tasknote",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-tasknote",
+      "description": "API references database table tasknote"
+    },
+    {
+      "type": "references",
+      "target": "db-userod",
+      "description": "API references database table userod"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-task",
+      "description": "API references database table task"
+    }
+  ]
+}

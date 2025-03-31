@@ -1,0 +1,40 @@
+{
+  "id": "db-imagedraw",
+  "type": "database",
+  "title": "imagedraw",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "imagedraw",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "imagedraw",
+    "description": "Table for imagedraw data.",
+    "columns": [
+      {
+        "name": "imagedrawNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "imagedrawNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

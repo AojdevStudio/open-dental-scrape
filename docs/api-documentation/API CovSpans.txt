@@ -1,0 +1,129 @@
+API CovSpans
+See API Specification
+
+Coverage Spans are specific procedure code ranges used by Insurance Categories. Also see API CovCats for more information.
+
+CovSpans GET (single)
+Version Added: 24.1.19
+
+Gets a single CovSpan.
+
+CovSpanNum: Required.
+
+Example Requests:
+GET /covspans/40
+
+Example Response:
+{
+"CovSpanNum": 40,
+"CovCatNum": 15,
+"FromCode": "D4000",
+"ToCode": "D4999"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+CovSpans GET (multiple)
+Version Added: 24.1.19
+
+Gets a list of CovSpans.
+
+CovCatNum: Optional. FK to covcat.CovCatNum.
+
+Example Requests:
+GET /covspans
+GET /covspans?CovCatNum=10
+
+Example Response:
+[
+{
+"CovSpanNum": 32,
+"CovCatNum": 10,
+"FromCode": "D0000",
+"ToCode": "D7999"
+},
+{
+"CovSpanNum": 33,
+"CovCatNum": 10,
+"FromCode": "D9000",
+"ToCode": "D9999"
+}
+]
+
+200 OK
+404 NotFound (with explanation)
+
+CovSpans POST (create)
+Version Added: 24.1.22
+
+Creates a CovSpan.
+
+CovCatNum: Required. FK to covcat.CovCatNum.
+FromCode: Required. Lower range of the span. Must be alphabetically less than ToCode. Does not need to be a valid code.
+ToCode: Required. Upper range of the span. Must be alphabetically greater than FromCode. Does not need to be a valid code.
+
+Example Request:
+POST /covspans
+
+{
+"CovCatNum": 37,
+"FromCode": "D1400",
+"ToCode": "D1499"
+}
+
+Example Response:
+{
+"CovSpanNum": 45,
+"CovCatNum": 37,
+"FromCode": "D1400",
+"ToCode": "D1499"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+CovSpans PUT (update)
+Version Added: 24.1.22
+
+Updates a CovSpan.
+
+CovSpanNum: Required in the URL.
+
+FromCode: Lower range of the span. Must be alphabetically less than ToCode. Does not need to be a valid code.
+ToCode: Upper range of the span. Must be alphabetically greater than FromCode. Does not need to be a valid code.
+
+Example Request:
+PUT /covspans/34
+
+{
+"FromCode": "D1400",
+"ToCode": "D1499"
+}
+
+Example Response:
+{
+"CovSpanNum": 34,
+"CovCatNum": 37,
+"FromCode": "D1400",
+"ToCode": "D1499"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+CovSpans DELETE
+Version Added: 24.1.22
+
+Deletes a CovSpan.
+
+CovSpanNum: Required in the URL.
+
+Example Requests:
+DELETE /covspans/13
+
+Example Responses:
+200 OK
+404 NotFound (with explanation)

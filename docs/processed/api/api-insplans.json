@@ -1,0 +1,130 @@
+{
+  "id": "api-insplans",
+  "type": "api",
+  "title": "Insplans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Insplans.txt",
+  "content": "API InsPlans\nSee API Specification\n\nSee Insurance Plans for more information.\n\nInsPlans GET (single)\nVersion Added: 24.2.11\n\nGets a single insplan.\n\nPlanNum: Required in URL.\n\nExample Request:\nGET /insplans/6\n\nExample Response:\n{\n\"PlanNum\": 6,\n\"GroupName\": \"United States Post Office\",\n\"GroupNum\": \"PB181863\",\n\"PlanNote\": \"Mostly covered.\",\n\"FeeSched\": 54,\n\"PlanType\": \"p\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 0,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"true\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-01-21\",\n\"SecDateTEdit\": \"2023-01-21 06:47:00\",\n\"IsBlueBookEnabled\": \"false\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nInsPlans GET (multiple)\nVersion Added: 22.3.30\n\nGets a list of insplans.\n\nParameters: All optional.\n\nPlanType: (Added in version 24.2.11) Must be one of the following: \"percentage\" (Percentage), \"p\" (PPO Percentage), \"f\" (Flat Copay), or \"c\" (Capitation). Percentage PlanTypes are stored as blank in the database.\nCarrierNum: (Added in version 24.2.11) FK to carrier.CarrierNum.\n\nExample Request:\nGET /insplans\nGET /insplans?PlanType=p\nGET /insplans?CarrierNum=10\n\nExample Response:\n[\n{\n\"PlanNum\": 6,\n\"GroupName\": \"United States Post Office\",\n\"GroupNum\": \"PB181863\",\n\"PlanNote\": \"Mostly covered.\",\n\"FeeSched\": 54,\n\"PlanType\": \"p\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 0,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"true\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-01-21\",\n\"SecDateTEdit\": \"2023-01-21 06:47:00\",\n\"IsBlueBookEnabled\": \"false\"\n},\n{\n\"PlanNum\": 14,\n\"GroupName\": \"REI\",\n\"GroupNum\": \"G189614\",\n\"PlanNote\": \"\",\n\"FeeSched\": 0,\n\"PlanType\": \"c\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 56,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"true\",\n\"MonthRenew\": 6,\n\"SecUserNumEntry\": 34,\n\"SecDateEntry\": \"2023-12-07\",\n\"SecDateTEdit\": \"2023-12-04 09:15:00\",\n\"IsBlueBookEnabled\": \"false\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nInsPlans POST\nVersion Added: 22.4.24\n\nCreates a new insplan.\n\nCarrierNum: Required. FK to carrier.CarrierNum.\n\nGroupName: Optional. Typically the same as the employer. Used to identify difference in plans.\nGroupNum: Optional. The Plan Number in Canada.\nPlanNote: Optional. Note for this plan. Same for all subscribers.\nFeeSched: Optional. FK to feesched.FeeSchedNum. Default 0.\nPlanType: Optional. Must be one of the following: \"\" (Percentage), \"p\" (PPO Percentage), \"f\" (Flat Copay), or \"c\" (Capitation). Default is \"\" (Percentage).\nCopayFeeSched: (Added in version 23.3.17) Optional. FK to feesched.FeeSchedNum when FeeSchedType is CoPay. Typically only used for capitation or copay plans. Default 0.\nEmployerNum: Optional. FK to employer.EmployerNum. Default 0.\nIsMedical: (Added in version 24.4.34) Optional. Either \"true\" or \"false\". Default \"false\".\nCodeSubstNone: (Added in version 22.4.31) Optional. Either \"true\" or \"false\". Set \"true\" if this Insurance Plan should ignore any Substitution Codes. Default \"false\".\nIsHidden: (Added in version 22.4.31) Optional. Either \"true\" or \"false\". Default \"false\".\nMonthRenew: Optional. The month, 1-12, when the insurance plan renews. It will renew on the first of the month. Default 0 to indicate calendar year.\nIsBlueBookEnabled: Optional. Determines if the plan utilizes BlueBook or not. Cannot be set to true if PlanType is set to anything other than \"\" (Percentage). Defaults to true if AllowedFeeSchedsAutomate is set to BlueBook, otherwise defaults to false.\n\nExample Requests:\nPOST /insplans\n{\n\"CarrierNum\": 10\n}\n\nor\n\n{\n\"GroupName\": \"Walmart\",\n\"GroupNum\": \"W4875\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12,\n\"IsBlueBookEnabled\": \"false\"\n}\n\nExample Response:\n{\n\"PlanNum\": 16,\n\"GroupName\": \"Walmart\",\n\"GroupNum\": \"W4875\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-01-21\",\n\"SecDateTEdit\": \"2023-01-21 06:47:00\",\n\"IsBlueBookEnabled\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nInsPlans PUT\nVersion Added: 22.3.30\n\nUpdates an insplan.\n\nPlanNum: Required in the URL.\n\nGroupName: Optional. Typically the same as the employer. Used to identify difference in plans.\nGroupNum: Optional. The Plan Number in Canada.\nPlanNote: Optional. Note for this plan. Same for all subscribers.\nFeeSched: Optional. FK to feesched.FeeSchedNum.\nPlanType: Optional. Must be one of the following: \"\" (Percentage), \"p\" (PPO Percentage), \"f\" (Flat Copay), or \"c\" (Capitation).\nCopayFeeSched: (Added in version 23.3.17) Optional. FK to feesched.FeeSchedNum when FeeSchedType is CoPay. Typically only used for capitation or copay plans.\nEmployerNum: (Added in version 22.4.24) Optional. FK to employer.EmployerNum.\nCarrierNum: (Added in version 22.4.24) Optional. FK to carrier.CarrierNum.\nIsMedical: (Added in version 24.4.34) Optional. Either \"true\" or \"false\".\nCodeSubstNone: (Added in version 22.4.31) Optional. Either \"true\" or \"false\". Set \"true\" if this Insurance Plan should ignore any Substitution Codes.\nIsHidden: (Added in version 22.4.31) Optional. Either \"true\" or \"false\".\nMonthRenew: Optional. The month, 1-12, when the insurance plan renews. It will renew on the first of the month. Use 0 to indicate calendar year.\nIsBlueBookEnabled: (Added in version 22.4.24) Optional. Determines if the plan utilizes BlueBook or not. Cannot be set to true if PlanType is set to anything other than \"\" (Percentage).\n\nExample Requests:\nPUT /insplans/15\n{\n\"FeeSched\": 0,\n\"PlanType\": \"\",\n\"MonthRenew\": 0\n}\n\nor\n\n{\n\"GroupName\": \"Pixar\",\n\"GroupNum\": \"Y4845\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 12,\n\"CarrierNum\": 8,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12\n\"IsBlueBookEnabled\": \"false\"\n}\n\nExample Response:\n{\n\"PlanNum\": 15,\n\"GroupName\": \"Pixar\",\n\"GroupNum\": \"Y4845\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 12,\n\"CarrierNum\": 8,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-01-21\",\n\"SecDateTEdit\": \"2023-01-21 06:47:00\",\n\"IsBlueBookEnabled\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.11",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Insplans",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "InsPlans",
+      "method": "POST",
+      "path": "/insplans",
+      "versionAdded": "22.4.24",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /insplans\n{\n\"CarrierNum\": 10\n}\n\nor\n\n{\n\"GroupName\": \"Walmart\",\n\"GroupNum\": \"W4875\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12,\n\"IsBlueBookEnabled\": \"false\"\n}",
+          "response": "{\n\"PlanNum\": 16,\n\"GroupName\": \"Walmart\",\n\"GroupNum\": \"W4875\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 23,\n\"CarrierNum\": 10,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12,\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-01-21\",\n\"SecDateTEdit\": \"2023-01-21 06:47:00\",\n\"IsBlueBookEnabled\": \"false\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a new insplan."
+    },
+    {
+      "resource": "InsPlans",
+      "method": "PUT",
+      "path": "/insplans",
+      "versionAdded": "22.3.30",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /insplans/15\n{\n\"FeeSched\": 0,\n\"PlanType\": \"\",\n\"MonthRenew\": 0\n}\n\nor\n\n{\n\"GroupName\": \"Pixar\",\n\"GroupNum\": \"Y4845\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 12,\n\"CarrierNum\": 8,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12\n\"IsBlueBookEnabled\": \"false\"\n}",
+          "response": "{\n\"PlanNum\": 15,\n\"GroupName\": \"Pixar\",\n\"GroupNum\": \"Y4845\",\n\"PlanNote\": \"Copayments\",\n\"FeeSched\": 56,\n\"PlanType\": \"f\",\n\"ClaimFormNum\": 1,\n\"CopayFeeSched\": 172,\n\"EmployerNum\": 12,\n\"CarrierNum\": 8,\n\"IsMedical\": \"false\",\n\"CodeSubstNone\": \"false\",\n\"IsHidden\": \"false\",\n\"MonthRenew\": 12\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-01-21\",\n\"SecDateTEdit\": \"2023-01-21 06:47:00\",\n\"IsBlueBookEnabled\": \"false\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates an insplan."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-carrier",
+      "description": "API references database table carrier"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-employer",
+      "description": "API references database table employer"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-claimform",
+      "description": "API references database table claimform"
+    }
+  ]
+}

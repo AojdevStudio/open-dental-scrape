@@ -1,0 +1,47 @@
+{
+  "id": "db-apptview",
+  "type": "database",
+  "title": "apptview",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "apptview",
+      "Appointment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "apptview",
+    "description": "Table for apptview data.",
+    "columns": [
+      {
+        "name": "apptviewNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "apptviewNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "related_concept",
+      "target": "manual-module",
+      "description": "Related by concept: appointment"
+    }
+  ]
+}

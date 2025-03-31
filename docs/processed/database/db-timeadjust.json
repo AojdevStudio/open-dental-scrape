@@ -1,0 +1,40 @@
+{
+  "id": "db-timeadjust",
+  "type": "database",
+  "title": "timeadjust",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "timeadjust",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "timeadjust",
+    "description": "Table for timeadjust data.",
+    "columns": [
+      {
+        "name": "timeadjustNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "timeadjustNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

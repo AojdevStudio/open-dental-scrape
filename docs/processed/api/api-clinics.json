@@ -1,0 +1,91 @@
+{
+  "id": "api-clinics",
+  "type": "api",
+  "title": "Clinics",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Clinics.txt",
+  "content": "API Clinics\nSee API Specification\n\nClinics GET\nVersion Added: 21.1\n\nGets all non-hidden clinics. An empty list indicates the dental office does not utilize the Clinics feature.\n\nExample Request:\nGET /clinics\n\nExample Response:\n[\n{\n\"ClinicNum\": 1,\n\"Description\": \"Clinic1\",\n\"Address\": \"333 Blackwood St\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"State\": \"Oregon\",\n\"Zip\": \"97301\",\n\"BillingAddress\": \"333 Blackwood St \",\n\"BillingAddress2\": \"\",\n\"BillingCity\": \" Salem \",\n\"BillingState\": \" Oregon \",\n\"BillingZip\": \"97301\",\n\"PayToAddress\": \"\",\n\"PayToAddress2\": \"\",\n\"PayToCity\": \"\",\n\"PayToState\": \"\",\n\"PayToZip\": \"\",\n\"Phone\": \"5105552005\",\n\"Abbr\": \"Clinic1\",\n\"IsHidden\": \"false\"\n}\n]\n\nClinics PUT (update)\nVersion Added: 21.4\n\nUpdates general contact and billing information for a clinic.\n\nClinicNum: Required in the URL.\n\nDescription: Clinic Name. Will show on statements, letters, etc.\nPhone: Clinic phone number. Exactly 10 digits. Does not include punctuation.\nBillingAddress: The billing address used on claims if different than physical treating address. This address will be used on claims if \"Use on Claims\" is checked. If checked, the address cannot be a PO Box for e-claims.\nBillingAddress2: Second BillingAddress line.\nBillingCity: City.\nBillingState: State.\nBillingZip: Postal Code.\nPayToAddress: The address where insurance payments will go if different than physical treating address. This can be a PO Box. It will be used as the billing address on claims. If the billing address is also entered, and \"Use on Claims\" is checked, the pay to address is sent with the address on e-claims but overrides the billing address on printed claims.\nPayToAddress2: Second PayToAddress line.\nPayToCity: City.\nPayToState: State.\nPayToZip: Postal Code.\nAbbr: Abbreviation for the Clinic's description. Will show in dropdowns and pick lists throughout Open Dental.\nIsHidden: Indicates whether or not the clinic is hidden. Clinic cannot be hidden if patients are attached. Either \"true\" or \"false\".\n\nExample Request:\nPUT /clinics/5\n\n{\n\"Description\":\"Clinic 5\",\n\"Phone\":\"5418675309\",\n\"BillingAddress\":\"123 Main St\",\n\"BillingAddress2\":\"\",\n\"BillingCity\":\" Austin\",\n\"BillingState\":\"TX\",\n\"BillingZip\":\"78701\",\n\"PayToAddress\": \"456 Main St\",\n\"PayToAddress2\": \"\",\n\"PayToCity\": \"Austin\",\n\"PayToState\": \"TX\",\n\"PayToZip\":\"78702\",\n\"Abbr\":\"Clinic Five\",\n\"IsHidden\":\"false\"\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "21.4",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Clinics",
+      "GET",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Clinics",
+      "method": "GET",
+      "path": "/clinics",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /clinics",
+          "response": "[\n{\n\"ClinicNum\": 1,\n\"Description\": \"Clinic1\",\n\"Address\": \"333 Blackwood St\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"State\": \"Oregon\",\n\"Zip\": \"97301\",\n\"BillingAddress\": \"333 Blackwood St \",\n\"BillingAddress2\": \"\",\n\"BillingCity\": \" Salem \",\n\"BillingState\": \" Oregon \",\n\"BillingZip\": \"97301\",\n\"PayToAddress\": \"\",\n\"PayToAddress2\": \"\",\n\"PayToCity\": \"\",\n\"PayToState\": \"\",\n\"PayToZip\": \"\",\n\"Phone\": \"5105552005\",\n\"Abbr\": \"Clinic1\",\n\"IsHidden\": \"false\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "333",
+          "status": "Blackwood",
+          "description": ""
+        },
+        {
+          "code": "333",
+          "status": "Blackwood",
+          "description": ""
+        }
+      ],
+      "description": "Gets all non-hidden clinics. An empty list indicates the dental office does not utilize the Clinics feature."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-letter",
+      "description": "API references database table letter"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-statement",
+      "description": "API references database table statement"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    }
+  ]
+}

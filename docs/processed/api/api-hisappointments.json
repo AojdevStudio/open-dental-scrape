@@ -1,0 +1,61 @@
+{
+  "id": "api-hisappointments",
+  "type": "api",
+  "title": "Hisappointments",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Hisappointments.txt",
+  "content": "API HistAppointments\nSee API Specification\n\nHistAppointments GET (multiple)\nVersion Added: 23.1.30\n\nA HistAppointment is a historical copy of an appointment. A new HistAppointment entry is created anytime an appointment is created, changed, missed, cancelled, or deleted. A single AptNum may have many associated HistAppointments.\n\nParameters: All optional.\n\nHistApptAction: Either \"Created\", \"Changed\", \"Missed\", \"Cancelled\", or \"Deleted\".\nAptNum: Filter responses by AptNum.\nPatNum: Filter responses by PatNum.\nAptStatus: Either \"Scheduled\", \"Complete\", \"UnschedList\", \"Broken\", or \"Planned\".\nClinicNum: Filter responses by ClinicNum. Leave blank if not using clincs or want results for all clinics.\ndate: For a single day, in \"yyyy-MM-dd\" format.\ndateStart, dateEnd: For a date range, inclusive of both dates, in \"yyyy-MM-dd\" format.\n\nExample Requests:\nGET /histappointments\nGET /histappointments?PatNum=1\nGET /histappointments?AptNum=266\n\nExample Responses:\n[\n{\n\"HistApptNum\": 1,\n\"HistUserNum\": 0,\n\"HistDateTStamp\": \"2021-05-20 14:50:44\",\n\"HistApptAction\": \"Created\",\n\"ApptSource\": \"EConnector\",\n\"AptNum\": 1,\n\"PatNum\": 1,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 7,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2021-05-20 15:50:44\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"\",\n\"ClinicNum\": 1,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2021-05-20 14:50:44\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 1,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"/X////X/\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"HistApptNum\": 3,\n\"HistUserNum\": 1,\n\"HistDateTStamp\": \"2021-05-24 14:32:40\",\n\"HistApptAction\": \"Changed\",\n\"ApptSource\": \"None\",\n\"AptNum\": 2,\n\"PatNum\": 1,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 7,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2021-05-24 12:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"true\",\n\"ProcDescript\": \"PerEx, LimEx, CmpEx\",\n\"ClinicNum\": 1,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2021-05-24 14:32:40\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 1,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"XX////////XX\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"HistApptNum\": 4,\n\"HistUserNum\": 1,\n\"HistDateTStamp\": \"2021-05-25 08:39:47\",\n\"HistApptAction\": \"Changed\",\n\"ApptSource\": \"None\",\n\"AptNum\": 2,\n\"PatNum\": 1,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XXXXXXXX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 7,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2021-05-25 12:00:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"true\",\n\"ProcDescript\": \"PerEx, LimEx, CmpEx\",\n\"ClinicNum\": 1,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2021-05-25 08:39:47\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 1,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"XX////////XX\",\n\"ItemOrderPlanned\": 0\n},\netc...\n]\n\nor\n\n[\n{\n\"HistApptNum\": 2751,\n\"HistUserNum\": 1,\n\"HistDateTStamp\": \"2022-05-16 09:51:38\",\n\"HistApptAction\": \"Changed\",\n\"ApptSource\": \"None\",\n\"AptNum\": 266,\n\"PatNum\": 68,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\nTimeLocked\": \"false\",\n\"Op\": 15,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-05-16 12:40:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"ProChild\",\n\"ClinicNum\": 5,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-16 09:51:38\",\n\"DateTimeArrived\": \"0001-01-01 00:00:00\",\n\"DateTimeSeated\": \"0001-01-01 00:00:00\",\n\"DateTimeDismissed\": \"0001-01-01 00:00:00\",\n\"InsPlan1\": 12,\n\"InsPlan2\": 5,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"//////\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"HistApptNum\": 2752,\n\"HistUserNum\": 1,\n\"HistDateTStamp\": \"2022-05-16 09:52:28\",\n\"HistApptAction\": \"Changed\",\n\"ApptSource\": \"None\",\n\"AptNum\": 266,\n\"PatNum\": 68,\n\"AptStatus\": \"Scheduled\",\n\"Pattern\": \"//XX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\nTimeLocked\": \"false\",\n\"Op\": 15,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-05-16 12:40:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"ProChild\",\n\"ClinicNum\": 5,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-16 09:52:28\",\n\"DateTimeArrived\": \"2022-05-16 00:00:00\",\n\"DateTimeSeated\": \"2022-05-16 00:00:00\",\n\"DateTimeDismissed\": \"2022-05-16 00:00:00\",\n\"InsPlan1\": 9,\n\"InsPlan2\": 15,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"//////\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"HistApptNum\": 2753,\n\"HistUserNum\": 1,\n\"HistDateTStamp\": \"2022-05-16 09:55:06\",\n\"HistApptAction\": \"Missed\",\n\"ApptSource\": \"None\",\n\"AptNum\": 266,\n\"PatNum\": 68,\n\"AptStatus\": \"Broken\",\n\"Pattern\": \"//XX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 15,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-05-16 12:40:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"ProChild\",\n\"ClinicNum\": 5,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-16 09:55:06\",\n\"DateTimeArrived\": \"2022-05-16 00:00:00\",\n\"DateTimeSeated\": \"2022-05-16 00:00:00\",\n\"DateTimeDismissed\": \"2022-05-16 00:00:00\",\n\"InsPlan1\": 3,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"//////\",\n\"ItemOrderPlanned\": 0\n},\n{\n\"HistApptNum\": 2754,\n\"HistUserNum\": 1,\n\"HistDateTStamp\": \"2022-05-16 09:55:19\",\n\"HistApptAction\": \"Deleted\",\n\"ApptSource\": \"None\",\n\"AptNum\": 266,\n\"PatNum\": 68,\n\"AptStatus\": \"Broken\",\n\"Pattern\": \"//XX//\",\n\"Confirmed\": 19,\n\"confirmed\": \"Not Called\",\n\"TimeLocked\": \"false\",\n\"Op\": 15,\n\"Note\": \"\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC\",\n\"ProvHyg\": 0,\n\"AptDateTime\": \"2022-05-16 12:40:00\",\n\"NextAptNum\": 0,\n\"UnschedStatus\": 0,\n\"unschedStatus\": \"\",\n\"IsNewPatient\": \"false\",\n\"ProcDescript\": \"ProChild\",\n\"ClinicNum\": 5,\n\"IsHygiene\": \"false\",\n\"DateTStamp\": \"2022-05-16 09:55:19\",\n\"DateTimeArrived\": \"2022-05-16 00:00:00\",\n\"DateTimeSeated\": \"2022-05-16 00:00:00\",\n\"DateTimeDismissed\": \"2022-05-16 00:00:00\",\n\"InsPlan1\": 4,\n\"InsPlan2\": 0,\n\"DateTimeAskedToArrive\": \"0001-01-01 00:00:00\",\n\"colorOverride\": \"0,0,0\",\n\"AppointmentTypeNum\": 0,\n\"Priority\": \"Normal\",\n\"PatternSecondary\": \"//////\",\n\"ItemOrderPlanned\": 0\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.1.30",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Hisappointments",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-appointmenttype",
+      "description": "API references database table appointmenttype"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-histappointment",
+      "description": "API references database table histappointment"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    }
+  ]
+}

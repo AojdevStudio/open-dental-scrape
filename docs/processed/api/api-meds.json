@@ -1,0 +1,100 @@
+{
+  "id": "api-meds",
+  "type": "api",
+  "title": "Meds",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Meds.txt",
+  "content": "API Medications\nSee API Specification\n\nMedications GET\nVersion Added: 21.3\n\nGets the list of medications that can be assigned to patients.\n\nRarely used. Usually just use MedicationPats GET and POST.\n\nExample Request:\nGET /medications\n\nExample Response:\n[\n{\n\"MedicationNum\": 12,\n\"MedName\": \"Glucophage\",\n\"GenericNum\": 124,\n\"genericName\": \"Metformin\",\n\"Notes\": \"Antidiabetic agent\",\n\"DateTStamp\": \"2016-12-01\"\n},\netc...\n]\n\nExample Response:\n201 Created\n400 BadRequest (Missing or Invalid fields)\n\nMedications POST\nVersion Added: 21.3\n\nCreates a new medication.\n\nRarely used. Usually just use MedicationPats GET and POST.\n\nMedName: Required.\n\ngenericName: Optional. If not provided this will be the same as MedName.\nNotes: Optional.\n\nExample Requests:\nPOST /medications\n\n{\n\"MedName\": \"Metformin\"\n}\n\n{\n\"MedName\": \"Glucophage\",\n\"genericName\": \"Metformin\",\n\"Notes\": \"Antidiabetic agent\"\n}\n\nExample Response:\n201 Created\n400 BadRequest (Missing or Invalid fields)\n404 Not Found \"No Medication with that genericName was found\"",
+  "metadata": {
+    "version": "21.3",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Meds",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Medications",
+      "method": "GET",
+      "path": "/medications",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /medications",
+          "response": "[\n{\n\"MedicationNum\": 12,\n\"MedName\": \"Glucophage\",\n\"GenericNum\": 124,\n\"genericName\": \"Metformin\",\n\"Notes\": \"Antidiabetic agent\",\n\"DateTStamp\": \"2016-12-01\"\n},\netc...\n]\n\nExample Response:"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or Invalid fields"
+        }
+      ],
+      "description": "Gets the list of medications that can be assigned to patients."
+    },
+    {
+      "resource": "Medications",
+      "method": "POST",
+      "path": "/medications",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /medications\n\n{\n\"MedName\": \"Metformin\"\n}\n\n{\n\"MedName\": \"Glucophage\",\n\"genericName\": \"Metformin\",\n\"Notes\": \"Antidiabetic agent\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or Invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "Not",
+          "description": ""
+        }
+      ],
+      "description": "Creates a new medication."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-medicationpat",
+      "description": "API references database table medicationpat"
+    }
+  ]
+}

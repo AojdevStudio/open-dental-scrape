@@ -1,0 +1,105 @@
+API Allergies
+See API Specification
+
+Allergies GET
+Version Added: 21.1
+
+Gets all allergies for a specified patient.
+
+PatNum: Required.
+
+Example Request:
+GET /allergies?PatNum=15
+
+Example Response:
+[
+{
+"AllergyNum": 1,
+"AllergyDefNum": 4,
+"PatNum": 15,
+"defDescription": "Penicillin",
+"defSnomedType": "None",
+"Reaction": "Rash",
+"StatusIsActive": "true",
+"DateAdverseReaction": "2020-03-18"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Allergies POST
+Version Added: 21.3
+
+Attaches an AllergyDef to a patient.
+
+AllergyDefNum: Rarely used. Just use defDescription instead, which handles insertion of AllergyDef automatically.
+PatNum: Required.
+defDescription: Required unless you choose to use AllergyDefNum.
+
+Reaction: Optional. String describing the adverse reaction.
+StatusIsActive: Optional. Either "true" or "false". Default "true".
+DateAdverseReaction: Optional. String in "yyyy-MM-dd" format. Default "0001-01-01".
+
+Example Requests:
+POST /allergies
+
+{
+"PatNum": 12,
+"AllergyDefNum": "243"
+}
+
+or
+
+{
+"PatNum": 12,
+"defDescription": "Penicillin",
+"Reaction": "Hives",
+"DateAdverseReaction": "2019-09-23"
+}
+
+Example Responses:
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Allergies PUT
+Version Added: 22.1
+
+Updates the allergy associated with a patient.
+
+AllergyNum: Required in the URL.
+
+Reaction: String describing the adverse reaction.
+DateAdverseReaction: String in "yyyy-MM-dd" format.
+StatusIsActive: Either "true" or "false".
+
+Example Request:
+PUT /allergies/12
+
+{
+"Reaction": "Rash",
+"DateAdverseReaction": "2022-04-13",
+"StatusIsActive": "true"
+}
+
+Example Responses:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Allergies DELETE
+Version Added: 22.1
+
+Deletes an allergy associated with a patient.
+
+AllergyNum: Required in the URL.
+
+Example Requests:
+DELETE /allergies/13
+
+Example Responses:
+200 OK
+404 NotFound (with explanation)

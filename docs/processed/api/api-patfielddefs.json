@@ -1,0 +1,100 @@
+{
+  "id": "api-patfielddefs",
+  "type": "api",
+  "title": "PatfieldDefs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API PatfieldDefs.txt",
+  "content": "API PatFieldDefs\nSee API Specification\n\nPatient Field Defs allow you to organize fields that are found in various areas of Open Dental such as the Patient Information area of the Family Module, Account Module, and Chart Module.\n\nIn version 24.1, the PickList field was deprecated and replaced with the PatFieldPickList table. Documentation has changed to reflect this, but the logic continues to support existing implementations.\n\nPatFieldDefs GET\nVersion Added: 22.4.9\n\nGets a list of patfielddefs.\n\nExample Request\nGET /patfielddefs\n\nExample Response:\n[\n{\n\"PatFieldDefNum\": 7,\n\"FieldName\": \"Outstanding\",\n\"FieldType\": \"Currency\",\n\"PickList\": \"\",\n\"IsHidden\": \"false\"\n},\n{\n\"PatFieldDefNum\": 8,\n\"FieldName\": \"Ortho Status\",\n\"FieldType\": \"PickList\",\n\"PickList\": \"\"\n\"IsHidden\": \"false\"\n},\n{\n\"PatFieldDefNum\": 11,\n\"FieldName\": \"Accommodations\",\n\"FieldType\": \"Text\",\n\"PickList\": \"\"\n\"IsHidden\": \"false\"\n}\n]\n\n200 OK\n\nPatFieldDefs POST (create)\nVersion Added: 23.3.26\n\nCreates a patfielddef.\n\nFieldName: Required. Name of the field. Must be unique.\nFieldType: Required. Either \"Text\", \"PickList\", \"Date\", \"Checkbox\", \"Currency\", \"CareCreditStatus\", \"CareCreditPreApprovalAmt\" (Added in version 24.1), or \"CareCreditAvailableCredit\" (Added in version 24.1).\nPickList: Required if FieldType is \"PickList\". Otherwise, not allowed. Each item in the list must be separated by a \\r\\n. Creates a PatFieldPickItem entry for each item in the list. The PatFieldDefs' PickList column will remain blank.\n\nIsHidden: Optional. Either \"true\" or \"false\". Default \"false\".\n\nExample Request:\nPOST /patfielddefs\n\n{\n\"FieldName\": \"Favorite Color\",\n\"FieldType\": \"PickList\",\n\"PickList\": \"Red\\r\\nBlue\\r\\nYellow\"\n}\n\nExample Response:\n{\n\"PatFieldDefNum\": 16,\n\"FieldName\": \"Favorite Color\",\n\"FieldType\": \"PickList\",\n\"PickList\": \"\"\n\"IsHidden\": \"false\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n\nPatFieldDefs PUT (update)\nVersion Added: 23.3.26\n\nUpdates a patfielddef.\n\nPatFieldDefNum: Required in the URL.\n\nFieldName: Name of the field. Cannot be changed for in-use CareCredit fields. Must be unique.\nFieldType: Either \"Text\", \"PickList\", \"Date\", \"Checkbox\", \"Currency\", \"CareCreditStatus\", \"CareCreditPreApprovalAmt\" (Added in version 24.1), or \"CareCreditAvailableCredit\" (Added in version 24.1).\nPickList: Only allowed if FieldType is \"PickList\". As of version 24.1, this is only allowed and required if changing the FieldType of a PatFieldDef to \"PickList\" from any other FieldType. It can no longer be used to edit a preexisting PickList. Each item in the list must be separated by a \\r\\n.\nIsHidden: Either \"true\" or \"false\".\n\nExample Requests:\nPUT /patfielddefs/18\n\n{\n\"FieldType\": \"PickList\",\n\"PickList\": \"Spring\\r\\nSummer\\r\\nAutumn\\r\\nWinter\"\n}\n\nExample Response:\n{\n\"PatFieldDefNum\": 18,\n\"FieldName\": \"Favorite Season\",\n\"FieldType\": \"PickList\",\n\"PickList\": \"\",\n\"IsHidden\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPatFieldDefs DELETE\nVersion Added: 23.3.26\n\nDeletes a patfielddef. Cannot delete a patfielddef that is in use.\n\nPatFieldDefNum: Required in the URL.\n\nExample Request:\nDELETE /patfielddefs/16\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.26",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "PatfieldDefs",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PatFieldDefs",
+      "method": "GET",
+      "path": "/patfielddefs",
+      "versionAdded": "22.4.9",
+      "parameters": [],
+      "examples": [],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of patfielddefs."
+    },
+    {
+      "resource": "PatFieldDefs",
+      "method": "DELETE",
+      "path": "/patfielddefs",
+      "versionAdded": "23.3.26",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /patfielddefs/16",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a patfielddef. Cannot delete a patfielddef that is in use."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patfield",
+      "description": "API references database table patfield"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-patfielddef",
+      "description": "API references database table patfielddef"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-patfieldpickitem",
+      "description": "API references database table patfieldpickitem"
+    }
+  ]
+}

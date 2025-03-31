@@ -1,0 +1,58 @@
+API RecallTypes
+See API Specification
+
+See Recall Types for additional information.
+
+RecallTypes GET (single)
+Version Added: 24.1.44
+
+Gets a single recalltype.
+
+RecallTypeNum: Required in URL.
+
+Example Request:
+GET /recalltypes/7
+
+Example Response:
+{
+"RecallTypeNum": 7,
+"Description": "Exam",
+"DefaultInterval": "6m1d",
+"TimePattern": "",
+"Procedures": "D0120",
+"AppendToSpecial": "true"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+RecallTypes GET (multiple)
+Version Added: 24.1.44
+
+Gets a list of all recalltypes.
+
+Example Request:
+GET /recalltypes
+
+Example Response:
+[
+{
+"RecallTypeNum": 1,
+"Description": "Prophy",
+"DefaultInterval": "6m1d",
+"TimePattern": "/XXXX/",
+"Procedures": "D1110",
+"AppendToSpecial": "false"
+},
+{
+"RecallTypeNum": 2,
+"Description": "Child Prophy",
+"DefaultInterval": "",
+"TimePattern": "XXX",
+"Procedures": "D1120,D1208",
+"AppendToSpecial": "false"
+},
+etc...
+]
+
+200 OK

@@ -1,0 +1,94 @@
+API AutoNoteControls
+See API Specification
+
+Auto Note Controls are the prompts for Auto Notes.
+
+AutoNoteControls GET
+Version Added: 22.3.22
+
+Gets a list of AutoNoteControls.
+
+Example Request:
+GET /autonotecontrols
+
+Example Response:
+[
+{
+"AutoNoteControlNum": 1,
+"Descript": "Medications",
+"ControlType": "MultiResponse",
+"ControlLabel": "Medications",
+"ControlOptions": "Zantac\r\nValium\r\nAdvair\r\nElavil"
+},
+{
+"AutoNoteControlNum": 2,
+"Descript": "Allergies",
+"ControlType": "MultiResponse",
+"ControlLabel": "Allergies",
+"ControlOptions": "Amox\r\nLatex\r\nPen VK\r\nCeph\r\nErythro\r\nSulfa"
+},
+{
+"AutoNoteControlNum": 3,
+"Descript": "BP Pulse",
+"ControlType": "Text",
+"ControlLabel": "BP Pulse",
+"ControlOptions": "BP: / Pulse: "
+},
+etc...
+]
+
+200 OK
+400 BadRequest
+
+AutoNoteControls POST (create)
+Version Added: 22.3
+
+Creates a new AutoNoteControl.
+
+Descript: Required. The description of the AutoNoteControl as it will be displayed.
+ControlType: Required. Either "Text", "OneResponse", "MultiResponse".
+ControlLabel: Required. Prompt text.
+ControlOptions: Required unless the ControlType is Text. The list of possible responses, one per line. Responses must be separated by \r\n.
+
+Example Request:
+POST /autonotecontrols
+{
+"Descript": "Medications",
+"ControlType": "MultiResponse",
+"ControlLabel": "Medications",
+"ControlOptions": "Zantac\r\nValium\r\nAdvair\r\nElavil"
+}
+
+Example Response:
+{
+"AutoNoteControlNum": 5,
+"Descript": "Medications",
+"ControlType": "MultiResponse",
+"ControlLabel": "Medications",
+"ControlOptions": "Zantac\r\nValium\r\nAdvair\r\nElavil"
+}
+
+201 Created
+400 BadRequest (Missing or invalid fields)
+
+AutoNoteControls PUT (update)
+Version Added: 22.3
+
+Updates an existing AutoNoteControl. All fields are optional.
+
+AutoNoteControlNum: Required in the URL.
+
+Descript: The description of the AutoNoteControl as it will be displayed.
+ControlType: Either "Text", "OneResponse", "MultiResponse"
+ControlLabel: Prompt text.
+ControlOptions: The list of possible responses, one per line. Responses must be separated by \r\n.
+
+Example Request:
+PUT /autonotecontrols/5
+{
+"ControlType": "MultiResponse"
+}
+
+200 OK
+400 BadRequest (Missing or invalid fields)
+404 NotFound ("AuotNoteControl not found")

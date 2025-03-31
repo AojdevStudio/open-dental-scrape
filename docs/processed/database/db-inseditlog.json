@@ -1,0 +1,41 @@
+{
+  "id": "db-inseditlog",
+  "type": "database",
+  "title": "inseditlog",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "inseditlog",
+      "Insurance",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "inseditlog",
+    "description": "Table for inseditlog data.",
+    "columns": [
+      {
+        "name": "inseditlogNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "inseditlogNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

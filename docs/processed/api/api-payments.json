@@ -1,0 +1,200 @@
+{
+  "id": "api-payments",
+  "type": "api",
+  "title": "Payments",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Payments.txt",
+  "content": "API Payments\nSee\u00a0API Specification\nPayments GET\nVersion Added: 22.2.32\nGet a list of payments for a patient.\nParameters:\u00a0All optional.\nPayType:\u00a0(Added in version 23.3.11) definition.DefNum where definition.Category=10.\u2028PatNum:\u00a0(Optional after version 23.3.11) FK to patient.PatNum.\u2028DateEntry:\u00a0String in \"yyyy-MM-dd\" format. Gets all payments made on or after a certain date.\nExample Requests:\u2028GET /payments?PatNum=1337\u2028GET /payments?PatNum=1337&DateEntry=2022-06-24\nExample Response:\u2028[\u2028{\u2028\"PayNum\": 56734,\u2028\"PayType\": 69,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2022-06-24\",\u2028\"PayAmt\": \"339\",\u2028\"CheckNum\": \"12798\",\u2028\"BankBranch\": \"20-6\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-06-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-06-24 07:34:31\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"2022-08-26 11:55:44\"\u2028},\u2028{\u2028\"PayNum\": 56952,\u2028\"PayType\": 69,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2022-07-24\",\u2028\"PayAmt\": \"239\",\u2028\"CheckNum\": \"12816\",\u2028\"BankBranch\": \"20-6\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-07-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-07-24 07:34:31\",\u2028\"PaymentSource\": \"API\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"2022-08-26 11:55:44\"\u2028}\u2028]\n200 OK\u2028400 BadRequest (Missing or invalid fields)\u2028404 NotFound (Patient not found)\nPayments POST (create)\nVersion Added: 21.2\nCreates a payment for a patient. Does not support insurance payments or income transfers. Payments apply to outstanding charges in a FIFO order. Overpayments are inserted as unearned income.\nPayments will be applied to the patient's payment plan, if one is eligible. The oldest plan will be chosen if there is more than one eligible plan. By marking the payment as a prepayment and supplying a\u00a0payPlanNum, patients are able to prepay on a specific Dynamic Payment Plan for its future charges. If needed, the user can later detach the payment from the plan within the Edit Payment Plan window by editing the split and unchecking \"Attach to Payment Plan\". They can also attach to a different plan in the same manner.\nThis method also creates appropriate paysplits according to the payment allocation preferences from Setup > Allocations within Open Dental.\nPayAmt:\u00a0Required.\u2028PatNum:\u00a0Required.\u2028\u2028PayType:\u00a0(Added in version 23.1.27) Optional. definition.DefNum where definition.Category=10. Defaults to the ApiPaymentType preference.\u2028PayDate:\u00a0Optional. String in \"yyyy-MM-dd\" format. Defaults to today's date. Follows the office's preference to allow future-dated payments.\u2028CheckNum:\u00a0Optional.\u2028PayNote:\u00a0Optional.\u2028BankBranch:\u00a0Optional.\u2028ClinicNum:\u00a0Optional. Defaults to patient.ClinicNum\u2028isPatientPreferred:\u00a0Optional. When entering a payment through Open Dental directly, there is a checkbox for this option. This API field allows the same functionality. It causes the splits to go to the patient instead of being split among family members on a FIFO basis. Default \"false\".\u2028isPrepayment:\u00a0(Added in version 22.4.8) Optional. Creates a single paysplit using the default unearned type for unallocated paysplits stored in the PrepaymentUnearnedType preference. See also\u00a0Unearned / Prepayment. Default \"false\".\u2028procNums:\u00a0(Added in version 22.4.16) Optional. An array of ProcNums, in [1,2,3] format to apply this Payment to. Procedures are paid by Procedure.ProcDate on a FIFO basis. Procedures not in the Patient's family will be silently ignored. Ignored if isPrepayment is set to \"true\". Default is an empty array.\u2028payPlanNum:\u00a0(Added in version 23.1.31) Optional. FK to payplan.PayPlanNum for a Dynamic Payment Plan. Only allowed if\u00a0isPrepayment\u00a0is \"true\" prior to version 23.3.4. Default 0.\nExample Requests:\u2028POST /payments\n{\u2028\"PayAmt\": \"129.99\",\u2028\"PatNum\": 1568\u2028}\nor\n{\u2028\"PayAmt\": \"129.99\",\u2028\"PatNum\": 1568,\u2028\"PayDate\": \"2021-07-05\",\u2028\"CheckNum\": \"2058\",\u2028\"PayNote\": \"Check payment through website\",\u2028\"BankBranch\": \"19-7076\",\u2028\"ClinicNum\": \"3\",\u2028\"isPatientPreferred\": \"true\",\u2028\"isPrepayment\": \"true\",\u2028\"procNums\": [13,14,18]\u2028}\nor\n{\u2028\"PayAmt\": \"129.99\",\u2028\"PatNum\": 1568,\u2028\"isPrepayment\": \"true\",\u2028\"payPlanNum\": 12\u2028}\nExample Response:\u2028{\u2028\"PayNum\": 56734,\u2028\"PayType\": 383,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2021-07-05\",\u2028\"PayAmt\": \"129.99\",\u2028\"CheckNum\": \"2058\",\u2028\"BankBranch\": \"19-7076\",\u2028\"PayNote\": \"Check payment through website\",\u2028\"PatNum\": 1568,\u2028\"ClinicNum\": \"3\",\u2028\"DateEntry\": \"2021-07-05\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2021-07-05 07:34:31\",\u2028\"PaymentSource\": \"API\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}\n201 Created\u2028400 BadRequest (Missing or invalid fields)\u2028404 NotFound (Patient not found)\nPayments POST Refund\nVersion Added: 24.4.28\nCreates a refund payment. Cannot refund payments that are attached to payment plans or have negative paysplits.\nExample Requests:\u2028POST /payments/Refund\n{\u2028\"PayNum\": 178\u2028}\nExample Response:\u2028{\u2028\"PayNum\": 231,\u2028\"PayType\": 383,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2025-01-05\",\u2028\"PayAmt\": \"-129.99\",\u2028\"CheckNum\": \"2058\",\u2028\"BankBranch\": \"19-7076\",\u2028\"PayNote\": \"Check payment through website\",\u2028\"PatNum\": 1568,\u2028\"ClinicNum\": \"3\",\u2028\"DateEntry\": \"2025-01-05\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2025-02-26 07:34:31\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}\n201 Created\u2028400 BadRequest (with explanation)\u2028404 NotFound (with explanation)\nPayments PUT (update)\nVersion Added: 23.3.11\nUpdates a payment.\nPayNum:\u00a0Required in the URL.\u2028\u2028PayType:\u00a0definition.DefNum where definition.Category=10.\u2028CheckNum:\u00a0Check number. Overwrites existing value.\u2028BankBranch:\u00a0Bank-branch code for checks. Overwrites existing value.\u2028PayNote:\u00a0Note on payment. Overwrites existing value.\u2028ProcessStatus:\u00a0(Added in version 24.3.26) Indicates whether a payment came from in office or online, and if the online payment is processed or pending. Either \"OnlineProcessed\" or \"OnlinePending\".\nExample Requests:\u2028PUT /payments/56734\n{\u2028\"ProcessStatus\": \"OnlineProcessed\"\u2028}\nor\n{\u2028\"PayType\": 449,\u2028\"CheckNum\": \"7492\",\u2028\"BankBranch\": \"98-795\",\u2028\"PayNote\": \"12 months - 10% discount.\"\u2028}\nExample Response:\u2028{\u2028\"PayNum\": 56734,\u2028\"PayType\": 449,\u2028\"payType\": \"API Payment Processed\",\u2028\"PayDate\": \"2022-06-24\",\u2028\"PayAmt\": \"339\",\u2028\"CheckNum\": \"7492\",\u2028\"BankBranch\": \"98-795\",\u2028\"PayNote\": \"12 months - 10% discount.\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-06-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-06-24 07:34:31\",\u2028\"PaymentSource\": \"API\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}\n200 OK\u2028400 BadRequest (with explanation)\u2028404 NotFound (with explanation)\nPayments PUT Partial\nVersion Added: 25.1.11\nRarely used.\u00a0Before calling this method, a payment must be made via Open Dental UI or Payments POST. Afterwards, use PaySplits GET to obtain the new paysplits.\nDeletes all existing paysplits for the payment and inserts new ones created for the passed in procedures.\nPayNum:\u00a0Required in the URL.\u2028\u2028procNumsAndAmounts:\u00a0Required. One or many pairs of\u00a0ProcNums\u00a0and\u00a0Amounts. The sum of all\u00a0Amounts\u00a0must equate to the PayAmt of the payment.\nProcNum:\u00a0FK to procedure.ProcNum. Procedure must have an outstanding charge, and be for the patient or a family member.\nAmount:\u00a0Amount to allocate to the ProcNum's procedure.\n\nExample Request:\u2028PUT /payments/40143/Partial\n{\u2028\"procNumsAndAmounts\": [ {\"ProcNum\": 271, \"Amount\": 50}, {\"ProcNum\": 402, \"Amount\": 25} ]\u2028}\nExample Response:\u2028{\u2028\"PayNum\": 40143,\u2028\"PayType\": 383,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2025-02-14\",\u2028\"PayAmt\": \"75\",\u2028\"CheckNum\": \"\",\u2028\"BankBranch\": \"\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 654,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2025-02-14\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"false\",\u2028\"SecUserNumEntry\": 1,\u2028\"SecDateTEdit\": \"2025-02-14 09:25:48\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}\n200 OK\u2028400 BadRequest (with explanation)\u2028404 NotFound (with explanation)\n",
+  "metadata": {
+    "version": "25.1.11",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Payments",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Payments",
+      "method": "GET",
+      "path": "/payments",
+      "versionAdded": "22.2.32",
+      "parameters": [
+        {
+          "name": "PayType",
+          "description": "(Added in version 23.3.11) definition.DefNum where definition.Category=10.\u2028PatNum:\u00a0(Optional after version 23.3.11) FK to patient.PatNum.\u2028DateEntry:\u00a0String in \"yyyy-MM-dd\" format. Gets all payments made on or after a certain date.",
+          "required": false
+        }
+      ],
+      "examples": [
+        {
+          "request": "GET /payments?PatNum=1337\u2028GET /payments?PatNum=1337&DateEntry=2022-06-24",
+          "response": "[\u2028{\u2028\"PayNum\": 56734,\u2028\"PayType\": 69,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2022-06-24\",\u2028\"PayAmt\": \"339\",\u2028\"CheckNum\": \"12798\",\u2028\"BankBranch\": \"20-6\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-06-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-06-24 07:34:31\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"2022-08-26 11:55:44\"\u2028},\u2028{\u2028\"PayNum\": 56952,\u2028\"PayType\": 69,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2022-07-24\",\u2028\"PayAmt\": \"239\",\u2028\"CheckNum\": \"12816\",\u2028\"BankBranch\": \"20-6\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-07-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-07-24 07:34:31\",\u2028\"PaymentSource\": \"API\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"2022-08-26 11:55:44\"\u2028}\u2028]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "337",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "Patient not found"
+        }
+      ],
+      "description": "Get a list of payments for a patient.\n1 /payments?PatNum=1337&DateEntry=2022-06-24\n56734,\u2028\"PayType\": 69,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2022-06-24\",\u2028\"PayAmt\": \"339\",\u2028\"CheckNum\": \"12798\",\u2028\"BankBranch\": \"20-6\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-06-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-06-24 07:34:31\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"2022-08-26 11:55:44\"\u2028},\u2028{\u2028\"PayNum\": 56952,\u2028\"PayType\": 69,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2022-07-24\",\u2028\"PayAmt\": \"239\",\u2028\"CheckNum\": \"12816\",\u2028\"BankBranch\": \"20-6\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 1337,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2022-07-24\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2022-07-24 07:34:31\",\u2028\"PaymentSource\": \"API\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"2022-08-26 11:55:44\"\u2028}\u2028]"
+    },
+    {
+      "resource": "Payments",
+      "method": "POST",
+      "path": "/payments",
+      "versionAdded": "24.4.28",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /payments/Refund\n{\u2028\"PayNum\": 178\u2028}",
+          "response": "{\u2028\"PayNum\": 231,\u2028\"PayType\": 383,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2025-01-05\",\u2028\"PayAmt\": \"-129.99\",\u2028\"CheckNum\": \"2058\",\u2028\"BankBranch\": \"19-7076\",\u2028\"PayNote\": \"Check payment through website\",\u2028\"PatNum\": 1568,\u2028\"ClinicNum\": \"3\",\u2028\"DateEntry\": \"2025-01-05\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2025-02-26 07:34:31\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a refund payment. Cannot refund payments that are attached to payment plans or have negative paysplits.\n178\u2028}\n231,\u2028\"PayType\": 383,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2025-01-05\",\u2028\"PayAmt\": \"-129.99\",\u2028\"CheckNum\": \"2058\",\u2028\"BankBranch\": \"19-7076\",\u2028\"PayNote\": \"Check payment through website\",\u2028\"PatNum\": 1568,\u2028\"ClinicNum\": \"3\",\u2028\"DateEntry\": \"2025-01-05\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"true\",\u2028\"SecUserNumEntry\": 0,\u2028\"SecDateTEdit\": \"2025-02-26 07:34:31\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}"
+    },
+    {
+      "resource": "Payments",
+      "method": "PUT",
+      "path": "/payments",
+      "versionAdded": "25.1.11",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /payments/40143/Partial\n{\u2028\"procNumsAndAmounts\": [ {\"ProcNum\": 271, \"Amount\": 50}, {\"ProcNum\": 402, \"Amount\": 25} ]\u2028}",
+          "response": "{\u2028\"PayNum\": 40143,\u2028\"PayType\": 383,\u2028\"payType\": \"Check\",\u2028\"PayDate\": \"2025-02-14\",\u2028\"PayAmt\": \"75\",\u2028\"CheckNum\": \"\",\u2028\"BankBranch\": \"\",\u2028\"PayNote\": \"\",\u2028\"PatNum\": 654,\u2028\"ClinicNum\": \"0\",\u2028\"DateEntry\": \"2025-02-14\",\u2028\"DepositNum\": 0,\u2028\"Receipt\": \"\",\u2028\"IsRecurringCC\": \"false\",\u2028\"SecUserNumEntry\": 1,\u2028\"SecDateTEdit\": \"2025-02-14 09:25:48\",\u2028\"PaymentSource\": \"None\",\u2028\"ProcessStatus\": \"OfficeProcessed\",\u2028\"RecurringChargeDate\": \"0001-01-01\",\u2028\"IsCcCompleted\": \"false\",\u2028\"serverDateTime\": \"\"\u2028}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Rarely used.\u00a0Before calling this method, a payment must be made via Open Dental UI or Payments POST. Afterwards, use PaySplits GET to obtain the new paysplits.\nDeletes all existing paysplits for the payment and inserts new ones created for the passed in procedures.\nPayNum:\u00a0Required in the URL.\u2028\u2028procNumsAndAmounts:\u00a0Required. One or many pairs of\u00a0ProcNums\u00a0and\u00a0Amounts. The sum of all\u00a0Amounts\u00a0must equate to the PayAmt of the payment.\nProcNum:\u00a0FK to procedure.ProcNum. Procedure must have an outstanding charge, and be for the patient or a family member.\nAmount:\u00a0Amount to allocate to the ProcNum's procedure."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-recurringcharge",
+      "description": "API references database table recurringcharge"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-deposit",
+      "description": "API references database table deposit"
+    },
+    {
+      "type": "references",
+      "target": "db-supply",
+      "description": "API references database table supply"
+    },
+    {
+      "type": "references",
+      "target": "db-paysplit",
+      "description": "API references database table paysplit"
+    },
+    {
+      "type": "references",
+      "target": "db-cert",
+      "description": "API references database table cert"
+    }
+  ]
+}

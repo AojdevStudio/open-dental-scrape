@@ -1,0 +1,46 @@
+{
+  "id": "db-electid",
+  "type": "database",
+  "title": "electid",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "electid",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "electid",
+    "description": "Table for electid data.",
+    "columns": [
+      {
+        "name": "electidNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "electidNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-carriers",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

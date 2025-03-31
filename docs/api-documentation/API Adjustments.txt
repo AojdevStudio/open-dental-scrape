@@ -1,0 +1,166 @@
+API Adjustments
+See API Specification
+
+Adjustments GET
+Version Added: 22.2.21
+
+Gets all adjustments for a specified patient.
+
+PatNum: Required.
+AdjType: (Added in version 22.2.33) Optional. definition.DefNum where definition.Category=1.
+ProcNum: (Added in version 22.4.28) Optional. FK to procedure.ProcNum.
+
+Example Requests:
+GET /adjustments?PatNum=26
+GET /adjustments?PatNum=42&AdjType=2
+GET /adjustments?PatNum=42&ProcNum=12
+
+Example Response:
+[
+{
+"AdjNum": 1,
+"AdjDate": "2022-07-02",
+"AdjAmt": -25.0,
+"PatNum": 26,
+"AdjType": 1,
+"adjType": "Misc Neg Adjustment",
+"ProvNum": 1,
+"AdjNote": "Cash Discount",
+"ProcDate": "2022-07-02",
+"ProcNum": 0,
+"DateEntry": "2022-07-02",
+"ClinicNum": 0,
+"SecUserNumEntry": 0,
+"SecDateTEdit": "2022-07-02 11:45:48",
+},
+{
+"AdjNum": 2,
+"AdjDate": "2022-07-18",
+"AdjAmt": 50.0,
+"PatNum": 26,
+"AdjType": 2,
+"adjType": "Misc Pos Adjustment",
+"ProvNum": 1,
+"AdjNote": "Finance Charge",
+"ProcDate": "2022-07-18",
+"ProcNum": 0,
+"DateEntry": "2022-07-18",
+"ClinicNum": 0,
+"SecUserNumEntry": 0,
+"SecDateTEdit": "2022-07-18 11:45:48",
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Adjustments POST (create)
+Version Added: 22.2.22
+
+Creates an adjustment for a patient.
+
+PatNum: Required.
+AdjType: Required. definition.DefNum where definition.Category=1, and definition.ItemValue="+" or "-".
+AdjAmt: Required. Must be positive if AdjType has an ItemValue of "+", or negative if it has an ItemValue of "-".
+AdjDate: Required. Cannot be a future date. String in "yyyy-MM-dd" format.
+
+ProvNum: Optional. Default patient.PriProv.
+ProcNum: Optional. Only used if attaching this adjustment to a procedure. The procedure must be associated to the patient. Default 0.
+ClinicNum: Optional. Default patient.ClinicNum.
+ProcDate: Optional. String in "yyyy-MM-dd" format. If attaching to a procedure then this will default to the procedure's ProcDate. Otherwise, defaults to today's date.
+AdjNote: Optional. Note for the adjustment.
+
+Example Request:
+POST /adjustments
+
+{
+"PatNum": 15,
+"AdjType": 1,
+"AdjAmt": -24.99,
+"AdjDate": "2022-07-19",
+"ProvNum": 1,
+"AdjNote": "Discount",
+"ProcNum": 18,
+"ProcDate": "2022-06-10",
+"ClinicNum": 1
+}
+
+Example Response:
+{
+"AdjNum": 12,
+"AdjDate": "2022-07-19",
+"AdjAmt": -24.99,
+"PatNum": 15,
+"AdjType": 1,
+"adjType": "Misc Neg Adjustment",
+"ProvNum": 1,
+"AdjNote": "Discount",
+"ProcDate": "2022-06-10",
+"ProcNum": 18,
+"DateEntry": "2022-06-10",
+"ClinicNum": 1,
+"SecUserNumEntry": 0,
+"SecDateTEdit": "2022-07-19 11:45:48",
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Adjustments PUT (update)
+Version Added: 22.2.23
+
+Updates an adjustment. A discount plan adjustment cannot be changed to another AdjType.
+
+AdjNum: Required in the URL.
+
+AdjDate: Cannot be a future date. String in "yyyy-MM-dd" format.
+AdjAmt: Must be positive if the AdjType of the adjustment is positive, or negative if the AdjType is negative or a discount plan.
+AdjType: definition.DefNum where definition.Category=1, and definition.ItemValue="+" or "-". ItemValue must be "+" if AdjAmt is positive, or "-" if AdjAmt is negative.
+ProvNum: ProvNum of a non-hidden provider.
+AdjNote: Overwrites existing note.
+ProcNum: Attaches the adjustment to a procedure, overwriting any previous ProcNum. The procedure's patient must match the patient on the adjustment. Updating this value will also update the adjustment's ProcDate to match the newly attached procedure's ProcDate.
+ClinicNum: ClinicNum of a clinic. Can be 0.
+
+Example Requests:
+PUT /adjustments/17
+
+{
+"AdjAmt": -24.49
+}
+
+or
+
+{
+"AdjDate": "2022-07-21",
+"AdjAmt": 39.50,
+"AdjType": 2,
+"ProvNum": 4,
+"AdjNote": "Additional Charge",
+"ProcNum": 22,
+"ClinicNum": 0
+}
+
+Example Response:
+{
+"AdjNum": 17,
+"AdjDate": "2022-07-21",
+"AdjAmt": 39.5,
+"PatNum": 21,
+"AdjType": 2,
+"adjType": "Misc Pos Adjustment",
+"ProvNum": 4,
+"AdjNote": "Additional Charge",
+"ProcDate": "2022-07-21",
+"ProcNum": 22,
+"DateEntry": "2022-07-21",
+"ClinicNum": 0,
+"SecUserNumEntry": 0,
+"SecDateTEdit": "2022-07-21 11:45:48",
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

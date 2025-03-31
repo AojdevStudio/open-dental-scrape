@@ -1,0 +1,40 @@
+{
+  "id": "db-alertcategory",
+  "type": "database",
+  "title": "alertcategory",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "alertcategory",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "alertcategory",
+    "description": "Table for alertcategory data.",
+    "columns": [
+      {
+        "name": "alertcategoryNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "alertcategoryNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

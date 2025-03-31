@@ -1,0 +1,33 @@
+{
+  "id": "api-employees",
+  "type": "api",
+  "title": "Employees",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Employees.txt",
+  "content": "API Employees\nSee API Specification\n\nEmployees GET (single)\nVersion Added: 23.3.22\n\nGets a single employee.\n\nParameters:\n\nEmployeeNum: Required in URL.\n\nExample Request:\nGET /employees/17\n\nExample Response:\n{\n\"EmployeeNum\": 17,\n\"LName\": \"Elser\",\n\"FName\": \"Sierra\",\n\"MiddleI\": \"O\",\n\"IsHidden\": \"false\",\n\"ClockStatus\": \"Working\",\n\"PayrollID\": \"\",\n\"WirelessPhone\": \"(555)012-4816\",\n\"EmailWork\": \"ElserS@email.net\",\n\"EmailPersonal\": \"\",\n\"IsFurloughed\": \"false\",\n\"ReportsTo\": 0\n}\n\n200 OK\n404 NotFound (with explanation)\n\nEmployees GET (multiple)\nVersion Added: 23.3.22\n\nGets a list of employees.\n\nParameters:\n\nReportsTo: Optional. FK to employee.EmployeeNum.\n\nExample Requests:\nGET /employees\nGET /employees?ReportsTo=0\nGET /employees?ReportsTo=17\n\n[\n{\n\"EmployeeNum\": 34,\n\"LName\": \"Bell\",\n\"FName\": \"Sharron\",\n\"MiddleI\": \"J\",\n\"IsHidden\": \"false\",\n\"ClockStatus\": \"Working\",\n\"PayrollID\": \"\",\n\"WirelessPhone\": \"(022)920-2325\",\n\"EmailWork\": \"SharronB@email.net\",\n\"EmailPersonal\": \"\",\n\"IsFurloughed\": \"false\",\n\"ReportsTo\": 17\n},\n{\n\"EmployeeNum\": 52,\n\"LName\": \"Grayson\",\n\"FName\": \"Fiona\",\n\"MiddleI\": \"D\",\n\"IsHidden\": \"false\",\n\"ClockStatus\": \"Home\",\n\"PayrollID\": \"\",\n\"WirelessPhone\": \"(555)122-9202\",\n\"EmailWork\": \"GraysonF@email.net\",\n\"EmailPersonal\": \"\",\n\"IsFurloughed\": \"false\",\n\"ReportsTo\": 17\n}\n]\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.22",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Employees",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

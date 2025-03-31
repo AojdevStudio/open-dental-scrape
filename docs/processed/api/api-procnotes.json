@@ -1,0 +1,110 @@
+{
+  "id": "api-procnotes",
+  "type": "api",
+  "title": "Procnotes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Procnotes.txt",
+  "content": "API ProcNotes\nSee API Specification\n\nSee Procedure Notes for additional information.\n\nProcNotes GET\nVersion Added: 24.2.29\n\nGets a list of procnotes ordered by most recent. When a procnote is edited in Open Dental, a new procnote is created. No existing procnote can EVER be edited or deleted.\n\nPatNum: Optional. FK to patient.PatNum.\nProcNum: Optional. FK to procedure.ProcNum.\n\nExample Requests:\nGET /procnotes?PatNum=426\nGET /procnotes?PatNum=426&ProcNum=1234\n\nExample Response:\n[\n{\n\"ProcNoteNum\": 17591,\n\"PatNum\": 426,\n\"ProcNum\": 1234,\n\"EntryDateTime\": \"2024-09-10 11:56:29\",\n\"UserNum\": 1,\n\"Note\": \"Review med hx \\nPt chief complaint: Bleeding, swelling \\nDue Date: \\\"\\\"\\nBP taken: BP: 118 / 72 Pulse: 83 \\n Follow up\",\n\"SigIsTopaz\": \"false\",\n\"isSigned\": \"true\"\n},\n{\n\"ProcNoteNum\": 17390,\n\"PatNum\": 426,\n\"ProcNum\": 1234,\n\"EntryDateTime\": \"2024-09-03 11:45:48\",\n\"UserNum\": 1,\n\"Note\": \"Review med hx \\nPt chief complaint: Bleeding, swelling \\nDue Date: \\\"\\\"\\nBP taken: BP: 118 / 72 Pulse: 83 \\n Follow up\",\n\"SigIsTopaz\": \"false\",\n\"isSigned\": \"false\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcNotes POST\nVersion Added: 22.2\n\nCreates a new note that is associated with a procedure. If the Procedure Note contains 50 or more consecutive blank lines, they will be removed. The new procnote will always replace the existing procnote. Every change is recorded with an archived note history, which can be viewed in the Chart Module under Show Tab > Audit.\n\nTo sign a procnote set isSigned to true. The signature that appears on the procnote will be shown as the following: \"Digitally Signed by [API DeveloperName] Date Signed: [\"MM/dd/yyyy HH:mm:ss tt\"]\". See API Implementation for more information on API Signatures.\n\nPatNum: Required.\nProcNum: Required. ProcNum of the procedure.\nNote: Required. The actual note.\nisSigned: (added in version 24.2.29) Optional. Either \"true\" or \"false\". If \"true\", will digitally sign the procnote. Default \"false\".\ndoAppendNote: (added in version 24.2.29) Optional. Either \"true\" or \"false\". If \"true\", will prepend the Note field with the most recent procnote.Note value followed by two newlines. Default \"false\".\n\nExample Request:\nPOST /procnotes\n\n{\n\"PatNum\": 74,\n\"ProcNum\": 868,\n\"Note\": \"Signed on behalf of Doctor Joe Smith.\",\n\"isSigned\": \"true\",\n\"doAppendNote\": \"true\"\n}\n\nExample Response:\n{\n\"ProcNoteNum\": 591,\n\"PatNum\": 74,\n\"ProcNum\": 868,\n\"EntryDateTime\": \"2024-09-10 11:56:29\",\n\"UserNum\": 0,\n\"Note\": \"Review med hx \\nPt chief complaint: Bleeding, swelling \\nDue Date: \\\"\\\"\\nBP taken: BP: 118 / 72 Pulse: 83 \\n Follow up\\r\\n\\r\\nSigned on behalf of Doctor Joe Smith.\",\n\"SigIsTopaz\": \"false\",\n\"isSigned\": \"true\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.29",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Procnotes",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ProcNotes",
+      "method": "GET",
+      "path": "/procnotes",
+      "versionAdded": "24.2.29",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /procnotes?PatNum=426\nGET /procnotes?PatNum=426&ProcNum=1234",
+          "response": "[\n{\n\"ProcNoteNum\": 17591,\n\"PatNum\": 426,\n\"ProcNum\": 1234,\n\"EntryDateTime\": \"2024-09-10 11:56:29\",\n\"UserNum\": 1,\n\"Note\": \"Review med hx \\nPt chief complaint: Bleeding, swelling \\nDue Date: \\\"\\\"\\nBP taken: BP: 118 / 72 Pulse: 83 \\n Follow up\",\n\"SigIsTopaz\": \"false\",\n\"isSigned\": \"true\"\n},\n{\n\"ProcNoteNum\": 17390,\n\"PatNum\": 426,\n\"ProcNum\": 1234,\n\"EntryDateTime\": \"2024-09-03 11:45:48\",\n\"UserNum\": 1,\n\"Note\": \"Review med hx \\nPt chief complaint: Bleeding, swelling \\nDue Date: \\\"\\\"\\nBP taken: BP: 118 / 72 Pulse: 83 \\n Follow up\",\n\"SigIsTopaz\": \"false\",\n\"isSigned\": \"false\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "426",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "234",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of procnotes ordered by most recent. When a procnote is edited in Open Dental, a new procnote is created. No existing procnote can EVER be edited or deleted."
+    },
+    {
+      "resource": "ProcNotes",
+      "method": "POST",
+      "path": "/procnotes",
+      "versionAdded": "22.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /procnotes\n\n{\n\"PatNum\": 74,\n\"ProcNum\": 868,\n\"Note\": \"Signed on behalf of Doctor Joe Smith.\",\n\"isSigned\": \"true\",\n\"doAppendNote\": \"true\"\n}",
+          "response": "{\n\"ProcNoteNum\": 591,\n\"PatNum\": 74,\n\"ProcNum\": 868,\n\"EntryDateTime\": \"2024-09-10 11:56:29\",\n\"UserNum\": 0,\n\"Note\": \"Review med hx \\nPt chief complaint: Bleeding, swelling \\nDue Date: \\\"\\\"\\nBP taken: BP: 118 / 72 Pulse: 83 \\n Follow up\\r\\n\\r\\nSigned on behalf of Doctor Joe Smith.\",\n\"SigIsTopaz\": \"false\",\n\"isSigned\": \"true\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a new note that is associated with a procedure. If the Procedure Note contains 50 or more consecutive blank lines, they will be removed. The new procnote will always replace the existing procnote. Every change is recorded with an archived note history, which can be viewed in the Chart Module under Show Tab > Audit."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-procnote",
+      "description": "API references database table procnote"
+    }
+  ]
+}

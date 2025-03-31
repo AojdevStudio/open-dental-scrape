@@ -1,0 +1,87 @@
+{
+  "id": "api-adjustments",
+  "type": "api",
+  "title": "Adjustments",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Adjustments.txt",
+  "content": "API Adjustments\nSee API Specification\n\nAdjustments GET\nVersion Added: 22.2.21\n\nGets all adjustments for a specified patient.\n\nPatNum: Required.\nAdjType: (Added in version 22.2.33) Optional. definition.DefNum where definition.Category=1.\nProcNum: (Added in version 22.4.28) Optional. FK to procedure.ProcNum.\n\nExample Requests:\nGET /adjustments?PatNum=26\nGET /adjustments?PatNum=42&AdjType=2\nGET /adjustments?PatNum=42&ProcNum=12\n\nExample Response:\n[\n{\n\"AdjNum\": 1,\n\"AdjDate\": \"2022-07-02\",\n\"AdjAmt\": -25.0,\n\"PatNum\": 26,\n\"AdjType\": 1,\n\"adjType\": \"Misc Neg Adjustment\",\n\"ProvNum\": 1,\n\"AdjNote\": \"Cash Discount\",\n\"ProcDate\": \"2022-07-02\",\n\"ProcNum\": 0,\n\"DateEntry\": \"2022-07-02\",\n\"ClinicNum\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateTEdit\": \"2022-07-02 11:45:48\",\n},\n{\n\"AdjNum\": 2,\n\"AdjDate\": \"2022-07-18\",\n\"AdjAmt\": 50.0,\n\"PatNum\": 26,\n\"AdjType\": 2,\n\"adjType\": \"Misc Pos Adjustment\",\n\"ProvNum\": 1,\n\"AdjNote\": \"Finance Charge\",\n\"ProcDate\": \"2022-07-18\",\n\"ProcNum\": 0,\n\"DateEntry\": \"2022-07-18\",\n\"ClinicNum\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateTEdit\": \"2022-07-18 11:45:48\",\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAdjustments POST (create)\nVersion Added: 22.2.22\n\nCreates an adjustment for a patient.\n\nPatNum: Required.\nAdjType: Required. definition.DefNum where definition.Category=1, and definition.ItemValue=\"+\" or \"-\".\nAdjAmt: Required. Must be positive if AdjType has an ItemValue of \"+\", or negative if it has an ItemValue of \"-\".\nAdjDate: Required. Cannot be a future date. String in \"yyyy-MM-dd\" format.\n\nProvNum: Optional. Default patient.PriProv.\nProcNum: Optional. Only used if attaching this adjustment to a procedure. The procedure must be associated to the patient. Default 0.\nClinicNum: Optional. Default patient.ClinicNum.\nProcDate: Optional. String in \"yyyy-MM-dd\" format. If attaching to a procedure then this will default to the procedure's ProcDate. Otherwise, defaults to today's date.\nAdjNote: Optional. Note for the adjustment.\n\nExample Request:\nPOST /adjustments\n\n{\n\"PatNum\": 15,\n\"AdjType\": 1,\n\"AdjAmt\": -24.99,\n\"AdjDate\": \"2022-07-19\",\n\"ProvNum\": 1,\n\"AdjNote\": \"Discount\",\n\"ProcNum\": 18,\n\"ProcDate\": \"2022-06-10\",\n\"ClinicNum\": 1\n}\n\nExample Response:\n{\n\"AdjNum\": 12,\n\"AdjDate\": \"2022-07-19\",\n\"AdjAmt\": -24.99,\n\"PatNum\": 15,\n\"AdjType\": 1,\n\"adjType\": \"Misc Neg Adjustment\",\n\"ProvNum\": 1,\n\"AdjNote\": \"Discount\",\n\"ProcDate\": \"2022-06-10\",\n\"ProcNum\": 18,\n\"DateEntry\": \"2022-06-10\",\n\"ClinicNum\": 1,\n\"SecUserNumEntry\": 0,\n\"SecDateTEdit\": \"2022-07-19 11:45:48\",\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nAdjustments PUT (update)\nVersion Added: 22.2.23\n\nUpdates an adjustment. A discount plan adjustment cannot be changed to another AdjType.\n\nAdjNum: Required in the URL.\n\nAdjDate: Cannot be a future date. String in \"yyyy-MM-dd\" format.\nAdjAmt: Must be positive if the AdjType of the adjustment is positive, or negative if the AdjType is negative or a discount plan.\nAdjType: definition.DefNum where definition.Category=1, and definition.ItemValue=\"+\" or \"-\". ItemValue must be \"+\" if AdjAmt is positive, or \"-\" if AdjAmt is negative.\nProvNum: ProvNum of a non-hidden provider.\nAdjNote: Overwrites existing note.\nProcNum: Attaches the adjustment to a procedure, overwriting any previous ProcNum. The procedure's patient must match the patient on the adjustment. Updating this value will also update the adjustment's ProcDate to match the newly attached procedure's ProcDate.\nClinicNum: ClinicNum of a clinic. Can be 0.\n\nExample Requests:\nPUT /adjustments/17\n\n{\n\"AdjAmt\": -24.49\n}\n\nor\n\n{\n\"AdjDate\": \"2022-07-21\",\n\"AdjAmt\": 39.50,\n\"AdjType\": 2,\n\"ProvNum\": 4,\n\"AdjNote\": \"Additional Charge\",\n\"ProcNum\": 22,\n\"ClinicNum\": 0\n}\n\nExample Response:\n{\n\"AdjNum\": 17,\n\"AdjDate\": \"2022-07-21\",\n\"AdjAmt\": 39.5,\n\"PatNum\": 21,\n\"AdjType\": 2,\n\"adjType\": \"Misc Pos Adjustment\",\n\"ProvNum\": 4,\n\"AdjNote\": \"Additional Charge\",\n\"ProcDate\": \"2022-07-21\",\n\"ProcNum\": 22,\n\"DateEntry\": \"2022-07-21\",\n\"ClinicNum\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateTEdit\": \"2022-07-21 11:45:48\",\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.2.23",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Adjustments",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Adjustments",
+      "method": "GET",
+      "path": "/adjustments",
+      "versionAdded": "22.2.21",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /adjustments?PatNum=26\nGET /adjustments?PatNum=42&AdjType=2\nGET /adjustments?PatNum=42&ProcNum=12",
+          "response": "[\n{\n\"AdjNum\": 1,\n\"AdjDate\": \"2022-07-02\",\n\"AdjAmt\": -25.0,\n\"PatNum\": 26,\n\"AdjType\": 1,\n\"adjType\": \"Misc Neg Adjustment\",\n\"ProvNum\": 1,\n\"AdjNote\": \"Cash Discount\",\n\"ProcDate\": \"2022-07-02\",\n\"ProcNum\": 0,\n\"DateEntry\": \"2022-07-02\",\n\"ClinicNum\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateTEdit\": \"2022-07-02 11:45:48\",\n},\n{\n\"AdjNum\": 2,\n\"AdjDate\": \"2022-07-18\",\n\"AdjAmt\": 50.0,\n\"PatNum\": 26,\n\"AdjType\": 2,\n\"adjType\": \"Misc Pos Adjustment\",\n\"ProvNum\": 1,\n\"AdjNote\": \"Finance Charge\",\n\"ProcDate\": \"2022-07-18\",\n\"ProcNum\": 0,\n\"DateEntry\": \"2022-07-18\",\n\"ClinicNum\": 0,\n\"SecUserNumEntry\": 0,\n\"SecDateTEdit\": \"2022-07-18 11:45:48\",\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all adjustments for a specified patient."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

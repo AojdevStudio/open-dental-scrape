@@ -1,0 +1,89 @@
+API Commlogs
+See API Specification
+
+Commlogs GET
+Version Added: 21.1
+
+Get all commlogs for a patient.
+
+PatNum: Required.
+
+Example Request:
+GET /commlogs?PatNum=15
+
+Example Response:
+[
+{
+"CommlogNum": 2,
+"PatNum": 15,
+"CommDateTime": "2021-02-07 03:25:29",
+"CommType": "239",
+"commType": "Misc",
+"Note": "Left msg on answering machine",
+"Mode_": "Phone",
+"SentOrReceived": "Sent"
+},
+{
+"CommlogNum": 1,
+"PatNum": 15,
+"CommDateTime": "2021-02-07 03:09:00",
+"CommType": "236",
+"commType": "Insurance",
+"Note": "Note for John Smith",
+"Mode_": "Mail",
+"SentOrReceived": "Received"
+}
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Commlogs POST (create)
+Version Added: 21.1
+
+Creates a commlog for the patient.
+
+PatNum: Required.
+Note: Required.
+
+CommDateTime: Optional. String in "yyyy-mm-dd HH:mm:ss" format. Default now.
+CommType: Optional. definition.DefNum where definition.Category=27. Default Miscellaneous.
+commType: Optional. definition.ItemName where definition.Category=27. Will be used over CommType if both are specified.
+Mode_: Either "None", "Email", "Mail", "Phone", "In Person", "Text", "Email and Text", or "Phone and Text". Default "Phone".
+SentOrReceived: Either "Neither", "Sent", or "Received". Default "Sent".
+
+Prior to version 23.3.7, the response would not include the commlog object.
+
+Example Requests:
+POST /commlogs
+
+{
+"PatNum": 15,
+"Note": "Left msg on answering machine"
+}
+
+{
+"PatNum": 30,
+"commType": "ApptRelated",
+"CommDateTime": "2022-01-01 11:19:00",
+"Mode_": "Text",
+"SentOrReceived": "Received",
+"Note": "Appointment confirmed for 9:15am."
+}
+
+Example Response:
+{
+"CommlogNum": 14,
+"PatNum": 30,
+"CommDateTime": "2022-01-01 11:19:00",
+"CommType": "235",
+"commType": "ApptRelated",
+"Note": "Appointment confirmed for 9:15am.",
+"Mode_": "Text",
+"SentOrReceived": "Received"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

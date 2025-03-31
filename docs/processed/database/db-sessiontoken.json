@@ -1,0 +1,40 @@
+{
+  "id": "db-sessiontoken",
+  "type": "database",
+  "title": "sessiontoken",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "sessiontoken",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "sessiontoken",
+    "description": "Table for sessiontoken data.",
+    "columns": [
+      {
+        "name": "sessiontokenNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "sessiontokenNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

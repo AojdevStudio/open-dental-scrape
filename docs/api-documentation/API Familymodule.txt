@@ -1,0 +1,104 @@
+API FamilyModules
+See API Specification
+
+FamilyModules GET Insurance
+Version Added: 21.4
+
+Gets the insurance information for a patient similarly to how it shows in the Family Module. Will typically return between 0 and 2 rows, one row for each insurance for the patient. Use another API method or a query to get additional details in each table. This area of the Family Module UI also shows discount plans, which are obtained through DiscountPlanSubs GET.
+
+PatNum: Required in the URL.
+
+Returned fields are detailed below:
+
+InsSubNum:inssub.InsSubNum. Primary key to insurance subscriber.
+Subscriber: inssub.Subscriber. The PatNum of the subscriber.
+subscriber: First and last name of Subscriber from patient table.
+SubscriberID: inssub.SubscriberID. Number assigned by insurance company, may be Medicaid ID.
+SubscNote: inssub.SubscNote. Stores any other information that affects coverage.
+PatPlanNum: patplan.PatPlanNum. Primary key to patient plan.
+Ordinal: patplan.Ordinal. Numerical representation of the patient's insurance order. 1, 2, 3, etc.
+ordinal: Description of Ordinal. Primary, Secondary, Medical, or Other insurance.
+IsPending: patplan.IsPending. Informational only. true or false. Identifies insurance information that is incomplete or unverified.
+Relationship: patplan.Relationship to subscriber. Self, Spouse, Child, Employee, HandicapDep, SignifOther, InjuredPlaintiff, LifePartner, or Dependant.
+PatID: patplan.PatID. Optional patient ID which overrides Subscriber ID on eclaims.
+CarrierNum: carrier.CarrierNum. Primary key to the carrier.
+CarrierName: carrier.CarrierName. Full name of carrier.
+PlanNum: insplan.PlanNum. Primary key to the insurance plan.
+GroupName: insplan.GroupName. Each plan has a group name, typically similar to employer.
+GroupNum: insplan.GroupNum. Issued by the carrier.
+PlanNote: insplan.PlanNote. Notes specific to the subscriber and associated family members.
+FeeSched: insplan.FeeSched, foreign key to feesched.FeeSchedNum.
+feeschedule: feesched.Description of the fee schedule.
+PlanType: insplan.PlanType. ""=percentage, "p"=ppo percentage, "f"=flat copay, "c"=capitation.
+planType: Description of PlanType. Category Percentage, PPO Fixed Benefit, PPO Percentage, Medicaid or Flat Co-pay, or Capitation.
+CopayFeeSched: insplan.CopayFeeSched, foreign key to feesched.FeeSchedNum.
+EmployerNum: insplan.EmployerNum, foreign key to employer.EmployerNum.
+employer: employer.EmpName. Description of EmployerNum.
+IsMedical: insplan.IsMedical. True if this is medical insurance rather than dental insurance.
+
+Example Request:
+GET /familymodules/13/Insurance
+
+Example Response:
+[
+{
+"PatNum": 13,
+"InsSubNum": 7,
+"Subscriber": 10,
+"subscriber": "Eve Wilkins",
+"SubscriberID": "541147842",
+"SubscNote": "",
+"PatPlanNum": 17,
+"Ordinal": 1,
+"ordinal": "Primary",
+"IsPending": "false",
+"Relationship": "LifePartner",
+"PatID": "",
+"CarrierNum": 8,
+"CarrierName": "BCBS",
+"PlanNum": 7,
+"GroupName": "",
+"GroupNum": "",
+"PlanNote": "",
+"FeeSched": 53,
+"feeSchedule": "Standard",
+"PlanType": "",
+"planType": "Category Percentage",
+"CopayFeeSched": 0,
+"EmployerNum": 0,
+"employer": "",
+"IsMedical": "false"
+},
+{
+"PatNum": 13,
+"InsSubNum": 16,
+"Subscriber": 13,
+"subscriber": "John Wilkins",
+"SubscriberID": "987654",
+"SubscNote": "",
+"PatPlanNum": 18,
+"Ordinal": 2,
+"ordinal": "Secondary",
+"IsPending": "false",
+"Relationship": "Self",
+"PatID": "",
+"CarrierNum": 9,
+"CarrierName": "Metlife Dental",
+"PlanNum": 11,
+"GroupName": "",
+"GroupNum": "",
+"PlanNote": "Insurance plan note.",
+"FeeSched": 0,
+"feeSchedule": "",
+"PlanType": "p",
+"planType": "PPO Percentage",
+"CopayFeeSched": 0,
+"EmployerNum": 2,
+"employer": "Happy Dental",
+"IsMedical": "false"
+}
+]
+
+200 OK
+400 Bad Request (with explanation)
+404 Not Found (with explanation)

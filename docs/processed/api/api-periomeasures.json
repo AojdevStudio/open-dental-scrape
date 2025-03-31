@@ -1,0 +1,114 @@
+{
+  "id": "api-periomeasures",
+  "type": "api",
+  "title": "PerioMeasures",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API PerioMeasures.txt",
+  "content": "API PerioMeasures\nSee API Specification\n\nSee Perio Chart for more information.\n\nA PerioMeasure stores measurements for a single tooth in a PerioExam. One tooth can have multiple PerioMeasures on a single exam, but only one of each SequenceType. Different SequenceTypes have different ranges of measurements that ToothValue and Surface Values (MBvalue, Bvalue, DBvalue, MLvalue, Lvalue, and DLvalue) can contain. Values of -1 indicate no measurement. Values greater than 100 indicate negative values (Example: To use a value of 105, subtract it from 100. [100 - 105 = -5]).\n\nIf SequenceType is \"Mobility\", then ToothValue can range from 0-19. All Surface Values must be -1.\nIf SequenceType is \"Furcation\", then Surface Values can range from -1, 0-19. ToothValue must be -1.\nIf SequenceType is \"GingMargin\", then Surface Values can range from -1, 0-19, or 101-119. ToothValue must be -1.\nIf SequenceType is \"MGJ\", then Surface Values can range from -1, 0-19. However, if IntTooth is 1-16, then MLvalue, Lvalue, and DLvalue must all be -1. ToothValue must be -1.\nIf SequenceType is \"Probing\", then Surface Values can range from -1, 0-19. ToothValue must be -1.\nIf SequenceType is \"SkipTooth\", then ToothValue must be 1. All Surface Values must be -1.\nIf SequenceType is \"BleedSupPlaqCalc\" (\"Bleeding\" prior to version 24.1), then Surface Values can range from 0-15. These values represent the sum of flags for bleeding(1), suppuration(2), plaque(4), and calculus(8). For example, a BleedSupPlaqCalc measurement of 13 means there is bleeding, plaque, and calculus (1+4+8=13). ToothValue must be -1.\n\nPerioMeasures of SequenceType \"CAL\" are not saved to the database. A Clinical Attachment Loss measurement for a surface is calculated by adding the Probing and GingMargin measurements of a surface.\nPerioMeasures GET\nVersion Added: 22.4.32\n\nGets a list of periomeasures.\n\nPerioExamNum: Optional. FK to perioexam.PerioExamNum. Use to get all measurements for a single exam.\n\nReturned fields are detailed below:\n\nSequenceType: Specifies what is being measured.\nIntTooth: The tooth this measurement is associated to.\nToothValue: Used when the measurement does not apply to a surface.\nMBvalue: Mesial Buccal surface value.\nBvalue: Buccal surface value.\nDBvalue: Distal Buccal surface value.\nMLvalue: Mesial Lingual surface value.\nLvalue: Lingual surface value.\nDLvalue: Distal Lingual surface value.\nSecDateTEdit: When this PerioMeasure was last modified.\n\nExample Requests:\nGET /periomeasures\nGET /periomeasures?PerioExamNum=3\n\nExample Response:\n[\n{\n\"PerioMeasureNum\": 66,\n\"PerioExamNum\": 3,\n\"SequenceType\": \"SkipTooth\",\n\"IntTooth\": 16,\n\"ToothValue\": 1,\n\"MBvalue\": -1,\n\"Bvalue\": -1,\n\"DBvalue\": -1,\n\"MLvalue\": -1,\n\"Lvalue\": -1,\n\"DLvalue\": -1,\n\"SecDateTEdit\": \"2023-03-15 11:35:22\"\n},\n{\n\"PerioMeasureNum\": 96,\n\"PerioExamNum\": 3,\n\"SequenceType\": \"Probing\",\n\"IntTooth\": 17,\n\"ToothValue\": -1,\n\"MBvalue\": 3,\n\"Bvalue\": 3,\n\"DBvalue\": 3,\n\"MLvalue\": 3,\n\"Lvalue\": 2,\n\"DLvalue\": 3,\n\"SecDateTEdit\": \"2023-03-15 11:44:14\"\n},\n{\n\"PerioMeasureNum\": 97,\n\"PerioExamNum\": 3,\n\"SequenceType\": \"BleedSupPlaqCalc\",\n\"IntTooth\": 2,\n\"ToothValue\": -1,\n\"MBvalue\": 0,\n\"Bvalue\": 15,\n\"DBvalue\": 15,\n\"MLvalue\": 0,\n\"Lvalue\": 0,\n\"DLvalue\": 0,\n\"SecDateTEdit\": \"2023-03-15 11:50:14\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPerioMeasures POST (create)\nVersion Added: 22.4.37\n\nInserts a new periomeasure. New periomeasures are compared against existing periomeasures attached to the same perioexam to prevent duplicates.\n\nPerioExamNum: Required. FK to perioexam.PerioExamNum.\nSequenceType: Required. Either \"Mobility\", \"Furcation\", \"GingMargin\", \"MGJ\", \"Probing\", \"SkipTooth\", or \"BleedSupPlaqCalc\".\nIntTooth: Required. Valid values are 1-32. The tooth that this measurement is associated to.\nToothValue, MBvalue, Bvalue, DBvalue, MLvalue, Lvalue, DLvalue: See the top of this page for more information. Relies on SequenceType. When SequenceType allows Surface Values, at least one of the six values must contain a measurement. Default -1.\n\nExample Requests:\nPOST /periomeasures\n{\n\"PerioExamNum\": 5,\n\"SequenceType\": \"Probing\",\n\"IntTooth\": 8,\n\"MBvalue\": 2,\n\"Bvalue\": 3,\n\"DBvalue\": 2,\n\"MLvalue\": 2,\n\"Lvalue\": 2,\n\"DLvalue\": 2\n}\n\nor\n\n{\n\"PerioExamNum\": 5,\n\"SequenceType\": \"Mobility\",\n\"IntTooth\": 9,\n\"ToothValue\": 4\n}\n\nExample Responses:\n{\n\"PerioMeasureNum\": 206,\n\"PerioExamNum\": 5,\n\"SequenceType\": \"Probing\",\n\"IntTooth\": 8,\n\"ToothValue\": -1,\n\"MBvalue\": 2,\n\"Bvalue\": 3,\n\"DBvalue\": 2,\n\"MLvalue\": 2,\n\"Lvalue\": 2,\n\"DLvalue\": 2,\n\"SecDateTEdit\": \"2023-03-30 11:20:02\"\n}\n\nor\n\n{\n\"PerioMeasureNum\": 207,\n\"PerioExamNum\": 5,\n\"SequenceType\": \"Mobility\",\n\"IntTooth\": 9,\n\"ToothValue\": 4,\n\"MBvalue\": -1,\n\"Bvalue\": -1,\n\"DBvalue\": -1,\n\"MLvalue\": -1,\n\"Lvalue\": -1,\n\"DLvalue\": -1,\n\"SecDateTEdit\": \"2023-03-30 11:23:31\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPerioMeasures PUT (update)\nVersion Added: 22.4.37\n\nUpdates an existing periomeasure.\n\nPerioMeasureNum: Required in the URL. Primary key.\nToothValue, MBvalue, Bvalue, DBvalue, MLvalue, Lvalue, DLvalue: The values that can be supplied and the measurements they can contain rely on the SequenceType. See the top of this page for more information.\n\nExample Requests:\nPUT /periomeasures/206\n{\n\"MBvalue\": 3,\n\"Bvalue\": 2,\n\"DBvalue\": 3,\n\"MLvalue\": 3,\n\"Lvalue\": 2,\n\"DLvalue\": 3\n}\n\nor\n\n{\n\"ToothValue\": 4\n}\n\nExample Responses:\n{\n\"PerioMeasureNum\": 206,\n\"PerioExamNum\": 5,\n\"SequenceType\": \"Probing\",\n\"IntTooth\": 8,\n\"ToothValue\": -1,\n\"MBvalue\": 3,\n\"Bvalue\": 2,\n\"DBvalue\": 3,\n\"MLvalue\": 3,\n\"Lvalue\": 2,\n\"DLvalue\": 3,\n\"SecDateTEdit\": \"2023-04-05 14:30:00\"\n}\n\nor\n\n{\n\"PerioMeasureNum\": 207,\n\"PerioExamNum\": 5,\n\"SequenceType\": \"Mobility\",\n\"IntTooth\": 9,\n\"ToothValue\": 4,\n\"MBvalue\": -1,\n\"Bvalue\": -1,\n\"DBvalue\": -1,\n\"MLvalue\": -1,\n\"Lvalue\": -1,\n\"DLvalue\": -1,\n\"SecDateTEdit\": \"2023-04-03 09:48:23\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPerioMeasures DELETE\nVersion Added: 23.3.27\n\nDeletes an existing periomeasure with a SequenceType of \"Mobility\" or \"SkipTooth\".\n\nPerioMeasureNum: Required in the URL.\n\nExample Request:\nDELETE /periomeasures/207\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.27",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "PerioMeasures",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PerioMeasures",
+      "method": "GET",
+      "path": "/periomeasures",
+      "versionAdded": "22.4.32",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /periomeasures\nGET /periomeasures?PerioExamNum=3",
+          "response": "[\n{\n\"PerioMeasureNum\": 66,\n\"PerioExamNum\": 3,\n\"SequenceType\": \"SkipTooth\",\n\"IntTooth\": 16,\n\"ToothValue\": 1,\n\"MBvalue\": -1,\n\"Bvalue\": -1,\n\"DBvalue\": -1,\n\"MLvalue\": -1,\n\"Lvalue\": -1,\n\"DLvalue\": -1,\n\"SecDateTEdit\": \"2023-03-15 11:35:22\"\n},\n{\n\"PerioMeasureNum\": 96,\n\"PerioExamNum\": 3,\n\"SequenceType\": \"Probing\",\n\"IntTooth\": 17,\n\"ToothValue\": -1,\n\"MBvalue\": 3,\n\"Bvalue\": 3,\n\"DBvalue\": 3,\n\"MLvalue\": 3,\n\"Lvalue\": 2,\n\"DLvalue\": 3,\n\"SecDateTEdit\": \"2023-03-15 11:44:14\"\n},\n{\n\"PerioMeasureNum\": 97,\n\"PerioExamNum\": 3,\n\"SequenceType\": \"BleedSupPlaqCalc\",\n\"IntTooth\": 2,\n\"ToothValue\": -1,\n\"MBvalue\": 0,\n\"Bvalue\": 15,\n\"DBvalue\": 15,\n\"MLvalue\": 0,\n\"Lvalue\": 0,\n\"DLvalue\": 0,\n\"SecDateTEdit\": \"2023-03-15 11:50:14\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of periomeasures."
+    },
+    {
+      "resource": "PerioMeasures",
+      "method": "DELETE",
+      "path": "/periomeasures",
+      "versionAdded": "23.3.27",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /periomeasures/207",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "207",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes an existing periomeasure with a SequenceType of \"Mobility\" or \"SkipTooth\"."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-perioexam",
+      "description": "API references database table perioexam"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-periomeasure",
+      "description": "API references database table periomeasure"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "id": "api-sheetdefs",
+  "type": "api",
+  "title": "Sheetdefs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Sheetdefs.txt",
+  "content": "API SheetDefs\nSee API Specification\n\nSheetDefs GET\nVersion Added: 23.2.5.0\n\nGets a list of SheetDefs.\n\nExample Request:\nGET /sheetdefs\n\nExample Response:\n[\n{\n\"SheetDefNum\": 1,\n\"Description\": \"Excuse Letter\",\n\"SheetType\": \"PatientLetter\"\n},\n{\n\"SheetDefNum\": 2,\n\"Description\": \"Screening\",\n\"SheetType\": \"Screening\"\n},\n{\n\"SheetDefNum\": 3,\n\"Description\": \"Registration Form\",\n\"SheetType\": \"PatientForm\"\n},\netc...\n]\n\n200 OK",
+  "metadata": {
+    "version": "23.2.5",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Sheetdefs",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "SheetDefs",
+      "method": "GET",
+      "path": "/sheetdefs",
+      "versionAdded": "23.2.5",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /sheetdefs",
+          "response": "[\n{\n\"SheetDefNum\": 1,\n\"Description\": \"Excuse Letter\",\n\"SheetType\": \"PatientLetter\"\n},\n{\n\"SheetDefNum\": 2,\n\"Description\": \"Screening\",\n\"SheetType\": \"Screening\"\n},\n{\n\"SheetDefNum\": 3,\n\"Description\": \"Registration Form\",\n\"SheetType\": \"PatientForm\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of SheetDefs."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-sheetdef",
+      "description": "API references database table sheetdef"
+    },
+    {
+      "type": "references",
+      "target": "db-letter",
+      "description": "API references database table letter"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-screen",
+      "description": "API references database table screen"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}

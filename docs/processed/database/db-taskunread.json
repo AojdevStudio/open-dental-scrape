@@ -1,0 +1,40 @@
+{
+  "id": "db-taskunread",
+  "type": "database",
+  "title": "taskunread",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "taskunread",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "taskunread",
+    "description": "Table for taskunread data.",
+    "columns": [
+      {
+        "name": "taskunreadNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "taskunreadNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

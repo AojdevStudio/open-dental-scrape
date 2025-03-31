@@ -1,0 +1,173 @@
+API Fees
+See API Specification
+
+Fees are complex. See Procedure Codes, Fee Schedules, and Fee Schedule Logic for more information. Fees associated with a FeeSchedGroup cannot be created, updated or deleted. See Fee Schedule Groups for more information.
+
+Fees GET (single)
+Version Added: 23.3.11
+
+Gets a single fee.
+
+FeeNum: Required in the URL.
+
+Example Request:
+GET /fees/112
+
+Example Response:
+{
+"FeeNum": 112,
+"Amount": 180.0,
+"FeeSched": 55,
+"CodeNum": 60,
+"ClinicNum": 0,
+"ProvNum": 0,
+"SecUserNumEntry": 0,
+"SecDateEntry": "2017-02-27",
+"SecDateTEdit": "2017-02-28 18:23:04"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Fees GET (multiple)
+Version Added: 23.3.11
+
+Gets a list of fees. Any fees with ClinicNum and/or ProvNum greater than zero are associated with a non-global FeeSched. See Fee Override for Provider or Clinic for more information.
+
+Parameters: All optional.
+
+FeeSched: FK to feesched.FeeSchedNum.
+CodeNum: FK to procedurecode.CodeNum.
+ClinicNum: FK to clinic.ClinicNum.
+ProvNum: FK to provider.ProvNum.
+
+Example Requests:
+GET /fees?FeeSched=13
+GET /fees?ClinicNum=8
+GET /fees?CodeNum=436&ProvNum=21
+
+Example Response:
+[
+{
+"FeeNum": 1817,
+"Amount": 97.0,
+"FeeSched": 269,
+"CodeNum": 688,
+"ClinicNum": 1,
+"ProvNum": 1,
+"SecUserNumEntry": 0,
+"SecDateEntry": "2023-09-12",
+"SecDateTEdit": "2023-09-12 08:55:25"
+},
+{
+"FeeNum": 1818,
+"Amount": 99.0,
+"FeeSched": 269,
+"CodeNum": 677,
+"ClinicNum": 3,
+"ProvNum": 1,
+"SecUserNumEntry": 0,
+"SecDateEntry": "2023-09-12",
+"SecDateTEdit": "2023-09-12 08:55:26"
+},
+etc...
+]
+
+200 OK
+404 NotFound (with explanation)
+
+Fees POST (create)
+Version Added: 23.3.11
+
+Fees are complex. If the FeeSched is non-global, you can specify a ClinicNum and/or a ProvNum. See Fee Override for Provider or Clinic for more information.
+
+Amount: Required. The amount usually charged.
+FeeSched: Required. FK to feesched.FeeSchedNum.
+CodeNum: Required. FK to procedurecode.CodeNum.
+
+ClinicNum: Optional. FK to clinic.ClinicNum. Default 0.
+ProvNum: Optional. FK to provider.ProvNum. Default 0.
+
+Example Requests:
+POST /fees
+
+{
+"Amount": "99.99",
+"FeeSched": 263,
+"CodeNum": 693
+}
+
+or
+
+{
+"Amount": "99.99",
+"FeeSched": 263,
+"CodeNum": 693,
+"ClinicNum": 9,
+"ProvNum": 23
+}
+
+Example Response:
+{
+"FeeNum": 1907,
+"Amount": "99.99",
+"FeeSched": 263,
+"CodeNum": 693,
+"ClinicNum": 9,
+"ProvNum": 23,
+"SecUserNumEntry": 0,
+"SecDateEntry": "2023-11-06",
+"SecDateTEdit": "2023-11-06 13:28:06"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Fees PUT (update)
+Version Added: 23.3.11
+
+Updates the amount of a single fee.
+
+FeeNum: Required in the URL.
+
+Amount: Required. The amount of the fee.
+
+Example Request:
+PUT /fees/1793
+
+{
+"Amount": "79.99"
+}
+
+Example Response:
+{
+"FeeNum": 1793,
+"Amount": "79.99",
+"FeeSched": 264,
+"CodeNum": 643,
+"ClinicNum": 2,
+"ProvNum": 16,
+"SecUserNumEntry": 0,
+"SecDateEntry": "2023-11-07",
+"SecDateTEdit": "2023-11-07 10:25:09"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Fees DELETE
+Version Added: 23.3.11
+
+Deletes a fee.
+
+FeeNum: Required in the URL.
+
+Example Request:
+DELETE /fees/293
+
+Example Responses:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

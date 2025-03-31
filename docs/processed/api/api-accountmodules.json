@@ -1,0 +1,171 @@
+{
+  "id": "api-accountmodules",
+  "type": "api",
+  "title": "AccountModules",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API AccountModules.txt",
+  "content": "API AccountModules\nSee API Specification\n\nAccountModules GET Aging\nVersion Added: 22.3.6\n\nGets the Aging information for a patient and their family, similarly to how it shows in the Account Module Aging grid.\n\nPatNum: Required in the URL.\n\nReturned fields are detailed below:\n\nBal_0_30: Aged balance from 0 to 30 days old for the entire family.\nBal_31_60: Aged balance from 31 to 60 days old for the entire family.\nBal_61_90: Aged balance from 61 to 90 days old for the entire family.\nBalOver90: Aged balance over 90 days old for the entire family.\nTotal: Total balance for entire family before insurance estimate.\nInsEst: Insurance Estimate for entire family.\nEstBal: The total remaining balance for the family after subtracting pending insurance amounts and write-offs.\nPatEstBal: The patient balance after subtracting pending insurance amounts and write-offs.\nUnearned: The total Unearned / Prepayment balance for the family.\n\nExample Request:\nGET /accountmodules/1337/Aging\n\nExample Response:\n{\n\"Bal_0_30\": 276.28,\n\"Bal_31_60\": 49.0,\n\"Bal_61_90\": 64.0,\n\"BalOver90\": 278.03,\n\"Total\": 667.31,\n\"InsEst\": 100.0,\n\"EstBal\": 567.31,\n\"PatEstBal\": 24.0,\n\"Unearned\": 2.46\n}\n\n200 OK\n400 BadRequest (Patient is deleted, etc)\n404 NotFound (Patient not found)\n\nAccountModules GET PatientBalances\nVersion Added: 22.1\n\nGets the patient portion for a patient's family, similarly to how it shows in the Account Module's Select Patient grid.\n\nPatNum: Required in the URL.\n\nReturned fields are detailed below:\n\nPatNum: The patient's PatNum / family guarantor's PatNum.\nName: The first and last name of the patient, or \"Entire Family\" when regarding the total patient portion of the family.\nBalance: The balance of the patient/entire family.\n\nExample Request:\nGET /accountmodules/16/PatientBalances\n\nExample Response:\n[\n{\n\"PatNum\": 15,\n\"Name\": \"Smith, John\",\n\"Balance\": 140.2\n},\n{\n\"PatNum\": 16,\n\"Name\": \"Smith, Jane\",\n\"Balance\": 180.55\n},\n{\n\"PatNum\": 17,\n\"Name\": \"Smith, Junior\",\n\"Balance\": 68\n},\n{\n\"PatNum\": 18,\n\"Name\": \"Smith, Sis\",\n\"Balance\": 0\n},\n{\n\"PatNum\": 15,\n\"Name\": \"Entire Family\",\n\"Balance\": 388.75\n}\n]\n\nAccountModules GET ServiceDateView\nVersion Added: 22.3.32\n\nGets a list of all charges and credits to the account for a patient and their family, similarly to how it shows in the Service Date View.\n\nPatNum: Required in the URL.\nisFamily: Optional. Either \"true\" or \"false\". Return data for the entire patient's family. Default \"false\".\n\nReturned fields are detailed below:\n\nObjectType: The type of object being returned. Either ProcedureLog, Adjustment, PaySplit, ClaimProc, PayPlanCharge, or PayPlan. Otherwise blank.\nPrimaryKey: Primary Key corresponding to the ObjectType. Example: procedure.ProcNum=985.\nType: Further details of the ObjectType being displayed: 'Proc', 'Adj-Att.', 'PatPay Att.', 'WriteOff-Att.', 'InsPay-Att.', 'PayPlan Charge Att.', 'PatPay Att. PayPlan', 'Unallocated', 'PatPay', 'WriteOff', 'Adj', 'InsPay', 'PayPlan Credit', 'Dynamic PayPlan Credit', 'PayPlan Charge', 'PatPay PayPlan', 'Day Total', 'Overall Total'. Att. indicates Attached.\nServiceDate: Date service was provided.\nTransDate: Date transaction was posted.\nPatient: patient.FName.\nPatNum: patient.PatNum.\nReference: Description of the of the returned object.\nCharge: Amount that was charged.\nCredit: Amount that was paid.\nProvider: provider.Abbr.\nInsBal: Balance of estimated insurance payment.\nAcctBal: The remaining patient portion balance.\n\nExample Request:\nGET /accountmodules/65/ServiceDateView?isFamily=true\n\nExample Response:\n[\n{\n\"ObjectType\": \"Procedure\",\n\"PrimaryKey\": \"43\",\n\"Type\": \"Proc\",\n\"ServiceDate\": \"2021-07-13\",\n\"TransDate\": \"\",\n\"Patient\": \"Jaime\",\n\"PatNum\": \"65\",\n\"Reference\": \"D2393:#14-MOD-C3(P)\",\n\"Charge\": \"235.00\",\n\"Credit\": \"0.00\",\n\"Provider\": \"DOC2\",\n\"InsBal\": \"0.00\",\n\"AcctBal\": \"216.20\"\n},\n{\n\"ObjectType\": \"Adjustment\",\n\"PrimaryKey\": \"10\",\n\"Type\": \"Adj-Att.\",\n\"ServiceDate\": \"\",\n\"TransDate\": \"2021-07-13\",\n\"Patient\": \"Jaime\",\n\"PatNum\": \"65\",\n\"Reference\": \"Adj- Discount\",\n\"Charge\": \"0.00\",\n\"Credit\": \"18.80\",\n\"Provider\": \"DOC2\",\n\"InsBal\": \"\",\n\"AcctBal\": \"\"\n},\n{\n\"ObjectType\": \"\",\n\"PrimaryKey\": \"\",\n\"Type\": \"Day Total\",\n\"ServiceDate\": \"2021-07-13\",\n\"TransDate\": \"\",\n\"Patient\": \"\",\n\"PatNum\": \"\",\n\"Reference\": \"Total for Date\",\n\"Charge\": \"235.00\",\n\"Credit\": \"18.80\",\n\"Provider\": \"\",\n\"InsBal\": \"0.00\",\n\"AcctBal\": \"216.20\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (Patient is deleted, etc)\n404 NotFound (Patient not found)",
+  "metadata": {
+    "version": "22.3.32",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "AccountModules",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "AccountModules",
+      "method": "GET",
+      "path": "/accountmodules",
+      "versionAdded": "22.3.6",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /accountmodules/1337/Aging",
+          "response": "{\n\"Bal_0_30\": 276.28,\n\"Bal_31_60\": 49.0,\n\"Bal_61_90\": 64.0,\n\"BalOver90\": 278.03,\n\"Total\": 667.31,\n\"InsEst\": 100.0,\n\"EstBal\": 567.31,\n\"PatEstBal\": 24.0,\n\"Unearned\": 2.46\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Patient is deleted, etc"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "Patient not found"
+        }
+      ],
+      "description": "Gets the Aging information for a patient and their family, similarly to how it shows in the Account Module Aging grid."
+    },
+    {
+      "resource": "AccountModules",
+      "method": "GET",
+      "path": "/accountmodules",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /accountmodules/16/PatientBalances",
+          "response": "[\n{\n\"PatNum\": 15,\n\"Name\": \"Smith, John\",\n\"Balance\": 140.2\n},\n{\n\"PatNum\": 16,\n\"Name\": \"Smith, Jane\",\n\"Balance\": 180.55\n},\n{\n\"PatNum\": 17,\n\"Name\": \"Smith, Junior\",\n\"Balance\": 68\n},\n{\n\"PatNum\": 18,\n\"Name\": \"Smith, Sis\",\n\"Balance\": 0\n},\n{\n\"PatNum\": 15,\n\"Name\": \"Entire Family\",\n\"Balance\": 388.75\n}\n]"
+        }
+      ],
+      "responses": [],
+      "description": "Gets the patient portion for a patient's family, similarly to how it shows in the Account Module's Select Patient grid."
+    },
+    {
+      "resource": "AccountModules",
+      "method": "GET",
+      "path": "/accountmodules",
+      "versionAdded": "22.3.32",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /accountmodules/65/ServiceDateView?isFamily=true",
+          "response": "[\n{\n\"ObjectType\": \"Procedure\",\n\"PrimaryKey\": \"43\",\n\"Type\": \"Proc\",\n\"ServiceDate\": \"2021-07-13\",\n\"TransDate\": \"\",\n\"Patient\": \"Jaime\",\n\"PatNum\": \"65\",\n\"Reference\": \"D2393:#14-MOD-C3(P)\",\n\"Charge\": \"235.00\",\n\"Credit\": \"0.00\",\n\"Provider\": \"DOC2\",\n\"InsBal\": \"0.00\",\n\"AcctBal\": \"216.20\"\n},\n{\n\"ObjectType\": \"Adjustment\",\n\"PrimaryKey\": \"10\",\n\"Type\": \"Adj-Att.\",\n\"ServiceDate\": \"\",\n\"TransDate\": \"2021-07-13\",\n\"Patient\": \"Jaime\",\n\"PatNum\": \"65\",\n\"Reference\": \"Adj- Discount\",\n\"Charge\": \"0.00\",\n\"Credit\": \"18.80\",\n\"Provider\": \"DOC2\",\n\"InsBal\": \"\",\n\"AcctBal\": \"\"\n},\n{\n\"ObjectType\": \"\",\n\"PrimaryKey\": \"\",\n\"Type\": \"Day Total\",\n\"ServiceDate\": \"2021-07-13\",\n\"TransDate\": \"\",\n\"Patient\": \"\",\n\"PatNum\": \"\",\n\"Reference\": \"Total for Date\",\n\"Charge\": \"235.00\",\n\"Credit\": \"18.80\",\n\"Provider\": \"\",\n\"InsBal\": \"0.00\",\n\"AcctBal\": \"216.20\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Patient is deleted, etc"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "Patient not found"
+        }
+      ],
+      "description": "Gets a list of all charges and credits to the account for a patient and their family, similarly to how it shows in the Service Date View."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-transaction",
+      "description": "API references database table transaction"
+    },
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-claimproc",
+      "description": "API references database table claimproc"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-payplancharge",
+      "description": "API references database table payplancharge"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    },
+    {
+      "type": "references",
+      "target": "db-paysplit",
+      "description": "API references database table paysplit"
+    }
+  ]
+}

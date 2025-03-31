@@ -1,0 +1,194 @@
+API DiscountPlans
+See API Specification
+
+See Discount Plans for more information.
+
+DiscountPlans GET (single)
+Version Added: 22.4.19
+
+Gets a single Discount Plan.
+
+Parameters:
+
+DiscountPlanNum: Required in URL.
+
+Example Request:
+GET /discountplans/2
+
+Example Response:
+{
+"DiscountPlanNum": 2,
+"Description": "Happy Smiles Basic",
+"FeeSchedNum": 54,
+"DefNum": 336,
+"adjustmentType": "Discount Plan",
+"IsHidden": "false",
+"PlanNote": "50% services when paid cash at time of service.",
+"ExamFreqLimit": 1,
+"XrayFreqLimit": 1,
+"ProphyFreqLimit": 1,
+"FluorideFreqLimit": 0,
+"PerioFreqLimit": 1,
+"LimitedExamFreqLimit": 0,
+"PAFreqLimit": 1,
+"AnnualMax": 1000.0
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+DiscountPlans GET (multiple)
+Version Added: 22.4.19
+
+Gets a list of Discount Plans.
+
+Example Request:
+GET /discountplans
+
+Example Response:
+[
+{
+"DiscountPlanNum": 1,
+"Description": "Happy Smiles Plus",
+"FeeSchedNum": 54,
+"DefNum": 336,
+"adjustmentType": "Discount Plan",
+"IsHidden": "true",
+"PlanNote": "75% services when paid cash at time of service.",
+"ExamFreqLimit": 1,
+"XrayFreqLimit": 0,
+"ProphyFreqLimit": 0,
+"FluorideFreqLimit": 0,
+"PerioFreqLimit": 1,
+"LimitedExamFreqLimit": 1,
+"PAFreqLimit": 1,
+"AnnualMax": 500.0
+},
+{
+"DiscountPlanNum": 2,
+"Description": "Happy Smiles Basic",
+"FeeSchedNum": 54,
+"DefNum": 336,
+"adjustmentType": "Discount Plan",
+"IsHidden": "false",
+"PlanNote": "50% services when paid cash at time of service.",
+"ExamFreqLimit": 1,
+"XrayFreqLimit": 1,
+"ProphyFreqLimit": 1,
+"FluorideFreqLimit": 0,
+"PerioFreqLimit": 1,
+"LimitedExamFreqLimit": 0,
+"PAFreqLimit": 1,
+"AnnualMax": 1000.0
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+DiscountPlans POST
+Version Added: 23.1.20
+
+Creates a DiscountPlan. Frequencies that do not have a limitation display as blank in Open Dental and are stored as -1 in the database.
+
+Description: Required. Description of this Discount Plan.
+FeeSchedNum: Required. FK to feesched.FeeSchedNum.
+DefNum: Required. definition.DefNum where definition.Category=1 and definition.ItemValue=dp.
+
+IsHidden: Optional. Hides a Discount Plan. Default "false".
+PlanNote: Optional. Note on a Discount Plan.
+ExamFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Exam category. Default -1.
+XrayFreqLimit: Optional. Number of procedures allowed for a Discount Plan's X-Ray category. Default -1 .
+ProphyFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Prophylaxis category. Default -1.
+FluorideFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Fluoride category. Default -1.
+PerioFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Periodontal category. Default -1.
+LimitedExamFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Limited Exam category. Default -1.
+PAFreqLimit: Optional. Number of procedures allowed for a Discount Plan's Periapical X-Ray category. Default -1.
+AnnualMax: Optional. Annual discount maximum for frequency limitations. Default -1, indicates no annual max limitation.
+
+Example Request:
+POST /discountplans
+
+{
+"Description": "Happy Smiles Ultra",
+"FeeSchedNum": 54,
+"DefNum": 336
+}
+
+Example Response:
+{
+"DiscountPlanNum": 3,
+"Description": "Happy Smiles Ultra",
+"FeeSchedNum": 54,
+"DefNum": 336,
+"adjustmentType": "Discount Plan",
+"IsHidden": "false",
+"PlanNote": "",
+"ExamFreqLimit": -1,
+"XrayFreqLimit": -1,
+"ProphyFreqLimit": -1,
+"FluorideFreqLimit": -1,
+"PerioFreqLimit": -1,
+"LimitedExamFreqLimit": -1,
+"PAFreqLimit": -1,
+"AnnualMax": -1.0
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+DiscountPlans PUT
+Version Added: 23.1.20
+
+Updates an existing DiscountPlan. Updating Description and/or PlanNote will overwrite existing values. Frequencies that do not have a limitation display as blank in Open Dental and are stored as -1 in the database.
+
+DiscountPlanNum: Required in URL.
+
+Description: Description of this Discount Plan.
+FeeSchedNum: FK to feesched.FeeSchedNum.
+DefNum: definition.DefNum where definition.Category=1 and definition.ItemValue=dp.
+IsHidden: Hides a Discount Plan. Either "true" or "false".
+PlanNote: Note on a Discount Plan.
+ExamFreqLimit: Number of procedures allowed for a Discount Plan's Exam category. -1 indicates blank.
+XrayFreqLimit: Number of procedures allowed for a Discount Plan's X-Ray category. -1 indicates blank.
+ProphyFreqLimit: Number of procedures allowed for a Discount Plan's Prophylaxis category. -1 indicates blank.
+FluorideFreqLimit: Number of procedures allowed for a Discount Plan's Fluoride category. -1 indicates blank.
+PerioFreqLimit: Number of procedures allowed for a Discount Plan's Periodontal category. -1 indicates blank.
+LimitedExamFreqLimit: Number of procedures allowed for a Discount Plan's Limited Exam category. -1 indicates blank.
+PAFreqLimit: Number of procedures allowed for a Discount Plan's Periapical X-Ray category. -1 indicates blank.
+AnnualMax: Annual discount maximum for frequency limitations. -1 indicates blank or no annual max limitation.
+
+Example Request:
+PUT /discountplans/1
+
+{
+"Description": "Happy Smiles Basic Plus",
+"IsHidden": "false"
+}
+
+Example Response:
+{
+"DiscountPlanNum": 1,
+"Description": "Happy Smiles Basic Plus",
+"FeeSchedNum": 54,
+"DefNum": 336,
+"adjustmentType": "Discount Plan",
+"IsHidden": "false",
+"PlanNote": "75% services when paid cash at time of service.",
+"ExamFreqLimit": 1,
+"XrayFreqLimit": 0,
+"ProphyFreqLimit": 0,
+"FluorideFreqLimit": 0,
+"PerioFreqLimit": 1,
+"LimitedExamFreqLimit": 1,
+"PAFreqLimit": 1,
+"AnnualMax": 500.0
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

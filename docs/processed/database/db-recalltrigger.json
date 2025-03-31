@@ -1,0 +1,41 @@
+{
+  "id": "db-recalltrigger",
+  "type": "database",
+  "title": "recalltrigger",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "recalltrigger",
+      "Recall",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "recalltrigger",
+    "description": "Table for recalltrigger data.",
+    "columns": [
+      {
+        "name": "recalltriggerNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "recalltriggerNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

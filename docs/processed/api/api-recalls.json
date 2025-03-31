@@ -1,0 +1,215 @@
+{
+  "id": "api-recalls",
+  "type": "api",
+  "title": "Recalls",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Recalls.txt",
+  "content": "API Recalls\nSee API Specification\n\nSee Recall for more information.\n\nRecalls GET\nVersion Added: 22.4.40\n\nGets a list of recalls.\n\nParameter:\n\nPatNum: Optional.\n\nExample Requests:\nGET /recalls\nGET /recalls?PatNum=38\n\nExample Response:\n[\n{\n\"RecallNum\": 40,\n\"PatNum\": 38,\n\"DateDue\": \"2022-09-09\",\n\"DatePrevious\": \"0001-01-01\",\n\"RecallInterval\": \"6m1d\",\n\"RecallStatus\": 142,\n\"recallStatus\": \"Mailed Postcard\",\n\"Note\": \"\",\n\"IsDisabled\": \"false\",\n\"DateTStamp\": \"2021-07-21 10:05:47\",\n\"RecallTypeNum\": 6,\n\"DisableUntilBalance\": 0.0,\n\"DisableUntilDate\": \"0001-01-01\",\n\"DateScheduled\": \"0001-01-01\",\n\"Priority\": \"Normal\",\n\"TimePatternOverride\": \"\"\n},\netc...\n]\n\n200 OK\n400 BadRequest\n404 NotFound\n\nRecalls GET List\nVersion Added: 22.1\n\nGets the Recall List similar to how it's shown in the Appointment Module when you click on Lists and select Recalls.\n\nRecallType selection is dependant upon Recall Setup. RecallTypes are stored in CSV format in the RecallTypesShowingInList preference. That preference stores the primary keys from the RecallType table. This information can be retrieved using GET preferences?PrefName=RecallTypesShowingInList.\n\nURL Search Parameters:\n\nDateStart: Due date range. String in \"yyyy-mm-dd\" format. Default is based on RecallDaysPast preference.\nDateEnd: Due date range. String in \"yyyy-mm-dd\" format. Default is based on RecallDaysFuture preference.\nProvNum: Provider. Default is all providers. Will consider PriProv and SecProv.\nClinicNum: Clinic. Default is all clinics. Use 0 for \"Unassigned\".\nRecallType: Typically either \"Prophy\" or \"Perio\". Default is all RecallTypes stored in the preference.\nIncludeReminded: Show patients that have already received reminders. Either \"true\" or \"false\". Default is false.\n\nReturned fields are detailed below:\n\nDueDate: The date the recall is due. Based off previously completed recall procedures or insurance history. If blank, the patient has never had a recall procedure set complete.\nPatNum: Patient.PatNum.\nPatient: Patient's name. Last, First.\nAge: Patient's Age.\nType: RecallType due.\nInterval: The length of time between each recall appointment for the recall type.\nNumRemind: The number of reminders sent since the patient's last recall appointment.\nLastRemind: The date the last reminder was sent.\nContact: The patient's Preferred Recall Method.\nStatus: Recall communication about a patient's unscheduled recall appointment. Example \"Left Msg\".\nClinicNum: ClinicNum of clinic patient is assigned to. Will be 0 if not using Clinics.\nNote: Administrative note.\n\nExample Request:\nGET /recalls/List?Offset=200\nGET /recalls/List?IncludeReminded=true\n\nExample Response:\n[\n{\n\"DueDate\": \"3/16/2022\",\n\"PatNum\": 15,\n\"Patient\": \"Strickler, Trent\",\n\"Age\": \"38\",\n\"Type\": \"Pano\",\n\"Interval\": \"6m1d\",\n\"NumRemind\": \"\",\n\"LastRemind\": \"\",\n\"Contact\": \"Text:(541)555-1234\",\n\"Status\": \"\",\n\"ClinicNum\": 5,\n\"Note\": \"\"\n},\n{\n\"DueDate\": \"1/10/2022\",\n\"PatNum\": 42,\n\"Patient\": \"Lehrer, 'Andy' Tom\",\n\"Age\": \"29\",\n\"Type\": \"Exam\",\n\"Interval\": \"6m1d\",\n\"NumRemind\": \"1\",\n\"LastRemind\": \"11/4/2021\",\n\"Contact\": \"meandu@earth.com\",\n\"Status\": \"\",\n\"ClinicNum\": 4,\n\"Note\": \"\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nRecalls POST (create)\nVersion Added: 24.2.31\n\nCreates a recall for a patient. A patient should have at most, one recall for each Recall Type.\n\nParameters:\n\nPatNum: Required. FK to patient.PatNum.\nRecallTypeNum: Required. FK to recalltype.RecallTypeNum. A patient may only have one recall for each RecallType.\n\nDateDue: Optional. This is the date that is actually used when doing reports for recall. String in \"yyyy-MM-dd\" format.\nRecallInterval: Optional.The interval between recalls. String that contains a digit followed by 'y' for years, 'm' for months, 'w' for weeks, or 'd' for days. An example of 1 year, 6 months, and 20 days should be formatted as follows: '1y6m20d'. Default recalltype.DefaultInterval.\nRecallStatus: Optional. FK to definition.DefNum where definition.Category=13. Default 0.\nNote: Optional. An administrative note for staff use.\nIsDisabled: Optional. Either \"true\" or \"false\". Default \"false\".\nDisableUntilBalance: Optional. Family balance must be less than this value for the recall to show in the recall list. Default 0.\nDisableUntilDate: Optional. Recall will be disabled until this date. String in \"yyyy-MM-dd\" format.\nPriority: Optional. Either \"Normal\" or \"ASAP\". Default \"Normal\".\nTimePatternOverride: Optional. Used to override recalltype.DefaultInterval. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only.\n\nExample Request:\nPOST /recalls\n\n{\n\"PatNum\": 38,\n\"RecallTypeNum\": 8,\n\"RecallInterval\": \"0y6m0w1d\",\n\"RecallStatus\": 142,\n\"Note\": \"New patient, try to get appoinment around the same time as child.\"\n}\n\nExample Response:\n{\n\"RecallNum\": 40,\n\"PatNum\": 38,\n\"DateDue\": \"0001-01-01\",\n\"DatePrevious\": \"0001-01-01\",\n\"RecallInterval\": \"6m1d\",\n\"RecallStatus\": 142,\n\"recallStatus\": \"Mailed Postcard\",\n\"Note\": \"New patient, try to get appoinment around the same time as child.\",\n\"IsDisabled\": \"false\",\n\"DateTStamp\": \"2024-09-02 09:31:19\",\n\"RecallTypeNum\": 8,\n\"DisableUntilBalance\": 0.0,\n\"DisableUntilDate\": \"0001-01-01\",\n\"DateScheduled\": \"0001-01-01\",\n\"Priority\": \"Normal\",\n\"TimePatternOverride\": \"\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nRecalls PUT (update)\nVersion Added: 24.2.31\n\nUpdates a recall.\n\nRecallNum: Required in URL.\n\nDateDue: This is the date that is actually used when doing reports for recall. String in \"yyyy-MM-dd\" format.\nRecallInterval: The interval between recalls. String that contains a digit followed by 'y' for years, 'm' for months, 'w' for weeks, or 'd' for days. An example of 1 year, 6 months, and 20 days should be formatted as follows: '1y6m20d'.\nRecallStatus: FK to definition.DefNum where definition.Category=13. Use 0 to set to \"None\".\nNote: An administrative note for staff use. Overwrites existing note.\nIsDisabled: Either \"true\" or \"false\".\nDisableUntilBalance: Family balance must be less than this value for the recall to show in the recall list.\nDisableUntilDate: Recall will be disabled until this date. String in \"yyyy-MM-dd\" format.\nPriority: Either \"Normal\" or \"ASAP\".\nTimePatternOverride: Used to override recalltype.DefaultInterval. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only.\n\nExample Request:\nPUT /recalls/1652\n\n{\n\"DateDue\": \"2022-09-09\",\n\"RecallInterval\": \"0y6m0w1d\",\n\"RecallStatus\": 142,\n\"Note\": \"New patient, try to get appoinment around the same time as child.\"\n}\n\nExample Response:\n{\n\"RecallNum\": 1652,\n\"PatNum\": 38,\n\"DateDue\": \"2022-09-09\",\n\"DatePrevious\": \"0001-01-01\",\n\"RecallInterval\": \"6m1d\",\n\"RecallStatus\": 142,\n\"recallStatus\": \"Mailed Postcard\",\n\"Note\": \"New patient, try to get appoinment around the same time as child.\",\n\"IsDisabled\": \"false\",\n\"DateTStamp\": \"2021-07-21 10:05:47\",\n\"RecallTypeNum\": 6,\n\"DisableUntilBalance\": 0.0,\n\"DisableUntilDate\": \"0001-01-01\",\n\"DateScheduled\": \"0001-01-01\",\n\"Priority\": \"Normal\",\n\"TimePatternOverride\": \"\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nRecalls PUT Status\nVersion Added: 21.2\n\nUpdates the RecallStatus on a patient's recall. This status describes the recall reminder itself, and not the status of the resulting appointment. To instead change an appointment's status, use Appointments PUT Confirm. A commlog for the patient is also created with CommType.Recall, Mode_.None, and note with \"Recall reminder\" and the new RecallStatus.\n\nPatNum: Required.\nrecallType: Required. Typically either \"Prophy\" or \"Perio\". RecallType is dependent upon Recall Setup and Recall Types.\nRecallStatus: Optional. Any definition.DefNum where Definition.Category=13. Use 0 set status to \"None\".\ncommlogMode: Optional. Either \"None\", \"Email\", \"Mail\", \"Phone\", \"InPerson\", \"Text\", \"EmailAndText\", or \"PhoneAndText\".\ncommlogNote: Optional. This text will be used instead of the default commlog.Note.\n\nExample Requests:\nPUT /recalls/Status\n\n{\n\"PatNum\": 71,\n\"recallType\": \"Prophy\",\n\"RecallStatus\": 312,\n\"commlogMode\": \"Phone\",\n\"commlogNote\": \"Patient out of town until 08/30/2021.\"\n}\n\n{\n\"PatNum\": 46,\n\"recallType\": \"Perio\"\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nRecalls PUT SwitchType\nVersion Added: 22.4.41\n\nSwitches a Recall's type similiar to clicking the 'Set Perio' or 'Set Prophy' button found in the Recalls for Patient window.\n\n\nIf a patient has a Prophy type recall, it will be set to Perio.\nIf a patient has a Perio type recall, it will be set to Prophy.\nPatNum: Required.\n\nExample Request:\nPUT /recalls/SwitchType\n\n{\n\"PatNum\": 38\n}\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.31",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Recalls",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Recalls",
+      "method": "GET",
+      "path": "/recalls",
+      "versionAdded": "22.4.40",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /recalls\nGET /recalls?PatNum=38",
+          "response": "[\n{\n\"RecallNum\": 40,\n\"PatNum\": 38,\n\"DateDue\": \"2022-09-09\",\n\"DatePrevious\": \"0001-01-01\",\n\"RecallInterval\": \"6m1d\",\n\"RecallStatus\": 142,\n\"recallStatus\": \"Mailed Postcard\",\n\"Note\": \"\",\n\"IsDisabled\": \"false\",\n\"DateTStamp\": \"2021-07-21 10:05:47\",\n\"RecallTypeNum\": 6,\n\"DisableUntilBalance\": 0.0,\n\"DisableUntilDate\": \"0001-01-01\",\n\"DateScheduled\": \"0001-01-01\",\n\"Priority\": \"Normal\",\n\"TimePatternOverride\": \"\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of recalls."
+    },
+    {
+      "resource": "Recalls",
+      "method": "GET",
+      "path": "/recalls/List",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /recalls/List?Offset=200\nGET /recalls/List?IncludeReminded=true",
+          "response": "[\n{\n\"DueDate\": \"3/16/2022\",\n\"PatNum\": 15,\n\"Patient\": \"Strickler, Trent\",\n\"Age\": \"38\",\n\"Type\": \"Pano\",\n\"Interval\": \"6m1d\",\n\"NumRemind\": \"\",\n\"LastRemind\": \"\",\n\"Contact\": \"Text:(541)555-1234\",\n\"Status\": \"\",\n\"ClinicNum\": 5,\n\"Note\": \"\"\n},\n{\n\"DueDate\": \"1/10/2022\",\n\"PatNum\": 42,\n\"Patient\": \"Lehrer, 'Andy' Tom\",\n\"Age\": \"29\",\n\"Type\": \"Exam\",\n\"Interval\": \"6m1d\",\n\"NumRemind\": \"1\",\n\"LastRemind\": \"11/4/2021\",\n\"Contact\": \"meandu@earth.com\",\n\"Status\": \"\",\n\"ClinicNum\": 4,\n\"Note\": \"\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets the Recall List similar to how it's shown in the Appointment Module when you click on Lists and select Recalls."
+    },
+    {
+      "resource": "Recalls",
+      "method": "PUT",
+      "path": "/recalls",
+      "versionAdded": "21.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /recalls/Status\n\n{\n\"PatNum\": 71,\n\"recallType\": \"Prophy\",\n\"RecallStatus\": 312,\n\"commlogMode\": \"Phone\",\n\"commlogNote\": \"Patient out of town until 08/30/2021.\"\n}\n\n{\n\"PatNum\": 46,\n\"recallType\": \"Perio\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates the RecallStatus on a patient's recall. This status describes the recall reminder itself, and not the status of the resulting appointment. To instead change an appointment's status, use Appointments PUT Confirm. A commlog for the patient is also created with CommType.Recall, Mode_.None, and note with \"Recall reminder\" and the new RecallStatus."
+    },
+    {
+      "resource": "Recalls",
+      "method": "PUT",
+      "path": "/recalls",
+      "versionAdded": "22.4.41",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /recalls/SwitchType\n\n{\n\"PatNum\": 38\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Switches a Recall's type similiar to clicking the 'Set Perio' or 'Set Prophy' button found in the Recalls for Patient window."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-commlog",
+      "description": "API references database table commlog"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    },
+    {
+      "type": "references",
+      "target": "db-recalltype",
+      "description": "API references database table recalltype"
+    }
+  ]
+}

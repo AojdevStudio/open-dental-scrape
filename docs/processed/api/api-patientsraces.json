@@ -1,0 +1,69 @@
+{
+  "id": "api-patientsraces",
+  "type": "api",
+  "title": "PatientsRaces",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API PatientsRaces.txt",
+  "content": "API PatientRaces\nSee API Specification\n\nPatientRaces GET\nVersion Added: 22.3.12\n\nGets all of the Race and Ethnicity information for a Patient, similarly to how it shows in the Edit Patient Information: Public Health Tab. The dental office must have Public Health enabled to record this information.\n\nIn the example below, a single patient has two races specified as well as an ethnicity.\n\nPatNum: Required.\n\nReturned fields are detailed below:\n\nPatientRaceNum: Primary key of the patientrace table.\nPatNum: The PatNum of the patient.\nCdcrecCode: CDC Race and Ethnicity unique identifier code.\ndescripition: Race or Ethnicity Description corresponding to the CdcrecCode.\nisEthnicity: True for ethnicity or False for race information.\nheirarchicalCode: Alphanumeric code that the CDC uses to organize CdcrecCodes.\n\nExample Request\nGET /patientraces?PatNum=73\n\nExample Response:\n[\n{\n\"PatientRaceNum\": 16,\n\"PatNum\": 73,\n\"CdcrecCode\": \"2066-9\",\n\"descripition\": \"ZAIREAN\",\n\"isEthnicity\": \"false\",\n\"heirarchicalCode\": \"R3.03.006\"\n},\n{\n\"PatientRaceNum\": 17,\n\"PatNum\": 73,\n\"CdcrecCode\": \"2120-4\",\n\"descripition\": \"EGYPTIAN\",\n\"isEthnicity\": \"false\",\n\"heirarchicalCode\": \"R5.02.002\"\n},\n{\n\"PatientRaceNum\": 18,\n\"PatNum\": 73,\n\"CdcrecCode\": \"2186-5\",\n\"descripition\": \"NOT HISPANIC OR LATINO\",\n\"isEthnicity\": \"true\",\n\"heirarchicalCode\": \"E2\"\n}\n]\n\n200 OK\n400 Bad Request (Patient is deleted, etc)\n401 NotFound (Patient not found)",
+  "metadata": {
+    "version": "22.3.12",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "PatientsRaces",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PatientRaces",
+      "method": "GET",
+      "path": "/patientraces",
+      "versionAdded": "22.3.12",
+      "parameters": [],
+      "examples": [],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        },
+        {
+          "code": "401",
+          "status": "NotFound",
+          "description": "Patient not found"
+        }
+      ],
+      "description": "Gets all of the Race and Ethnicity information for a Patient, similarly to how it shows in the Edit Patient Information: Public Health Tab. The dental office must have Public Health enabled to record this information."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-cdcrec",
+      "description": "API references database table cdcrec"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-patientrace",
+      "description": "API references database table patientrace"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

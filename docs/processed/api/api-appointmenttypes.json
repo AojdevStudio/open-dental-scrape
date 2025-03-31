@@ -1,0 +1,65 @@
+{
+  "id": "api-appointmenttypes",
+  "type": "api",
+  "title": "AppointmentTypes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API AppointmentTypes.txt",
+  "content": "API AppointmentTypes\nSee API Specification\n\nAppointmentTypes GET\nVersion Added: 22.4.10\n\nGets a list of AppointmentTypes.\n\nExample Request:\nGET /appointmenttypes\n\nExample Response:\n[\n{\n\"AppointmentTypeNum\": 1,\n\"AppointmentTypeName\": \"WebSched New Patient Default\",\n\"appointmentTypeColor\": \"93,54,220\",\n\"IsHidden\": \"false\",\n\"Pattern\": \"//XX//\",\n\"CodeStr\": \"\",\n\"CodeStrRequired\": \"\",\n\"RequiredProcCodesNeeded\": 0,\n\"BlockoutTypes\": \"\"\n},\n{\n\"AppointmentTypeNum\": 2,\n\"AppointmentTypeName\": \"WebSched\",\n\"appointmentTypeColor\": \"74,250,61\",\n\"IsHidden\": \"false\",\n\"Pattern\": \"//XX//\",\n\"CodeStr\": \"D0272,D0274\",\n\"CodeStrRequired\": \"D0272,D0274\",\n\"RequiredProcCodesNeeded\": \"AtLeastOne\",\n\"BlockoutTypes\": \"TeleExam\"\n},\netc...\n]\n\n200 OK",
+  "metadata": {
+    "version": "22.4.10",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "AppointmentTypes",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "AppointmentTypes",
+      "method": "GET",
+      "path": "/appointmenttypes",
+      "versionAdded": "22.4.10",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /appointmenttypes",
+          "response": "[\n{\n\"AppointmentTypeNum\": 1,\n\"AppointmentTypeName\": \"WebSched New Patient Default\",\n\"appointmentTypeColor\": \"93,54,220\",\n\"IsHidden\": \"false\",\n\"Pattern\": \"//XX//\",\n\"CodeStr\": \"\",\n\"CodeStrRequired\": \"\",\n\"RequiredProcCodesNeeded\": 0,\n\"BlockoutTypes\": \"\"\n},\n{\n\"AppointmentTypeNum\": 2,\n\"AppointmentTypeName\": \"WebSched\",\n\"appointmentTypeColor\": \"74,250,61\",\n\"IsHidden\": \"false\",\n\"Pattern\": \"//XX//\",\n\"CodeStr\": \"D0272,D0274\",\n\"CodeStrRequired\": \"D0272,D0274\",\n\"RequiredProcCodesNeeded\": \"AtLeastOne\",\n\"BlockoutTypes\": \"TeleExam\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of AppointmentTypes."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-appointmenttype",
+      "description": "API references database table appointmenttype"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    }
+  ]
+}

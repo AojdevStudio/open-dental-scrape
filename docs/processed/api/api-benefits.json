@@ -1,0 +1,134 @@
+{
+  "id": "api-benefits",
+  "type": "api",
+  "title": "Benefits",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Benefits.txt",
+  "content": "API Benefits\nSee API Specification\n\nBenefits GET\nVersion Added: 22.3.27\n\nGets all Benefits for a given Insurance Plan or Patient Plan. Empty Percent and MonetaryAmt values are indicated by -1 .\n\nPlanNum: (Optional after version 23.2.62) FK to InsPlan.PlanNum.\nPatPlanNum: (Optional after version 23.2.62) FK to PatPlan.PatPlanNum.\n\nExample Requests:\nGET /benefits?PlanNum=12\nGET /benefits?PatPlanNum=30\n\nExample Response:\n[\n{\n\"BenefitNum\": 236,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 3,\n\"BenefitType\": \"CoInsurance\",\n\"Percent\": 30,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"None\",\n\"QuantityQualifier\": \"Visits\",\n\"Quantity\": 2,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"None\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n},\n{\n\"BenefitNum\": 243,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 0,\n\"BenefitType\": \"WaitingPeriod\",\n\"Percent\": -1,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"ServiceYear\",\n\"QuantityQualifier\": \"Months\",\n\"Quantity\": 3,\n\"CodeNum\": 150,\n\"procCode\": \"D0486\",\n\"CoverageLevel\": \"Family\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n},\n{\n\"BenefitNum\": 245,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 12,\n\"BenefitType\": \"Limitations\",\n\"Percent\": -1,\n\"MonetaryAmt\": 1000.0,\n\"TimePeriod\": \"Lifetime\",\n\"QuantityQualifier\": \"None\",\n\"Quantity\": 0,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"Individual\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nBenefits POST (create)\nVersion Added: 22.3.17\n\nCreates a new benefit for a given Insurance Plan or Patient Plan. For more information, see Edit Benefits - Row View.\n\nPlanNum: This or PatPlanNum is required. FK to InsPlan.PlanNum.\nPatPlanNum: This or PlanNum is required. FK to PatPlan.PlanNum.\nBenefitType: Required. Either \"ActiveCoverage\", \"CoInsurance\", \"Deductible\", \"CoPayment\", \"Exclusions\", \"Limitations\", or \"WaitingPeriod\".\nCoverageLevel: Required. Either \"None\", \"Individual\", or \"Family\".\n\nCovCatNum: Optional. FK to covcat.CovCatNum.\nPercent: Optional. Only allowed if BenefitType is \"CoInsurance\". Must be a value between 0 and 100. Default -1 (Indicating empty).\nMonetaryAmt: Optional. Only used if BenefitType is \"CoPayment\", \"Limitations\", or \"Deductible\". Default -1.0 (Indicating empty).\nTimePeriod: Optional. Either \"None\", \"ServiceYear\", \"CalendarYear\", \"Lifetime\", \"Years\", or \"NumberInLast12Months\". Default \"CalendarYear\".\nQuantityQualifier: Optional. Either \"None\", \"NumberOfServices\", \"AgeLimit\", \"Visits\", \"Years\", or \"Months\". Default \"None\". Must be \"Months\" or \"Years\" if BenefitType is \"WaitingPeriod\".\nQuantity: Optional. Must be a value between 0 and 100. Default 0. Must be a value greater than 0 if QuantityQualifier is \"AgeLimit\".\nCodeNum: Optional. FK to procedurecode.CodeNum. Only allowed if CovCatNum is 0. Will be used over procCode if both are specified. Default 0.\nprocCode: Optional. FK to procedurecode.ProcCode. Only allowed if CovCatNum is 0. Default empty string.\nCodeGroupNum: Optional. (Added in version 23.2.62) FK to codegroup.CodeGroupNum. The group of procedure codes that apply to this Frequency Limitation benefit.\n\nExample Requests:\nPOST /benefits\n\n{\n\"PlanNum\": 12,\n\"CoverageLevel\": \"None\",\n\"BenefitType\": \"CoInsurance\",\n\"Percent\": 30,\n\"QuantityQualifier\": \"Visits\",\n\"Quantity\": 2,\n\"CovCatNum\": 3,\n\"TimePeriod\": \"None\"\n}\n\nor\n\n{\n\"PatPlanNum\": 29,\n\"CoverageLevel\": \"Individual\",\n\"BenefitType\": \"Deductible\",\n\"MonetaryAmt\": 500,\n\"CodeNum\": 158,\n\"QuantityQualifier\": \"AgeLimit\",\n\"Quantity\": \"15\",\n\"TimePeriod\": \"Years\"\n}\n\nor\n\n{\n\"PlanNum\": 19,\n\"CoverageLevel\": \"Family\",\n\"BenefitType\": \"WaitingPeriod\",\n\"QuantityQualifier\": \"Months\",\n\"Quantity\": \"6\",\n\"procCode\": \"D1110\",\n\"TimePeriod\": \"ServiceYear\"\n}\n\nor\n\n{\n\"PlanNum\":25,\n\"BenefitType\":\"Limitations\",\n\"CoverageLevel\":\"None\",\n\"Percent\":-1,\n\"MonetaryAmt\":-1,\n\"TimePeriod\": \"None\",\n\"QuantityQualifier\":\"AgeLimit\",\n\"Quantity\":12,\n\"CodeGroupNum\":1\n}\n\nExample Responses:\n{\n\"BenefitNum\": 236,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 3,\n\"BenefitType\": CoInsurance,\n\"Percent\": 30,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": None,\n\"QuantityQualifier\": \"Visits\",\n\"Quantity\": 2,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"None\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n}\n\nor\n\n{\n\"BenefitNum\": 245,\n\"PlanNum\": 0,\n\"PatPlanNum\": 29,\n\"CovCatNum\": 0,\n\"BenefitType\": \"Deductible\",\n\"Percent\": -1,\n\"MonetaryAmt\": 500.0,\n\"TimePeriod\": \"Years\",\n\"QuantityQualifier\": \"AgeLimit\",\n\"Quantity\": 15,\n\"CodeNum\": 158,\n\"procCode\": \"D1120\",\n\"CoverageLevel\": \"Individual\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n}\n\nor\n\n{\n\"BenefitNum\": 246,\n\"PlanNum\": 19,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 0,\n\"BenefitType\": \"WaitingPeriod\",\n\"Percent\": -1,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"ServiceYear\",\n\"QuantityQualifier\": \"Months\",\n\"Quantity\": 6,\n\"CodeNum\": 157,\n\"procCode\": \"D1110\",\n\"CoverageLevel\": \"Family\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n}\n\nor\n\n{\n\"BenefitNum\": 323,\n\"PlanNum\": 25,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 0,\n\"BenefitType\": \"Limitations\",\n\"Percent\": -1,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"None\",\n\"QuantityQualifier\": \"AgeLimit\",\n\"Quantity\": 12,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"None\",\n\"SecDateTEntry\": \"2024-02-13 14:45:19\",\n\"SecDateTEdit\": \"2024-02-13 14:45:19\",\n\"CodeGroupNum\": 1\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nBenefits PUT (update)\nVersion Added: 22.4.7\n\nUpdates an existing benefit by BenefitNum. For more information, see Edit Benefits - Row View.\n\nBenefitNum: Required in URL.\n\nCovCatNum: Optional. FK to covcat.CovCatNum.\nBenefitType: Optional. Either \"ActiveCoverage\", \"CoInsurance\", \"Deductible\", \"CoPayment\", \"Exclusions\", \"Limitations\", or \"WaitingPeriod\".\nPercent: Optional. Only allowed if BenefitType is \"CoInsurance\". Must be a value between 0 and 100. Use -1 to indicate empty.\nMonetaryAmt: Optional. Only used if BenefitType is \"CoPayment\", \"Limitations\", or \"Deductible\". Use -1 to indicate empty.\nTimePeriod: Optional. Either \"None\", \"ServiceYear\", \"CalendarYear\", \"Lifetime\", \"Years\", or \"NumberInLast12Months\".\nQuantityQualifier: Optional. Either \"None\", \"NumberOfServices\", \"AgeLimit\", \"Visits\", \"Years\", or \"Months\". Must be \"Months\" or \"Years\" if BenefitType is \"WaitingPeriod\".\nQuantity: Optional. Must be a value between 0 and 100. Must be a value greater than 0 if QuantityQualifier is \"AgeLimit\".\nCodeNum: Optional. FK to procedurecode.CodeNum. Only allowed if CovCatNum is 0. Will be used over procCode if both are specified.\nprocCode: Optional. FK to procedurecode.ProcCode. Only allowed if CovCatNum is 0.\nCoverageLevel: Optional. Either \"None\", \"Individual\", or \"Family\".\n\nExample Requests:\nPUT /benefits/75\nPUT /benefits/323\n\n{\n\"Percent\": 70,\n\"QuantityQualifier\": \"Visits\",\n\"Quantity\": 2\n}\n\nor\n\n{\n\"CovCatNum\": 0,\n\"BenefitType\": \"ActiveCoverage\",\n\"Percent\": -1,\n\"MonetaryAmt\": 499.99,\n\"TimePeriod\": \"ServiceYear\",\n\"QuantityQualifier\": \"AgeLimit\",\n\"Quantity\": 13,\n\"CodeNum\": 156,\n\"procCode\": \"D1110\",\n\"CoverageLevel\": \"Individual\"\n}\n\nor\n\n{\n\"Quantity\":18\n}\n\nExample Response:\n{\n\"BenefitNum\": 75,\n\"PlanNum\": 10,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 0,\n\"BenefitType\": \"ActiveCoverage\",\n\"Percent\": -1,\n\"MonetaryAmt\": 499.99,\n\"TimePeriod\": \"ServiceYear\",\n\"QuantityQualifier\": \"AgeLimit\",\n\"Quantity\": 13,\n\"CodeNum\": 156,\n\"procCode\": \"D0999\",\n\"CoverageLevel\": \"Individual\",\n\"SecDateTEntry\": \"2021-05-25 13:27:52\",\n\"SecDateTEdit\": \"2021-05-25 13:27:52\",\n\"CodeGroupNum\": 0\n}\n\nor\n\n{\n\"BenefitNum\": 323,\n\"PlanNum\": 25,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 0,\n\"BenefitType\": \"Limitations\",\n\"Percent\": -1,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"None\",\n\"QuantityQualifier\": \"AgeLimit\",\n\"Quantity\": 18,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"None\",\n\"SecDateTEntry\": \"2024-02-13 14:45:19\",\n\"SecDateTEdit\": \"2024-02-13 14:45:19\",\n\"CodeGroupNum\": 1\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nBenefits DELETE\nVersion Added: 22.4.7\n\nDeletes an existing benefit by BenefitNum.\n\nBenefitNum: Required in URL.\n\nExample Request:\nDELETE /benefits/75\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.4.7",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Benefits",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Benefits",
+      "method": "GET",
+      "path": "/benefits",
+      "versionAdded": "22.3.27",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /benefits?PlanNum=12\nGET /benefits?PatPlanNum=30",
+          "response": "[\n{\n\"BenefitNum\": 236,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 3,\n\"BenefitType\": \"CoInsurance\",\n\"Percent\": 30,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"None\",\n\"QuantityQualifier\": \"Visits\",\n\"Quantity\": 2,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"None\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n},\n{\n\"BenefitNum\": 243,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 0,\n\"BenefitType\": \"WaitingPeriod\",\n\"Percent\": -1,\n\"MonetaryAmt\": -1.0,\n\"TimePeriod\": \"ServiceYear\",\n\"QuantityQualifier\": \"Months\",\n\"Quantity\": 3,\n\"CodeNum\": 150,\n\"procCode\": \"D0486\",\n\"CoverageLevel\": \"Family\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n},\n{\n\"BenefitNum\": 245,\n\"PlanNum\": 12,\n\"PatPlanNum\": 0,\n\"CovCatNum\": 12,\n\"BenefitType\": \"Limitations\",\n\"Percent\": -1,\n\"MonetaryAmt\": 1000.0,\n\"TimePeriod\": \"Lifetime\",\n\"QuantityQualifier\": \"None\",\n\"Quantity\": 0,\n\"CodeNum\": 0,\n\"procCode\": \"\",\n\"CoverageLevel\": \"Individual\",\n\"SecDateTEntry\": \"2021-06-21 10:03:08\",\n\"SecDateTEdit\": \"2021-06-21 10:03:08\",\n\"CodeGroupNum\": 0\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all Benefits for a given Insurance Plan or Patient Plan. Empty Percent and MonetaryAmt values are indicated by -1 ."
+    },
+    {
+      "resource": "Benefits",
+      "method": "DELETE",
+      "path": "/benefits",
+      "versionAdded": "22.4.7",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /benefits/75",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes an existing benefit by BenefitNum."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-covcat",
+      "description": "API references database table covcat"
+    },
+    {
+      "type": "references",
+      "target": "db-codegroup",
+      "description": "API references database table codegroup"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

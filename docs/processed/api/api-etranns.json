@@ -1,0 +1,94 @@
+{
+  "id": "api-etranns",
+  "type": "api",
+  "title": "Etranns",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Etranns.txt",
+  "content": "API Etranss\nSee API Specification\n\nEtranss GET\nVersion Added: 23.2.7\n\nGets all etranss for a patient.\n\nParameters:\n\nPatNum: Required.\nCarrierNum: Optional. FK to Carrier.CarrierNum.\nClaimNum: Optional. FK to Claim.ClaimNum.\n\nExample Request:\nGET /etranss?PatNum=66\n\nExample Response:\n[\n{\n\"EtransNum\": 143,\n\"DateTimeTrans\": \"2023-07-31 10:40:41\",\n\"ClearingHouseNum\": 0,\n\"Etype\": \"ERA_835\",\n\"ClaimNum\": 54,\n\"OfficeSequenceNumber\": 0,\n\"CarrierTransCounter\": 0,\n\"CarrierTransCounter2\": 0,\n\"CarrierNum\": 12,\n\"CarrierNum2\": 0,\n\"PatNum\": 66,\n\"BatchNumber\": 4534,\n\"AckCode\": \"\",\n\"TransSetNum\": 0,\n\"Note\": \"\",\n\"EtransMessageTextNum\": 22,\n\"AckEtransNum\": 0,\n\"PlanNum\": 72,\n\"InsSubNum\": 21,\n\"TransSetId835\": 0,\n\"CarrierNameRaw\": \"Yamhill Community Care\",\n\"PatientNameRaw\": \"Smith, Jane\",\n\"UserNum\": 0\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.2.7",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Etranns",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Etranss",
+      "method": "GET",
+      "path": "/etranss",
+      "versionAdded": "23.2.7",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /etranss?PatNum=66",
+          "response": "[\n{\n\"EtransNum\": 143,\n\"DateTimeTrans\": \"2023-07-31 10:40:41\",\n\"ClearingHouseNum\": 0,\n\"Etype\": \"ERA_835\",\n\"ClaimNum\": 54,\n\"OfficeSequenceNumber\": 0,\n\"CarrierTransCounter\": 0,\n\"CarrierTransCounter2\": 0,\n\"CarrierNum\": 12,\n\"CarrierNum2\": 0,\n\"PatNum\": 66,\n\"BatchNumber\": 4534,\n\"AckCode\": \"\",\n\"TransSetNum\": 0,\n\"Note\": \"\",\n\"EtransMessageTextNum\": 22,\n\"AckEtransNum\": 0,\n\"PlanNum\": 72,\n\"InsSubNum\": 21,\n\"TransSetId835\": 0,\n\"CarrierNameRaw\": \"Yamhill Community Care\",\n\"PatientNameRaw\": \"Smith, Jane\",\n\"UserNum\": 0\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all etranss for a patient."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-carrier",
+      "description": "API references database table carrier"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-clearinghouse",
+      "description": "API references database table clearinghouse"
+    },
+    {
+      "type": "references",
+      "target": "db-etransmessagetext",
+      "description": "API references database table etransmessagetext"
+    },
+    {
+      "type": "references",
+      "target": "db-etrans",
+      "description": "API references database table etrans"
+    }
+  ]
+}

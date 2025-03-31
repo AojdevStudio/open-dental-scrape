@@ -1,0 +1,38 @@
+API SecurityPerms
+See API Specification
+
+SecurityPerms GET
+Version Added: 22.2
+
+Gets all API Permissions for a single dental office. Uses the Customer's API Key specified in the API request header.
+
+Example Request:
+GET /securityperms
+
+Example Response:
+
+[
+{
+"Permission": "ApiReadAll",
+"HasPermission": "true"
+},
+{
+"Permission": "ApiAllOthers",
+"HasPermission": "true"
+},
+{
+"Permission": "ApiComm",
+"HasPermission": "true"
+},
+{
+"Permission": "ApiDocuments",
+"HasPermission": "false"
+},
+{
+"Permission": "ApiQueries",
+"HasPermission": "true"
+},
+etc...
+]
+
+200 OK

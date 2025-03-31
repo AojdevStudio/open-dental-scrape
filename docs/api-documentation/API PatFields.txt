@@ -1,0 +1,171 @@
+API PatFields
+See API Specification
+
+Patient Fields are custom fields that are found in various areas of Open Dental such as the Patient Information area of the Family Module, Account Module, and Chart Module.
+
+FieldTypes can be:
+
+Text - String.
+PickList - patfieldpickitem.Name for the patfielddef
+Date - String in "yyyy-MM-dd" format.
+Checkbox - "1" indicates true.
+Currency - Monetary amount.
+PatFields GET (single)
+Version Added: 22.4
+
+Gets a single PatField.
+
+PatFieldNum: Required in the URL.
+
+Example Request:
+GET /patfields/5
+
+Example Response:
+{
+"PatFieldNum": 5,
+"PatNum": 69,
+"FieldName": "Ins Verified",
+"FieldValue": "Yes"
+"SecDateTEdit": "2022-12-15 11:26:31",
+"SecDateEntry":"2021-12-04"
+}
+
+PatFields GET (multiple)
+Version Added: 21.1
+
+Gets a list of PatFields.
+
+Parameters: All optional.
+
+PatNum: (Optional after version 22.4.5) The patient's PatNum.
+FieldName: (Optional after version 22.4.5) FK to patFieldDef.FieldName. Case sensitive.
+SecDateTEdit: (Added in version 22.4.5) Timestamp representing when the PatField was last edited. In "yyyy-MM-dd HH:mm:ss" format.
+
+Example Requests:
+GET /patfields
+GET /patfields?PatNum=69&FieldName=Ins%20Verified
+GET /patfields?FieldName=Deposit
+
+Example Responses:
+[
+{
+"PatFieldNum": 1,
+"PatNum": 39,
+"FieldName": "Deposit",
+"FieldValue": "450.29",
+"SecDateTEdit": "2022-12-22 09:31:00",
+"SecDateEntry":"2021-02-04"
+},
+{
+"PatFieldNum": 2,
+"PatNum": 68,
+"FieldName": "Over 18",
+"FieldValue": "1",
+"SecDateTEdit": "2022-10-22 08:35:33",
+"SecDateEntry":"2020-03-14"
+},
+{
+"PatFieldNum": 3,
+"PatNum": 86,
+"FieldName": "Ortho Status",
+"FieldValue": "In Progress",
+"SecDateTEdit": "2022-12-22 14:45:11",
+"SecDateEntry":"2020-06-24"
+},
+etc...
+]
+
+or
+
+{
+"PatFieldNum": 5,
+"PatNum": 69,
+"FieldName": "Ins Verified",
+"FieldValue":"Yes"
+"SecDateTEdit": "2022-12-15 11:26:31",
+"SecDateEntry":"2021-05-05"
+}
+
+or
+
+{
+"PatFieldNum": 1,
+"PatNum": 39,
+"FieldName": "Deposit",
+"FieldValue": "450.29",
+"SecDateTEdit": "2022-12-22 09:31:00",
+"SecDateEntry":"2009-11-09"
+}
+
+PatFields POST (create)
+Version Added: 22.4
+
+Creates a patfield. Cannot create PatFields associated with hidden PatFieldDefs.
+
+Parameters:
+
+PatNum: Required. The patient's PatNum.
+FieldName: Required. FK to PatFieldDef.FieldName. Case sensitive.
+FieldValue: Required. See the top of this page for more information. Relies on PatFieldDef.FieldType.
+
+Example Request:
+POST /patfields
+
+{
+"PatNum":10,
+"FieldName": "Ins Verified",
+"FieldValue":"Yes"
+}
+
+Example Response:
+{
+"PatFieldNum": 29,
+"PatNum": 10,
+"FieldName": "Ins Verified",
+"FieldValue": "Yes",
+"SecDateTEdit": "2022-12-28 09:38:01",
+"SecDateEntry":"2021-12-04"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+PatFields PUT
+Version Added: 21.1
+
+Updates an existing patfield.
+
+Parameters:
+
+PatNum: Required. The patient's PatNum.
+FieldName: Required. FK to patFieldDef.FieldName. Case sensitive.
+FieldValue: Required. See the top of this page for more information. Relies on PatFieldDef.FieldType.
+
+Example Request:
+PUT /patfields
+
+{
+"PatNum":101,
+"FieldName": "Ins Verified",
+"FieldValue":"Yes"
+}
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+
+PatFields DELETE
+Version Added: 22.4
+
+Deletes a patfield. Will not delete a PatField with an associated PatFieldDef of type CareCreditStatus.
+
+PatFieldNum: Required in the URL.
+
+Example Request:
+DELETE /patfields/29
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

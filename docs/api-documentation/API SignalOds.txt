@@ -1,0 +1,30 @@
+API Signalods
+See API Specification
+
+Signalods GET
+Version Added: 21.2
+
+SigDateTime is a required parameter. If any Signalods exist after the given dateTime, they will be returned. If a matching Signalod does not exist, it returns an empty list. Store serverDateTime that gets returned and use it to run the next GET.
+
+Example Request
+GET /signalods?SigDateTime=2021-02-02%2005%3A05%3A00
+
+Example Response:
+[
+{
+"SignalNum": 71,
+"DateViewing": "0001-01-01",
+"SigDateTime": "2021-04-15 08:01:46",
+"FKey": 0,
+"FKeyType": "Undefined",
+"IType": "Security",
+"RemoteRole": "ClientDirect",
+"MsgValue": "",
+"serverDateTime": "2021-05-25 08:01:46"
+},
+etc...
+]
+
+200 OK
+404 Not Found (with reason)
+400 Bad Request (with reason)

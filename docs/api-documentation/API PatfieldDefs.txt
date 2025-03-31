@@ -1,0 +1,121 @@
+API PatFieldDefs
+See API Specification
+
+Patient Field Defs allow you to organize fields that are found in various areas of Open Dental such as the Patient Information area of the Family Module, Account Module, and Chart Module.
+
+In version 24.1, the PickList field was deprecated and replaced with the PatFieldPickList table. Documentation has changed to reflect this, but the logic continues to support existing implementations.
+
+PatFieldDefs GET
+Version Added: 22.4.9
+
+Gets a list of patfielddefs.
+
+Example Request
+GET /patfielddefs
+
+Example Response:
+[
+{
+"PatFieldDefNum": 7,
+"FieldName": "Outstanding",
+"FieldType": "Currency",
+"PickList": "",
+"IsHidden": "false"
+},
+{
+"PatFieldDefNum": 8,
+"FieldName": "Ortho Status",
+"FieldType": "PickList",
+"PickList": ""
+"IsHidden": "false"
+},
+{
+"PatFieldDefNum": 11,
+"FieldName": "Accommodations",
+"FieldType": "Text",
+"PickList": ""
+"IsHidden": "false"
+}
+]
+
+200 OK
+
+PatFieldDefs POST (create)
+Version Added: 23.3.26
+
+Creates a patfielddef.
+
+FieldName: Required. Name of the field. Must be unique.
+FieldType: Required. Either "Text", "PickList", "Date", "Checkbox", "Currency", "CareCreditStatus", "CareCreditPreApprovalAmt" (Added in version 24.1), or "CareCreditAvailableCredit" (Added in version 24.1).
+PickList: Required if FieldType is "PickList". Otherwise, not allowed. Each item in the list must be separated by a \r\n. Creates a PatFieldPickItem entry for each item in the list. The PatFieldDefs' PickList column will remain blank.
+
+IsHidden: Optional. Either "true" or "false". Default "false".
+
+Example Request:
+POST /patfielddefs
+
+{
+"FieldName": "Favorite Color",
+"FieldType": "PickList",
+"PickList": "Red\r\nBlue\r\nYellow"
+}
+
+Example Response:
+{
+"PatFieldDefNum": 16,
+"FieldName": "Favorite Color",
+"FieldType": "PickList",
+"PickList": ""
+"IsHidden": "false"
+}
+
+201 Created
+400 BadRequest (with explanation)
+
+PatFieldDefs PUT (update)
+Version Added: 23.3.26
+
+Updates a patfielddef.
+
+PatFieldDefNum: Required in the URL.
+
+FieldName: Name of the field. Cannot be changed for in-use CareCredit fields. Must be unique.
+FieldType: Either "Text", "PickList", "Date", "Checkbox", "Currency", "CareCreditStatus", "CareCreditPreApprovalAmt" (Added in version 24.1), or "CareCreditAvailableCredit" (Added in version 24.1).
+PickList: Only allowed if FieldType is "PickList". As of version 24.1, this is only allowed and required if changing the FieldType of a PatFieldDef to "PickList" from any other FieldType. It can no longer be used to edit a preexisting PickList. Each item in the list must be separated by a \r\n.
+IsHidden: Either "true" or "false".
+
+Example Requests:
+PUT /patfielddefs/18
+
+{
+"FieldType": "PickList",
+"PickList": "Spring\r\nSummer\r\nAutumn\r\nWinter"
+}
+
+Example Response:
+{
+"PatFieldDefNum": 18,
+"FieldName": "Favorite Season",
+"FieldType": "PickList",
+"PickList": "",
+"IsHidden": "false"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+PatFieldDefs DELETE
+Version Added: 23.3.26
+
+Deletes a patfielddef. Cannot delete a patfielddef that is in use.
+
+PatFieldDefNum: Required in the URL.
+
+Example Request:
+DELETE /patfielddefs/16
+
+Example Responses:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

@@ -1,0 +1,56 @@
+{
+  "id": "db-codegroup",
+  "type": "database",
+  "title": "codegroup",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "codegroup",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "codegroup",
+    "description": "Table for codegroup data.",
+    "columns": [
+      {
+        "name": "codegroupNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "codegroupNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-benefits",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-codegroups",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

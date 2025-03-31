@@ -1,0 +1,43 @@
+API UserGroupAttaches
+See API Specification
+
+See User Edit for more information.
+
+UserGroupAttaches GET
+Version Added: 23.3.7
+
+Gets a list of usergroupattaches.
+
+Parameters: All optional.
+
+UserNum: FK to userod.UserNum.
+UserGroupNum: FK to usergroup.UserGroupNum.
+
+Example Requests:
+GET /usergroupattaches
+GET /usergroupattaches?UserNum=5
+GET /usergroupattaches?UserGroupNum=10
+
+Example Response:
+[
+{
+"UserGroupAttachNum": 3,
+"UserNum": 5,
+"UserGroupNum": 5
+},
+}
+"UserGroupAttachNum": 14,
+"UserNum": 5,
+"UserGroupNum": 10
+},
+{
+"UserGroupAttachNum": 23,
+"UserNum": 5,
+"UserGroupNum": 11
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

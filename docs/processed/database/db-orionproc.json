@@ -1,0 +1,41 @@
+{
+  "id": "db-orionproc",
+  "type": "database",
+  "title": "orionproc",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "orionproc",
+      "Procedure",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "orionproc",
+    "description": "Table for orionproc data.",
+    "columns": [
+      {
+        "name": "orionprocNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "orionprocNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

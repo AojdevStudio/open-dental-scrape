@@ -1,0 +1,162 @@
+{
+  "id": "api-medpatis",
+  "type": "api",
+  "title": "MedPatis",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API MedPatis.txt",
+  "content": "API MedicationPats\nSee API Specification\n\nMedicationPats GET\nVersion Added: 21.3\n\nGets a list of all medications for a given patient.\n\nExample Request:\nGET /medicationpats?PatNum=234\n\nExample Response:\n[\n{\n\"MedicationPatNum\": 45,\n\"PatNum\": \"234\",\n\"medName\": \"Metformin\",\n\"MedicationNum\": 12,\n\"PatNote\": \"500mg, taken twice a day.\",\n\"DateStart\": \"2000-06-20\",\n\"DateStop\": \"0001-01-01\",\n\"ProvNum\": 1\n},\netc...\n]\n\nMedicationPats POST\nVersion Added: 21.3\n\nAttaches a medication to a patient.\n\nPatNum: Required.\nmedName: Required. Tries to match to an existing medication. If a new medication must be created, it will be assumed to be generic rather than brand. For more control, use medication POST.\nMedicationNum: Rarely used. Just use medName instead, which handles insertion of a Medication automatically. If MedicationNum is used, then medName is not required.\n\nPatNote: Optional.\nDateStart: Optional. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\nDateStop: Optional. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\nProvNum: Optional. Default is 0.\n\nExample Requests:\nPOST /medicationpats\n\n{\n\"PatNum\": 234,\n\"medName\": \"Metformin\"\n}\n\nor\n\n{\n\"PatNum\": 234,\n\"medName\": \"Metformin\",\n\"PatNote\": \"500mg, taken twice a day.\",\n\"DateStart\": \"2006-02-01\",\n\"DateStop\": \"0001-01-01\",\n\"ProvNum\": 1\n}\n\nExample Response:\n201 Created\n400 BadRequest (Missing or Invalid fields)\n404 NotFound \"Patient not found\", \"Provider not found\" or \"Medication not found\"\n\nMedicationPats PUT\nVersion Added: 22.1\n\nUpdates the medication associated with a patient.\n\nMedicationPatNum: Required in the URL.\n\nPatNote: Optional. String for notes specific to this patient's medication.\nDateStart: Optional. String in \"yyyy-MM-dd\" format. Set to an empty string to reset to default of \"0001-01-01\".\nDateStop: Optional. String in \"yyyy-MM-dd\" format. Set to an empty string to reset to default of \"0001-01-01\".\nProvNum: Optional.\n\nExample Requests:\nPUT /medicationpats/212\n\n{\n\"PatNote\": \"500mg, taken twice a day.\",\n\"DateStart\": \"2006-02-01\",\n\"DateStop\": \"2022-05-11\",\n\"ProvNum\": 1\n}\n\nExample Response:\n200 OK\n400 BadRequest (Missing or Invalid fields)\n404 NotFound \"Provider not found\", \"Provider not found\" or \"MedicationPat not found\"\n\nMedicationPats DELETE\nVersion Added: 22.1\n\nDeletes a MedicationPat by MedicationPatNum.\n\nMedicationPatNum: Required in URL.\n\nExample Request:\nDELETE /medicationpats/5\n\nExample Response:\n200 OK\n400 BadRequest \"MedicationPatNum is required.\"\n404 NotFound \"MedicationPat not found.\"",
+  "metadata": {
+    "version": "22.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "MedPatis",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "MedicationPats",
+      "method": "GET",
+      "path": "/medicationpats",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /medicationpats?PatNum=234",
+          "response": "[\n{\n\"MedicationPatNum\": 45,\n\"PatNum\": \"234\",\n\"medName\": \"Metformin\",\n\"MedicationNum\": 12,\n\"PatNote\": \"500mg, taken twice a day.\",\n\"DateStart\": \"2000-06-20\",\n\"DateStop\": \"0001-01-01\",\n\"ProvNum\": 1\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "234",
+          "status": "Example",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of all medications for a given patient."
+    },
+    {
+      "resource": "MedicationPats",
+      "method": "POST",
+      "path": "/medicationpats",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /medicationpats\n\n{\n\"PatNum\": 234,\n\"medName\": \"Metformin\"\n}\n\nor\n\n{\n\"PatNum\": 234,\n\"medName\": \"Metformin\",\n\"PatNote\": \"500mg, taken twice a day.\",\n\"DateStart\": \"2006-02-01\",\n\"DateStop\": \"0001-01-01\",\n\"ProvNum\": 1\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or Invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Attaches a medication to a patient."
+    },
+    {
+      "resource": "MedicationPats",
+      "method": "PUT",
+      "path": "/medicationpats",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /medicationpats/212\n\n{\n\"PatNote\": \"500mg, taken twice a day.\",\n\"DateStart\": \"2006-02-01\",\n\"DateStop\": \"2022-05-11\",\n\"ProvNum\": 1\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or Invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Updates the medication associated with a patient."
+    },
+    {
+      "resource": "MedicationPats",
+      "method": "DELETE",
+      "path": "/medicationpats",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /medicationpats/5",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Deletes a MedicationPat by MedicationPatNum."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-medicationpat",
+      "description": "API references database table medicationpat"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

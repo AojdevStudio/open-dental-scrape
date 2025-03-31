@@ -1,0 +1,40 @@
+{
+  "id": "db-fhircontactpoint",
+  "type": "database",
+  "title": "fhircontactpoint",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "fhircontactpoint",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "fhircontactpoint",
+    "description": "Table for fhircontactpoint data.",
+    "columns": [
+      {
+        "name": "fhircontactpointNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "fhircontactpointNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

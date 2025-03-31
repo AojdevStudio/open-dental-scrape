@@ -1,0 +1,111 @@
+API Statements
+See API Specification
+
+See Statement Window for more information.
+
+Statements GET (single)
+Version Added: 24.2.23
+
+Gets a single statement.
+
+StatementNum: Required in URL.
+
+Example Request:
+GET /statements/1
+
+Example Response:
+{
+"StatementNum": 1,
+"PatNum": 1430,
+"DateSent": "2003-12-05",
+"DateRangeFrom": "0001-01-01",
+"DateRangeTo": "2004-02-01",
+"Note": "",
+"NoteBold": "",
+"Mode_": "Mail",
+"HidePayment": "false",
+"SinglePatient": "false",
+"Intermingled": "false",
+"IsSent": "false",
+"DocNum": 354,
+"DateTStamp": "2024-07-26 10:58:28",
+"IsReceipt": "false",
+"IsInvoice": "false",
+"IsInvoiceCopy": "false",
+"SuperFamily": 0,
+"IsBalValid": "false",
+"InsEst": 0.0,
+"BalTotal": 0.0,
+"StatementType": "NotSet",
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Statements GET (multiple)
+Version Added: 24.2.23
+
+Gets a list of statements.
+
+PatNum: Optional. Filter by patient.PatNum. Typically the guarantor.
+
+Example Requests:
+GET /statements
+GET /statements?PatNum=1430
+
+Example Response:
+[
+{
+"StatementNum": 1,
+"PatNum": 1430,
+"DateSent": "2003-12-05",
+"DateRangeFrom": "0001-01-01",
+"DateRangeTo": "2004-02-01",
+"Note": "",
+"NoteBold": "",
+"Mode_": "Mail",
+"HidePayment": "false",
+"SinglePatient": "false",
+"Intermingled": "false",
+"IsSent": "false",
+"DocNum": 354,
+"DateTStamp": "2024-07-26 10:58:28",
+"IsReceipt": "false",
+"IsInvoice": "false",
+"IsInvoiceCopy": "false",
+"SuperFamily": 0,
+"IsBalValid": "false",
+"InsEst": 0.0,
+"BalTotal": 0.0,
+"StatementType": "NotSet",
+},
+{
+"StatementNum": 2,
+"PatNum": 1430,
+"DateSent": "2024-02-08",
+"DateRangeFrom": "2024-01-01",
+"DateRangeTo": "2024-03-31",
+"Note": "",
+"NoteBold": "",
+"Mode_": "Mail",
+"HidePayment": "false",
+"SinglePatient": "false",
+"Intermingled": "false",
+"IsSent": "true",
+"DocNum": 355,
+"DateTStamp": "2022-09-30 14:20:24",
+"IsReceipt": "false",
+"IsInvoice": "false",
+"IsInvoiceCopy": "false",
+"SuperFamily": 0,
+"IsBalValid": "false",
+"InsEst": 0.0,
+"BalTotal": 0.0,
+"StatementType": "NotSet",
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

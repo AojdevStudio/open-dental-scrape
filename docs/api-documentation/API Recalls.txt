@@ -1,0 +1,276 @@
+API Recalls
+See API Specification
+
+See Recall for more information.
+
+Recalls GET
+Version Added: 22.4.40
+
+Gets a list of recalls.
+
+Parameter:
+
+PatNum: Optional.
+
+Example Requests:
+GET /recalls
+GET /recalls?PatNum=38
+
+Example Response:
+[
+{
+"RecallNum": 40,
+"PatNum": 38,
+"DateDue": "2022-09-09",
+"DatePrevious": "0001-01-01",
+"RecallInterval": "6m1d",
+"RecallStatus": 142,
+"recallStatus": "Mailed Postcard",
+"Note": "",
+"IsDisabled": "false",
+"DateTStamp": "2021-07-21 10:05:47",
+"RecallTypeNum": 6,
+"DisableUntilBalance": 0.0,
+"DisableUntilDate": "0001-01-01",
+"DateScheduled": "0001-01-01",
+"Priority": "Normal",
+"TimePatternOverride": ""
+},
+etc...
+]
+
+200 OK
+400 BadRequest
+404 NotFound
+
+Recalls GET List
+Version Added: 22.1
+
+Gets the Recall List similar to how it's shown in the Appointment Module when you click on Lists and select Recalls.
+
+RecallType selection is dependant upon Recall Setup. RecallTypes are stored in CSV format in the RecallTypesShowingInList preference. That preference stores the primary keys from the RecallType table. This information can be retrieved using GET preferences?PrefName=RecallTypesShowingInList.
+
+URL Search Parameters:
+
+DateStart: Due date range. String in "yyyy-mm-dd" format. Default is based on RecallDaysPast preference.
+DateEnd: Due date range. String in "yyyy-mm-dd" format. Default is based on RecallDaysFuture preference.
+ProvNum: Provider. Default is all providers. Will consider PriProv and SecProv.
+ClinicNum: Clinic. Default is all clinics. Use 0 for "Unassigned".
+RecallType: Typically either "Prophy" or "Perio". Default is all RecallTypes stored in the preference.
+IncludeReminded: Show patients that have already received reminders. Either "true" or "false". Default is false.
+
+Returned fields are detailed below:
+
+DueDate: The date the recall is due. Based off previously completed recall procedures or insurance history. If blank, the patient has never had a recall procedure set complete.
+PatNum: Patient.PatNum.
+Patient: Patient's name. Last, First.
+Age: Patient's Age.
+Type: RecallType due.
+Interval: The length of time between each recall appointment for the recall type.
+NumRemind: The number of reminders sent since the patient's last recall appointment.
+LastRemind: The date the last reminder was sent.
+Contact: The patient's Preferred Recall Method.
+Status: Recall communication about a patient's unscheduled recall appointment. Example "Left Msg".
+ClinicNum: ClinicNum of clinic patient is assigned to. Will be 0 if not using Clinics.
+Note: Administrative note.
+
+Example Request:
+GET /recalls/List?Offset=200
+GET /recalls/List?IncludeReminded=true
+
+Example Response:
+[
+{
+"DueDate": "3/16/2022",
+"PatNum": 15,
+"Patient": "Strickler, Trent",
+"Age": "38",
+"Type": "Pano",
+"Interval": "6m1d",
+"NumRemind": "",
+"LastRemind": "",
+"Contact": "Text:(541)555-1234",
+"Status": "",
+"ClinicNum": 5,
+"Note": ""
+},
+{
+"DueDate": "1/10/2022",
+"PatNum": 42,
+"Patient": "Lehrer, 'Andy' Tom",
+"Age": "29",
+"Type": "Exam",
+"Interval": "6m1d",
+"NumRemind": "1",
+"LastRemind": "11/4/2021",
+"Contact": "meandu@earth.com",
+"Status": "",
+"ClinicNum": 4,
+"Note": ""
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Recalls POST (create)
+Version Added: 24.2.31
+
+Creates a recall for a patient. A patient should have at most, one recall for each Recall Type.
+
+Parameters:
+
+PatNum: Required. FK to patient.PatNum.
+RecallTypeNum: Required. FK to recalltype.RecallTypeNum. A patient may only have one recall for each RecallType.
+
+DateDue: Optional. This is the date that is actually used when doing reports for recall. String in "yyyy-MM-dd" format.
+RecallInterval: Optional.The interval between recalls. String that contains a digit followed by 'y' for years, 'm' for months, 'w' for weeks, or 'd' for days. An example of 1 year, 6 months, and 20 days should be formatted as follows: '1y6m20d'. Default recalltype.DefaultInterval.
+RecallStatus: Optional. FK to definition.DefNum where definition.Category=13. Default 0.
+Note: Optional. An administrative note for staff use.
+IsDisabled: Optional. Either "true" or "false". Default "false".
+DisableUntilBalance: Optional. Family balance must be less than this value for the recall to show in the recall list. Default 0.
+DisableUntilDate: Optional. Recall will be disabled until this date. String in "yyyy-MM-dd" format.
+Priority: Optional. Either "Normal" or "ASAP". Default "Normal".
+TimePatternOverride: Optional. Used to override recalltype.DefaultInterval. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only.
+
+Example Request:
+POST /recalls
+
+{
+"PatNum": 38,
+"RecallTypeNum": 8,
+"RecallInterval": "0y6m0w1d",
+"RecallStatus": 142,
+"Note": "New patient, try to get appoinment around the same time as child."
+}
+
+Example Response:
+{
+"RecallNum": 40,
+"PatNum": 38,
+"DateDue": "0001-01-01",
+"DatePrevious": "0001-01-01",
+"RecallInterval": "6m1d",
+"RecallStatus": 142,
+"recallStatus": "Mailed Postcard",
+"Note": "New patient, try to get appoinment around the same time as child.",
+"IsDisabled": "false",
+"DateTStamp": "2024-09-02 09:31:19",
+"RecallTypeNum": 8,
+"DisableUntilBalance": 0.0,
+"DisableUntilDate": "0001-01-01",
+"DateScheduled": "0001-01-01",
+"Priority": "Normal",
+"TimePatternOverride": ""
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Recalls PUT (update)
+Version Added: 24.2.31
+
+Updates a recall.
+
+RecallNum: Required in URL.
+
+DateDue: This is the date that is actually used when doing reports for recall. String in "yyyy-MM-dd" format.
+RecallInterval: The interval between recalls. String that contains a digit followed by 'y' for years, 'm' for months, 'w' for weeks, or 'd' for days. An example of 1 year, 6 months, and 20 days should be formatted as follows: '1y6m20d'.
+RecallStatus: FK to definition.DefNum where definition.Category=13. Use 0 to set to "None".
+Note: An administrative note for staff use. Overwrites existing note.
+IsDisabled: Either "true" or "false".
+DisableUntilBalance: Family balance must be less than this value for the recall to show in the recall list.
+DisableUntilDate: Recall will be disabled until this date. String in "yyyy-MM-dd" format.
+Priority: Either "Normal" or "ASAP".
+TimePatternOverride: Used to override recalltype.DefaultInterval. Time pattern in 5 minute increments. A string consisting of 'X' and '/' characters only.
+
+Example Request:
+PUT /recalls/1652
+
+{
+"DateDue": "2022-09-09",
+"RecallInterval": "0y6m0w1d",
+"RecallStatus": 142,
+"Note": "New patient, try to get appoinment around the same time as child."
+}
+
+Example Response:
+{
+"RecallNum": 1652,
+"PatNum": 38,
+"DateDue": "2022-09-09",
+"DatePrevious": "0001-01-01",
+"RecallInterval": "6m1d",
+"RecallStatus": 142,
+"recallStatus": "Mailed Postcard",
+"Note": "New patient, try to get appoinment around the same time as child.",
+"IsDisabled": "false",
+"DateTStamp": "2021-07-21 10:05:47",
+"RecallTypeNum": 6,
+"DisableUntilBalance": 0.0,
+"DisableUntilDate": "0001-01-01",
+"DateScheduled": "0001-01-01",
+"Priority": "Normal",
+"TimePatternOverride": ""
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Recalls PUT Status
+Version Added: 21.2
+
+Updates the RecallStatus on a patient's recall. This status describes the recall reminder itself, and not the status of the resulting appointment. To instead change an appointment's status, use Appointments PUT Confirm. A commlog for the patient is also created with CommType.Recall, Mode_.None, and note with "Recall reminder" and the new RecallStatus.
+
+PatNum: Required.
+recallType: Required. Typically either "Prophy" or "Perio". RecallType is dependent upon Recall Setup and Recall Types.
+RecallStatus: Optional. Any definition.DefNum where Definition.Category=13. Use 0 set status to "None".
+commlogMode: Optional. Either "None", "Email", "Mail", "Phone", "InPerson", "Text", "EmailAndText", or "PhoneAndText".
+commlogNote: Optional. This text will be used instead of the default commlog.Note.
+
+Example Requests:
+PUT /recalls/Status
+
+{
+"PatNum": 71,
+"recallType": "Prophy",
+"RecallStatus": 312,
+"commlogMode": "Phone",
+"commlogNote": "Patient out of town until 08/30/2021."
+}
+
+{
+"PatNum": 46,
+"recallType": "Perio"
+}
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Recalls PUT SwitchType
+Version Added: 22.4.41
+
+Switches a Recall's type similiar to clicking the 'Set Perio' or 'Set Prophy' button found in the Recalls for Patient window.
+
+
+If a patient has a Prophy type recall, it will be set to Perio.
+If a patient has a Perio type recall, it will be set to Prophy.
+PatNum: Required.
+
+Example Request:
+PUT /recalls/SwitchType
+
+{
+"PatNum": 38
+}
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

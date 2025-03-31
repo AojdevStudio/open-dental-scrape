@@ -1,0 +1,65 @@
+API EhrPatients
+See API Specification
+
+EhrPatients GET
+Version Added: 24.1.15
+
+Gets a single ehrpatient.
+
+PatNum: Required in the URL.
+
+Example Request:
+GET /ehrpatients/11
+
+Example Response:
+{
+"PatNum": 11,
+"MotherMaidenFname": "Uriel",
+"MotherMaidenLname": "Unallowed",
+"VacShareOk": "Yes",
+"MedicaidState": "OR",
+"SexualOrientation": "20430005",
+"GenderIdentity": "446151000124109",
+"SexualOrientationNote": "",
+"GenderIdentityNote": "",
+"DischargeDate": "0001-01-01"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+EhrPatients PUT (update)
+Version Added: 24.1.15
+
+Updates an ehrpatient.
+
+PatNum: Required in the URL.
+
+DischargeDate: String in "yyyy-MM-dd" format.
+MedicaidState: (Added in version 24.4.13) The abbreviation for the state for the patient's MedicaidID.
+
+Example Request:
+PUT /ehrpatients/11
+
+{
+"DischargeDate": "2024-02-15"
+}
+
+Example Response:
+{
+"PatNum": 11,
+"MotherMaidenFname": "Uriel",
+"MotherMaidenLname": "Unallowed",
+"VacShareOk": "Yes",
+"MedicaidState": "OR",
+"SexualOrientation": "20430005",
+"GenderIdentity": "446151000124109",
+"SexualOrientationNote": "",
+"GenderIdentityNote": "",
+"DischargeDate": "2024-02-15"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

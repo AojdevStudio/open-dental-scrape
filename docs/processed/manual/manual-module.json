@@ -1,0 +1,102 @@
+{
+  "id": "manual-module",
+  "type": "manual",
+  "title": "Module",
+  "path": "Module",
+  "metadata": {
+    "category": [
+      "Manual"
+    ],
+    "tags": [
+      "Schedule",
+      "Module",
+      "Appointment"
+    ],
+    "section": "Module",
+    "subsection": null,
+    "topic": null
+  },
+  "manual": {
+    "content": [
+      {
+        "type": "text",
+        "content": "Manual"
+      },
+      {
+        "type": "text",
+        "content": "Search"
+      },
+      {
+        "type": "text",
+        "content": "Module"
+      },
+      {
+        "type": "text",
+        "content": "Open Dental has one main window with seven modules. This makes navigation easy and keeps the screen and task bar uncluttered."
+      },
+      {
+        "type": "text",
+        "content": "To switch modules, click the associated button in the vertical toolbar on the left side of the window."
+      },
+      {
+        "type": "list",
+        "items": [
+          "Appointments Module",
+          "Family Module",
+          "Account Module",
+          "Treatment Plan Module",
+          "Chart Module",
+          "Imaging Module",
+          "Manage Module"
+        ],
+        "ordered": false
+      },
+      {
+        "type": "text",
+        "content": "Two Modules Open at Same Time: Sometimes you may want two modules open at the same time. For example, you may want to view the appointment schedule while managing accounts. Or perhaps you want to compare two different patients side by side. In these scenarios, simply open two instances of Open Dental."
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "type": "references",
+      "target": "api-patients",
+      "description": "Manual section references API"
+    },
+    {
+      "type": "references",
+      "target": "api-appointments",
+      "description": "Manual section references API"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "Manual section references database table"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "Manual section references database table"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "Manual section references database table"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "Manual section references database table"
+    },
+    {
+      "type": "references",
+      "target": "db-screen",
+      "description": "Manual section references database table"
+    },
+    {
+      "type": "references",
+      "target": "db-task",
+      "description": "Manual section references database table"
+    }
+  ]
+}

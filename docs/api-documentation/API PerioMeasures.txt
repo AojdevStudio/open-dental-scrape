@@ -1,0 +1,237 @@
+API PerioMeasures
+See API Specification
+
+See Perio Chart for more information.
+
+A PerioMeasure stores measurements for a single tooth in a PerioExam. One tooth can have multiple PerioMeasures on a single exam, but only one of each SequenceType. Different SequenceTypes have different ranges of measurements that ToothValue and Surface Values (MBvalue, Bvalue, DBvalue, MLvalue, Lvalue, and DLvalue) can contain. Values of -1 indicate no measurement. Values greater than 100 indicate negative values (Example: To use a value of 105, subtract it from 100. [100 - 105 = -5]).
+
+If SequenceType is "Mobility", then ToothValue can range from 0-19. All Surface Values must be -1.
+If SequenceType is "Furcation", then Surface Values can range from -1, 0-19. ToothValue must be -1.
+If SequenceType is "GingMargin", then Surface Values can range from -1, 0-19, or 101-119. ToothValue must be -1.
+If SequenceType is "MGJ", then Surface Values can range from -1, 0-19. However, if IntTooth is 1-16, then MLvalue, Lvalue, and DLvalue must all be -1. ToothValue must be -1.
+If SequenceType is "Probing", then Surface Values can range from -1, 0-19. ToothValue must be -1.
+If SequenceType is "SkipTooth", then ToothValue must be 1. All Surface Values must be -1.
+If SequenceType is "BleedSupPlaqCalc" ("Bleeding" prior to version 24.1), then Surface Values can range from 0-15. These values represent the sum of flags for bleeding(1), suppuration(2), plaque(4), and calculus(8). For example, a BleedSupPlaqCalc measurement of 13 means there is bleeding, plaque, and calculus (1+4+8=13). ToothValue must be -1.
+
+PerioMeasures of SequenceType "CAL" are not saved to the database. A Clinical Attachment Loss measurement for a surface is calculated by adding the Probing and GingMargin measurements of a surface.
+PerioMeasures GET
+Version Added: 22.4.32
+
+Gets a list of periomeasures.
+
+PerioExamNum: Optional. FK to perioexam.PerioExamNum. Use to get all measurements for a single exam.
+
+Returned fields are detailed below:
+
+SequenceType: Specifies what is being measured.
+IntTooth: The tooth this measurement is associated to.
+ToothValue: Used when the measurement does not apply to a surface.
+MBvalue: Mesial Buccal surface value.
+Bvalue: Buccal surface value.
+DBvalue: Distal Buccal surface value.
+MLvalue: Mesial Lingual surface value.
+Lvalue: Lingual surface value.
+DLvalue: Distal Lingual surface value.
+SecDateTEdit: When this PerioMeasure was last modified.
+
+Example Requests:
+GET /periomeasures
+GET /periomeasures?PerioExamNum=3
+
+Example Response:
+[
+{
+"PerioMeasureNum": 66,
+"PerioExamNum": 3,
+"SequenceType": "SkipTooth",
+"IntTooth": 16,
+"ToothValue": 1,
+"MBvalue": -1,
+"Bvalue": -1,
+"DBvalue": -1,
+"MLvalue": -1,
+"Lvalue": -1,
+"DLvalue": -1,
+"SecDateTEdit": "2023-03-15 11:35:22"
+},
+{
+"PerioMeasureNum": 96,
+"PerioExamNum": 3,
+"SequenceType": "Probing",
+"IntTooth": 17,
+"ToothValue": -1,
+"MBvalue": 3,
+"Bvalue": 3,
+"DBvalue": 3,
+"MLvalue": 3,
+"Lvalue": 2,
+"DLvalue": 3,
+"SecDateTEdit": "2023-03-15 11:44:14"
+},
+{
+"PerioMeasureNum": 97,
+"PerioExamNum": 3,
+"SequenceType": "BleedSupPlaqCalc",
+"IntTooth": 2,
+"ToothValue": -1,
+"MBvalue": 0,
+"Bvalue": 15,
+"DBvalue": 15,
+"MLvalue": 0,
+"Lvalue": 0,
+"DLvalue": 0,
+"SecDateTEdit": "2023-03-15 11:50:14"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+PerioMeasures POST (create)
+Version Added: 22.4.37
+
+Inserts a new periomeasure. New periomeasures are compared against existing periomeasures attached to the same perioexam to prevent duplicates.
+
+PerioExamNum: Required. FK to perioexam.PerioExamNum.
+SequenceType: Required. Either "Mobility", "Furcation", "GingMargin", "MGJ", "Probing", "SkipTooth", or "BleedSupPlaqCalc".
+IntTooth: Required. Valid values are 1-32. The tooth that this measurement is associated to.
+ToothValue, MBvalue, Bvalue, DBvalue, MLvalue, Lvalue, DLvalue: See the top of this page for more information. Relies on SequenceType. When SequenceType allows Surface Values, at least one of the six values must contain a measurement. Default -1.
+
+Example Requests:
+POST /periomeasures
+{
+"PerioExamNum": 5,
+"SequenceType": "Probing",
+"IntTooth": 8,
+"MBvalue": 2,
+"Bvalue": 3,
+"DBvalue": 2,
+"MLvalue": 2,
+"Lvalue": 2,
+"DLvalue": 2
+}
+
+or
+
+{
+"PerioExamNum": 5,
+"SequenceType": "Mobility",
+"IntTooth": 9,
+"ToothValue": 4
+}
+
+Example Responses:
+{
+"PerioMeasureNum": 206,
+"PerioExamNum": 5,
+"SequenceType": "Probing",
+"IntTooth": 8,
+"ToothValue": -1,
+"MBvalue": 2,
+"Bvalue": 3,
+"DBvalue": 2,
+"MLvalue": 2,
+"Lvalue": 2,
+"DLvalue": 2,
+"SecDateTEdit": "2023-03-30 11:20:02"
+}
+
+or
+
+{
+"PerioMeasureNum": 207,
+"PerioExamNum": 5,
+"SequenceType": "Mobility",
+"IntTooth": 9,
+"ToothValue": 4,
+"MBvalue": -1,
+"Bvalue": -1,
+"DBvalue": -1,
+"MLvalue": -1,
+"Lvalue": -1,
+"DLvalue": -1,
+"SecDateTEdit": "2023-03-30 11:23:31"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+PerioMeasures PUT (update)
+Version Added: 22.4.37
+
+Updates an existing periomeasure.
+
+PerioMeasureNum: Required in the URL. Primary key.
+ToothValue, MBvalue, Bvalue, DBvalue, MLvalue, Lvalue, DLvalue: The values that can be supplied and the measurements they can contain rely on the SequenceType. See the top of this page for more information.
+
+Example Requests:
+PUT /periomeasures/206
+{
+"MBvalue": 3,
+"Bvalue": 2,
+"DBvalue": 3,
+"MLvalue": 3,
+"Lvalue": 2,
+"DLvalue": 3
+}
+
+or
+
+{
+"ToothValue": 4
+}
+
+Example Responses:
+{
+"PerioMeasureNum": 206,
+"PerioExamNum": 5,
+"SequenceType": "Probing",
+"IntTooth": 8,
+"ToothValue": -1,
+"MBvalue": 3,
+"Bvalue": 2,
+"DBvalue": 3,
+"MLvalue": 3,
+"Lvalue": 2,
+"DLvalue": 3,
+"SecDateTEdit": "2023-04-05 14:30:00"
+}
+
+or
+
+{
+"PerioMeasureNum": 207,
+"PerioExamNum": 5,
+"SequenceType": "Mobility",
+"IntTooth": 9,
+"ToothValue": 4,
+"MBvalue": -1,
+"Bvalue": -1,
+"DBvalue": -1,
+"MLvalue": -1,
+"Lvalue": -1,
+"DLvalue": -1,
+"SecDateTEdit": "2023-04-03 09:48:23"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+PerioMeasures DELETE
+Version Added: 23.3.27
+
+Deletes an existing periomeasure with a SequenceType of "Mobility" or "SkipTooth".
+
+PerioMeasureNum: Required in the URL.
+
+Example Request:
+DELETE /periomeasures/207
+
+Example Responses:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

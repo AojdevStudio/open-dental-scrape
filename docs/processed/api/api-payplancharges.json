@@ -1,0 +1,84 @@
+{
+  "id": "api-payplancharges",
+  "type": "api",
+  "title": "Payplancharges",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Payplancharges.txt",
+  "content": "API PayPlanCharges\nSee API Specification\n\nPayPlanCharges GET\nVersion Added: 23.2.28\n\nGets all payplancharges for a specified payment plan.\n\nPayPlanNum: Required.\n\nExample Request:\nGET /payplancharges?PayPlanNum=23\n\nExample Response:\n[\n{\n\"PayPlanChargeNum\": 42,\n\"PayPlanNum\": 23,\n\"Guarantor\": 30,\n\"PatNum\": 30,\n\"ChargeDate\": \"2023-09-20\",\n\"Principal\": 25.0,\n\"Interest\": 0.0,\n\"Note\": \"Down Payment\",\n\"ProvNum\": 2,\n\"ClinicNum\": 0,\n\"ChargeType\": \"Debit\",\n\"ProcNum\": 0,\n\"SecDateTEntry\": \"2023-09-20 09:24:16\",\n\"SecDateTEdit\": \"2023-09-20 09:24:16\",\n\"StatementNum\": 0,\n\"FKey\": 134,\n\"LinkType\": \"Procedure\",\n\"IsOffset\": \"false\"\n},\n{\n\"PayPlanChargeNum\": 43,\n\"PayPlanNum\": 23,\n\"Guarantor\": 30,\n\"PatNum\": 30,\n\"ChargeDate\": \"2023-10-20\",\n\"Principal\": 40.96,\n\"Interest\": 0.12,\n\"Note\": \"\",\n\"ProvNum\": 2,\n\"ClinicNum\": 0,\n\"ChargeType\": \"Debit\",\n\"ProcNum\": 0,\n\"SecDateTEntry\": \"2023-10-20 08:58:27\",\n\"SecDateTEdit\": \"2023-10-20 08:58:27\",\n\"StatementNum\": 0,\n\"FKey\": 134,\n\"LinkType\": \"Procedure\",\n\"IsOffset\": \"false\"\n},\n{\n\"PayPlanChargeNum\": 44,\n\"PayPlanNum\": 23,\n\"Guarantor\": 30,\n\"PatNum\": 30,\n\"ChargeDate\": \"2023-10-23\",\n\"Principal\": 8.04,\n\"Interest\": 0.0,\n\"Note\": \"Close Out Charge\",\n\"ProvNum\": 2,\n\"ClinicNum\": 0,\n\"ChargeType\": \"Debit\",\n\"ProcNum\": 0,\n\"SecDateTEntry\": \"2023-10-23 15:38:30\",\n\"SecDateTEdit\": \"2023-10-23 15:38:30\",\n\"StatementNum\": 0,\n\"FKey\": 134,\n\"LinkType\": \"Procedure\",\n\"IsOffset\": \"false\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.2.28",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Payplancharges",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PayPlanCharges",
+      "method": "GET",
+      "path": "/payplancharges",
+      "versionAdded": "23.2.28",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /payplancharges?PayPlanNum=23",
+          "response": "[\n{\n\"PayPlanChargeNum\": 42,\n\"PayPlanNum\": 23,\n\"Guarantor\": 30,\n\"PatNum\": 30,\n\"ChargeDate\": \"2023-09-20\",\n\"Principal\": 25.0,\n\"Interest\": 0.0,\n\"Note\": \"Down Payment\",\n\"ProvNum\": 2,\n\"ClinicNum\": 0,\n\"ChargeType\": \"Debit\",\n\"ProcNum\": 0,\n\"SecDateTEntry\": \"2023-09-20 09:24:16\",\n\"SecDateTEdit\": \"2023-09-20 09:24:16\",\n\"StatementNum\": 0,\n\"FKey\": 134,\n\"LinkType\": \"Procedure\",\n\"IsOffset\": \"false\"\n},\n{\n\"PayPlanChargeNum\": 43,\n\"PayPlanNum\": 23,\n\"Guarantor\": 30,\n\"PatNum\": 30,\n\"ChargeDate\": \"2023-10-20\",\n\"Principal\": 40.96,\n\"Interest\": 0.12,\n\"Note\": \"\",\n\"ProvNum\": 2,\n\"ClinicNum\": 0,\n\"ChargeType\": \"Debit\",\n\"ProcNum\": 0,\n\"SecDateTEntry\": \"2023-10-20 08:58:27\",\n\"SecDateTEdit\": \"2023-10-20 08:58:27\",\n\"StatementNum\": 0,\n\"FKey\": 134,\n\"LinkType\": \"Procedure\",\n\"IsOffset\": \"false\"\n},\n{\n\"PayPlanChargeNum\": 44,\n\"PayPlanNum\": 23,\n\"Guarantor\": 30,\n\"PatNum\": 30,\n\"ChargeDate\": \"2023-10-23\",\n\"Principal\": 8.04,\n\"Interest\": 0.0,\n\"Note\": \"Close Out Charge\",\n\"ProvNum\": 2,\n\"ClinicNum\": 0,\n\"ChargeType\": \"Debit\",\n\"ProcNum\": 0,\n\"SecDateTEntry\": \"2023-10-23 15:38:30\",\n\"SecDateTEdit\": \"2023-10-23 15:38:30\",\n\"StatementNum\": 0,\n\"FKey\": 134,\n\"LinkType\": \"Procedure\",\n\"IsOffset\": \"false\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all payplancharges for a specified payment plan."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-statement",
+      "description": "API references database table statement"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-payplancharge",
+      "description": "API references database table payplancharge"
+    }
+  ]
+}

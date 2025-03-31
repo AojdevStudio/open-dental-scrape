@@ -1,0 +1,40 @@
+{
+  "id": "db-toolbutitem",
+  "type": "database",
+  "title": "toolbutitem",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "toolbutitem",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "toolbutitem",
+    "description": "Table for toolbutitem data.",
+    "columns": [
+      {
+        "name": "toolbutitemNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "toolbutitemNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

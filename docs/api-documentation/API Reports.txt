@@ -1,0 +1,104 @@
+API Reports
+See API Specification
+
+Reports GET Aging
+Version Added: 21.4
+
+Rarely used. See API Setup for additional information.
+
+Gets the Aging Report for all patients. This endpoint calculates aging, but does not update accounts.
+
+DateAsOf: Optional. Defaults to today's date. Gets the aging as of the passed in date. Must be in yyyy-MM-dd format.
+ClinicNum: (Added in version 22.2) Optional. Gets aging for account entries on a specific clinic. Not specifying ClinicNum will get aging for all clinics, if enabled.
+
+Returned fields are detailed below:
+
+PatNum: The PatNum of the guarantor.
+patName: The guarantor's first and last name.
+Bal_0_30: The balance that is up to 30 days past due.
+Bal_31_60: The balance that is 31-60 days past due.
+Bal_61_90: The balance that is 61-90 days past due.
+BalOver90: The balance that is greater than 90 days past due.
+BalTotal: The total amount owed by the family before insurance.
+InsWoEst: The insurance write-off estimate amount based on procedures attached to the claim.
+InsPayEst: The total estimated insurance payment amount.
+PatientPortion: BalTotal - InsPayEst - InsWoEst.
+
+Example Requests:
+GET /reports/Aging
+GET /reports/Aging?DateAsOf=2020-07-30&ClinicNum=5
+GET /reports/Aging?Offset=200
+
+Example Response:
+[
+{
+"PatNum": 11,
+"patName": "Allowed, Allen ",
+"Bal_0_30": 0,
+"Bal_31_60": 0,
+"Bal_61_90": 0,
+"BalOver90": 370,
+"BalTotal": 370,
+"InsWoEst": 0,
+"InsPayEst": 265,
+"PatientPortion": 105
+},
+{
+"PatNum": 13,
+"patName": "Copay, Candi ",
+"Bal_0_30": 0,
+"Bal_31_60": 0,
+"Bal_61_90": 0,
+"BalOver90": 140,
+"BalTotal": 140,
+"InsWoEst": 30,
+"InsPayEst": 35,
+"PatientPortion": 75
+},
+etc...
+]
+
+Reports GET FinanceCharges
+Version Added: 22.2.32
+
+Gets the Finance Charge Report for passed in parameters.
+
+DateFrom: Optional. Defaults to today's date. Must be in yyyy-MM-dd format.
+DateTo: Optional. Defaults to today's date. Must be in yyyy-MM-dd format.
+ProvNums: Optional. Array of ProvNums. Default all providers.
+BillingTypes: Optional. Array of DefNums for definitions where definition.Category=4. Default all billing types.
+
+Returned fields are detailed below:
+
+PatNum: The PatNum of the patient.
+PatName: The patient's first and last name.
+Preferred: The patient's preferred name.
+AdjAmt: The amount of the adjustment.
+
+Example Requests:
+GET /reports/FinanceCharges
+GET /reports/FinanceCharges?DateFrom=2022-08-22&DateTo=2022-09-02&ProvNums=[2,3]&BillingTypes=[40]
+GET /reports/FinanceCharges?ProvNums=2,3,4
+
+Example Response:
+[
+{
+"PatNum": 11,
+"PatName": "Allowed, Allen ",
+"Preferred": "",
+"AdjAmt": 3.08
+},
+{
+"PatNum": 13,
+"PatName": "Copay, Candice ",
+"Preferred": "Candi",
+"AdjAmt": 1.17
+},
+{
+"PatNum": 25,
+"PatName": "Jones, Mary Sue ",
+"Preferred": "",
+"AdjAmt": 16.05
+},
+etc...
+]

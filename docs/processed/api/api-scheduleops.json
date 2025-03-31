@@ -1,0 +1,79 @@
+{
+  "id": "api-scheduleops",
+  "type": "api",
+  "title": "ScheduleOps",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ScheduleOps.txt",
+  "content": "API ScheduleOps\nSee API Specification\n\nA scheduleop links one schedule block to one operatory. A schedule block can be linked to one or more operatories. A schedule can also not have any scheduleops.\n\nScheduleOps GET\nVersion Added: 23.2.27\n\nGets a list of scheduleops optionally filtered by either ScheduleNum or OperatoryNum.\n\nParameters: All optional.\n\nScheduleNum: FK to schedule.ScheduleNum.\nOperatoryNum: FK to operatory.OperatoryNum.\n\nExample Requests:\nGET /scheduleops\nGET /scheduleops?ScheduleNum=1093\nGET /scheduleops?OperatoryNum=14\n\nExample Response:\n[\n{\n\"ScheduleOpNum\": 156,\n\"ScheduleNum\": 1092,\n\"OperatoryNum\": 12\n},\n{\n\"ScheduleOpNum\": 157,\n\"ScheduleNum\": 1092,\n\"OperatoryNum\": 13\n},\n{\n\"ScheduleOpNum\": 158,\n\"ScheduleNum\": 1092,\n\"OperatoryNum\": 14\n},\n{\n\"ScheduleOpNum\": 159,\n\"ScheduleNum\": 1093,\n\"OperatoryNum\": 12\n},\n{\n\"ScheduleOpNum\": 160,\n\"ScheduleNum\": 1093,\n\"OperatoryNum\": 13\n},\n{\n\"ScheduleOpNum\": 161,\n\"ScheduleNum\": 1093,\n\"OperatoryNum\": 14\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.2.27",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ScheduleOps",
+      "GET",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ScheduleOps",
+      "method": "GET",
+      "path": "/scheduleops",
+      "versionAdded": "23.2.27",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /scheduleops\nGET /scheduleops?ScheduleNum=1093\nGET /scheduleops?OperatoryNum=14",
+          "response": "[\n{\n\"ScheduleOpNum\": 156,\n\"ScheduleNum\": 1092,\n\"OperatoryNum\": 12\n},\n{\n\"ScheduleOpNum\": 157,\n\"ScheduleNum\": 1092,\n\"OperatoryNum\": 13\n},\n{\n\"ScheduleOpNum\": 158,\n\"ScheduleNum\": 1092,\n\"OperatoryNum\": 14\n},\n{\n\"ScheduleOpNum\": 159,\n\"ScheduleNum\": 1093,\n\"OperatoryNum\": 12\n},\n{\n\"ScheduleOpNum\": 160,\n\"ScheduleNum\": 1093,\n\"OperatoryNum\": 13\n},\n{\n\"ScheduleOpNum\": 161,\n\"ScheduleNum\": 1093,\n\"OperatoryNum\": 14\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "093",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of scheduleops optionally filtered by either ScheduleNum or OperatoryNum."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-scheduleop",
+      "description": "API references database table scheduleop"
+    },
+    {
+      "type": "references",
+      "target": "db-operatory",
+      "description": "API references database table operatory"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "api-ehrpatients",
+  "type": "api",
+  "title": "EhrPatients",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API EhrPatients.txt",
+  "content": "API EhrPatients\nSee API Specification\n\nEhrPatients GET\nVersion Added: 24.1.15\n\nGets a single ehrpatient.\n\nPatNum: Required in the URL.\n\nExample Request:\nGET /ehrpatients/11\n\nExample Response:\n{\n\"PatNum\": 11,\n\"MotherMaidenFname\": \"Uriel\",\n\"MotherMaidenLname\": \"Unallowed\",\n\"VacShareOk\": \"Yes\",\n\"MedicaidState\": \"OR\",\n\"SexualOrientation\": \"20430005\",\n\"GenderIdentity\": \"446151000124109\",\n\"SexualOrientationNote\": \"\",\n\"GenderIdentityNote\": \"\",\n\"DischargeDate\": \"0001-01-01\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nEhrPatients PUT (update)\nVersion Added: 24.1.15\n\nUpdates an ehrpatient.\n\nPatNum: Required in the URL.\n\nDischargeDate: String in \"yyyy-MM-dd\" format.\nMedicaidState: (Added in version 24.4.13) The abbreviation for the state for the patient's MedicaidID.\n\nExample Request:\nPUT /ehrpatients/11\n\n{\n\"DischargeDate\": \"2024-02-15\"\n}\n\nExample Response:\n{\n\"PatNum\": 11,\n\"MotherMaidenFname\": \"Uriel\",\n\"MotherMaidenLname\": \"Unallowed\",\n\"VacShareOk\": \"Yes\",\n\"MedicaidState\": \"OR\",\n\"SexualOrientation\": \"20430005\",\n\"GenderIdentity\": \"446151000124109\",\n\"SexualOrientationNote\": \"\",\n\"GenderIdentityNote\": \"\",\n\"DischargeDate\": \"2024-02-15\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.1.15",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "EhrPatients",
+      "GET",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "EhrPatients",
+      "method": "GET",
+      "path": "/ehrpatients",
+      "versionAdded": "24.1.15",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /ehrpatients/11",
+          "response": "{\n\"PatNum\": 11,\n\"MotherMaidenFname\": \"Uriel\",\n\"MotherMaidenLname\": \"Unallowed\",\n\"VacShareOk\": \"Yes\",\n\"MedicaidState\": \"OR\",\n\"SexualOrientation\": \"20430005\",\n\"GenderIdentity\": \"446151000124109\",\n\"SexualOrientationNote\": \"\",\n\"GenderIdentityNote\": \"\",\n\"DischargeDate\": \"0001-01-01\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a single ehrpatient."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-ehrpatient",
+      "description": "API references database table ehrpatient"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

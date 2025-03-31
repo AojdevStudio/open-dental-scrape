@@ -1,0 +1,36 @@
+{
+  "id": "api-quickpastecats",
+  "type": "api",
+  "title": "Quickpastecats",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Quickpastecats.txt",
+  "content": "API QuickPasteCats\nSee\u00a0API Specification\nQuickPasteCats are used to organize Quick Paste Notes of a similar type, for more information see\u00a0Quick Paste Category.\nQuickPasteCats GET (single)\nVersion Added: 22.3.26\nGets a QuickPasteCat corresponding to a passed in QuickPasteCatNum.\nExample Request:\u2028GET /quickpastecats/2\nExample Response:\u2028{\u2028\"QuickPasteCatNum\": 2,\u2028\"Description\": \"Medical Summary\",\u2028\"ItemOrder\": 1,\u2028\"DefaultForTypes\": \"MedicalSummary\"\u2028}\n200 OK\u2028404 NotFound\nQuickPasteCats GET (multiple)\nVersion Added: 22.3.26\nGets a list of QuickPasteCats.\nExample Request:\u2028GET /quickpastecats\u2028GET /quickpastecats?Limit=20&Offset=50\nExample Response:\u2028[\u2028{\u2028\"QuickPasteCatNum\": 1,\u2028\"Description\": \"Medical Urgent\",\u2028\"ItemOrder\": 0,\u2028\"DefaultForTypes\": \"\"\u2028},\u2028{\u2028\"QuickPasteCatNum\": 2,\u2028\"Description\": \"Medical Summary\",\u2028\"ItemOrder\": 1,\u2028\"DefaultForTypes\": \"MedicalSummary\"\u2028},\u2028{\u2028\"QuickPasteCatNum\": 3,\u2028\"Description\": \"Notes\",\u2028\"ItemOrder\": 2,\u2028\"DefaultForTypes\": \"ServiceNotes,PatAddressNote,FinancialNotes,AutoNote\"\u2028},\u2028etc...\u2028]\n200 OK\u2028400 BadRequest\n",
+  "metadata": {
+    "version": "22.3.26",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Quickpastecats",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-autonote",
+      "description": "API references database table autonote"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-quickpastecat",
+      "description": "API references database table quickpastecat"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+API PayPlanCharges
+See API Specification
+
+PayPlanCharges GET
+Version Added: 23.2.28
+
+Gets all payplancharges for a specified payment plan.
+
+PayPlanNum: Required.
+
+Example Request:
+GET /payplancharges?PayPlanNum=23
+
+Example Response:
+[
+{
+"PayPlanChargeNum": 42,
+"PayPlanNum": 23,
+"Guarantor": 30,
+"PatNum": 30,
+"ChargeDate": "2023-09-20",
+"Principal": 25.0,
+"Interest": 0.0,
+"Note": "Down Payment",
+"ProvNum": 2,
+"ClinicNum": 0,
+"ChargeType": "Debit",
+"ProcNum": 0,
+"SecDateTEntry": "2023-09-20 09:24:16",
+"SecDateTEdit": "2023-09-20 09:24:16",
+"StatementNum": 0,
+"FKey": 134,
+"LinkType": "Procedure",
+"IsOffset": "false"
+},
+{
+"PayPlanChargeNum": 43,
+"PayPlanNum": 23,
+"Guarantor": 30,
+"PatNum": 30,
+"ChargeDate": "2023-10-20",
+"Principal": 40.96,
+"Interest": 0.12,
+"Note": "",
+"ProvNum": 2,
+"ClinicNum": 0,
+"ChargeType": "Debit",
+"ProcNum": 0,
+"SecDateTEntry": "2023-10-20 08:58:27",
+"SecDateTEdit": "2023-10-20 08:58:27",
+"StatementNum": 0,
+"FKey": 134,
+"LinkType": "Procedure",
+"IsOffset": "false"
+},
+{
+"PayPlanChargeNum": 44,
+"PayPlanNum": 23,
+"Guarantor": 30,
+"PatNum": 30,
+"ChargeDate": "2023-10-23",
+"Principal": 8.04,
+"Interest": 0.0,
+"Note": "Close Out Charge",
+"ProvNum": 2,
+"ClinicNum": 0,
+"ChargeType": "Debit",
+"ProcNum": 0,
+"SecDateTEntry": "2023-10-23 15:38:30",
+"SecDateTEdit": "2023-10-23 15:38:30",
+"StatementNum": 0,
+"FKey": 134,
+"LinkType": "Procedure",
+"IsOffset": "false"
+}
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

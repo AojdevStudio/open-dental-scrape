@@ -1,0 +1,87 @@
+{
+  "id": "api-feescheds",
+  "type": "api",
+  "title": "FeeScheds",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API FeeScheds.txt",
+  "content": "API FeeScheds\nSee API Specification\n\nSee Fee Schedules for more information.\n\nFeeScheds GET\nVersion Added: 22.4.31\n\nGets a list of fee schedules.\n\nExample Request:\nGET /feescheds\n\nExample Response:\n[\n{\n\"FeeSchedNum\": 53,\n\"Description\": \"Standard\",\n\"FeeSchedType\": \"Normal\",\n\"ItemOrder\": 0,\n\"IsHidden\": \"false\",\n\"IsGlobal\": \"true\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"0001-01-01\",\n\"SecDateTEdit\": \"2018-07-18 08:59:30\"\n},\n{\n\"FeeSchedNum\": 54,\n\"Description\": \"BCBS Co-pay\",\n\"FeeSchedType\": \"CoPay\",\n\"ItemOrder\": 1,\n\"IsHidden\": \"false\",\n\"IsGlobal\": \"true\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2021-08-05\",\n\"SecDateTEdit\": \"2021-08-05 12:54:44\"\n},\n{\n\"FeeSchedNum\": 55,\n\"Description\": \"USR Archive\",\n\"FeeSchedType\": \"Normal\",\n\"ItemOrder\": 2,\n\"IsHidden\": \"true\",\n\"IsGlobal\": \"true\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2022-02-05\",\n\"SecDateTEdit\": \"2022-02-05 13:25:55\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nFeeScheds POST (create)\nVersion Added: 23.3.7\n\nCreates a new feesched. Global fee schedules only allow a single (global) fee per procedure. When using a non-global fee schedule, fees can be overridden for clinics or providers. See Fee Override for Provider or Clinic for more information.\n\nDescription: Required. The name of the fee schedule.\nFeeSchedType: Required. Either \"Normal\", \"CoPay\", \"OutNetwork\", \"FixedBenefit\", or \"ManualBlueBook\". FeeSchedType cannot be changed once it is inserted.\nIsHidden: Optional. Either \"true\" or \"false\". Default false.\nIsGlobal: Optional. Either \"true\" or \"false\". Default true.\n\nExample Requests:\nPOST /feescheds\n\n{\n\"Description\": \"BCBS_2023\",\n\"FeeSchedType\": \"Normal\"\n}\n\nor\n\n{\n\"Description\": \"BCBS_2023\",\n\"FeeSchedType\": \"Normal\",\n\"IsHidden\": \"false\",\n\"IsGlobal\": \"false\"\n}\n\nExample Response:\n{\n\"FeeSchedNum\": 274,\n\"Description\": \"BCBS_2023\",\n\"FeeSchedType\": \"Normal\",\n\"ItemOrder\": 16,\n\"IsHidden\": \"false\",\n\"IsGlobal\": \"false\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-11-03\",\n\"SecDateTEdit\": \"2023-11-03 13:57:46\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n\nFeeScheds PUT (update)\nVersion Added: 23.3.7\n\nUpdates a feesched.\n\nFeeSchedNum: Required in the URL.\n\nDescription: The name of the fee schedule.\nIsHidden: Either \"true\" or \"false\".\nIsGlobal: Either \"true\" or \"false\".\n\nExample Request:\nPUT /feescheds/293\n\n{\n\"Description\": \"BCBS_outdated\",\n\"IsHidden\": \"true\",\n}\n\nExample Response:\n{\n\"FeeSchedNum\": 293,\n\"Description\": \"BCBS_outdated\",\n\"FeeSchedType\": \"Normal\",\n\"ItemOrder\": 16,\n\"IsHidden\": \"true\",\n\"IsGlobal\": \"false\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2022-01-01\",\n\"SecDateTEdit\": \"2023-11-03 14:57:46\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.7",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "FeeScheds",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "FeeScheds",
+      "method": "GET",
+      "path": "/feescheds",
+      "versionAdded": "22.4.31",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /feescheds",
+          "response": "[\n{\n\"FeeSchedNum\": 53,\n\"Description\": \"Standard\",\n\"FeeSchedType\": \"Normal\",\n\"ItemOrder\": 0,\n\"IsHidden\": \"false\",\n\"IsGlobal\": \"true\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"0001-01-01\",\n\"SecDateTEdit\": \"2018-07-18 08:59:30\"\n},\n{\n\"FeeSchedNum\": 54,\n\"Description\": \"BCBS Co-pay\",\n\"FeeSchedType\": \"CoPay\",\n\"ItemOrder\": 1,\n\"IsHidden\": \"false\",\n\"IsGlobal\": \"true\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2021-08-05\",\n\"SecDateTEdit\": \"2021-08-05 12:54:44\"\n},\n{\n\"FeeSchedNum\": 55,\n\"Description\": \"USR Archive\",\n\"FeeSchedType\": \"Normal\",\n\"ItemOrder\": 2,\n\"IsHidden\": \"true\",\n\"IsGlobal\": \"true\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2022-02-05\",\n\"SecDateTEdit\": \"2022-02-05 13:25:55\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of fee schedules."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

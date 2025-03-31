@@ -1,0 +1,161 @@
+API Carriers
+See API Specification
+
+See Carriers for additional information.
+
+Carriers GET (single)
+Version Added: 24.4.5
+
+Gets a single insurance carrier.
+
+CarrierNum: Required in URL.
+
+Example Request:
+GET /carriers/32
+
+Example Response:
+{
+"CarrierNum": 32,
+"CarrierName": "PPO (Prefered Provider Insurance)",
+"Address": "42960 Random Road",
+"Address2": "",
+"City": "Harrington",
+"State": "PA",
+"Zip": "52482",
+"Phone": "(503)456-8910",
+"ElectID": "18158",
+"NoSendElect": "SendElect",
+"IsHidden": "false"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Carriers GET (multiple)
+Version Added: 22.4.16
+
+Gets a list of insurance carriers.
+
+Example Request:
+GET /carriers
+
+Example Response:
+[
+{
+"CarrierNum": 1,
+"CarrierName": "Dental Guard",
+"Address": "123 Elen St",
+"Address2": "",
+"City": "Portland",
+"State": "OR",
+"Zip": "97035",
+"Phone": "(503)456-8910",
+"ElectID": "54651",
+"NoSendElect": "SendElect",
+"IsHidden": "false"
+},
+{
+"CarrierNum": 2,
+"CarrierName": "Out of Network Insurance",
+"Address": "365 Tree Top St",
+"Address2": "",
+"City": "Salem",
+"State": "OR",
+"Zip": "18911",
+"Phone": "(503)456-8910",
+"ElectID": "",
+"NoSendElect": "SendElect",
+"IsHidden": "false"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+
+Carriers POST (create)
+Version Added: 21.4
+
+Creates a new insurance carrier.
+
+CarrierName: Required.
+
+Address: Optional. The carriers physical address.
+Address2: Optional. Second address line.
+City: Optional.
+State: Optional. Two capital characters in USA. Province in Canada.
+Zip: Optional. Postal code for USA. Must be in format 12345, 12345-1234, or 123456789.
+Phone: Optional. Phone number including any necessary punctuation.
+ElectID: Optional. Used for e-claims, this is the electronic payer ID.
+NoSendElect: Optional. This must be one of the following values: "SendElect", "NoSendElect" or "NoSendSecondaryElect".
+IsHidden: Optional. Either "true" or "false".
+
+Example Request:
+POST /carriers
+{
+"CarrierName": "Dental Guard",
+"Address": "123 Elen St",
+"Address2": "",
+"City": "Portland",
+"State": "OR",
+"Zip": "97035",
+"Phone": "503-456-8910",
+"ElectID": "54651",
+"NoSendElect": "SendElect",
+"IsHidden": "false"
+}
+
+Example Response:
+{
+"CarrierNum": 1,
+"CarrierName": "Dental Guard",
+"Address": "123 Elen St",
+"Address2": "",
+"City": "Portland",
+"State": "OR",
+"Zip": "97035",
+"Phone": "(503)456-8910",
+"ElectID": "54651",
+"NoSendElect": "SendElect",
+"IsHidden": "false"
+}
+
+201 Created
+400 BadRequest (with explanation)
+
+Carriers PUT (update)
+Version Added: 21.4
+
+Updates an insurance carrier.
+
+CarrierNum: Required in the URL.
+
+CarrierName: Optional.
+Address: Optional. The carrier's physical address.
+Address2: Optional. Second address line.
+City: Optional.
+State: Optional. Two capital characters in USA. Province in Canada.
+Zip: Optional. Postal code for USA. Must be in format 12345, 12345-1234, or 123456789.
+Phone: Optional. Phone number including any necessary punctuation.
+ElectID: Optional. Used for e-claims, this is the electronic payer ID.
+NoSendElect: Optional. This must be one of the following values: "SendElect", "NoSendElect" or "NoSendSecondaryElect".
+IsHidden: Optional. Either "true" or "false".
+
+Example Request:
+PUT /carriers/1
+{
+"CarrierName": "Dental Guard",
+"Address": "123 Elen St",
+"Address2": "",
+"City": "Portland",
+"State": "OR",
+"Zip": "97035",
+"Phone": "503-456-8910",
+"ElectID": "54651",
+"NoSendElect": "SendElect",
+"IsHidden": "true"
+}
+
+Example Response:
+200 OK
+404 NotFound (with explanation)

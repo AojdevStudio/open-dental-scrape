@@ -1,0 +1,43 @@
+{
+  "id": "api-statements",
+  "type": "api",
+  "title": "Statements",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Statements.txt",
+  "content": "API Statements\nSee API Specification\n\nSee Statement Window for more information.\n\nStatements GET (single)\nVersion Added: 24.2.23\n\nGets a single statement.\n\nStatementNum: Required in URL.\n\nExample Request:\nGET /statements/1\n\nExample Response:\n{\n\"StatementNum\": 1,\n\"PatNum\": 1430,\n\"DateSent\": \"2003-12-05\",\n\"DateRangeFrom\": \"0001-01-01\",\n\"DateRangeTo\": \"2004-02-01\",\n\"Note\": \"\",\n\"NoteBold\": \"\",\n\"Mode_\": \"Mail\",\n\"HidePayment\": \"false\",\n\"SinglePatient\": \"false\",\n\"Intermingled\": \"false\",\n\"IsSent\": \"false\",\n\"DocNum\": 354,\n\"DateTStamp\": \"2024-07-26 10:58:28\",\n\"IsReceipt\": \"false\",\n\"IsInvoice\": \"false\",\n\"IsInvoiceCopy\": \"false\",\n\"SuperFamily\": 0,\n\"IsBalValid\": \"false\",\n\"InsEst\": 0.0,\n\"BalTotal\": 0.0,\n\"StatementType\": \"NotSet\",\n}\n\n200 OK\n404 NotFound (with explanation)\n\nStatements GET (multiple)\nVersion Added: 24.2.23\n\nGets a list of statements.\n\nPatNum: Optional. Filter by patient.PatNum. Typically the guarantor.\n\nExample Requests:\nGET /statements\nGET /statements?PatNum=1430\n\nExample Response:\n[\n{\n\"StatementNum\": 1,\n\"PatNum\": 1430,\n\"DateSent\": \"2003-12-05\",\n\"DateRangeFrom\": \"0001-01-01\",\n\"DateRangeTo\": \"2004-02-01\",\n\"Note\": \"\",\n\"NoteBold\": \"\",\n\"Mode_\": \"Mail\",\n\"HidePayment\": \"false\",\n\"SinglePatient\": \"false\",\n\"Intermingled\": \"false\",\n\"IsSent\": \"false\",\n\"DocNum\": 354,\n\"DateTStamp\": \"2024-07-26 10:58:28\",\n\"IsReceipt\": \"false\",\n\"IsInvoice\": \"false\",\n\"IsInvoiceCopy\": \"false\",\n\"SuperFamily\": 0,\n\"IsBalValid\": \"false\",\n\"InsEst\": 0.0,\n\"BalTotal\": 0.0,\n\"StatementType\": \"NotSet\",\n},\n{\n\"StatementNum\": 2,\n\"PatNum\": 1430,\n\"DateSent\": \"2024-02-08\",\n\"DateRangeFrom\": \"2024-01-01\",\n\"DateRangeTo\": \"2024-03-31\",\n\"Note\": \"\",\n\"NoteBold\": \"\",\n\"Mode_\": \"Mail\",\n\"HidePayment\": \"false\",\n\"SinglePatient\": \"false\",\n\"Intermingled\": \"false\",\n\"IsSent\": \"true\",\n\"DocNum\": 355,\n\"DateTStamp\": \"2022-09-30 14:20:24\",\n\"IsReceipt\": \"false\",\n\"IsInvoice\": \"false\",\n\"IsInvoiceCopy\": \"false\",\n\"SuperFamily\": 0,\n\"IsBalValid\": \"false\",\n\"InsEst\": 0.0,\n\"BalTotal\": 0.0,\n\"StatementType\": \"NotSet\",\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.23",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Statements",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-statement",
+      "description": "API references database table statement"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

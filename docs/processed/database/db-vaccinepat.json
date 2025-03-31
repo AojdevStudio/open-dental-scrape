@@ -1,0 +1,40 @@
+{
+  "id": "db-vaccinepat",
+  "type": "database",
+  "title": "vaccinepat",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "vaccinepat",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "vaccinepat",
+    "description": "Table for vaccinepat data.",
+    "columns": [
+      {
+        "name": "vaccinepatNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "vaccinepatNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

@@ -1,0 +1,40 @@
+{
+  "id": "db-orthohardwarespec",
+  "type": "database",
+  "title": "orthohardwarespec",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "orthohardwarespec",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "orthohardwarespec",
+    "description": "Table for orthohardwarespec data.",
+    "columns": [
+      {
+        "name": "orthohardwarespecNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "orthohardwarespecNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

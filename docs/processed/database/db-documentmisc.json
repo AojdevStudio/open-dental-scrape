@@ -1,0 +1,40 @@
+{
+  "id": "db-documentmisc",
+  "type": "database",
+  "title": "documentmisc",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "documentmisc",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "documentmisc",
+    "description": "Table for documentmisc data.",
+    "columns": [
+      {
+        "name": "documentmiscNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "documentmiscNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

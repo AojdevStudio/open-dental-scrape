@@ -1,0 +1,52 @@
+{
+  "id": "api-schedules",
+  "type": "api",
+  "title": "Schedules",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Schedules.txt",
+  "content": "API Schedules\nSee API Specification\n\nSchedules GET (single)\nVersion Added: 22.1\n\nGets the schedule corresponding to a passed in ScheduleNum.\n\nExample Request:\nGET /schedules/24555\n\nExample Response:\n{\n\"ScheduleNum\": \"24555\",\n\"SchedDate\": \"2022-04-04\",\n\"StartTime\": \"08:00:00\",\n\"StopTime\": \"12:00:00\",\n\"SchedType\": \"Provider\",\n\"ProvNum\": \"2\",\n\"BlockoutType\": \"0\",\n\"blockoutType\": \"\",\n\"Note\": \"\",\n\"operatories\": \"5\",\n\"EmployeeNum\": \"0\"\n}\n\n200 OK\n404 Not Found \"Schedule not found\"\n\nSchedules GET (multiple)\nVersion Added: 22.1\n\nGets every schedule entry that meets any passed-in criteria. Results are sorted by StartTime. Certain values are always 0 depending on the schedule type. blockoutType will always be 0 unless the SchedType is Blockout, ProvNum will be 0 unless the SchedType is Provider, and EmployeeNum will be 0 unless the SchedType is Employee.\n\nParameters: All optional.\n\ndate: For a single day. Today's date by default.\ndateStart, dateEnd: For a date range, inclusive of both dates.\nSchedType: Either \"Practice\", \"Provider\", \"Blockout\", \"Employee\", or \"WebSchedASAP\".\nBlockoutDefNum: Definition.DefNum where definition.Category=25.\nProvNum:FK to provider.ProvNum.\nEmployeeNum: FK to employee.EmployeeNum.\n\nExample Requests:\nGET /schedules?date=2022-03-07\nGET /schedules?dateStart=2022-03-07&dateEnd=2022-03-11\nGET /schedules?SchedType=Blockout\n\nExample Response:\n[\n{\n\"ScheduleNum\": \"25888\",\n\"SchedDate\": \"2022-03-11\",\n\"StartTime\": \"00:00:00\",\n\"StopTime\": \"00:00:00\",\n\"SchedType\": \"Practice\",\n\"ProvNum\": \"0\",\n\"BlockoutType\": \"0\",\n\"blockoutType\": \"\",\n\"Note\": \"3 Day Weekend\",\n\"operatories\": \"\",\n\"EmployeeNum\": \"0\",\n},\n{\n\"ScheduleNum\": \"25884\",\n\"SchedDate\": \"2022-03-07\",\n\"StartTime\": \"13:30:00\",\n\"StopTime\": \"14:00:00\",\n\"SchedType\": \"Blockout\",\n\"ProvNum\": \"0\",\n\"BlockoutType\": \"248\",\n\"blockoutType\": \"Staff Meeting\",\n\"Note\": \"Weekly Meet\",\n\"operatories\": \"5,6\",\n\"EmployeeNum\": \"0\",\n},\n{\n\"ScheduleNum\": \"24420\",\n\"SchedDate\": \"2022-03-07\",\n\"StartTime\": \"14:00:00\",\n\"StopTime\": \"18:00:00\",\n\"SchedType\": \"Provider\",\n\"ProvNum\": \"3\",\n\"BlockoutType\": \"0\",\n\"blockoutType\": \"\",\n\"Note\": \"\",\n\"operatories\": \"2\",\n\"EmployeeNum\": \"0\",\n},\n{\n\"ScheduleNum\": \"25887\",\n\"SchedDate\": \"2022-03-08\",\n\"StartTime\": \"15:30:00\",\n\"StopTime\": \"16:00:00\",\n\"SchedType\": \"Employee\",\n\"ProvNum\": \"0\",\n\"BlockoutType\": \"0\",\n\"blockoutType\": \"\",\n\"Note\": \"Leaving early\",\n\"operatories\": \"\",\n\"EmployeeNum\": \"2\",\n},\netc...\n]\n\n200 OK\n400 Bad Request (with explanation)\n404 Not Found (with explanation)",
+  "metadata": {
+    "version": "22.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Schedules",
+      "GET",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-cert",
+      "description": "API references database table cert"
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "id": "api-refattches",
+  "type": "api",
+  "title": "Refattches",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Refattches.txt",
+  "content": "API RefAttaches\nSee API Specification\n\nSee Referrals and EHR Summaries of Care for more information.\n\nRefAttaches GET\nVersion Added: 22.4.27\n\nGets a list of refattaches.\n\nParameters:\n\nPatNum: Optional. Filter responses by PatNum.\n\nExample Requests:\nGET /refattaches\nGET /refattaches?PatNum=25\n\nExample Response:\n[\n{\n\"RefAttachNum\": 1,\n\"ReferralNum\": 3,\n\"referralName\": \"Steve N Stevens, DDS\",\n\"PatNum\": 25,\n\"ItemOrder\": 0,\n\"RefDate\": \"2022-01-05\",\n\"ReferralType\": \"RefFrom\",\n\"RefToStatus\": \"None\",\n\"Note\": \"\",\n\"IsTransitionOfCare\": \"false\",\n\"ProcNum\": 0,\n\"DateProcComplete\": \"0001-01-01\",\n\"ProvNum\": 0,\n\"DateTStamp\": \"2022-01-05 10:13:12\"\n},\netc...\n]\n\n200 OK\n400 BadRequest \"Patient has been deleted\".\n404 NotFound \"Patient not found\".\n\nRefAttaches POST (create)\nVersion Added: 21.2\n\nAttaches a patient to a referral source. The referral source must be specified by either ReferralNum or referralName. Before calling this method, use Referrals GET to find the ReferralNum of an existing referral source. Alternatively, specify a referralName to search the LName of existing referrals for an exact match. If a match is not found, a new referral with that name is created and used.\n\nPatNum: Required. FK to patient.PatNum.\nReferralNum: This or referralName is required. FK to referral.ReferralNum.\nreferralName: This or ReferralNum is required.\nRefDate: Optional. String in \"yyyy-MM-dd\" format. The date the referral source is attached to the patient. Default to today's date.\nReferralType: Optional. Either \"RefTo\", \"RefFrom\", or \"RefCustom\". Default \"RefFrom\".\nRefToStatus: Optional. Typically only used with outgoing referrals. Either \"None\", \"Declined\", \"Scheduled\", \"Consulted\", \"InTreatment\", or \"Complete\". Default \"None\".\nNote: Optional. Referral note specific to this patient.\nIsTransitionOfCare: (Added in version 23.3.26) Optional. Either \"true\" or \"false\". Used to track EHR events. Default \"false\".\nProcNum: (Added in version 23.3.26) Optional. FK to procedurelog.ProcNum. Default 0.\nDateProcComplete: (Added in version 23.3.26) Optional. String in \"yyyy-MM-dd\" format. Default \"0001-01-01\".\nProvNum: (Added in version 23.3.26) Optional. FK to provider.ProvNum. Can only be specified when ReferralType is \"RefTo\". Default 0.\n\nExample Requests:\nPOST /refattaches\n\n{\n\"PatNum\": 972,\n\"ReferralNum\": 17,\n\"ReferralType\": \"RefTo\",\n\"RefToStatus\": \"Scheduled\",\n\"Note\": \"12052 - Called Dr. Bokish to confirm this has been scheduled.\",\n\"RefDate\": \"2023-12-05\",\n\"ProvNum\": 8\n}\n\nExample Response:\n{\n\"RefAttachNum\": 568,\n\"ReferralNum\": 17,\n\"referralName\": \"Bokish\",\n\"PatNum\": 972,\n\"ItemOrder\": 7,\n\"RefDate\": \"2023-12-05\",\n\"ReferralType\": \"RefTo\",\n\"RefToStatus\": \"Scheduled\",\n\"Note\": \"\",\n\"IsTransitionOfCare\": \"false\",\n\"ProcNum\": 1192,\n\"DateProcComplete\": \"0001-01-01\",\n\"ProvNum\": 8,\n\"DateTStamp\": \"2023-12-07 11:43:15\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nRefAttaches PUT (update)\nVersion Added: 23.3.26\n\nUpdates an existing refattach.\n\nRefAttachNum: Required in the URL.\n\nReferralNum: FK to referral.ReferralNum.\nRefDate: The date the referral source was attached to the patient.\nReferralType: Either \"RefTo\", \"RefFrom\", or \"RefCustom\".\nRefToStatus: Either \"None\", \"Declined\", \"Scheduled\", \"Consulted\", \"InTreatment\", or \"Complete\".\nNote: Referral notes specific to this patient. Overwrites existing note.\nIsTransitionOfCare: Either \"true\" or \"false\".\nProcNum: FK to procedurelog.ProcNum.\nDateProcComplete: String in \"yyyy-MM-dd\" format.\nProvNum: FK to provider.ProvNum. Can only be specified when ReferralType is \"RefTo\".\n\nExample Request:\nPUT /refattaches/568\n\n{\n\"ReferralNum\": 17,\n\"ReferralType\": \"RefTo\",\n\"RefToStatus\": \"Complete\",\n\"Note\": \"12/14 - Dr. Bokish called back to confirm this has been completed.\",\n\"DateProcComplete\": \"2023-12-14\"\n}\n\nExample Response:\n{\n\"RefAttachNum\": 568,\n\"ReferralNum\": 17,\n\"referralName\": \"Bokish\",\n\"PatNum\": 972,\n\"ItemOrder\": 1,\n\"RefDate\": \"2023-12-05\",\n\"ReferralType\": \"RefTo\",\n\"RefToStatus\": \"Complete\",\n\"Note\": \"12/14 - Dr. Bokish called back to confirm this has been completed.\",\n\"IsTransitionOfCare\": \"false\",\n\"ProcNum\": 1192,\n\"DateProcComplete\": \"2023-12-14\",\n\"ProvNum\": 8,\n\"DateTStamp\": \"2023-12-14 15:17:28\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nRefAttaches DELETE\nVersion Added: 23.3.26\n\nDeletes a refattach.\n\nRefAttachNum: Required in the URL.\n\nExample Requests:\nDELETE /refattaches/867\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.26",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Refattches",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "RefAttaches",
+      "method": "GET",
+      "path": "/refattaches",
+      "versionAdded": "22.4.27",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /refattaches\nGET /refattaches?PatNum=25",
+          "response": "[\n{\n\"RefAttachNum\": 1,\n\"ReferralNum\": 3,\n\"referralName\": \"Steve N Stevens, DDS\",\n\"PatNum\": 25,\n\"ItemOrder\": 0,\n\"RefDate\": \"2022-01-05\",\n\"ReferralType\": \"RefFrom\",\n\"RefToStatus\": \"None\",\n\"Note\": \"\",\n\"IsTransitionOfCare\": \"false\",\n\"ProcNum\": 0,\n\"DateProcComplete\": \"0001-01-01\",\n\"ProvNum\": 0,\n\"DateTStamp\": \"2022-01-05 10:13:12\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of refattaches."
+    },
+    {
+      "resource": "RefAttaches",
+      "method": "DELETE",
+      "path": "/refattaches",
+      "versionAdded": "23.3.26",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /refattaches/867",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "867",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a refattach."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-refattach",
+      "description": "API references database table refattach"
+    },
+    {
+      "type": "references",
+      "target": "db-referral",
+      "description": "API references database table referral"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    }
+  ]
+}

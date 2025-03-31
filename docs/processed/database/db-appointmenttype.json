@@ -1,0 +1,72 @@
+{
+  "id": "db-appointmenttype",
+  "type": "database",
+  "title": "appointmenttype",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "appointmenttype",
+      "Appointment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "appointmenttype",
+    "description": "Table for appointmenttype data.",
+    "columns": [
+      {
+        "name": "appointmenttypeNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "appointmenttypeNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-events",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-hisappointments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-appointments",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-appointmenttypes",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "related_concept",
+      "target": "manual-module",
+      "description": "Related by concept: appointment"
+    }
+  ]
+}

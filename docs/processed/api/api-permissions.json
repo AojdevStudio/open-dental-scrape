@@ -1,0 +1,787 @@
+{
+  "id": "api-permissions",
+  "type": "api",
+  "title": "Permissions",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Permissions.txt",
+  "content": "API Permissions\nSee API Specification\n\nSecurity Permissions\nThe security permissions for the API are organized differently from those in Open Dental.\n\nPermission\tMethods\tDetails\nRead All\tAccountModules GET Aging\nAccountModules GET PatientBalances\nAccountModules GET ServiceDateView\nAdjustments GET\nAllergies GET\nAllergyDefs GET\nAppointments GET (single/multiple)\nAppointments GET SlotsWebSched\nAppointments GET Slots\nAppointments GET ASAP\nAppointments GET WebSched\nAppointmentTypes GET\nApptFields GET\nApptFieldDefs GET\nAsapComms GET (single/multiple)\nAutoNoteControls GET\nAutoNotes GET\nBenefits GET\nCarriers GET (single/multiple)\nChartModules GET ProgNotes\nChartModules GET PatientInfo\nChartModules GET PlannedAppts\nClaimProcs GET\nClaimPayments GET (single/multiple)\nClaims GET (single/multiple)\nClaimTrackings GET\nClinics GET\nClockEvents GET (single/multiple)\nCodeGroups GET\nCommlogs GET\nComputers GET\nCovCats GET (single/multiple)\nCovSpans GET (single/multiple)\nDefinitions GET\nDiscountPlans GET\nDiscountPlanSubs GET\nDiseases GET (single/multiple)\nDiseaseDefs GET (single/multiple)\nDocuments GET (single/multiple)\nEhrPatients GET\nEobAttaches GET\nEmployees GET (single/multiple)\nEmployers GET (single/multiple)\nEtransMessageTexts GET\nEtranss GET\nFamilyModules GET Insurance\nFees GET (single/multiple)\nFeeScheds GET\nHistAppointments GET\nInsPlans GET (single/multiple)\nLabCases GET (single/multiple)\nLaboratories GET (single/multiple)\nLabTurnarounds GET (single/multiple)\nMedications GET\nMedicationPats GET\nOperatories GET (single/multiple)\nPatFieldDefs GET\nPatFields GET\nPatientNotes GET\nPatientRaces GET\nPatients GET (single/multiple)\nPatients GET Simple\nPatPlans GET\nPayments GET\nPayPlanCharges GET\nPayPlans GET (multiple)\nPaySplits GET\nPerioExams GET\nPerioMeasures GET\nPharmacies GET (single/multiple)\nPopups GET\nPreferences GET\nProcedureCodes GET (single/multiple)\nProcedureLogs GET\nProcedureLogs GET InsuranceHistory\nProcNotes GET\nProcTPs GET\nProviders GET\nQuickPasteCats GET (single/multiple)\nQuickPasteNotes GET (single/multiple)\nRecalls GET\nRecalls GET List\nRecallTypes GET (single/multiple)\nRefAttaches GET\nReferrals GET (single/multiple)\nReports GET Aging\nReports GET FinanceCharges\nRxPats GET (single/multiple)\nSecurityLogs GET\nSecurityPerms GET\nScheduleOps GET\nSchedules GET (single/multiple)\nSheetDefs GET\nSheets GET\nSignalods GET\nStatements GET (single/multiple)\nSubscriptions GET\nSubscriptions POST\nSubscriptions PUT\nSubstitutionLinks GET\nTaskLists GET\nTaskNotes GET (single/multiple)\nTasks GET\nToothInitials GET\nTreatPlanAttaches GET\nTreatPlans GET\nUserGroupAttaches GET\nUserGroups GET\nUserods GET\tAll GET methods. These are throttled at different rates for different users.\nAllOthers\tAdjustments POST\nAdjustments PUT\nAllergies DELETE\nAllergies POST\nAllergies PUT\nAutoNoteControls POST\nAutoNoteControls PUT\nAutoNotes POST\nAutoNotes PUT\nCarriers POST\nCarriers PUT\nDiscountPlans POST\nDiscountPlans PUT\nDiscountPlanSubs DELETE\nDiscountPlanSubs POST\nDiscountPlanSubs PUT\nDiseases DELETE\nDiseases POST\nDiseases PUT\nDocuments DELETE\nDocuments POST DownloadMount\nDocuments POST DownloadSftp\nDocuments POST SetByUrl\nDocuments POST Thumbnails\nDocuments POST UploadSftp\nDocuments PUT\nEhrPatients PUT\nEobAttaches POST DownloadSftp\nEobAttaches POST UploadSftp\nEmployers DELETE\nEmployers POST\nEmployers PUT\nFees DELETE\nFees POST\nFees PUT\nFeeScheds POST\nFeeScheds PUT\nLabCases POST\nLabCases PUT\nLabCases DELETE\nLaboratories POST\nLaboratories PUT\nLabTurnarounds POST\nLabTurnarounds PUT\nMedicationPats DELETE\nMedicationPats POST\nPatFieldDefs DELETE\nPatFieldDefs POST\nPatFieldDefs PUT\nPatFields PUT\nPatientNotes PUT\nPerioExams DELETE\nPerioExams POST\nPerioExams PUT\nPerioMeasures DELETE\nPerioMeasures POST\nPerioMeasures PUT\nProcedureCodes POST\nProcedureCodes PUT\nProcedureLogs POST GroupNote\nProcedureLogs DELETE GroupNote\nProcedureLogs PUT GroupNote\nProcNotes POST\nProcTPs PUT\nProcTPs DELETE\nRecalls POST\nRecalls PUT\nRecalls PUT SwitchType\nRefAttaches DELETE\nRefAttaches POST\nRefAttaches PUT\nReferrals POST\nReferrals PUT\nSheets POST\nSheets POST DownloadSftp\nSubstitutionLinks DELETE\nSubstitutionLinks POST\nSubstitutionLinks PUT\nTaskNotes POST\nTaskNotes PUT\nTasks POST\nTasks PUT\nToothInitials DELETE\nToothInitials POST\nTreatPlans POST\nTreatPlans POST Saved\nTreatPlans PUT\nAny method not listed under a different permission.\nComm\tAppointments PUT Break\nAppointments PUT Confirm\nAppointments PUT Note\nApptFields PUT\nCommlogs POST\nPopups POST\nRecalls PUT Status\nDocuments\tDocuments POST Upload\n(not any other Documents methods)\tBecause each upload consumes bandwidth.\nQueries\tQueries POST\nQueries PUT ShortQuery\t\nAppointments\tAppointments POST\nAppointments POST Planned\nAppointments POST SchedulePlanned\nAppointments POST WebSched\nAppointments PUT\nInsuranceSimple\tClaimProcs POST InsAdjust\nClaimProcs PUT InsAdjust\nInsSubs DELETE\nInsSubs POST\nInsSubs PUT\nPatPlans DELETE\nPatPlans POST\nPatPlans PUT\nInsVerifies PUT\nAdded in version 25.1\nInsurance\tBenefits DELETE\nBenefits POST\nBenefits PUT\nClaimPayments DELETE\nClaimPayments POST\nClaimPayments POST Batch\nClaimPayments PUT\nClaimProcs PUT\nClaims DELETE\nClaims POST\nClaims PUT\nClaims PUT Split\nClaims PUT Status\nClaimTrackings POST\nClaimTrackings PUT\nInsPlans POST\nInsPlans PUT\nThese are complex and rarely used.\nPatients\tPatients POST\nPatients PUT\t\nPayments\tPayments POST\nPayments POST Refund\nPayments PUT\nPayments PUT Partial\tAdded in version 21.3.\nPayPlans\tPayPlans POST (Deprecated in version 23.3)\nPayPlans POST Dynamic\tAdded in version 21.3.\nProcedureLogs\tProcedureLogs DELETE\nProcedureLogs POST\nProcedureLogs POST InsuranceHistory\nProcedureLogs PUT\nAdded in version 21.4.\nSetup\tAllergyDefs POST\nApptFieldDefs POST\nClinics PUT\nCovCats POST\nCoCats PUT\nCovSpans DELETE\nCovSpans POST\nCovSpans PUT\nDefinitions POST\nDiseaseDefs POST\nMedications POST\nProviders POST\nProviders PUT\nUserods POST\nUserods PUT\nAdded in version 23.1.\nTextingASAP*\tAsapComms POST\nAdded in version 23.3.\nEnterprise*\tApplies to all methods.\tAdded in version 23.3. Increases Limit for Remote mode to 1000 elements, and Local/Service mode to 10,000 elements. Also reduces throttle to 500ms, for Remote mode.\n\nThe normal Open Dental permissions are used for logging API actions, but they do not restrict the API from making changes. For example, date restrictions do not apply.\n\nPricing\nGeneral monthly pricing for API is:\n\nFree - Read All (1 request per 5 seconds throttle)\n$15 - Comm, Documents, InsuranceSimple, Setup, and Queries (1 request per 1 second throttle)\n$30 - All except Payments, PayPlans, and Special (Special permissions are indicated with * in the Permissions table above)\n$35 - All except Special\nPricing is per location. If your organization develops for a large number of practices, contact Open Dental Support to discuss pricing.",
+  "metadata": {
+    "version": "",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Permissions"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "AccountModules",
+      "method": "GET",
+      "path": "/accountmodules",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Appointments GET (single/multiple)"
+    },
+    {
+      "resource": "Appointments",
+      "method": "GET",
+      "path": "/appointments",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "AsapComms GET (single/multiple)"
+    },
+    {
+      "resource": "AutoNoteControls",
+      "method": "GET",
+      "path": "/autonotecontrols",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Carriers GET (single/multiple)"
+    },
+    {
+      "resource": "ChartModules",
+      "method": "GET",
+      "path": "/chartmodules",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "ClaimPayments GET (single/multiple)"
+    },
+    {
+      "resource": "ClaimTrackings",
+      "method": "GET",
+      "path": "/claimtrackings",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "ClockEvents GET (single/multiple)"
+    },
+    {
+      "resource": "CodeGroups",
+      "method": "GET",
+      "path": "/codegroups",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "CovCats GET (single/multiple)"
+    },
+    {
+      "resource": "Definitions",
+      "method": "GET",
+      "path": "/definitions",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Diseases GET (single/multiple)"
+    },
+    {
+      "resource": "EhrPatients",
+      "method": "GET",
+      "path": "/ehrpatients",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Employees GET (single/multiple)"
+    },
+    {
+      "resource": "EtransMessageTexts",
+      "method": "GET",
+      "path": "/etransmessagetexts",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Fees GET (single/multiple)"
+    },
+    {
+      "resource": "FeeScheds",
+      "method": "GET",
+      "path": "/feescheds",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "InsPlans GET (single/multiple)"
+    },
+    {
+      "resource": "Medications",
+      "method": "GET",
+      "path": "/medications",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Operatories GET (single/multiple)"
+    },
+    {
+      "resource": "PatFieldDefs",
+      "method": "GET",
+      "path": "/patfielddefs",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Patients GET (single/multiple)"
+    },
+    {
+      "resource": "Patients",
+      "method": "GET",
+      "path": "/patients",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "PayPlans GET (multiple)"
+    },
+    {
+      "resource": "PaySplits",
+      "method": "GET",
+      "path": "/paysplits",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Pharmacies GET (single/multiple)"
+    },
+    {
+      "resource": "Popups",
+      "method": "GET",
+      "path": "/popups",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "ProcedureCodes GET (single/multiple)"
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "GET",
+      "path": "/procedurelogs",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "QuickPasteCats GET (single/multiple)"
+    },
+    {
+      "resource": "Recalls",
+      "method": "GET",
+      "path": "/recalls",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "RecallTypes GET (single/multiple)"
+    },
+    {
+      "resource": "RefAttaches",
+      "method": "GET",
+      "path": "/refattaches",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Referrals GET (single/multiple)"
+    },
+    {
+      "resource": "Reports",
+      "method": "GET",
+      "path": "/reports",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "RxPats GET (single/multiple)"
+    },
+    {
+      "resource": "SecurityLogs",
+      "method": "GET",
+      "path": "/securitylogs",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Schedules GET (single/multiple)"
+    },
+    {
+      "resource": "SheetDefs",
+      "method": "GET",
+      "path": "/sheetdefs",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Statements GET (single/multiple)"
+    },
+    {
+      "resource": "Subscriptions",
+      "method": "GET",
+      "path": "/subscriptions",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "TaskNotes GET (single/multiple)"
+    },
+    {
+      "resource": "Tasks",
+      "method": "GET",
+      "path": "/tasks",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Userods GET\tAll GET methods. These are throttled at different rates for different users.\nAllOthers\tAdjustments POST"
+    },
+    {
+      "resource": "Adjustments",
+      "method": "PUT",
+      "path": "/adjustments",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Any method not listed under a different permission.\nComm\tAppointments PUT Break"
+    },
+    {
+      "resource": "Appointments",
+      "method": "PUT",
+      "path": "/appointments",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "(not any other Documents methods)\tBecause each upload consumes bandwidth.\nQueries\tQueries POST"
+    },
+    {
+      "resource": "Queries",
+      "method": "PUT",
+      "path": "/queries",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Added in version 25.1\nInsurance\tBenefits DELETE"
+    },
+    {
+      "resource": "Benefits",
+      "method": "POST",
+      "path": "/benefits",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "These are complex and rarely used.\nPatients\tPatients POST"
+    },
+    {
+      "resource": "Patients",
+      "method": "PUT",
+      "path": "/patients",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Payments PUT Partial\tAdded in version 21.3.\nPayPlans\tPayPlans POST (Deprecated in version 23.3)"
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "DELETE",
+      "path": "/procedurelogs",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [],
+      "description": "Added in version 21.4.\nSetup\tAllergyDefs POST"
+    },
+    {
+      "resource": "ApptFieldDefs",
+      "method": "POST",
+      "path": "/apptfielddefs",
+      "versionAdded": "",
+      "parameters": [],
+      "examples": [],
+      "responses": [
+        {
+          "code": "000",
+          "status": "elements",
+          "description": ""
+        },
+        {
+          "code": "000",
+          "status": "elements",
+          "description": ""
+        }
+      ],
+      "description": "Added in version 23.1.\nTextingASAP*\tAsapComms POST\nAdded in version 23.3.\nEnterprise*\tApplies to all methods.\tAdded in version 23.3. Increases Limit for Remote mode to 1, and Local/Service mode to 10,. Also reduces throttle to 500ms, for Remote mode."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-above",
+      "description": "References database table above"
+    },
+    {
+      "type": "references",
+      "target": "db-carrier",
+      "description": "API references database table carrier"
+    },
+    {
+      "type": "references",
+      "target": "db-ehrpatient",
+      "description": "API references database table ehrpatient"
+    },
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-patfield",
+      "description": "API references database table patfield"
+    },
+    {
+      "type": "references",
+      "target": "db-clockevent",
+      "description": "API references database table clockevent"
+    },
+    {
+      "type": "references",
+      "target": "db-covcat",
+      "description": "API references database table covcat"
+    },
+    {
+      "type": "references",
+      "target": "db-sheetdef",
+      "description": "API references database table sheetdef"
+    },
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-perioexam",
+      "description": "API references database table perioexam"
+    },
+    {
+      "type": "references",
+      "target": "db-substitutionlink",
+      "description": "API references database table substitutionlink"
+    },
+    {
+      "type": "references",
+      "target": "db-treatplan",
+      "description": "API references database table treatplan"
+    },
+    {
+      "type": "references",
+      "target": "db-codegroup",
+      "description": "API references database table codegroup"
+    },
+    {
+      "type": "references",
+      "target": "db-tasknote",
+      "description": "API references database table tasknote"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-eobattach",
+      "description": "API references database table eobattach"
+    },
+    {
+      "type": "references",
+      "target": "db-toothinitial",
+      "description": "API references database table toothinitial"
+    },
+    {
+      "type": "references",
+      "target": "db-covspan",
+      "description": "API references database table covspan"
+    },
+    {
+      "type": "references",
+      "target": "db-proctp",
+      "description": "API references database table proctp"
+    },
+    {
+      "type": "references",
+      "target": "db-asapcomm",
+      "description": "API references database table asapcomm"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-diseasedef",
+      "description": "API references database table diseasedef"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-signalod",
+      "description": "API references database table signalod"
+    },
+    {
+      "type": "references",
+      "target": "db-popup",
+      "description": "API references database table popup"
+    },
+    {
+      "type": "references",
+      "target": "db-scheduleop",
+      "description": "API references database table scheduleop"
+    },
+    {
+      "type": "references",
+      "target": "db-allergydef",
+      "description": "API references database table allergydef"
+    },
+    {
+      "type": "references",
+      "target": "db-refattach",
+      "description": "API references database table refattach"
+    },
+    {
+      "type": "references",
+      "target": "db-userod",
+      "description": "API references database table userod"
+    },
+    {
+      "type": "references",
+      "target": "db-labturnaround",
+      "description": "API references database table labturnaround"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-patientrace",
+      "description": "API references database table patientrace"
+    },
+    {
+      "type": "references",
+      "target": "db-labcase",
+      "description": "API references database table labcase"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-usergroupattach",
+      "description": "API references database table usergroupattach"
+    },
+    {
+      "type": "references",
+      "target": "db-claimpayment",
+      "description": "API references database table claimpayment"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-statement",
+      "description": "API references database table statement"
+    },
+    {
+      "type": "references",
+      "target": "db-commlog",
+      "description": "API references database table commlog"
+    },
+    {
+      "type": "references",
+      "target": "db-referral",
+      "description": "API references database table referral"
+    },
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-patfielddef",
+      "description": "API references database table patfielddef"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-autonote",
+      "description": "API references database table autonote"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-medicationpat",
+      "description": "API references database table medicationpat"
+    },
+    {
+      "type": "references",
+      "target": "db-quickpastenote",
+      "description": "API references database table quickpastenote"
+    },
+    {
+      "type": "references",
+      "target": "db-computer",
+      "description": "API references database table computer"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-procnote",
+      "description": "API references database table procnote"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-appointmenttype",
+      "description": "API references database table appointmenttype"
+    },
+    {
+      "type": "references",
+      "target": "db-discountplansub",
+      "description": "API references database table discountplansub"
+    },
+    {
+      "type": "references",
+      "target": "db-rxpat",
+      "description": "API references database table rxpat"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-histappointment",
+      "description": "API references database table histappointment"
+    },
+    {
+      "type": "references",
+      "target": "db-patientnote",
+      "description": "API references database table patientnote"
+    },
+    {
+      "type": "references",
+      "target": "db-claimproc",
+      "description": "API references database table claimproc"
+    },
+    {
+      "type": "references",
+      "target": "db-allergy",
+      "description": "API references database table allergy"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-quickpastecat",
+      "description": "API references database table quickpastecat"
+    },
+    {
+      "type": "references",
+      "target": "db-employer",
+      "description": "API references database table employer"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-treatplanattach",
+      "description": "API references database table treatplanattach"
+    },
+    {
+      "type": "references",
+      "target": "db-claimtracking",
+      "description": "API references database table claimtracking"
+    },
+    {
+      "type": "references",
+      "target": "db-payplancharge",
+      "description": "API references database table payplancharge"
+    },
+    {
+      "type": "references",
+      "target": "db-usergroup",
+      "description": "API references database table usergroup"
+    },
+    {
+      "type": "references",
+      "target": "db-etransmessagetext",
+      "description": "API references database table etransmessagetext"
+    },
+    {
+      "type": "references",
+      "target": "db-apptfielddef",
+      "description": "API references database table apptfielddef"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    },
+    {
+      "type": "references",
+      "target": "db-autonotecontrol",
+      "description": "API references database table autonotecontrol"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-contact",
+      "description": "API references database table contact"
+    },
+    {
+      "type": "references",
+      "target": "db-disease",
+      "description": "API references database table disease"
+    },
+    {
+      "type": "references",
+      "target": "db-etrans",
+      "description": "API references database table etrans"
+    },
+    {
+      "type": "references",
+      "target": "db-securitylog",
+      "description": "API references database table securitylog"
+    },
+    {
+      "type": "references",
+      "target": "db-discountplan",
+      "description": "API references database table discountplan"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    },
+    {
+      "type": "references",
+      "target": "db-paysplit",
+      "description": "API references database table paysplit"
+    },
+    {
+      "type": "references",
+      "target": "db-recalltype",
+      "description": "API references database table recalltype"
+    },
+    {
+      "type": "references",
+      "target": "db-tasklist",
+      "description": "API references database table tasklist"
+    },
+    {
+      "type": "references",
+      "target": "db-task",
+      "description": "API references database table task"
+    },
+    {
+      "type": "references",
+      "target": "db-apptfield",
+      "description": "API references database table apptfield"
+    },
+    {
+      "type": "references",
+      "target": "db-periomeasure",
+      "description": "API references database table periomeasure"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}

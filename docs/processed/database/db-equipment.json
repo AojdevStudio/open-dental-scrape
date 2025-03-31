@@ -1,0 +1,40 @@
+{
+  "id": "db-equipment",
+  "type": "database",
+  "title": "equipment",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "equipment",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "equipment",
+    "description": "Table for equipment data.",
+    "columns": [
+      {
+        "name": "equipmentNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "equipmentNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

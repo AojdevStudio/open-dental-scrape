@@ -1,0 +1,38 @@
+{
+  "id": "api-recalltypes",
+  "type": "api",
+  "title": "RecallTypes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API RecallTypes.txt",
+  "content": "API RecallTypes\nSee API Specification\n\nSee Recall Types for additional information.\n\nRecallTypes GET (single)\nVersion Added: 24.1.44\n\nGets a single recalltype.\n\nRecallTypeNum: Required in URL.\n\nExample Request:\nGET /recalltypes/7\n\nExample Response:\n{\n\"RecallTypeNum\": 7,\n\"Description\": \"Exam\",\n\"DefaultInterval\": \"6m1d\",\n\"TimePattern\": \"\",\n\"Procedures\": \"D0120\",\n\"AppendToSpecial\": \"true\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nRecallTypes GET (multiple)\nVersion Added: 24.1.44\n\nGets a list of all recalltypes.\n\nExample Request:\nGET /recalltypes\n\nExample Response:\n[\n{\n\"RecallTypeNum\": 1,\n\"Description\": \"Prophy\",\n\"DefaultInterval\": \"6m1d\",\n\"TimePattern\": \"/XXXX/\",\n\"Procedures\": \"D1110\",\n\"AppendToSpecial\": \"false\"\n},\n{\n\"RecallTypeNum\": 2,\n\"Description\": \"Child Prophy\",\n\"DefaultInterval\": \"\",\n\"TimePattern\": \"XXX\",\n\"Procedures\": \"D1120,D1208\",\n\"AppendToSpecial\": \"false\"\n},\netc...\n]\n\n200 OK",
+  "metadata": {
+    "version": "24.1.44",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "RecallTypes",
+      "GET",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-recall",
+      "description": "API references database table recall"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-recalltype",
+      "description": "API references database table recalltype"
+    }
+  ]
+}

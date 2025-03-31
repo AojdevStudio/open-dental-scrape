@@ -1,0 +1,8 @@
+API Preferences
+See API Specification
+Preferences GET
+Version Added: 21.1
+PrefName is optional. Otherwise you end up with all ~1000 preferences, paginated.
+Example Requests: GET /preferences?PrefName=RecallDaysPast GET /preferences?Offset=200
+Example Response: [ { "PrefNum": 14, "PrefName": "PracticeDefaultBillType", "ValueString": "40" }, { "PrefNum": 15, "PrefName": "RecallDaysPast", "ValueString": "365" }, { "PrefNum": 16, "PrefName": "RecallDaysFuture", "ValueString": "7" }, etc... ]
+ e

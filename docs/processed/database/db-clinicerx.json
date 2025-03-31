@@ -1,0 +1,40 @@
+{
+  "id": "db-clinicerx",
+  "type": "database",
+  "title": "clinicerx",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "clinicerx",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "clinicerx",
+    "description": "Table for clinicerx data.",
+    "columns": [
+      {
+        "name": "clinicerxNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "clinicerxNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

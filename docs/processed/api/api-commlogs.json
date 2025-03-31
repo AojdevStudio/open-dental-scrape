@@ -1,0 +1,81 @@
+{
+  "id": "api-commlogs",
+  "type": "api",
+  "title": "Commlogs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Commlogs.txt",
+  "content": "API Commlogs\nSee API Specification\n\nCommlogs GET\nVersion Added: 21.1\n\nGet all commlogs for a patient.\n\nPatNum: Required.\n\nExample Request:\nGET /commlogs?PatNum=15\n\nExample Response:\n[\n{\n\"CommlogNum\": 2,\n\"PatNum\": 15,\n\"CommDateTime\": \"2021-02-07 03:25:29\",\n\"CommType\": \"239\",\n\"commType\": \"Misc\",\n\"Note\": \"Left msg on answering machine\",\n\"Mode_\": \"Phone\",\n\"SentOrReceived\": \"Sent\"\n},\n{\n\"CommlogNum\": 1,\n\"PatNum\": 15,\n\"CommDateTime\": \"2021-02-07 03:09:00\",\n\"CommType\": \"236\",\n\"commType\": \"Insurance\",\n\"Note\": \"Note for John Smith\",\n\"Mode_\": \"Mail\",\n\"SentOrReceived\": \"Received\"\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nCommlogs POST (create)\nVersion Added: 21.1\n\nCreates a commlog for the patient.\n\nPatNum: Required.\nNote: Required.\n\nCommDateTime: Optional. String in \"yyyy-mm-dd HH:mm:ss\" format. Default now.\nCommType: Optional. definition.DefNum where definition.Category=27. Default Miscellaneous.\ncommType: Optional. definition.ItemName where definition.Category=27. Will be used over CommType if both are specified.\nMode_: Either \"None\", \"Email\", \"Mail\", \"Phone\", \"In Person\", \"Text\", \"Email and Text\", or \"Phone and Text\". Default \"Phone\".\nSentOrReceived: Either \"Neither\", \"Sent\", or \"Received\". Default \"Sent\".\n\nPrior to version 23.3.7, the response would not include the commlog object.\n\nExample Requests:\nPOST /commlogs\n\n{\n\"PatNum\": 15,\n\"Note\": \"Left msg on answering machine\"\n}\n\n{\n\"PatNum\": 30,\n\"commType\": \"ApptRelated\",\n\"CommDateTime\": \"2022-01-01 11:19:00\",\n\"Mode_\": \"Text\",\n\"SentOrReceived\": \"Received\",\n\"Note\": \"Appointment confirmed for 9:15am.\"\n}\n\nExample Response:\n{\n\"CommlogNum\": 14,\n\"PatNum\": 30,\n\"CommDateTime\": \"2022-01-01 11:19:00\",\n\"CommType\": \"235\",\n\"commType\": \"ApptRelated\",\n\"Note\": \"Appointment confirmed for 9:15am.\",\n\"Mode_\": \"Text\",\n\"SentOrReceived\": \"Received\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "21.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Commlogs",
+      "GET",
+      "POST",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Commlogs",
+      "method": "GET",
+      "path": "/commlogs",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /commlogs?PatNum=15",
+          "response": "[\n{\n\"CommlogNum\": 2,\n\"PatNum\": 15,\n\"CommDateTime\": \"2021-02-07 03:25:29\",\n\"CommType\": \"239\",\n\"commType\": \"Misc\",\n\"Note\": \"Left msg on answering machine\",\n\"Mode_\": \"Phone\",\n\"SentOrReceived\": \"Sent\"\n},\n{\n\"CommlogNum\": 1,\n\"PatNum\": 15,\n\"CommDateTime\": \"2021-02-07 03:09:00\",\n\"CommType\": \"236\",\n\"commType\": \"Insurance\",\n\"Note\": \"Note for John Smith\",\n\"Mode_\": \"Mail\",\n\"SentOrReceived\": \"Received\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Get all commlogs for a patient."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-commlog",
+      "description": "API references database table commlog"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    }
+  ]
+}

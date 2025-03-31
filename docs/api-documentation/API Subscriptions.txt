@@ -1,0 +1,148 @@
+API Subscriptions
+See API Specification
+
+Subscriptions allow you to receive API Events about database changes or UI actions. Each event is a REST style call to an endpoint of your choice.
+
+There are two ways a Subscription can be processed:
+
+OpenDental.exe running on a workstation can process both UI and Database Events.
+OpenDentalAPIService.exe running on a workstation can only process Database Events (no UI).
+See API Guide - Subscriptions and Events for more information.
+
+Subscriptions POST
+Version Added: 22.1
+
+Creates a subscription. Subscriptions are specific to the Customer's API Key specified in the API request header. Each subscription is for either a database event or for a UI event. You may choose to append "/patientevent" or "?type=patientevent" if you use the same EndPointUrl in multiple subscriptions.
+
+EndPointUrl: Required. This is the URL endpoint to which events will be sent. Examples of endpoints that you might choose include:
+   https://myserver/apievents/
+   http://localhost:2097/
+   http://192.168.1.14:2097/
+Workstation: Required unless you want all workstations to be firing events. The machine name of the computer that will fire events. Only leave this blank if your endpoint is localhost. If you don't specify a workstation for the other scenarios, your endpoint will get duplicate event from all machines running OpenDental.exe and/or OpenDentalAPIService.exe, which is very undesirable.
+PollingSeconds: Required for Database Events. Frequency of database polling, in seconds.
+WatchTable: Required for Database Events. The name of the database table to monitor. List of types is in API Events. Example: "Patient".
+UiEventType: Required for UI Events. List of types is in API Events. Example: "PatientSelected".
+DateTimeStart: Optional. When this Subscription will start monitoring the database table for changes. Default Now. This database column gets changed each time events are fired, as described in API Events.
+DateTimeStop: Optional. When this Subscription will expire. Default 01-01-0001 to represent no expiration.
+Note: Optional.
+
+Example Requests:
+POST /subscriptions
+{
+"EndPointUrl": "https://myserver/apievents/",
+"Workstation": "MOLLYR",
+"WatchTable": "Appointment",
+"PollingSeconds": 5,
+"DateTimeStart": "2022-01-31"
+}
+
+or
+
+{
+"EndPointUrl": "http://localhost:2097/",
+"UiEventType": "PatientSelected"
+}
+
+Example Response:
+{
+"SubscriptionNum": 14,
+"EndPointUrl": "https://myserver/apievents/",
+"Workstation": "MOLLYR",
+"CustomerKey": "VzkmZEaUWOjnQX2z",
+"WatchTable": "Appointment",
+"PollingSeconds": 5,
+"UiEventType": "",
+"DateTimeStart": "2022-01-31 00:00:00",
+"DateTimeStop": "0001-01-01 00:00:00",
+"Note": ""
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound
+
+Subscriptions GET
+Version Added: 22.1
+
+Gets a list of all subscriptions for the Customer's API Key specified in the API request header.
+
+Example Request:
+GET /subscriptions
+
+Example Response:
+[
+{
+"SubscriptionNum": 14,
+"EndPointUrl": "https://myserver/apievents/",
+"Workstation": "MOLLYR",
+"CustomerKey": "VzkmZEaUWOjnQX2z",
+"WatchTable": "Appointment",
+"PollingSeconds": 5,
+"UiEventType": "",
+"DateTimeStart": "2022-01-31 00:00:00",
+"DateTimeStop": "0001-01-01 00:00:00",
+"Note": ""
+},
+{
+"SubscriptionNum": 18,
+"EndPointUrl": "http://localhost:2097/",
+"Workstation": "",
+"CustomerKey": "VzkmZEaUWOjnQX2z",
+"WatchTable": "",
+"PollingSeconds": 0,
+"UiEventType": "PatientSelected",
+"DateTimeStart": "2022-02-02 08:12:15",
+"DateTimeStop": "0001-01-01 00:00:00",
+"Note": ""
+},
+etc...
+]
+
+Subscriptions PUT
+Version Added: 22.1
+
+Updates an existing Subscription.
+
+SubscriptionNum: Required in the URL.
+EndPointUrl: This is the URL endpoint to which events will be sent.
+Workstation: The machine name of the computer that will fire events. Blank if you want all machines to fire events.
+PollingSeconds: Frequency of database polling, in seconds. Can only be set for WatchTable subscriptions.
+DateTimeStart: When the subscription started. This gets updated each time database is polled so that it represents the start of the date range for the next polling.
+DateTimeStop: When the subscription will expire.
+Note: Optional.
+
+Example Request:
+PUT /subscriptions/14
+
+{
+"PollingSeconds": 30,
+"Note": "Decreased polling rate."
+}
+
+or
+
+{
+"EndPointUrl": "https://myserver2/apievents/",
+"Workstation": "BETTYC",
+"DateTimeStop": "2022-12-31",
+}
+
+Example Response:
+200 OK
+400 BadRequest (Invalid fields)
+404 NotFound (Subscription not found)
+
+Subscriptions DELETE
+Version Added: 22.1
+
+Deletes a Subscription.
+
+SubscriptionNum: Required in the URL.
+
+Example Request:
+DELETE /subscriptions/14
+
+Example Response:
+200 OK
+400 BadRequest (Invalid fields)
+404 NotFound (SubscriptionNum not found)

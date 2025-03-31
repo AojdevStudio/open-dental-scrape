@@ -1,0 +1,129 @@
+{
+  "id": "api-familymodule",
+  "type": "api",
+  "title": "Familymodule",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Familymodule.txt",
+  "content": "API FamilyModules\nSee API Specification\n\nFamilyModules GET Insurance\nVersion Added: 21.4\n\nGets the insurance information for a patient similarly to how it shows in the Family Module. Will typically return between 0 and 2 rows, one row for each insurance for the patient. Use another API method or a query to get additional details in each table. This area of the Family Module UI also shows discount plans, which are obtained through DiscountPlanSubs GET.\n\nPatNum: Required in the URL.\n\nReturned fields are detailed below:\n\nInsSubNum:inssub.InsSubNum. Primary key to insurance subscriber.\nSubscriber: inssub.Subscriber. The PatNum of the subscriber.\nsubscriber: First and last name of Subscriber from patient table.\nSubscriberID: inssub.SubscriberID. Number assigned by insurance company, may be Medicaid ID.\nSubscNote: inssub.SubscNote. Stores any other information that affects coverage.\nPatPlanNum: patplan.PatPlanNum. Primary key to patient plan.\nOrdinal: patplan.Ordinal. Numerical representation of the patient's insurance order. 1, 2, 3, etc.\nordinal: Description of Ordinal. Primary, Secondary, Medical, or Other insurance.\nIsPending: patplan.IsPending. Informational only. true or false. Identifies insurance information that is incomplete or unverified.\nRelationship: patplan.Relationship to subscriber. Self, Spouse, Child, Employee, HandicapDep, SignifOther, InjuredPlaintiff, LifePartner, or Dependant.\nPatID: patplan.PatID. Optional patient ID which overrides Subscriber ID on eclaims.\nCarrierNum: carrier.CarrierNum. Primary key to the carrier.\nCarrierName: carrier.CarrierName. Full name of carrier.\nPlanNum: insplan.PlanNum. Primary key to the insurance plan.\nGroupName: insplan.GroupName. Each plan has a group name, typically similar to employer.\nGroupNum: insplan.GroupNum. Issued by the carrier.\nPlanNote: insplan.PlanNote. Notes specific to the subscriber and associated family members.\nFeeSched: insplan.FeeSched, foreign key to feesched.FeeSchedNum.\nfeeschedule: feesched.Description of the fee schedule.\nPlanType: insplan.PlanType. \"\"=percentage, \"p\"=ppo percentage, \"f\"=flat copay, \"c\"=capitation.\nplanType: Description of PlanType. Category Percentage, PPO Fixed Benefit, PPO Percentage, Medicaid or Flat Co-pay, or Capitation.\nCopayFeeSched: insplan.CopayFeeSched, foreign key to feesched.FeeSchedNum.\nEmployerNum: insplan.EmployerNum, foreign key to employer.EmployerNum.\nemployer: employer.EmpName. Description of EmployerNum.\nIsMedical: insplan.IsMedical. True if this is medical insurance rather than dental insurance.\n\nExample Request:\nGET /familymodules/13/Insurance\n\nExample Response:\n[\n{\n\"PatNum\": 13,\n\"InsSubNum\": 7,\n\"Subscriber\": 10,\n\"subscriber\": \"Eve Wilkins\",\n\"SubscriberID\": \"541147842\",\n\"SubscNote\": \"\",\n\"PatPlanNum\": 17,\n\"Ordinal\": 1,\n\"ordinal\": \"Primary\",\n\"IsPending\": \"false\",\n\"Relationship\": \"LifePartner\",\n\"PatID\": \"\",\n\"CarrierNum\": 8,\n\"CarrierName\": \"BCBS\",\n\"PlanNum\": 7,\n\"GroupName\": \"\",\n\"GroupNum\": \"\",\n\"PlanNote\": \"\",\n\"FeeSched\": 53,\n\"feeSchedule\": \"Standard\",\n\"PlanType\": \"\",\n\"planType\": \"Category Percentage\",\n\"CopayFeeSched\": 0,\n\"EmployerNum\": 0,\n\"employer\": \"\",\n\"IsMedical\": \"false\"\n},\n{\n\"PatNum\": 13,\n\"InsSubNum\": 16,\n\"Subscriber\": 13,\n\"subscriber\": \"John Wilkins\",\n\"SubscriberID\": \"987654\",\n\"SubscNote\": \"\",\n\"PatPlanNum\": 18,\n\"Ordinal\": 2,\n\"ordinal\": \"Secondary\",\n\"IsPending\": \"false\",\n\"Relationship\": \"Self\",\n\"PatID\": \"\",\n\"CarrierNum\": 9,\n\"CarrierName\": \"Metlife Dental\",\n\"PlanNum\": 11,\n\"GroupName\": \"\",\n\"GroupNum\": \"\",\n\"PlanNote\": \"Insurance plan note.\",\n\"FeeSched\": 0,\n\"feeSchedule\": \"\",\n\"PlanType\": \"p\",\n\"planType\": \"PPO Percentage\",\n\"CopayFeeSched\": 0,\n\"EmployerNum\": 2,\n\"employer\": \"Happy Dental\",\n\"IsMedical\": \"false\"\n}\n]\n\n200 OK\n400 Bad Request (with explanation)\n404 Not Found (with explanation)",
+  "metadata": {
+    "version": "21.4",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Familymodule",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "FamilyModules",
+      "method": "GET",
+      "path": "/familymodules",
+      "versionAdded": "21.4",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /familymodules/13/Insurance",
+          "response": "[\n{\n\"PatNum\": 13,\n\"InsSubNum\": 7,\n\"Subscriber\": 10,\n\"subscriber\": \"Eve Wilkins\",\n\"SubscriberID\": \"541147842\",\n\"SubscNote\": \"\",\n\"PatPlanNum\": 17,\n\"Ordinal\": 1,\n\"ordinal\": \"Primary\",\n\"IsPending\": \"false\",\n\"Relationship\": \"LifePartner\",\n\"PatID\": \"\",\n\"CarrierNum\": 8,\n\"CarrierName\": \"BCBS\",\n\"PlanNum\": 7,\n\"GroupName\": \"\",\n\"GroupNum\": \"\",\n\"PlanNote\": \"\",\n\"FeeSched\": 53,\n\"feeSchedule\": \"Standard\",\n\"PlanType\": \"\",\n\"planType\": \"Category Percentage\",\n\"CopayFeeSched\": 0,\n\"EmployerNum\": 0,\n\"employer\": \"\",\n\"IsMedical\": \"false\"\n},\n{\n\"PatNum\": 13,\n\"InsSubNum\": 16,\n\"Subscriber\": 13,\n\"subscriber\": \"John Wilkins\",\n\"SubscriberID\": \"987654\",\n\"SubscNote\": \"\",\n\"PatPlanNum\": 18,\n\"Ordinal\": 2,\n\"ordinal\": \"Secondary\",\n\"IsPending\": \"false\",\n\"Relationship\": \"Self\",\n\"PatID\": \"\",\n\"CarrierNum\": 9,\n\"CarrierName\": \"Metlife Dental\",\n\"PlanNum\": 11,\n\"GroupName\": \"\",\n\"GroupNum\": \"\",\n\"PlanNote\": \"Insurance plan note.\",\n\"FeeSched\": 0,\n\"feeSchedule\": \"\",\n\"PlanType\": \"p\",\n\"planType\": \"PPO Percentage\",\n\"CopayFeeSched\": 0,\n\"EmployerNum\": 2,\n\"employer\": \"Happy Dental\",\n\"IsMedical\": \"false\"\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "Not",
+          "description": ""
+        }
+      ],
+      "description": "Gets the insurance information for a patient similarly to how it shows in the Family Module. Will typically return between 0 and 2 rows, one row for each insurance for the patient. Use another API method or a query to get additional details in each table. This area of the Family Module UI also shows discount plans, which are obtained through DiscountPlanSubs GET."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-carrier",
+      "description": "API references database table carrier"
+    },
+    {
+      "type": "references",
+      "target": "db-employee",
+      "description": "API references database table employee"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-feesched",
+      "description": "API references database table feesched"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-discountplansub",
+      "description": "API references database table discountplansub"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-employer",
+      "description": "API references database table employer"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    },
+    {
+      "type": "references",
+      "target": "db-discountplan",
+      "description": "API references database table discountplan"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

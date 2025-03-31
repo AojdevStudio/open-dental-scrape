@@ -1,0 +1,65 @@
+{
+  "id": "api-referrals",
+  "type": "api",
+  "title": "Referrals",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Referrals.txt",
+  "content": "API Referrals\nSee API Specification\n\nSee Referral List for more information.\n\nReferrals GET (single)\nVersion Added: 24.1.34\n\nGets a single referral.\n\nParameters:\n\nReferralNum: Required in URL.\n\nExample Request:\nGET /referrals/1\n\nExample Response:\n{\n\"ReferralNum\": 1,\n\"LName\": \"Davidson\",\n\"FName\": \"Norm\",\n\"MName\": \"\",\n\"SSN\": \"123456789\",\n\"UsingTIN\": \"true\",\n\"Specialty\": 465,\n\"specialty\": \"Endodontics\",\n\"ST\": \"OR\",\n\"Telephone\": \"\",\n\"Address\": \"163 Madison Loop\",\n\"Address2\": \"\",\n\"City\": \"Portland\",\n\"Zip\": \"54698\",\n\"Note\": \"\",\n\"Phone2\": \"\",\n\"IsHidden\": \"false\",\n\"NotPerson\": \"false\",\n\"Title\": \"DMD\",\n\"EMail\": \"\",\n\"PatNum\": 0,\n\"IsDoctor\": \"true\",\n\"DateTStamp\": \"2021-06-21 10:03:08\",\n\"IsPreferred\": \"true\",\n\"BusinessName\": \"\",\n\"DisplayNote\": \"\",\n\"isPatient\": \"false\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nReferrals GET (multiple)\nVersion Added: 21.4\n\nGets a list of all referral sources. These can be either a provider, patient, or non-person. The description of non-patient sources is stored in the LName field.\n\nParameters: All optional.\n\nIsHidden: (Added in version 24.1.34) Filter hidden responses. Either \"true\" or \"false\"\nNotPerson: (Added in version 24.1.34) Filter referrals that are marked NotPerson. Either \"true\" or \"false\".\nIsDoctor: (Added in version 24.1.34) Filter referrals that are marked IsDoctor. Either \"true\" or \"false\".\nIsPreferred: (Added in version 24.1.34) Filter referrals that are marked Preferred. Either \"true\" or \"false\"\nisPatient: (Added in version 24.1.34) Filter referrals that are marked isPatient. Either \"true\" or \"false\".\nBusinessName: (Added in version 24.4.19) Filter referrals by business name. Supports partial string matching.\n\nExample Requests:\nGET /referrals\nGET /referrals?IsPreferred=true\nGET /referrals?IsPreferred=true&isPatient=true\nGET /referrals?BusinessName=Facebook\n\nExample Response:\n[\n{\n\"ReferralNum\": 1,\n\"LName\": \"Davidson\",\n\"FName\": \"Norm\",\n\"MName\": \"\",\n\"SSN\": \"123456789\",\n\"UsingTIN\": \"true\",\n\"Specialty\": 465,\n\"specialty\": \"Endodontics\",\n\"ST\": \"OR\",\n\"Telephone\": \"\",\n\"Address\": \"163 Madison Loop\",\n\"Address2\": \"\",\n\"City\": \"Portland\",\n\"Zip\": \"54698\",\n\"Note\": \"\",\n\"Phone2\": \"\",\n\"IsHidden\": \"false\",\n\"NotPerson\": \"false\",\n\"Title\": \"DMD\",\n\"EMail\": \"\",\n\"PatNum\": 0,\n\"IsDoctor\": \"true\",\n\"DateTStamp\": \"2021-06-21 10:03:08\",\n\"IsPreferred\": \"true\",\n\"BusinessName\": \"\",\n\"DisplayNote\": \"\",\n\"isPatient\": \"false\"\n},\n{\n\"ReferralNum\": 2,\n\"LName\": \"Facebook Ad\",\n\"FName\": \"\",\n\"MName\": \"\",\n\"SSN\": \"\",\n\"UsingTIN\": \"false\",\n\"Specialty\": 0,\n\"specialty\": \"\",\n\"ST\": \"\",\n\"Telephone\": \"\",\n\"Address\": \"\",\n\"Address2\": \"\",\n\"City\": \"\",\n\"Zip\": \"\",\n\"Note\": \"Ad active from 06/01/2021 to 09/01/2021\",\n\"Phone2\": \"\",\n\"IsHidden\": \"false\",\n\"NotPerson\": \"true\",\n\"Title\": \"\",\n\"EMail\": \"\",\n\"PatNum\": 0,\n\"IsDoctor\": \"false\",\n\"DateTStamp\": \"2021-07-21 11:03:08\",\n\"IsPreferred\": \"true\",\n\"BusinessName\": \"Facebook Ad\",\n\"DisplayNote\": \"\",\n\"isPatient\": \"false\"\n},\n{\n\"ReferralNum\": 3,\n\"LName\": \"Beringer\",\n\"FName\": \"Debbie\",\n\"MName\": \"L\",\n\"SSN\": \"111111111\",\n\"UsingTIN\": \"false\",\n\"Specialty\": 0,\n\"specialty\": \"\",\n\"ST\": \"OR\",\n\"Telephone\": \"5033635432\",\n\"Address\": \"\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"Zip\": \"\",\n\"Note\": \"\",\n\"Phone2\": \"\",\n\"IsHidden\": \"false\",\n\"NotPerson\": \"false\",\n\"Title\": \"\",\n\"EMail\": \"\",\n\"PatNum\": 435,\n\"IsDoctor\": \"false\",\n\"DateTStamp\": \"2021-09-21 12:03:08\",\n\"IsPreferred\": \"false\",\n\"BusinessName\": \"\",\n\"DisplayNote\": \"\",\n\"isPatient\": \"true\"\n\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nReferrals POST (create)\nVersion Added: 22.3\n\nCreates a new Referral. Referrals can be for patients (provide PatNum), providers (provide specialty) or non-persons (provide neither PatNum or specialty). In the last case, isPatient and IsDoctor will be set false automatically while NotPerson will be set to true. If you wish to create an associated RefAttach please see RefAttaches POST.\n\nLName: Required. The last name of a referral source or referral source description.\nPatNum: Optional. Only set this if the referral source is a patient. The provided LName must match the patient for whom the PatNum is given. This automatically populates the rest of the referral based on the given patient. If this is set, IsDoctor and NotPerson are set to \"false\", while isPatient will be true.\nFName: Optional. The referral source's first name.\nMName: Optional. The referral source's middle name or initial.\nSSN: (Added in version 24.4.16) Optional. SSN, or TIN if UsingTIN is true. No punctuation.\nUsingTIN: (Added in version 24.4.16) Optional. Either \"true\" or \"false\". Dictates whether SSN contains an SSN or TIN. Default \"false\".\nSpecialty: Optional. definition.DefNum where definition.Category=35 (ProviderSpecialty). If set, NotPerson will default to \"false\", IsDoctor will default to \"true\", and isPatient will be false.\nspecialty: Optional. Only set this if the Referral source is a Provider. This is a definition.ItemName where the DefCat is ProviderSpecialty(35). If this is set, IsDoctor will default to \"true\", NotPerson will default to \"false\", and isPatient will be false.\nST: (Added in version 24.4.16) Optional. The referral source's state. Two characters maximum.\nTelephone: (Added in version 24.4.16) Optional. The referral source's phone number. Must be ten digits.\nAddress: (Added in version 24.4.16) Optional. The referral source's mailing address.\nAddress2: (Added in version 24.4.16) Optional. Additional info regarding the referral source's mailing address.\nCity: (Added in version 24.4.16) Optional. The referral source's city.\nZip: (Added in version 24.4.16) Optional. The referral source's ZIP code.\nNote: Optional.\nPhone2: (Added in version 24.4.16) Optional. Additional phone.\nNotPerson: (Added in version 24.4.16) Optional. Either \"true\" or \"false\". Default \"false\", unless neither PatNum nor Specialty were supplied.\nTitle: Optional. The referral source's title.\nEMail: (Added in version 24.4.16) Optional. The email address for the referral.\nIsDoctor: (Added in version 24.4.16) Optional. Either \"true\" or \"false\". Default \"false\", unless a Specialty was supplied.\nBusinessName: (Added in version 24.4.16) Optional. Name of the business that the referral works for.\nDisplayNote: (Added in version 24.4.16) Optional. Shows in the Family Module's Patient Info grid.\n\nExample Request:\nPOST /referrals\n{\n\"LName\": \"Yellow Pages\"\n}\n\n{\n\"LName\": \"Smith\",\n\"PatNum\": 435\n}\n\n{\n\"LName\": \"Smith\",\n\"FName\": \"John\",\n\"specialty\": \"Surgery\"\n}\n\nExample Response:\n{\n\"ReferralNum\": 314,\n\"LName\": \"Smith\",\n\"FName\": \"James\",\n\"MName\": \"\",\n\"SSN\": \"\",\n\"UsingTIN\": \"false\",\n\"Specialty\": 0,\n\"specialty\": \"\",\n\"ST\": \"OR\",\n\"Telephone\": \"5033635432\",\n\"Address\": \"123 Gumtree Ln\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"Zip\": \"97304\",\n\"Note\": \"\",\n\"Phone2\": \"(503)363-5432\",\n\"IsHidden\": \"false\",\n\"NotPerson\": \"false\",\n\"Title\": \"Mr\",\n\"EMail\": \"name@site.com\",\n\"PatNum\": 435,\n\"IsDoctor\": \"false\",\n\"DateTStamp\": \"2021-06-21 10:03:08\",\n\"IsPreferred\": \"false\",\n\"BusinessName\": \"\",\n\"DisplayNote\": \"\",\n\"isPatient\": \"true\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nReferrals PUT (update)\nVersion Added: 22.4.24\n\nUpdates an existing Referral. All fields are optional. Referrals for a patient can only have the Note and DisplayNote fields modified.\n\nLName: The last name of a referral source or referral source description.\nFName: The referral source's first name.\nMName: The referral source's middle name or initial.\nSSN: (Added in version 24.4.16) SSN, or TIN if UsingTIN is true.\nUsingTIN: (Added in version 24.4.16) Either \"true\" or \"false\". Dictates whether SSN contains an SSN or TIN.\nSpecialty: definition.DefNum where definition.Category=35 (ProviderSpecialty). Use 0 to indicate None.\nST: (Added in version 24.4.16) The referral source's state. Two characters maximum.\nTelephone: (Added in version 24.4.16) The referral source's phone number. Must be ten digits.\nAddress: (Added in version 24.4.16) The referral source's mailing address.\nAddress2: (Added in version 24.4.16) Additional info regarding the referral source's mailing address.\nCity: (Added in version 24.4.16) The referral source's city.\nZip: (Added in version 24.4.16) The referral source's ZIP code.\nNote: Overwrites existing note.\nPhone2: (Added in version 24.4.16) Additional phone.\nNotPerson: (Added in version 24.4.16) Either \"true\" or \"false\".\nTitle: The referral source's title.\nEMail: (Added in version 24.4.16) The email address for the referral.\nIsDoctor: (Added in version 24.4.16) Either \"true\" or \"false\".\nBusinessName: (Added in version 24.4.16) Optional.\nDisplayNote: (Added in version 24.4.16) Overwrites existing DisplayNote.\n\nExample Requests:\nPUT /referrals/325\n\n{\n\"Note\": \"Referral credit added to account on 08/21/2022\"\n}\n\nor\n\n{\n\"LName\": \"Smithers\",\n\"FName\": \"Jonathan\",\n\"MName\": \"C\",\n\"Title\": \"DDS\",\n\"Specialty\": 272,\n\"Note\": \"Out on Thursdays\"\n}\nExample Response:\n{\n\"ReferralNum\": 325,\n\"LName\": \"Smithers\",\n\"FName\": \"Jonathan\",\n\"MName\": \"C\",\n\"SSN\": \"11111\",\n\"UsingTIN\": \"true\",\n\"Specialty\": 272,\n\"specialty\": \"Surgery\",\n\"ST\": \"OR\",\n\"Telephone\": \"5033635432\",\n\"Address\": \"123 Gumtree Ln\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"Zip\": \"97304\",\n\"Note\": \"Out on Thursdays\",\n\"Phone2\": \"(536)265-8587\",\n\"IsHidden\": \"false\",\n\"NotPerson\": \"false\",\n\"Title\": \"DDS\",\n\"EMail\": \"name@site.com\",\n\"PatNum\": 0,\n\"IsDoctor\": \"true\",\n\"DateTStamp\": \"2021-06-21 10:03:08\",\n\"IsPreferred\": \"false\",\n\"BusinessName\": \"Surgery Center\",\n\"DisplayNote\": \"\",\n\"isPatient\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.1.34",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Referrals",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-refattach",
+      "description": "API references database table refattach"
+    },
+    {
+      "type": "references",
+      "target": "db-referral",
+      "description": "API references database table referral"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

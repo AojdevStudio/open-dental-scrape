@@ -1,0 +1,59 @@
+{
+  "id": "db-patientportalinvite",
+  "type": "database",
+  "title": "patientportalinvite",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "patientportalinvite",
+      "Patient Data",
+      "Has Primary Key",
+      "Has Foreign Keys"
+    ]
+  },
+  "database": {
+    "tableName": "patientportalinvite",
+    "description": "Table for patientportalinvite data.",
+    "columns": [
+      {
+        "name": "patientportalinviteNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      },
+      {
+        "name": "PatNum",
+        "type": "bigint(20)",
+        "order": "2",
+        "description": "Foreign key to patient.PatNum.",
+        "nullable": false,
+        "foreign_key": {
+          "table": "patient",
+          "column": "PatNum"
+        }
+      }
+    ],
+    "primaryKey": [
+      "patientportalinviteNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "References patient"
+    }
+  ]
+}

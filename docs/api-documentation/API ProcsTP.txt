@@ -1,0 +1,163 @@
+API ProcTPs
+See API Specification
+
+ProcTPs are copies of procedures that are attached to Saved treatment plans. The ProcNumOrig points to the actual procedurelog row. For Active and Inactive treatment plans, use TreatPlanAttaches. See Treatment Plans for more information.
+
+ProcTPs GET
+Version Added: 22.4.17
+
+Get a list of ProcTPs by the TreatPlanNum. Before calling this method, use TreatPlans GET to find the TreatPlanNum of an existing TreatPlan.
+
+TreatPlanNum: Required. FK to TreatPlan.TreatPlanNum.
+
+Example Request:
+GET /proctps?TreatPlanNum=963
+
+Example Response:
+[
+{
+"ProcTPNum": 976,
+"TreatPlanNum": 963,
+"PatNum": 722,
+"ProcNumOrig": 1154,
+"ItemOrder": 0,
+"Priority": 0,
+"priority": "",
+"ToothNumTP": "13",
+"Surf": "MOD",
+"ProcCode": "D2393",
+"Descript": "resin-based composite - three surfaces, posterior",
+"FeeAmt": 204.0,
+"PriInsAmt": 80.0,
+"SecInsAmt": 0.0,
+"PatAmt": 70.0,
+"Discount": 54.0,
+"Prognosis": "",
+"Dx": "",
+"ProcAbbr": "C3 (P)",
+"SecUserNumEntry": 12,
+"SecDateEntry": "2023-01-24",
+"SecDateTEdit": "2023-01-24 09:33:46",
+"FeeAllowed": 0.0,
+"TaxAmt": 0.0,
+"ProvNum": 11,
+"DateTP": "2022-12-19",
+"ClinicNum": 3,
+"CatPercUCR": 204.0
+},
+{
+"ProcTPNum": 977,
+"TreatPlanNum": 963,
+"PatNum": 722,
+"ProcNumOrig": 1167,
+"ItemOrder": 1,
+"Priority": 0,
+"priority": "",
+"ToothNumTP": "",
+"Surf": "",
+"ProcCode": "D0140",
+"Descript": "Limited Exam",
+"FeeAmt": 57.0,
+"PriInsAmt": 57.0,
+"SecInsAmt": 0.0,
+"PatAmt": 0.0,
+"Discount": 0.0,
+"Prognosis": "",
+"Dx": "",
+"ProcAbbr": "LimEx",
+"SecUserNumEntry": 12,
+"SecDateEntry": "2023-01-24",
+"SecDateTEdit": "2023-01-24 09:33:46",
+"FeeAllowed": 0.0,
+"TaxAmt": 0.0,
+"ProvNum": 11,
+"DateTP": "2022-12-19",
+"ClinicNum": 3,
+"CatPercUCR": 57.0
+}
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+ProcTPs PUT (update)
+Version Added: 24.4.26
+
+Updates a ProcTp. Only ProcTPs associated with an unsigned treatment plan can be updated.
+
+ProcTPNum: Required in the URL.
+
+Priority: definition.DefNum where definition.Category=20.
+ToothNumTP: The tooth number.
+Surf: Tooth surfaces or area.
+ProcCode: Not a foreign key. Simply display text.
+Descript: Description of procedure.
+FeeAmt: The fee charged to the patient.
+PriInsAmt: The amount primary insurance is expected to pay.
+SecInsAmt: The amount secondary insurance is expected to pay.
+PatAmt: The amount the patient is expected to pay.
+Discount: The amount of discount. Used for PPOs and procedure level discounts.
+Prognosis: Text for prognosis definition.
+Dx: Text for diagnosis definition.
+ProcAbbr: The procedure code abbreviation.
+FeeAllowed: The amount primary insurance allows.
+
+Example Request:
+PUT /proctps/1
+
+{
+"Discount": "17.00",
+}
+
+Example Response:
+{
+"ProcTPNum": 1,
+"TreatPlanNum": 1,
+"PatNum": 2040,
+"ProcNumOrig": 10052,
+"ItemOrder": 0,
+"Priority": 0,
+"priority": "",
+"ToothNumTP": "",
+"Surf": "",
+"ProcCode": "D1110",
+"Descript": "Prophy- Adult",
+"FeeAmt": 72.0,
+"PriInsAmt": 72.0,
+"SecInsAmt": 0.0,
+"PatAmt": 0.0,
+"Discount": 17.0,
+"Prognosis": "",
+"Dx": "",
+"ProcAbbr": "Pro",
+"SecUserNumEntry": 0,
+"SecDateEntry": "2022-09-29",
+"SecDateTEdit": "2022-09-29 11:45:57",
+"FeeAllowed": 0.0,
+"TaxAmt": 0.0,
+"ProvNum": 0,
+"DateTP": "0001-01-01",
+"ClinicNum": 0,
+"CatPercUCR": 0.0
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+ProcTPs DELETE
+Version Added: 23.3.10
+
+Deletes a ProcTp. Only ProcTPs associated with an unsigned treatment plan can be deleted.
+
+ProcTPNum: Required in the URL.
+
+Example Request:
+DELETE /proctps/293
+
+Example Responses:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

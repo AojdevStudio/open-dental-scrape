@@ -1,0 +1,61 @@
+{
+  "id": "api-definitions",
+  "type": "api",
+  "title": "Definitions",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Definitions.txt",
+  "content": "API Definitions\nSee API Specification\n\nDefinitions GET\nVersion Added: 21.1\n\nincludeHidden is an optional parameter that defaults to false.\n\nExample Requests:\nGET /definitions\nGET /definitions?Offset=200\nGET /definitions?Category=1\nGET /definitions?Category=1&includeHidden=true\n\nExample Response:\n[\n{\n\"DefNum\": 293,\n\"ItemName\": \"Sales Tax\",\n\"ItemValue\": \"+\",\n\"Category\": 1,\n\"category\": \"AdjTypes\",\n\"isHidden\": \"false\"\n},\n{\n\"DefNum\": 8,\n\"ItemName\": \"Professional Discount\",\n\"ItemValue\": \"-\",\n\"Category\": 1,\n\"category\": \"AdjTypes\",\n\"isHidden\": \"false\"\n},\n{\n\"DefNum\": 9,\n\"ItemName\": \"Cash Discount\",\n\"ItemValue\": \"-\",\n\"Category\": 1,\n\"category\": \"AdjTypes\",\n\"isHidden\": \"false\"\n},\netc...\n]\n\nDefinitions POST (create)\nVersion Added: 22.1\n\nCreates a new Definition, attempts to set the Category (definition.Category) will be silently ignored.\n\nItemName: Required. Name of the definition.\ncategory: Required. See the list of current Definitions for a valid definition.Category name.\n\nItemValue: Optional. Values will be validated differently for each Category.\nisHidden: Optional. Defaults to \"false\".\n\nExample Request:\nPOST /definitions\n{\n\"ItemName\": \"Interest Payment\",\n\"category\": \"PaymentTypes\"\n}\n\n{\n\"ItemName\": \"Cash Discount\",\n\"ItemValue\":\"-\",\n\"category\": \"AdjTypes\",\n\"isHidden\":\"false\"\n}\n\nExample Response:\n{\n\"DefNum\": 12,\n\"ItemName\": \"Cash Discount\",\n\"ItemValue\":\"-\",\n\"Category\": 1,\n\"category\":\"AdjTypes\",\n\"isHidden\":\"false\"\n}\n\n201 Created\n400 BadRequest (Missing or Invalid fields)",
+  "metadata": {
+    "version": "22.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Definitions",
+      "GET",
+      "POST",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Definitions",
+      "method": "GET",
+      "path": "/definitions",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /definitions\nGET /definitions?Offset=200\nGET /definitions?Category=1\nGET /definitions?Category=1&includeHidden=true",
+          "response": "[\n{\n\"DefNum\": 293,\n\"ItemName\": \"Sales Tax\",\n\"ItemValue\": \"+\",\n\"Category\": 1,\n\"category\": \"AdjTypes\",\n\"isHidden\": \"false\"\n},\n{\n\"DefNum\": 8,\n\"ItemName\": \"Professional Discount\",\n\"ItemValue\": \"-\",\n\"Category\": 1,\n\"category\": \"AdjTypes\",\n\"isHidden\": \"false\"\n},\n{\n\"DefNum\": 9,\n\"ItemName\": \"Cash Discount\",\n\"ItemValue\": \"-\",\n\"Category\": 1,\n\"category\": \"AdjTypes\",\n\"isHidden\": \"false\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "GET",
+          "description": ""
+        }
+      ],
+      "description": "includeHidden is an optional parameter that defaults to false."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    }
+  ]
+}

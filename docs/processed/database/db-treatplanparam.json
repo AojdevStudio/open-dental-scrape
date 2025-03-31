@@ -1,0 +1,40 @@
+{
+  "id": "db-treatplanparam",
+  "type": "database",
+  "title": "treatplanparam",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "treatplanparam",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "treatplanparam",
+    "description": "Table for treatplanparam data.",
+    "columns": [
+      {
+        "name": "treatplanparamNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "treatplanparamNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

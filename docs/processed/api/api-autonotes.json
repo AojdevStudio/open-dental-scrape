@@ -1,0 +1,74 @@
+{
+  "id": "api-autonotes",
+  "type": "api",
+  "title": "Autonotes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Autonotes.txt",
+  "content": "API AutoNotes\nSee API Specification\n\nAuto Notes are templates used to insert frequently-used, large, or complex notes.\n\nAutoNotes GET\nVersion Added: 22.3.22\n\nGets a list of Auto Notes.\n\nParameters:\n\nCategory: Optional. definition.DefNum where definition.Category=41.\n\nExample Requests:\nGET /autonotes\nGET /autonotes?Category=340\n\nExample Response:\n[\n{\n\"AutoNoteNum\": 7,\n\"AutoNoteName\": \"SOAP\",\n\"MainText\": \"Subjective:\\r\\nPatient Presents with:[Prompt:\\\"Chief Complaint\\\"]\\r\\nMedical history:\\r\\nReviewed today's procedure:[Prompt:\\\"Responsible party\\\"] [Prompt:\\\"Patient Response\\\"]\\r\\nObjective:\\r\\nVitals: \\r\\nExtraoral: [Prompt:\\\"Extraoral\\\"]\\r\\nIntraoral:) [Prompt:\\\"Intraoral\\\"]\\r\\nRadiology:[Prompt:\\\"Radiology\\\"]\\r\\nAssessment:[Prompt:\\\"Assess\\\"]\\r\\nPlan:[Prompt:\\\"Plan\\\"]\\r\\nPARQ\\r\\nNV\",\n\"Category\": 0,\n\"category\": \"\"\n},\n{\n\"AutoNoteNum\": 8,\n\"AutoNoteName\": \"SRP- Kelli\",\n\"MainText\": \"Review med hx\\r\\nPt chief complaint\\r\\nBP taken: [Prompt:\\\"BP Pulse\\\"]\\r\\nQuad/s: [Prompt:\\\"Quad\\\"]\\r\\nAnesth: [Prompt:\\\"Anesth\\\"]\\r\\nCapules: [Prompt:\\\"Carps\\\"]\\r\\nNV\\r\\nIn\",\n\"Category\": 0,\n\"category\": \"\"\n},\n{\n\"AutoNoteNum\": 9,\n\"AutoNoteName\": \"TMJ Consult\",\n\"MainText\": \"Reviewed Med HX:\\r\\nPt's Chief concern:\\r\\nBP Taken: [Prompt:\\\"BP Pulse\\\"]\\r\\nPain: [Prompt:\\\"Pain\\\"]\\r\\nPano and Ceph and I/O photos taken.\\r\\nMuscle: Left: [Prompt:\\\"Left Muscle\\\"] Right: [Prompt:\\\"Right Muscle\\\"]\\r\\nDeviation: [Prompt:\\\"Deviation\\\"]\",\n\"Category\": 340,\n\"category\": \"Exams\"\n},\netc...\n]\n\n200 OK\n\nAutoNotes POST (create)\nVersion Added: 22.3.33\n\nInserts an Auto Note. For information on how Auto Notes are categorized, see Definitions: Auto Note Categories. When including Prompts in MainText, they must be formatted as [Prompt:\\\"autonotecontrol.Descript\\\"]. To obtain the Descript, see AutoNoteControls GET.\n\nAutoNoteName: Required. Identifying name of the Auto Note.\nMainText: Required. Can include static text and Prompts (Auto Note Controls).\nCategory: Optional. definition.DefNum where definition.Category=41. Use 0 to indicate Uncategorized. Default is 0.\n\nExample Requests:\nPOST /autonotes\n\n{\n\"AutoNoteName\": \"Allergens\",\n\"MainText\": \"Allergies: [Prompt:\\\"Allergies\\\"]\",\n\"Category\": 399\n}\n\nExample Response:\n{\n\"AutoNoteNum\": 10,\n\"AutoNoteName\": \"Allergens\",\n\"MainText\": \"Allergies: [Prompt:\\\"Allergies\\\"]\",\n\"Category\": 399,\n\"category\": \"Patient Information\"\n}\n\n201 Created\n400 BadRequest (Missing or invalid fields)\n\nAutoNotes PUT (update)\nVersion Added: 22.3.33\n\nUpdates an Auto Note. For information on how Auto Notes are categorized, see Definitions: Auto Note Categories. When including Prompts in MainText, they must be formatted as [Prompt:\\\"autonotecontrol.Descript\\\"]. To obtain the Descript, see AutoNoteControls GET.\n\nAutoNoteNum: Required in the URL.\n\nAutoNoteName: Optional. Identifying name of the Auto Note.\nMainText: Optional. Can include static text and Prompts (Auto Note Controls).\nCategory: Optional. definition.DefNum where definition.Category=41. Use 0 to indicate Uncategorized.\n\nExample Requests:\nPUT /autonotes/5\n\n{\n\"AutoNoteName\": \"Filling\",\n\"MainText\": \"Pt presents with:\\r\\nAnesthetic: [Prompt:\\\"Anesth\\\"]\\r\\nCarpules: [Prompt:\\\"Carps\\\"]\",\n\"Category\": 425\n}\n\nor\n\n{\n\"Category\": 0\n}\n\nExample Response:\n{\n\"AutoNoteNum\": 5,\n\"AutoNoteName\": \"Filling\",\n\"MainText\": \"Pt presents with:\\r\\nAnesthetic: [Prompt:\\\"Anesth\\\"]\\r\\nCarpules: [Prompt:\\\"Carps\\\"]\",\n\"Category\": 425,\n\"category\": \"Restorative\"\n}\n\n200 OK\n400 BadRequest (Missing or invalid fields)\n404 NotFound",
+  "metadata": {
+    "version": "22.3.33",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Autonotes",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "AutoNotes",
+      "method": "GET",
+      "path": "/autonotes",
+      "versionAdded": "22.3.22",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /autonotes\nGET /autonotes?Category=340",
+          "response": "[\n{\n\"AutoNoteNum\": 7,\n\"AutoNoteName\": \"SOAP\",\n\"MainText\": \"Subjective:\\r\\nPatient Presents with:[Prompt:\\\"Chief Complaint\\\"]\\r\\nMedical history:\\r\\nReviewed today's procedure:[Prompt:\\\"Responsible party\\\"] [Prompt:\\\"Patient Response\\\"]\\r\\nObjective:\\r\\nVitals: \\r\\nExtraoral: [Prompt:\\\"Extraoral\\\"]\\r\\nIntraoral:) [Prompt:\\\"Intraoral\\\"]\\r\\nRadiology:[Prompt:\\\"Radiology\\\"]\\r\\nAssessment:[Prompt:\\\"Assess\\\"]\\r\\nPlan:[Prompt:\\\"Plan\\\"]\\r\\nPARQ\\r\\nNV\",\n\"Category\": 0,\n\"category\": \"\"\n},\n{\n\"AutoNoteNum\": 8,\n\"AutoNoteName\": \"SRP- Kelli\",\n\"MainText\": \"Review med hx\\r\\nPt chief complaint\\r\\nBP taken: [Prompt:\\\"BP Pulse\\\"]\\r\\nQuad/s: [Prompt:\\\"Quad\\\"]\\r\\nAnesth: [Prompt:\\\"Anesth\\\"]\\r\\nCapules: [Prompt:\\\"Carps\\\"]\\r\\nNV\\r\\nIn\",\n\"Category\": 0,\n\"category\": \"\"\n},\n{\n\"AutoNoteNum\": 9,\n\"AutoNoteName\": \"TMJ Consult\",\n\"MainText\": \"Reviewed Med HX:\\r\\nPt's Chief concern:\\r\\nBP Taken: [Prompt:\\\"BP Pulse\\\"]\\r\\nPain: [Prompt:\\\"Pain\\\"]\\r\\nPano and Ceph and I/O photos taken.\\r\\nMuscle: Left: [Prompt:\\\"Left Muscle\\\"] Right: [Prompt:\\\"Right Muscle\\\"]\\r\\nDeviation: [Prompt:\\\"Deviation\\\"]\",\n\"Category\": 340,\n\"category\": \"Exams\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "340",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of Auto Notes."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-autonote",
+      "description": "API references database table autonote"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-autonotecontrol",
+      "description": "API references database table autonotecontrol"
+    }
+  ]
+}

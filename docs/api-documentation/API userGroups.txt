@@ -1,0 +1,38 @@
+API UserGroups
+See API Specification
+
+See User Edit for more information.
+
+UserGroups GET
+Version Added: 23.2.21
+
+Gets a list of user groups, which can include CEMT user groups. See User Groups.
+
+includeCEMT: Optional. Either "true" or "false". Set to "true" to return usergroups that are designated as CEMT as well as those that are not. Default "false".
+
+Example Request:
+GET /usergroups
+GET /usergroups?includeCEMT=true
+
+Example Response:
+[
+{
+"UserGroupNum": 1,
+"Description": "Admin",
+"UserGroupNumCEMT": 0
+},
+{
+"UserGroupNum": 3,
+"Description": "Security",
+"UserGroupNumCEMT": 3
+},
+{
+"UserGroupNum": 4,
+"Description": "HR",
+"UserGroupNumCEMT": 0
+},
+etc...
+]
+
+200 OK
+400 Bad Request (with explanation)

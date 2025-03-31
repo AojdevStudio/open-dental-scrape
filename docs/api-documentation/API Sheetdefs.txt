@@ -1,0 +1,32 @@
+API SheetDefs
+See API Specification
+
+SheetDefs GET
+Version Added: 23.2.5.0
+
+Gets a list of SheetDefs.
+
+Example Request:
+GET /sheetdefs
+
+Example Response:
+[
+{
+"SheetDefNum": 1,
+"Description": "Excuse Letter",
+"SheetType": "PatientLetter"
+},
+{
+"SheetDefNum": 2,
+"Description": "Screening",
+"SheetType": "Screening"
+},
+{
+"SheetDefNum": 3,
+"Description": "Registration Form",
+"SheetType": "PatientForm"
+},
+etc...
+]
+
+200 OK

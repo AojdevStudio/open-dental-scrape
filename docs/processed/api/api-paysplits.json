@@ -1,0 +1,99 @@
+{
+  "id": "api-paysplits",
+  "type": "api",
+  "title": "Paysplits",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Paysplits.txt",
+  "content": "API PaySplits\nSee\u00a0API Specification\nPaySplits GET\nVersion Added: 22.4.16\nGet a list of paysplits.\nParameters:\nPatNum:\u00a0(Optional after version 24.4.24) Get all PaySplits for a single patient.\u2028PayNum:\u00a0(Optional after version 24.4.24) Get all PaySplits for a single payment.\u2028ProcNum:\u00a0(Added in version 24.4.24) Optional. Get all PaySplits attached to a specific procedure.\nExample Requests:\u2028GET /paysplits\u2028GET /paysplits?PayNum=8567\u2028GET /paysplits?PatNum=407&ProcNum=8\nExample Response:\n[\u2028{\u2028\"SplitNum\": 116,\u2028\"SplitAmt\": 140,\u2028\"PatNum\": 407,\u2028\"PayNum\": 8567,\u2028\"ProvNum\": 1,\u2028\"PayPlanNum\": 0,\u2028\"DatePay\": \"2023-01-27\",\u2028\"ProcNum\": 9,\u2028\"DateEntry\": \"2023-01-27\",\u2028\"UnearnedType\": 0,\u2028\"unearnedType\": \"\",\u2028\"ClinicNum\": 1,\u2028\"SecDateTEdit\": \"2023-01-27\",\u2028\"AdjNum\": 0,\u2028\"PayPlanChargeNum\": 0,\u2028\"PayPlanDebitType\": \"Unknown\"\u2028},\u2028{\u2028\"SplitNum\": 115,\u2028\"SplitAmt\": 140,\u2028\"PatNum\": 407,\u2028\"PayNum\": 8567,\u2028\"ProvNum\": 1,\u2028\"PayPlanNum\": 0,\u2028\"DatePay\": \"2023-01-27\",\u2028\"ProcNum\": 8,\u2028\"DateEntry\": \"2023-01-27\",\u2028\"UnearnedType\": 0,\u2028\"unearnedType\": \"\",\u2028\"ClinicNum\": 1,\u2028\"SecDateTEdit\": \"2023-01-27\",\u2028\"AdjNum\": 0,\u2028\"PayPlanChargeNum\": 0,\u2028\"PayPlanDebitType\": \"Unknown\"\u2028},\u2028etc...\u2028]\n\n200 OK\u2028400 BadRequest (with explanation)\u2028404 NotFound (with explanation)\n",
+  "metadata": {
+    "version": "22.4.16",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Paysplits",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PaySplits",
+      "method": "GET",
+      "path": "/paysplits",
+      "versionAdded": "22.4.16",
+      "parameters": [
+        {
+          "name": "PatNum",
+          "description": "(Optional after version 24.4.24) Get all PaySplits for a single patient.\u2028PayNum:\u00a0(Optional after version 24.4.24) Get all PaySplits for a single payment.\u2028ProcNum:\u00a0(Added in version 24.4.24) Optional. Get all PaySplits attached to a specific procedure.",
+          "required": false
+        }
+      ],
+      "examples": [
+        {
+          "request": "GET /paysplits\u2028GET /paysplits?PayNum=8567\u2028GET /paysplits?PatNum=407&ProcNum=8",
+          "response": "[\u2028{\u2028\"SplitNum\": 116,\u2028\"SplitAmt\": 140,\u2028\"PatNum\": 407,\u2028\"PayNum\": 8567,\u2028\"ProvNum\": 1,\u2028\"PayPlanNum\": 0,\u2028\"DatePay\": \"2023-01-27\",\u2028\"ProcNum\": 9,\u2028\"DateEntry\": \"2023-01-27\",\u2028\"UnearnedType\": 0,\u2028\"unearnedType\": \"\",\u2028\"ClinicNum\": 1,\u2028\"SecDateTEdit\": \"2023-01-27\",\u2028\"AdjNum\": 0,\u2028\"PayPlanChargeNum\": 0,\u2028\"PayPlanDebitType\": \"Unknown\"\u2028},\u2028{\u2028\"SplitNum\": 115,\u2028\"SplitAmt\": 140,\u2028\"PatNum\": 407,\u2028\"PayNum\": 8567,\u2028\"ProvNum\": 1,\u2028\"PayPlanNum\": 0,\u2028\"DatePay\": \"2023-01-27\",\u2028\"ProcNum\": 8,\u2028\"DateEntry\": \"2023-01-27\",\u2028\"UnearnedType\": 0,\u2028\"unearnedType\": \"\",\u2028\"ClinicNum\": 1,\u2028\"SecDateTEdit\": \"2023-01-27\",\u2028\"AdjNum\": 0,\u2028\"PayPlanChargeNum\": 0,\u2028\"PayPlanDebitType\": \"Unknown\"\u2028},\u2028etc...\u2028]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "567",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Get a list of paysplits.\n8 /paysplits?PatNum=407&ProcNum=8\n116,\u2028\"SplitAmt\": 140,\u2028\"PatNum\": 407,\u2028\"PayNum\": 8567,\u2028\"ProvNum\": 1,\u2028\"PayPlanNum\": 0,\u2028\"DatePay\": \"2023-01-27\",\u2028\"ProcNum\": 9,\u2028\"DateEntry\": \"2023-01-27\",\u2028\"UnearnedType\": 0,\u2028\"unearnedType\": \"\",\u2028\"ClinicNum\": 1,\u2028\"SecDateTEdit\": \"2023-01-27\",\u2028\"AdjNum\": 0,\u2028\"PayPlanChargeNum\": 0,\u2028\"PayPlanDebitType\": \"Unknown\"\u2028},\u2028{\u2028\"SplitNum\": 115,\u2028\"SplitAmt\": 140,\u2028\"PatNum\": 407,\u2028\"PayNum\": 8567,\u2028\"ProvNum\": 1,\u2028\"PayPlanNum\": 0,\u2028\"DatePay\": \"2023-01-27\",\u2028\"ProcNum\": 8,\u2028\"DateEntry\": \"2023-01-27\",\u2028\"UnearnedType\": 0,\u2028\"unearnedType\": \"\",\u2028\"ClinicNum\": 1,\u2028\"SecDateTEdit\": \"2023-01-27\",\u2028\"AdjNum\": 0,\u2028\"PayPlanChargeNum\": 0,\u2028\"PayPlanDebitType\": \"Unknown\"\u2028},\u2028etc...\u2028]"
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-payplancharge",
+      "description": "API references database table payplancharge"
+    },
+    {
+      "type": "references",
+      "target": "db-paysplit",
+      "description": "API references database table paysplit"
+    }
+  ]
+}

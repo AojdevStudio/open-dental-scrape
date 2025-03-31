@@ -1,0 +1,63 @@
+{
+  "id": "api-securitylogs",
+  "type": "api",
+  "title": "Securitylogs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Securitylogs.txt",
+  "content": "API SecurityLogs\nSee API Specification\n\nSee Audit Trail for additional information.\n\nSecurityLogs GET\nVersion Added: 23.1.33\n\nGets all securitylogs for the API developer making the request.\n\nPermType: Optional. Filter responses by permission type. See Audit Trail Permissions for additional information.\n\nExample Requests:\nGET /securitylogs\nGET /securitylogs?PermType=PatientEdit\n\nExample Response:\n[\n{\n\"SecurityLogNum\": 21855,\n\"PermType\": \"PatientCreate\",\n\"UserNum\": 0,\n\"LogDateTime\": \"7/6/2023 11:48:55 AM\",\n\"LogText\": \"Created by API Test Developer through API. \",\n\"PatNum\": 95,\n\"CompName\": \"JUSTINE\",\n\"LogSource\": \"API\"\n},\n{\n\"SecurityLogNum\": 21853,\n\"PermType\": \"PatientEdit\",\n\"UserNum\": 0,\n\"LogDateTime\": \"7/6/2023 11:47:47 AM\",\n\"LogText\": \"Updated by API Test Developer through API. \",\n\"PatNum\": 86,\n\"CompName\": \"JUSTINE\",\n\"LogSource\": \"API\"\n},\n{\n\"SecurityLogNum\": 21845,\n\"PermType\": \"PatientEdit\",\n\"UserNum\": 0,\n\"LogDateTime\": \"7/6/2023 11:42:49 AM\",\n\"LogText\": \"Updated by API Test Developer through API. \",\n\"PatNum\": 86,\n\"CompName\": \"JUSTINE\",\n\"LogSource\": \"API\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)",
+  "metadata": {
+    "version": "23.1.33",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Securitylogs",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "SecurityLogs",
+      "method": "GET",
+      "path": "/securitylogs",
+      "versionAdded": "23.1.33",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /securitylogs\nGET /securitylogs?PermType=PatientEdit",
+          "response": "[\n{\n\"SecurityLogNum\": 21855,\n\"PermType\": \"PatientCreate\",\n\"UserNum\": 0,\n\"LogDateTime\": \"7/6/2023 11:48:55 AM\",\n\"LogText\": \"Created by API Test Developer through API. \",\n\"PatNum\": 95,\n\"CompName\": \"JUSTINE\",\n\"LogSource\": \"API\"\n},\n{\n\"SecurityLogNum\": 21853,\n\"PermType\": \"PatientEdit\",\n\"UserNum\": 0,\n\"LogDateTime\": \"7/6/2023 11:47:47 AM\",\n\"LogText\": \"Updated by API Test Developer through API. \",\n\"PatNum\": 86,\n\"CompName\": \"JUSTINE\",\n\"LogSource\": \"API\"\n},\n{\n\"SecurityLogNum\": 21845,\n\"PermType\": \"PatientEdit\",\n\"UserNum\": 0,\n\"LogDateTime\": \"7/6/2023 11:42:49 AM\",\n\"LogText\": \"Updated by API Test Developer through API. \",\n\"PatNum\": 86,\n\"CompName\": \"JUSTINE\",\n\"LogSource\": \"API\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all securitylogs for the API developer making the request."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-securitylog",
+      "description": "API references database table securitylog"
+    }
+  ]
+}

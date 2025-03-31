@@ -1,0 +1,40 @@
+{
+  "id": "db-hl7defmessage",
+  "type": "database",
+  "title": "hl7defmessage",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "hl7defmessage",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "hl7defmessage",
+    "description": "Table for hl7defmessage data.",
+    "columns": [
+      {
+        "name": "hl7defmessageNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "hl7defmessageNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

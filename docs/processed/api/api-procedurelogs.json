@@ -1,0 +1,328 @@
+{
+  "id": "api-procedurelogs",
+  "type": "api",
+  "title": "ProcedureLogs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ProcedureLogs.txt",
+  "content": "API ProcedureLogs\nSee API Specification\n\nProcedureLogs GET (single)\nVersion Added: 23.3.13\n\nGet a single procedurelog.\n\nProcNum: Required in URL.\n\nExample Request:\nGET /procedurelogs/20\n\nExample Response:\n{\n\"ProcNum\": 20,\n\"PatNum\": 12,\n\"AptNum\": 0,\n\"ProcDate\": \"2022-05-05\",\n\"ProcFee\": \"130.00\",\n\"Surf\": \"MODL\",\n\"ToothNum\": \"4\",\n\"ToothRange\": \"\",\n\"Priority\": 0,\n\"priority\": \"\",\n\"ProcStatus\": \"C\",\n\"ProvNum\": 2,\n\"provAbbr\": \"DOC2\",\n\"Dx\": 0,\n\"dxName\": \"\",\n\"PlannedAptNum\": 0,\n\"Prosthesis\": \"\",\n\"DateOriginalProsth\": \"0001-01-01\",\n\"ClinicNum\": 0,\n\"CodeNum\": 2,\n\"procCode\": \"D0120\",\n\"descript\": \"periodic oral evaluation - established patient\",\n\"UnitQty\": 1,\n\"BaseUnits\": 0,\n\"DateTStamp\": \"2022-05-05 07:00:34\",\n\"IsDateProsthEst\": \"false\",\n\"serverDateTime\": \"2022-05-05 09:00:34\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureLogs GET (multiple)\nVersion Added: 21.1\n\nGet a list of procedurelogs that meet a set of search criteria.\n\nParameters: All Optional.\n\nPatNum: FK to patient.PatNum.\nAptNum: (Added in version 22.3.32) FK to appointment.AptNum.\nPlannedAptNum: (Added in version 24.4.5) FK to appointment.AptNum where appointment.AptStatus=Planned.\nClinicNum: (Added in version 23.3.13) FK to clinic.ClinicNum.\nDateTStamp: Gets procedurelogs created on or after the specified date and time. String in \"yyyy-MM-dd HH:mm:ss\" format.\n\nExample Requests:\nGET /procedurelogs?PatNum=261\nGET /procedurelogs?DateTStamp=2020-07-30 08:00:00&Offset=400\nGET /procedurelogs?AptNum=202\nGET /procedurelogs?ClinicNum=1\n\nExample Response:\n[\n{\n\"ProcNum\": 1,\n\"PatNum\": 1,\n\"AptNum\": 12,\n\"ProcDate\": \"2021-04-01\",\n\"ProcFee\": \"255.00\",\n\"Surf\": \"MODL\",\n\"ToothNum\": \"4\",\n\"ToothRange\": \"\",\n\"Priority\": 0,\n\"priority\": \"\",\n\"ProcStatus\": \"C\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC1\",\n\"Dx\": 0,\n\"dxName\": \"\",\n\"PlannedAptNum\": 0,\n\"Prosthesis\": \"\",\n\"DateOriginalProsth\": \"0001-01-01\",\n\"ClinicNum\": 0,\n\"CodeNum\": 2,\n\"procCode\": \"D0120\",\n\"descript\": \"periodic oral evaluation - established patient\",\n\"UnitQty\": 1,\n\"BaseUnits\": 0,\n\"DateTStamp\": \"2021-11-03 05:30:06\",\n\"IsDateProsthEst\": \"false\",\n\"serverDateTime\": \"2021-11-03 09:32:45\"\n},\n{\n\"ProcNum\": 34,\n\"PatNum\": 46,\n\"AptNum\": 0,\n\"ProcDate\": \"2022-07-06\",\n\"ProcFee\": \"49.99\",\n\"Surf\": \"\",\n\"ToothNum\": \"\",\n\"ToothRange\": \"\",\n\"Priority\": 0,\n\"priority\": \"\",\n\"ProcStatus\": \"TP\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC1\",\n\"Dx\": 0,\n\"dxName\": \"\",\n\"PlannedAptNum\": 38,\n\"Prosthesis\": \"\",\n\"DateOriginalProsth\": \"0001-01-01\",\n\"ClinicNum\": 0,\n\"CodeNum\": 176,\n\"procCode\": \"D1110\",\n\"descript\": \"prophylaxis - adult\",\n\"UnitQty\": 1,\n\"BaseUnits\": 0,\n\"DateTStamp\": \"2023-02-08 11:37:43\",\n\"IsDateProsthEst\": \"false\",\n\"serverDateTime\": \"2023-08-19 13:04:27\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureLogs GET InsuranceHistory\nVersion Added: 22.4.31\n\nGets the previous treatment dates of procedures for a patient's insurance plan, similarly to how it shows in the Insurance History form.\n\nParameters:\n\nPatNum: Required. FK to patient.PatNum.\nInsSubNum: Required. FK to inssub.InsSubNum.\n\nReturned fields are detailed below:\n\ninsHistPrefName: Name of the Preference that is storing the ProcedureCodes for that category.\nprocDate: Previous treatement date for this category. Returns \"No History\" if there is no record, or \"Not Set\" if that preference has no procedure codes.\nProcNum: FK to procedure.ProcNum for the most recent procedure for that category.\n\nExample Requests:\nGET /procedurelogs/InsuranceHistory?PatNum=2617&InsSubNum=2046\n\nExample Response:\n[\n{\n\"insHistPrefName\": \"InsHistBWCodes\",\n\"procDate\": \"2021-12-12\",\n\"ProcNum\": 13073\n},\n{\n\"insHistPrefName\": \"InsHistPanoCodes\",\n\"procDate\": \"2023-03-08\",\n\"ProcNum\": 17068\n},\n{\n\"insHistPrefName\": \"InsHistExamCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistProphyCodes\",\n\"procDate\": \"2023-03-07\",\n\"ProcNum\": 17064\n},\n{\n\"insHistPrefName\": \"InsHistPerioURCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistPerioULCodes\",\n\"procDate\": \"Not Set\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistPerioLRCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistPerioLLCodes\",\n\"procDate\": \"2009-06-19\",\n\"ProcNum\": 1074\n},\n{\n\"insHistPrefName\": \"InsHistPerioMaintCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistDebridementCodes\",\n\"procDate\": \"2023-03-01\",\n\"ProcNum\": 17067\n}\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureLogs POST (create)\nVersion Added: 21.4\n\nCreates a new procedure for a given patient. The following fields cannot be set as part of a POST: ProcNum, provAbbr, CodeNum, and descript. Attempts to set them will be silently ignored. Furthermore, the following pairs of fields may only have one of the two passed in at once: Priority and priority, Dx and dxName. Not all procedure codes support Surfs, ToothNums, and ToothRanges. Procedure code default notes will not be used.\n\nPatNum: Required.\nProcDate: Required. String in \"yyyy-MM-dd\" format.\nProcStatus: Required. Either Treatment Planned (TP), Complete (C), or Existing Other Provider (EO).\nprocCode: Required. This should be a valid D code, example: D0120. CodeNum is set automatically.\nAptNum: Optional.\nProcFee: Optional. If none is given this will default to the procedurecodes default, with consideration of the patient's insurance.\nSurf: Required for the treatment areas of some procCodes. Can be tooth Surfaces (B/F,V,M,O/I,D,L), mouth Quadrants (UL,UR,LR,LL), Sextants (1,2,3,4,5,6), or Arches (U or L).\nToothNum: Required by procCodes with a Surf or Tooth treatment area.\nToothRange: Required by procCodes with a ToothRange treatment area, or for Quadrants and Arches when AreaAlsoToothRange is true. A string of numbers separated by commas and/or hyphen separated ranges.\nPriority: Optional. Definition.DefNum where definition.Category=20. Default is the first definition in that Category. If Priority is used, then priority will be set automatically.\npriority: Optional. String version of Priority. If priority is used, then Priority will be set automatically.\nProvNum: Optional. Defaults to the PriProv of the appointment if given, otherwise it will check the patient's default provider. Failing either of the previous options, it will be set to the dental office's default provider. If ProvNum is used, then provAbbr will be set automatically.\nDx: Optional. Definition.DefNum where definition.Category=16. Default is the first definition in that Category. If Dx is used, then dxName will be set automatically.\ndxName: Optional. String version of Dx. If dxName is used, then Dx will be set automatically.\nPlannedAptNum: Optional. Only set if this procedure is on a planned appointment, otherwise it will be 0.\nClinicNum: Optional. Defaults to the patient's clinic.\n\nExample Requests:\nPOST /procedurelogs\n\n{\n\"PatNum\": 31,\n\"ProcDate\": \"2021-04-28\",\n\"ToothRange\": \"2,3, 13-15\",\n\"Priority\": 149,\n\"ProcStatus\": \"TP\",\n\"dxName\": \"Defect (or miss fill)\",\n\"procCode\": \"D1206\"\n}\n\n{\n\"PatNum\": 29,\n\"AptNum\": 0,\n\"ProcDate\": \"2021-04-25\",\n\"ProcFee\": \"125.95\",\n\"Surf\": \"MO\",\n\"ToothNum\": \"4\",\n\"priority\": \"Low\",\n\"ProcStatus\": \"TP\",\n\"ProvNum\": 1,\n\"Dx\": 126,\n\"PlannedAptNum\": 0,\n\"ClinicNum\": 0,\n\"procCode\": \"D2331\"\n}\n\nExample Responses:\n{\n\"ProcNum\": 301,\n\"PatNum\": 29,\n\"AptNum\": 0,\n\"ProcDate\": \"2021-04-25\",\n\"ProcFee\": \"125.95\",\n\"Surf\": \"MO\",\n\"ToothNum\": \"4\",\n\"ToothRange\": \"\",\n\"Priority\": 148,\n\"priority\": \"Low\",\n\"ProcStatus\": \"TP\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC 1\",\n\"Dx\": 126,\n\"dxName\": \"Cracked Tooth\",\n\"PlannedAptNum\": 0,\n\"ClinicNum\": \"0\",\n\"CodeNum\": 187,\n\"procCode\": \"D2331\",\n\"descript\": \"resin-based composite - two surfaces, anterior\",\n\"UnitQty\": 1,\n\"BaseUnits\": 0,\n\"DateTStamp\": \"\",\n\"serverDateTime\": \"\"\n}\n\n400 BadRequest (Missing or invalid fields)\n404 NotFound \"Patient not found\", \"Appointment not found\", \"procCode not found\", \"Priority not found\", \"Dx not found\"\n201 Created\nHeader \"location\": https://api.opendental.com/api/v1/procedurelogs/345\n\nProcedureLogs POST GroupNote\nVersion Added: 22.2\n\nCreates a Group Note for a set of procedures. These procedures must have the same procdate, clinic, and provider. Any repeated ProcNums will be silently ignored.\n\nSome dental offices choose to include an aggregate of the individual procedures' notes into their Group Notes, with the new Note text appended. For more information about Group Notes see Procedure Group Note. To create a Note for a single procedure see API ProcNotes.\n\nPatNum: Required.\nProcNums: Required. An array of ProcNums, in [1,2,3] format.\nNote: Required. The text for the Group Note.\n\nExample Request:\nPOST /procedurelogs/GroupNote\n\n{\n\"PatNum\": 52,\n\"ProcNums\": [1470, 1472],\n\"Note\": \"Medical: no changes \\r\\nPt concerns: none\"\n}\n\nExample Responses:\n{\n\"PatNum\": 52,\n\"ProcNums\": [1470, 1472],\n\"Note\": \"Medical: no changes \\r\\nPt concerns: none\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureLogs POST InsuranceHistory\nVersion Added: 22.4.31\n\nThis functions similarly to entering a date in the Insurance History form for a single category. Creates a new Existing Other Provider (EO) procedure and Insurance History (InsHist) claimproc for a given patient. The new procedure will use the patient's default clinic, default provider, and the first alphanumeric procedure code in the category for the insHistPrefName.\n\nPatNum: Required. FK to patient.PatNum.\nInsSubNum: Required. FK to inssub.InsSubNum.\ninsHistPrefName: Required. String. The PrefName of the Insurance History category. Either \"InsHistBWCodes\", \"InsHistPanoCodes\", \"InsHistExamCodes\", \"InsHistProphyCodes\", \"InsHistPerioURCodes\", \"InsHistPerioULCodes\", \"InsHistPerioLRCodes\", \"InsHistPerioLLCodes\", \"InsHistPerioMaintCodes\", or \"InsHistDebridementCodes\". Case sensitive.\nProcDate: Required. String in \"yyyy-MM-dd\" format. The date the procedure was completed.\n\nExample Request:\nPOST /procedurelogs/InsuranceHistory\n\n{\n\"PatNum\": 572,\n\"InsSubNum\": 49,\n\"insHistPrefName\": \"InsHistExamCodes\",\n\"ProcDate\": \"2023-01-23\"\n}\n\nExample Responses:\n{\n\"ProcNum\": 19087,\n\"PatNum\": 572,\n\"AptNum\": 0,\n\"ProcDate\": \"2023-01-23\",\n\"ProcFee\": \"0.00\",\n\"Surf\": \"\",\n\"ToothNum\": \"\",\n\"ToothRange\": \"\",\n\"Priority\": 0,\n\"priority\": \"\",\n\"ProcStatus\": \"EO\",\n\"ProvNum\": 1,\n\"provAbbr\": \"DOC1\",\n\"Dx\": 0,\n\"dxName\": \"\",\n\"PlannedAptNum\": 0,\n\"ClinicNum\": 3,\n\"CodeNum\": 2,\n\"procCode\": \"D0120\",\n\"descript\": \"periodic oral evaluation - established patient\",\n\"UnitQty\": 1,\n\"BaseUnits\": 0,\n\"DateTStamp\": \"0001-01-01 00:00:00\",\n\"serverDateTime\": \"\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureLogs PUT (update)\nVersion Added: 22.1\n\nUpdates an existing procedure. When changing procCode, the treatment area of the current and passed in procedure codes must match. Attempting to pass in empty strings for ToothNum, Surf, and ToothRange will be silently ignored. The procCode, ToothNum, Surf, and ToothRange fields cannot be updated on procedures with a ProcStatus of C. Procedure code default notes will not be used.\n\nProcedureLogs associated with adjustments, appointments, claimprocs, payments, payplancharges, paysplits, are updated exactly as in Open Dental.\n\nProcNum: Required in URL.\n\nAptNum: AptNum of the appointment to attach this procedure to.\nProcDate: String in \"yyyy-MM-dd\" format.\nProcFee: Procedure fee.\nPriority: Definition.DefNum where definition.Category=20.\nProcStatus: Either Treatment Planned (TP), Complete (C), or Existing Other Provider (EO).\nProvNum: ProvNum for a provider.\nDx: Definition.DefNum where definition.Category=16.\nPlannedAptNum: AptNum of a planned appointment this procedure is attached to.\nClinicNum: ClinicNum of a clinic.\nprocCode: ProcCode of a procedurecode entry. If passed in, the treatment area must be the same as the current procCode's.\nToothNum: Can only be updated if the treatment area of this procCode supports ToothNum.\nSurf: Can only be updated if the treatment area of this procCode supports Surf.\nToothRange: Comma separated ToothNums and/or dash separated ranges of ToothNums. Can only be updated if the treatment area of this procCode supports ToothRange, whether the procCode's TreatArea is ToothRange or its 'AreaAlsoToothRange' field is true.\n\nExample Requests:\nPUT /procedurelogs/100\n\n{\n\"AptNum\": \"1023\",\n\"ProcDate\": \"2022-04-25\",\n\"ProcFee\": \"250\",\n\"Priority\": \"153\",\n\"ProcStatus\": \"TP\",\n\"ProvNum\": \"2\",\n\"Dx\": \"139\",\n\"PlannedAptNum\": \"0\",\n\"ClinicNum\": \"2\",\n\"ToothNum\":\"14\",\n\"Surf\":\"MO\",\n\"ToothRange\": \"\"\n}\n\n{\n\"procCode\": \"D9972\",\n\"Surf\": \"L\",\n\"ToothRange\":\"31,30, 18-21\"\n}\n\nExample Responses:\n{\n\"ProcNum\": 179,\n\"PatNum\": 23,\n\"AptNum\": \"1023\",\n\"ProcDate\": \"2022-04-25\",\n\"ProcFee\": \"250.00\",\n\"Surf\": \"MO\",\n\"ToothNum\": \"14\",\n\"ToothRange\": \"\",\n\"Priority\": 153,\n\"priority\": \"3\",\n\"ProcStatus\": \"TP\",\n\"ProvNum\": 2,\n\"provAbbr\": \"HYG1\",\n\"Dx\": 139,\n\"dxName\": \"None\",\n\"PlannedAptNum\": \"0\",\n\"ClinicNum\": \"2\",\n\"CodeNum\": 193,\n\"procCode\": \"D2393\",\n\"descript\": \"resin-based composite - three surfaces, posterior\",\n\"UnitQty\": 1,\n\"BaseUnits\": 0,\n\"DateTStamp\": \"2022-04-26 13:44:55\",\n\"serverDateTime\": \"\"\n}\n\n400 BadRequest (With explanation)\n404 NotFound (With explanation)\n200 OK\n\nProcedureLogs PUT GroupNote\nVersion Added: 22.2.29\n\nUpdates a specific Group Note procedure for a given patient.\n\nFor more information about Group Notes see Procedure Group Note. To update a Note for a single procedure see API ProcNotes.\n\nPatNum: Required.\nProcNum: Required. Must be the ProcNum of a procedure with a procCode of \"~GRP~\".\nNote: Required. The text for the Group Note.\n\nExample Request:\nPUT /procedurelogs/GroupNote\n\n{\n\"PatNum\": 30,\n\"ProcNum\": 865,\n\"Note\": \"Dental exam\"\n}\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nProcedureLogs DELETE\nVersion Added: 22.1\n\nDeletes a procedure. Can only delete procedures with a ProcStatus of TP, TPi, or (added in version 23.1.11) C. Procedures cannot be deleted if they are attached to a claim, insurance payment, patient payment, adjustment, prescription, or payment plan. Also cannot delete a procedure if it has referrals attached, is linked to an ortho case, or if it's the last procedure from a preauthorization claim.\n\nProcNum: Required in the URL.\n\nExample Request:\nDELETE /procedurelogs/25\n\nExample Responses:\n200 OK\n400 BadRequest (With explanation)\n404 NotFound \"Procedure not found.\"\n\nProcedureLogs DELETE GroupNote\nVersion Added: 22.3.8\n\nDeletes a GroupNote procedure.\n\nProcNum: Required in the URL. Must be the ProcNum of a procedure with a procCode of \"~GRP~\".\n\nExample Request:\nDELETE /procedurelogs/144/GroupNote\n\nExample Responses:\n200 OK\n400 BadRequest (With explanation)\n404 NotFound \"Procedure not found.\"",
+  "metadata": {
+    "version": "23.3.13",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ProcedureLogs",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ProcedureLogs",
+      "method": "GET",
+      "path": "/procedurelogs",
+      "versionAdded": "22.4.31",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /procedurelogs/InsuranceHistory?PatNum=2617&InsSubNum=2046",
+          "response": "[\n{\n\"insHistPrefName\": \"InsHistBWCodes\",\n\"procDate\": \"2021-12-12\",\n\"ProcNum\": 13073\n},\n{\n\"insHistPrefName\": \"InsHistPanoCodes\",\n\"procDate\": \"2023-03-08\",\n\"ProcNum\": 17068\n},\n{\n\"insHistPrefName\": \"InsHistExamCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistProphyCodes\",\n\"procDate\": \"2023-03-07\",\n\"ProcNum\": 17064\n},\n{\n\"insHistPrefName\": \"InsHistPerioURCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistPerioULCodes\",\n\"procDate\": \"Not Set\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistPerioLRCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistPerioLLCodes\",\n\"procDate\": \"2009-06-19\",\n\"ProcNum\": 1074\n},\n{\n\"insHistPrefName\": \"InsHistPerioMaintCodes\",\n\"procDate\": \"No History\",\n\"ProcNum\": 0\n},\n{\n\"insHistPrefName\": \"InsHistDebridementCodes\",\n\"procDate\": \"2023-03-01\",\n\"ProcNum\": 17067\n}\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "046",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets the previous treatment dates of procedures for a patient's insurance plan, similarly to how it shows in the Insurance History form."
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "POST",
+      "path": "/procedurelogs",
+      "versionAdded": "22.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /procedurelogs/GroupNote\n\n{\n\"PatNum\": 52,\n\"ProcNums\": [1470, 1472],\n\"Note\": \"Medical: no changes \\r\\nPt concerns: none\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a Group Note for a set of procedures. These procedures must have the same procdate, clinic, and provider. Any repeated ProcNums will be silently ignored."
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "POST",
+      "path": "/procedurelogs",
+      "versionAdded": "22.4.31",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /procedurelogs/InsuranceHistory\n\n{\n\"PatNum\": 572,\n\"InsSubNum\": 49,\n\"insHistPrefName\": \"InsHistExamCodes\",\n\"ProcDate\": \"2023-01-23\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "This functions similarly to entering a date in the Insurance History form for a single category. Creates a new Existing Other Provider (EO) procedure and Insurance History (InsHist) claimproc for a given patient. The new procedure will use the patient's default clinic, default provider, and the first alphanumeric procedure code in the category for the insHistPrefName."
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "PUT",
+      "path": "/procedurelogs",
+      "versionAdded": "22.2.29",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /procedurelogs/GroupNote\n\n{\n\"PatNum\": 30,\n\"ProcNum\": 865,\n\"Note\": \"Dental exam\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Updates a specific Group Note procedure for a given patient."
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "DELETE",
+      "path": "/procedurelogs",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /procedurelogs/25",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "With explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Deletes a procedure. Can only delete procedures with a ProcStatus of TP, TPi, or (added in version 23.1.11) C. Procedures cannot be deleted if they are attached to a claim, insurance payment, patient payment, adjustment, prescription, or payment plan. Also cannot delete a procedure if it has referrals attached, is linked to an ortho case, or if it's the last procedure from a preauthorization claim."
+    },
+    {
+      "resource": "ProcedureLogs",
+      "method": "DELETE",
+      "path": "/procedurelogs",
+      "versionAdded": "22.3.8",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /procedurelogs/144/GroupNote",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "With explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Deletes a GroupNote procedure."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-referral",
+      "description": "API references database table referral"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-site",
+      "description": "API references database table site"
+    },
+    {
+      "type": "references",
+      "target": "db-procnote",
+      "description": "API references database table procnote"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-evaluation",
+      "description": "API references database table evaluation"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-claimproc",
+      "description": "API references database table claimproc"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-payplancharge",
+      "description": "API references database table payplancharge"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    },
+    {
+      "type": "references",
+      "target": "db-paysplit",
+      "description": "API references database table paysplit"
+    }
+  ]
+}

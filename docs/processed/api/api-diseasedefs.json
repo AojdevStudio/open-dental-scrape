@@ -1,0 +1,86 @@
+{
+  "id": "api-diseasedefs",
+  "type": "api",
+  "title": "DiseaseDefs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API DiseaseDefs.txt",
+  "content": "API DiseaseDefs\nSee API Specification\n\nSee Problem List for more information.\n\nDiseaseDefs GET (single)\nVersion Added: 24.1.44\n\nGet a single DiseaseDef (Problem) that can be assigned to a patient.\n\nDiseaseDefNum: Required in the URL.\n\nExample Request:\nGET /diseasedefs/58\n\nExample Response:\n{\n\"DiseaseDefNum\": 58,\n\"DiseaseName\": \"Severe Back Pain\",\n\"IsHidden\": \"true\",\n\"DateTStamp\": \"2021-02-07 12:27:28\",\n\"ICD9Code\": \"\",\n\"ICD10Code\": \"\",\n\"SnomedCode\": \"\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nDiseaseDefs GET (multiple)\nVersion Added: 21.3\n\nGets a list of all DiseaseDefs (Problems) that can be assigned to patients.\n\nExample Requests:\nGET /diseasedefs\nGET /diseasedefs?Offset=200\n\nExample Response:\n[\n{\n\"DiseaseDefNum\": 58,\n\"DiseaseName\": \"Severe Back Pain\",\n\"IsHidden\": \"true\",\n\"DateTStamp\": \"2021-02-07 12:27:28\",\n\"ICD9Code\": \"\",\n\"ICD10Code\": \"\",\n\"SnomedCode\": \"\"\n},\n{\n\"DiseaseDefNum\": 59,\n\"DiseaseName\": \"Unspecified Essential Hypertension\",\n\"IsHidden\": \"false\",\n\"DateTStamp\": \"2021-09-07 14:00:10\",\n\"ICD9Code\": \"401.9\",\n\"ICD10Code\": \"\",\n\"SnomedCode\": \"\"\n},\netc...\n]\n\nDiseaseDefs POST\nVersion Added: 21.3\n\nInserts a single DiseaseDef using a unique DiseaseName.\n\nExample Request:\nPOST /diseasedefs\n\n{\n\"DiseaseName\": \"Shingles\"\n}\n\nExample Responses:\n201 Created\n400 BadRequest \"DiseaseName is required\" or \"A DiseaseDef with that name already exists\".",
+  "metadata": {
+    "version": "24.1.44",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "DiseaseDefs",
+      "GET",
+      "POST",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "DiseaseDefs",
+      "method": "POST",
+      "path": "/diseasedefs",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /diseasedefs\n\n{\n\"DiseaseName\": \"Shingles\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        }
+      ],
+      "description": "Inserts a single DiseaseDef using a unique DiseaseName."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-icd10",
+      "description": "API references database table icd10"
+    },
+    {
+      "type": "references",
+      "target": "db-diseasedef",
+      "description": "API references database table diseasedef"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-icd9",
+      "description": "API references database table icd9"
+    },
+    {
+      "type": "references",
+      "target": "db-snomed",
+      "description": "API references database table snomed"
+    },
+    {
+      "type": "references",
+      "target": "db-disease",
+      "description": "API references database table disease"
+    }
+  ]
+}

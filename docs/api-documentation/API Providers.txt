@@ -1,0 +1,285 @@
+API Providers
+See API Specification
+
+Providers GET (single)
+Version Added: 24.4.17
+
+Gets a single provider.
+
+ProvNum: Required in URL.
+
+Example Request:
+GET /providers/4
+
+Example Response:
+{
+"ProvNum": 4,
+"Abbr": "HYG2",
+"LName": "Bently",
+"FName": "Bruce",
+"MI": "",
+"Suffix": "",
+"FeeSched": 53,
+"Specialty": 265,
+"SSN": "",
+"StateLicense": "",
+"IsSecondary": "true",
+"provColor": "164,164,255",
+"IsHidden": "false",
+"UsingTIN": "false",
+"SigOnFile": "false",
+"NationalProvID": "",
+"DateTStamp": "2016-03-03 13:10:47",
+"IsNotPerson": "false",
+"ProvStatus": "Active",
+"IsHiddenReport": "false",
+"Birthdate": "0001-01-01",
+"SchedNote": "",
+"PreferredName": "",
+"serverDateTime": "2021-01-16 12:55:39"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Providers GET (multiple)
+Version Added: 21.1
+
+Gets a list of all providers. Can be optionally filtered by either ClinicNum or DateTStamp. Two different queries are used. ClinicNum is not a field in the Provider table, so it does not get returned in any results.
+
+ClinicNum: Optional. Specifying a ClinicNum returns list of non-hidden providers that are either not restricted to a clinic, or are restricted to the ClinicNum provided. When using ClinicNum, a serverDateTime will not be returned.
+DateTStamp (added in version 21.3): Optional. String in "yyyy-MM-dd HH:mm:ss" format. Get providers altered after the specified date and time. This is a good way for you to keep a synchronized copy of providers. Store serverDateTime that gets returned, and use it to run the next GET.
+
+Example Requests:
+GET /providers
+GET /providers?DateTStamp=2021-08-01%2005%3A30%3A00
+
+Example Response:
+[
+{
+"ProvNum": 1,
+"Abbr": "DOC1",
+"LName": "Albert",
+"FName": "Brian",
+"MI": "L",
+"Suffix": "",
+"FeeSched": 53,
+"Specialty": 263,
+"SSN": "1522864182",
+"StateLicense": "D7601",
+"IsSecondary": "false",
+"provColor": "164,255,164",
+"IsHidden": "false",
+"UsingTIN": "true",
+"SigOnFile": "true",
+"NationalProvID": "1679608723",
+"DateTStamp": "2021-08-04 08:33:01",
+"IsNotPerson": "false",
+"ProvStatus": "Active",
+"IsHiddenReport": "false",
+"Birthdate": "0001-01-01",
+"SchedNote": "",
+"PreferredName": "",
+"serverDateTime": "2021-08-31 12:05:31"
+},
+{
+"ProvNum": 2,
+"Abbr": "HYG1",
+"LName": "Jones",
+"FName": "Tina",
+"MI": "",
+"Suffix": "",
+"FeeSched": 53,
+"Specialty": 264,
+"SSN": "",
+"StateLicense": "D7601",
+"IsSecondary": "true",
+"provColor": "203,151,255",
+"IsHidden": "false",
+"UsingTIN": "false",
+"SigOnFile": "false",
+"NationalProvID": "1657398425",
+"DateTStamp": "2021-08-15 13:18:51",
+"IsNotPerson": "false",
+"ProvStatus": "Deleted",
+"IsHiddenReport": "false",
+"Birthdate": "0001-01-01",
+"SchedNote": "",
+"PreferredName": "",
+"serverDateTime": "2021-08-31 12:05:31"
+}
+]
+
+Example Request:
+GET /providers?ClinicNum=4
+
+Example Response:
+{
+"ProvNum": 6,
+"Abbr": "HYG2",
+"LName": "Thomason",
+"FName": "Shirley",
+"MI": "",
+"Suffix": "",
+"FeeSched": 53,
+"Specialty": 264,
+"SSN": "",
+"StateLicense": "D7601",
+"IsSecondary": "true",
+"provColor": "255,183,183",
+"IsHidden": "false",
+"UsingTIN": "false",
+"SigOnFile": "false",
+"NationalProvID": "1857495435",
+"DateTStamp": "2021-07-25 10:20:21",
+"IsNotPerson": "false",
+"ProvStatus": "Active",
+"IsHiddenReport": "false",
+"Birthdate": "1969-10-01",
+"SchedNote": "",
+"PreferredName": "",
+"serverDateTime": ""
+}
+
+200 OK
+400 BadRequest "DateTStamp format must be yyyy-MM-dd HH:mm:ss"
+404 NotFound "Clinic not found"
+
+Providers POST (create)
+Version Added: 21.4
+
+Creates a new provider, billing entity, or dummy provider. After adding a provider, there's no way to delete it, not even from within Open Dental. The best you can do is to go into Open Dental and hide the provider.
+
+Abbr: Required. A short abbreviation that shows in various lists throughout Open Dental.
+LName: Optional. Last name. If billing as an entity, enter the billing entity name.
+FName: Optional. First name.
+MI: Optional. Middle initial.
+Suffix: Optional. MD, DMD, DDS, etc.
+FeeSched: Optional. Foreign key to feesched.FeeSchedNum. Default is the first in the Fee Schedule list.
+Specialty: Optional. Definition.DefNum where definition.Category=35. Default is the first in the Specialty list.
+SSN: Optional. Provider's SSN or TIN. Most offices will enter their TIN here. If SSN the TIN field must be set to "false". SSN/TIN is not allowed to have dashes.
+StateLicense: (Added in version 24.4.31) Optional. The provider's state license number.
+IsSecondary: Optional. True if provider is a hygienist. Default is false.
+IsHidden: Optional. If true, provider will be removed as a selection option in various areas of Open Dental. Default is false.
+UsingTIN: Optional. True if SSN field is storing TIN. Default is true.
+SigOnFile: (Added in version 24.4.17) Optional. Signature on file. May affect what shows on the ADA Claim Forms for treating provider signature. Either "true" or "false". Default is "false".
+NationalProvID: (Added in version 24.4.31) Optional. The provider's national provider ID.
+IsNotPerson: Optional. This is set to true if the provider is used as an entity or organization instead of a person. When set to true, FName and MI must be omitted. Default is false.
+IsHiddenReport: Optional. Determines whether the provider will show on standard reports. Default is false.
+BirthDate: Optional. Provider's birth date in "yyyy-mm-dd" format.
+SchedNote: Optional. Indicates if the provider should be scheduled in a certain way.
+PreferredName: Optional. The preferred name of the provider. This is displayed in the eClipboard.
+
+Example Request:
+POST /providers
+
+{
+"Abbr": "DOCE",
+"LName": "Fisher",
+"FName": "Ethan",
+"Suffix": "DDS",
+"SSN":"123859778",
+"IsHiddenReport": "true",
+"Birthdate": "1987-07-17",
+"SchedNote": "Root canals only.",
+"PreferredName": "Doc E."
+}
+
+Example Response:
+{
+"ProvNum": 12,
+"Abbr": "DOCE",
+"LName": "Fisher",
+"FName": "Ethan",
+"MI": "",
+"Suffix": "DDS",
+"FeeSched": 53,
+"Specialty": 263,
+"SSN": "123859778",
+"StateLicense": "",
+"IsSecondary": "false",
+"provColor": "0,0,0",
+"IsHidden": "false",
+"UsingTIN": "true",
+"SigOnFile": "false",
+"NationalProvID": "",
+"DateTStamp": "2021-08-04 08:33:01",
+"IsNotPerson": "false",
+"ProvStatus": "Active",
+"IsHiddenReport": "true",
+"Birthdate": "1987-07-17",
+"SchedNote": "Root canals only.",
+"PreferredName": "Doc E.",
+"serverDateTime": ""
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Providers PUT (update)
+Version Added: 22.1
+
+All fields are optional.
+
+Abbr: The provider's abbreviation. Cannot be blank.
+FName: The provider's first name.
+LName: The provider's last name.
+MI: The provider's middle initial.
+Suffix: The provider's suffix (Jr., III, IV, etc...).
+PreferredName: The provider's preferred name.
+Specialty: The DefNum of the provider's specialty, where the definition category is 35.
+SigOnFile: (Added in version 24.4.17) Signature on file. May affect what shows on the ADA Claim Forms for treating provider signature. Either "true" or "false".
+NationalProvId: The provider's national provider ID.
+StateLicense: The provider's state license number.
+SSN: Provider's SSN or TIN, no dashes.
+UsingTIN: True if SSN field is storing TIN. Valid values are "true" and "false".
+
+Example Request:
+PUT /providers/13
+
+{
+"Abbr": "DOC1",
+"FName": "Philip",
+"LName": "Sherman",
+"MI": "",
+"Suffix": "",
+"PreferredName": "Phil",
+"Specialty": 264,
+"NationalProvId": "1245319599",
+"StateLicense": "183815",
+"SSN": "123456789",
+"UsingTIN": "false"
+}
+
+Example Response:
+{
+"ProvNum": 13,
+"Abbr": "DOC1",
+"LName": "Sherman",
+"FName": "Philip",
+"MI": "",
+"Suffix": "",
+"FeeSched": 53,
+"Specialty": 263,
+"SSN": "123456789",
+"StateLicense": "D7601",
+"IsSecondary": "false",
+"provColor": "0,0,0",
+"IsHidden": "false",
+"UsingTIN": "false",
+"SigOnFile": "true",
+"NationalProvID": "1245319599",
+"DateTStamp": "2021-08-04 08:33:01",
+"IsNotPerson": "false",
+"ProvStatus": "Active",
+"IsHiddenReport": "true",
+"Birthdate": "1987-07-17",
+"SchedNote": "Root canals only.",
+"PreferredName": "Phil",
+"serverDateTime": ""
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

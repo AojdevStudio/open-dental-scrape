@@ -1,0 +1,58 @@
+API ScheduleOps
+See API Specification
+
+A scheduleop links one schedule block to one operatory. A schedule block can be linked to one or more operatories. A schedule can also not have any scheduleops.
+
+ScheduleOps GET
+Version Added: 23.2.27
+
+Gets a list of scheduleops optionally filtered by either ScheduleNum or OperatoryNum.
+
+Parameters: All optional.
+
+ScheduleNum: FK to schedule.ScheduleNum.
+OperatoryNum: FK to operatory.OperatoryNum.
+
+Example Requests:
+GET /scheduleops
+GET /scheduleops?ScheduleNum=1093
+GET /scheduleops?OperatoryNum=14
+
+Example Response:
+[
+{
+"ScheduleOpNum": 156,
+"ScheduleNum": 1092,
+"OperatoryNum": 12
+},
+{
+"ScheduleOpNum": 157,
+"ScheduleNum": 1092,
+"OperatoryNum": 13
+},
+{
+"ScheduleOpNum": 158,
+"ScheduleNum": 1092,
+"OperatoryNum": 14
+},
+{
+"ScheduleOpNum": 159,
+"ScheduleNum": 1093,
+"OperatoryNum": 12
+},
+{
+"ScheduleOpNum": 160,
+"ScheduleNum": 1093,
+"OperatoryNum": 13
+},
+{
+"ScheduleOpNum": 161,
+"ScheduleNum": 1093,
+"OperatoryNum": 14
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

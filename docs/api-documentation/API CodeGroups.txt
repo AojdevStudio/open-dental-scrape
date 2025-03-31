@@ -1,0 +1,109 @@
+API CodeGroups
+See API Specification
+
+A codegroup is used in Benefit Frequencies. For more information, see Code Groups and Frequency Limitations.
+
+CodeGroups GET
+Version Added: 23.2.62
+
+Gets a list of codegroups.
+
+Example Request:
+GET /codegroups
+
+Example Response:
+[
+{
+"CodeGroupNum": 1,
+"GroupName": "Fluoride",
+"ProcCodes": "D1206",
+"ItemOrder": 0,
+"CodeGroupFixed": "Fluoride",
+"IsHidden": "false",
+"ShowInAgeLimit": "true"
+},
+{
+"CodeGroupNum": 2,
+"GroupName": "Sealant",
+"ProcCodes": "D1351",
+"ItemOrder": 1,
+"CodeGroupFixed": "Sealant",
+"IsHidden": "false",
+"ShowInAgeLimit": "true"
+},
+etc...
+]
+
+200 OK
+
+CodeGroups POST (create)
+Version Added: 24.1.29
+
+Creates a codegroup.
+
+GroupName: Required. Name of the codegroup.
+ProcCodes: Optional. Comma delimited list of procedure codes.
+CodeGroupFixed: Optional. Either "None", "BW", "PanoFMX", "Exam", "Perio", "Prophy", "SRP", "FMDebride", "Fluoride", or "Sealant". Default "None".
+IsHidden: Optional. Either "true" or "false". If true, this codegroup will be hidden from the Frequency Limitations grid. Default "false".
+ShowInAgeLimit: Optional. Either "true" or "false". If true, this codegroup will show in Age Limitations grid. Default "false".
+
+Example Request:
+POST /codegroups
+
+{
+"GroupName": "Perio Maintenance",
+"ProcCodes": "D4910",
+"CodeGroupFixed": "Perio",
+"IsHidden": "false",
+"ShowInAgeLimit": "true"
+}
+
+Example Response:
+{
+"CodeGroupNum": 23,
+"GroupName": "Perio Maintenance",
+"ProcCodes": "D4910",
+"ItemOrder": 1,
+"CodeGroupFixed": "Perio",
+"IsHidden": "false",
+"ShowInAgeLimit": "true"
+}
+
+201 Created
+400 BadRequest (with explanation)
+
+CodeGroups PUT (update)
+Version Added: 24.1.29
+
+Updates a codegroup.
+
+CodeGroupNum: Required in the URL.
+
+GroupName: Name of the codegroup.
+ProcCodes: Comma delimited list of procedure codes. Overwrites existing value.
+CodeGroupFixed: Either "None", "BW", "PanoFMX", "Exam", "Perio", "Prophy", "SRP", "FMDebride", "Fluoride", or "Sealant".
+IsHidden: Either "true" or "false". If true, this codegroup will be hidden from the Frequency Limitations grid.
+ShowInAgeLimit: Either "true" or "false". If true, this codegroup will show in Age Limitations grid.
+
+Example Request:
+PUT /codegroups/23
+
+{
+"IsHidden": "true",
+"ShowInAgeLimit": "false"
+}
+
+Example Response:
+{
+"CodeGroupNum": 23,
+"GroupName": "Perio Maintenance",
+"ProcCodes": "D4910",
+"ItemOrder": 9,
+"CodeGroupFixed": "Perio",
+"IsHidden": "true",
+"ShowInAgeLimit": "false"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

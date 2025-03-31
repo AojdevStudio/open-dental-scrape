@@ -1,0 +1,105 @@
+{
+  "id": "api-substituionlinks",
+  "type": "api",
+  "title": "SubstituionLinks",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API SubstituionLinks.txt",
+  "content": "API SubstitutionLinks\nSee API Specification\n\nSee Estimate Downgrades for additional information.\n\nSubstitutionLinks GET\nVersion Added: 22.4.25\n\nGets a list of substitution links for a given insurance plan.\n\nPlanNum: FK to InsPlan.planNum.\n\nExample Request:\nGET /substitutionlinks?PlanNum=33\n\nExample Response:\n\n[\n{\n\"SubstiutionLinkNum\": 13,\n\"PlanNum\": 33,\n\"CodeNum\": 6,\n\"SubstitutionCode\": \"D3002\",\n\"SubstOnlyIf\": \"Always\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nSubstitutionLinks POST (create)\nVersion Added: 22.4.1\n\nCreates a new SubstitutionLink. These links are created for a single insurance plan and will overwrite the ProcedureCode on a procedure with the SubstitutionCode. This replacement is based upon the SubstOnlyIf condition.\n\nPlanNum: Required. FK to InsPlan.PlanNum.\nCodeNum: Required. FK to ProcedureCode.CodeNum.\nSubstitutionCode: Required. FK to ProcedureCode.ProcCode. Case-sensitive.\nSubstOnlyIf: Required. Either \"Always\", \"Molar\", \"SecondMolar\", \"Never\", or \"Posterior\".\n\nExample Request:\nPOST /substitutionlinks\n\n{\n\"PlanNum\": 34,\n\"CodeNum\": 6,\n\"SubstitutionCode\": \"D3002\",\n\"SubstOnlyIf\": \"Molar\"\n}\n\nExample Response:\n\n{\n\"SubstitutionLinkNum\": 16,\n\"PlanNum\": 34,\n\"CodeNum\": 6,\n\"SubstitutionCode\": \"D3002\",\n\"SubstOnlyIf\": \"Molar\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nSubstitutionLinks PUT (update)\nVersion Added: 22.4.25\n\nUpdates a substitution link.\n\nSubstitutionLinkNum: Required in the URL.\n\nSubstitutionCode: Optional. FK to ProcedureCode.ProcCode. Case-sensitive.\nSubstOnlyIf: Optional. Either \"Always\", \"Molar\", \"SecondMolar\", \"Never\", or \"Posterior\".\nExample Request:\nPUT /substitutionlinks/34\n\n{\n\"SubstitutionCode\": \"D3004\",\n\"SubstOnlyIf\": \"SecondMolar\"\n}\n\nExample Response:\n\n{\n\"SubstitutionLinkNum\": 34,\n\"PlanNum\": 14,\n\"CodeNum\": 6,\n\"SubstitutionCode\": \"D3004\",\n\"SubstOnlyIf\": \"SecondMolar\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nSubstitutionLinks DELETE\nVersion Added: 22.4.25\n\nDeletes an existing substitution link by SubstitutionLinkNum.\n\nSubsitutionLinkNum: Required in URL.\n\nExample Request:\nDELETE /substitutionlinks/25\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.4.25",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "SubstituionLinks",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "SubstitutionLinks",
+      "method": "GET",
+      "path": "/substitutionlinks",
+      "versionAdded": "22.4.25",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /substitutionlinks?PlanNum=33",
+          "response": "[\n{\n\"SubstiutionLinkNum\": 13,\n\"PlanNum\": 33,\n\"CodeNum\": 6,\n\"SubstitutionCode\": \"D3002\",\n\"SubstOnlyIf\": \"Always\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of substitution links for a given insurance plan."
+    },
+    {
+      "resource": "SubstitutionLinks",
+      "method": "DELETE",
+      "path": "/substitutionlinks",
+      "versionAdded": "22.4.25",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /substitutionlinks/25",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes an existing substitution link by SubstitutionLinkNum."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-substitutionlink",
+      "description": "API references database table substitutionlink"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-insplan",
+      "description": "API references database table insplan"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "db-transaction",
+  "type": "database",
+  "title": "transaction",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "transaction",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "transaction",
+    "description": "Table for transaction data.",
+    "columns": [
+      {
+        "name": "transactionNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "transactionNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-accountmodules",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

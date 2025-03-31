@@ -1,0 +1,123 @@
+API Sheets
+See API Specification
+
+Sheets GET
+Version Added: 21.4
+
+Gets all Sheets for a single patient.
+
+PatNum: Required.
+
+Example Request:
+GET /sheets?PatNum=123
+GET /sheets?PatNum=123&Offset=400
+
+Example Response:
+[
+{
+"SheetNum": 45,
+"SheetType": "PatientLetter",
+"PatNum": 123,
+"DateTimeSheet": "2021-11-16 02:45:38",
+"InternalNote": "",
+"Description": "Custom Patient Letter",
+"IsWebForm": "false",
+"SheetDefNum": 25,
+"DocNum": 0,
+"ClinicNum": 0,
+"DateTSheetEdited": "2022-01-23 08:33:02"
+},
+{
+"SheetNum": 47,
+"SheetType": "MedicalHistory",
+"PatNum": 123,
+"DateTimeSheet": "2021-11-16 12:21:03",
+"InternalNote": "",
+"Description": "Medical History Simple",
+"IsWebForm": "false",
+"SheetDefNum": 24,
+"DocNum": 0,
+"ClinicNum": 0,
+"DateTSheetEdited": "2022-11-23 04:20:12"
+},
+{
+"SheetNum": 50,
+"SheetType": "ExamSheet",
+"PatNum": 123,
+"DateTimeSheet": "2022-03-07 10:25:00",
+"InternalNote": "",
+"Description": "Exam",
+"IsWebForm": "false",
+"SheetDefNum": 20,
+"DocNum": 0,
+"ClinicNum": 0,
+"DateTSheetEdited": "2022-03-07 10:25:22"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Sheets POST
+Version Added: 23.1.32
+
+Creates a Sheet with SheetFields using an existing SheetDef for a patient. Only SheetDefs of SheetType "Consent", "PatientLetter", "PatientForm", "MedicalHistory", and "ExamSheet" are supported.
+
+SheetDefNum: Required. FK to sheetdef.SheetDefNum.
+PatNum: Required.
+InternalNote: Optional.
+
+Example Request:
+POST /sheets
+
+{
+"SheetDefNum": 25,
+"PatNum": 465
+}
+
+Example Response:
+{
+"SheetNum": 70,
+"SheetType": "PatientLetter",
+"PatNum": 465,
+"DateTimeSheet": "2023-06-21 15:24:52",
+"InternalNote": "",
+"Description": "Patient Letter",
+"IsWebForm": "false",
+"SheetDefNum": 25,
+"DocNum": 0,
+"ClinicNum": 0,
+"DateTSheetEdited": "2023-06-21 15:24:52"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Sheets POST DownloadSftp
+Version Added: 22.1
+
+Converts a sheet to a PDF, then downloads it to an SFTP site that you specify. After running this method, download the resulting file from your SFTP site. The user with the SFTP credentials must have write permission in this directory. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. If no file name is specified, the file will be titled "sheet.pdf".
+
+SheetNum: Required.
+SftpAddress: Required.
+SftpUsername: Required.
+SftpPassword: Required.
+
+Example Request:
+POST /sheets/DownloadSftp
+
+{
+"SheetNum": 50,
+"SftpAddress": "MySftpSite/myUsername/Sheets/ExamSheetJones.pdf",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+Example Response:
+
+201 Created, "location": The full filepath of the saved file.
+400 BadRequest (Invalid fields, invalid file extension, and Sftp connection errors).
+404 NotFound (with explanation)

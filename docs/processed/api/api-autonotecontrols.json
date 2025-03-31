@@ -1,0 +1,72 @@
+{
+  "id": "api-autonotecontrols",
+  "type": "api",
+  "title": "AutoNoteControls",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API AutoNoteControls.txt",
+  "content": "API AutoNoteControls\nSee API Specification\n\nAuto Note Controls are the prompts for Auto Notes.\n\nAutoNoteControls GET\nVersion Added: 22.3.22\n\nGets a list of AutoNoteControls.\n\nExample Request:\nGET /autonotecontrols\n\nExample Response:\n[\n{\n\"AutoNoteControlNum\": 1,\n\"Descript\": \"Medications\",\n\"ControlType\": \"MultiResponse\",\n\"ControlLabel\": \"Medications\",\n\"ControlOptions\": \"Zantac\\r\\nValium\\r\\nAdvair\\r\\nElavil\"\n},\n{\n\"AutoNoteControlNum\": 2,\n\"Descript\": \"Allergies\",\n\"ControlType\": \"MultiResponse\",\n\"ControlLabel\": \"Allergies\",\n\"ControlOptions\": \"Amox\\r\\nLatex\\r\\nPen VK\\r\\nCeph\\r\\nErythro\\r\\nSulfa\"\n},\n{\n\"AutoNoteControlNum\": 3,\n\"Descript\": \"BP Pulse\",\n\"ControlType\": \"Text\",\n\"ControlLabel\": \"BP Pulse\",\n\"ControlOptions\": \"BP: / Pulse: \"\n},\netc...\n]\n\n200 OK\n400 BadRequest\n\nAutoNoteControls POST (create)\nVersion Added: 22.3\n\nCreates a new AutoNoteControl.\n\nDescript: Required. The description of the AutoNoteControl as it will be displayed.\nControlType: Required. Either \"Text\", \"OneResponse\", \"MultiResponse\".\nControlLabel: Required. Prompt text.\nControlOptions: Required unless the ControlType is Text. The list of possible responses, one per line. Responses must be separated by \\r\\n.\n\nExample Request:\nPOST /autonotecontrols\n{\n\"Descript\": \"Medications\",\n\"ControlType\": \"MultiResponse\",\n\"ControlLabel\": \"Medications\",\n\"ControlOptions\": \"Zantac\\r\\nValium\\r\\nAdvair\\r\\nElavil\"\n}\n\nExample Response:\n{\n\"AutoNoteControlNum\": 5,\n\"Descript\": \"Medications\",\n\"ControlType\": \"MultiResponse\",\n\"ControlLabel\": \"Medications\",\n\"ControlOptions\": \"Zantac\\r\\nValium\\r\\nAdvair\\r\\nElavil\"\n}\n\n201 Created\n400 BadRequest (Missing or invalid fields)\n\nAutoNoteControls PUT (update)\nVersion Added: 22.3\n\nUpdates an existing AutoNoteControl. All fields are optional.\n\nAutoNoteControlNum: Required in the URL.\n\nDescript: The description of the AutoNoteControl as it will be displayed.\nControlType: Either \"Text\", \"OneResponse\", \"MultiResponse\"\nControlLabel: Prompt text.\nControlOptions: The list of possible responses, one per line. Responses must be separated by \\r\\n.\n\nExample Request:\nPUT /autonotecontrols/5\n{\n\"ControlType\": \"MultiResponse\"\n}\n\n200 OK\n400 BadRequest (Missing or invalid fields)\n404 NotFound (\"AuotNoteControl not found\")",
+  "metadata": {
+    "version": "22.3.22",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "AutoNoteControls",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "AutoNoteControls",
+      "method": "GET",
+      "path": "/autonotecontrols",
+      "versionAdded": "22.3.22",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /autonotecontrols",
+          "response": "[\n{\n\"AutoNoteControlNum\": 1,\n\"Descript\": \"Medications\",\n\"ControlType\": \"MultiResponse\",\n\"ControlLabel\": \"Medications\",\n\"ControlOptions\": \"Zantac\\r\\nValium\\r\\nAdvair\\r\\nElavil\"\n},\n{\n\"AutoNoteControlNum\": 2,\n\"Descript\": \"Allergies\",\n\"ControlType\": \"MultiResponse\",\n\"ControlLabel\": \"Allergies\",\n\"ControlOptions\": \"Amox\\r\\nLatex\\r\\nPen VK\\r\\nCeph\\r\\nErythro\\r\\nSulfa\"\n},\n{\n\"AutoNoteControlNum\": 3,\n\"Descript\": \"BP Pulse\",\n\"ControlType\": \"Text\",\n\"ControlLabel\": \"BP Pulse\",\n\"ControlOptions\": \"BP: / Pulse: \"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of AutoNoteControls."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-autonote",
+      "description": "API references database table autonote"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-autonotecontrol",
+      "description": "API references database table autonotecontrol"
+    }
+  ]
+}

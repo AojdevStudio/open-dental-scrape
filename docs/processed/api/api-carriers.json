@@ -1,0 +1,50 @@
+{
+  "id": "api-carriers",
+  "type": "api",
+  "title": "Carriers",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Carriers.txt",
+  "content": "API Carriers\nSee API Specification\n\nSee Carriers for additional information.\n\nCarriers GET (single)\nVersion Added: 24.4.5\n\nGets a single insurance carrier.\n\nCarrierNum: Required in URL.\n\nExample Request:\nGET /carriers/32\n\nExample Response:\n{\n\"CarrierNum\": 32,\n\"CarrierName\": \"PPO (Prefered Provider Insurance)\",\n\"Address\": \"42960 Random Road\",\n\"Address2\": \"\",\n\"City\": \"Harrington\",\n\"State\": \"PA\",\n\"Zip\": \"52482\",\n\"Phone\": \"(503)456-8910\",\n\"ElectID\": \"18158\",\n\"NoSendElect\": \"SendElect\",\n\"IsHidden\": \"false\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nCarriers GET (multiple)\nVersion Added: 22.4.16\n\nGets a list of insurance carriers.\n\nExample Request:\nGET /carriers\n\nExample Response:\n[\n{\n\"CarrierNum\": 1,\n\"CarrierName\": \"Dental Guard\",\n\"Address\": \"123 Elen St\",\n\"Address2\": \"\",\n\"City\": \"Portland\",\n\"State\": \"OR\",\n\"Zip\": \"97035\",\n\"Phone\": \"(503)456-8910\",\n\"ElectID\": \"54651\",\n\"NoSendElect\": \"SendElect\",\n\"IsHidden\": \"false\"\n},\n{\n\"CarrierNum\": 2,\n\"CarrierName\": \"Out of Network Insurance\",\n\"Address\": \"365 Tree Top St\",\n\"Address2\": \"\",\n\"City\": \"Salem\",\n\"State\": \"OR\",\n\"Zip\": \"18911\",\n\"Phone\": \"(503)456-8910\",\n\"ElectID\": \"\",\n\"NoSendElect\": \"SendElect\",\n\"IsHidden\": \"false\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n\nCarriers POST (create)\nVersion Added: 21.4\n\nCreates a new insurance carrier.\n\nCarrierName: Required.\n\nAddress: Optional. The carriers physical address.\nAddress2: Optional. Second address line.\nCity: Optional.\nState: Optional. Two capital characters in USA. Province in Canada.\nZip: Optional. Postal code for USA. Must be in format 12345, 12345-1234, or 123456789.\nPhone: Optional. Phone number including any necessary punctuation.\nElectID: Optional. Used for e-claims, this is the electronic payer ID.\nNoSendElect: Optional. This must be one of the following values: \"SendElect\", \"NoSendElect\" or \"NoSendSecondaryElect\".\nIsHidden: Optional. Either \"true\" or \"false\".\n\nExample Request:\nPOST /carriers\n{\n\"CarrierName\": \"Dental Guard\",\n\"Address\": \"123 Elen St\",\n\"Address2\": \"\",\n\"City\": \"Portland\",\n\"State\": \"OR\",\n\"Zip\": \"97035\",\n\"Phone\": \"503-456-8910\",\n\"ElectID\": \"54651\",\n\"NoSendElect\": \"SendElect\",\n\"IsHidden\": \"false\"\n}\n\nExample Response:\n{\n\"CarrierNum\": 1,\n\"CarrierName\": \"Dental Guard\",\n\"Address\": \"123 Elen St\",\n\"Address2\": \"\",\n\"City\": \"Portland\",\n\"State\": \"OR\",\n\"Zip\": \"97035\",\n\"Phone\": \"(503)456-8910\",\n\"ElectID\": \"54651\",\n\"NoSendElect\": \"SendElect\",\n\"IsHidden\": \"false\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n\nCarriers PUT (update)\nVersion Added: 21.4\n\nUpdates an insurance carrier.\n\nCarrierNum: Required in the URL.\n\nCarrierName: Optional.\nAddress: Optional. The carrier's physical address.\nAddress2: Optional. Second address line.\nCity: Optional.\nState: Optional. Two capital characters in USA. Province in Canada.\nZip: Optional. Postal code for USA. Must be in format 12345, 12345-1234, or 123456789.\nPhone: Optional. Phone number including any necessary punctuation.\nElectID: Optional. Used for e-claims, this is the electronic payer ID.\nNoSendElect: Optional. This must be one of the following values: \"SendElect\", \"NoSendElect\" or \"NoSendSecondaryElect\".\nIsHidden: Optional. Either \"true\" or \"false\".\n\nExample Request:\nPUT /carriers/1\n{\n\"CarrierName\": \"Dental Guard\",\n\"Address\": \"123 Elen St\",\n\"Address2\": \"\",\n\"City\": \"Portland\",\n\"State\": \"OR\",\n\"Zip\": \"97035\",\n\"Phone\": \"503-456-8910\",\n\"ElectID\": \"54651\",\n\"NoSendElect\": \"SendElect\",\n\"IsHidden\": \"true\"\n}\n\nExample Response:\n200 OK\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.5",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Carriers",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-carrier",
+      "description": "API references database table carrier"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-electid",
+      "description": "API references database table electid"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

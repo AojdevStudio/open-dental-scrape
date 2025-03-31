@@ -1,0 +1,51 @@
+{
+  "id": "db-labturnaround",
+  "type": "database",
+  "title": "labturnaround",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "labturnaround",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "labturnaround",
+    "description": "Table for labturnaround data.",
+    "columns": [
+      {
+        "name": "labturnaroundNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "labturnaroundNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-labturnarounds",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

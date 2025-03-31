@@ -1,0 +1,42 @@
+{
+  "id": "manual-toc",
+  "type": "manual",
+  "title": "Manual Table of Contents",
+  "metadata": {
+    "category": [
+      "Manual",
+      "Overview"
+    ],
+    "tags": [
+      "Table of Contents",
+      "Overview",
+      "Navigation"
+    ]
+  },
+  "manual": {
+    "content": [
+      {
+        "type": "text",
+        "content": "OpenDental Manual Table of Contents"
+      },
+      {
+        "type": "toc",
+        "sections": [
+          {
+            "section": "Module",
+            "subsection": null,
+            "topic": null,
+            "id": "manual-module"
+          }
+        ]
+      }
+    ]
+  },
+  "relationships": [
+    {
+      "type": "contains",
+      "target": "manual-module",
+      "description": "Contains section Module"
+    }
+  ]
+}

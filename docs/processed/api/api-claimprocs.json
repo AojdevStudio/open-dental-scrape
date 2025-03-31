@@ -1,0 +1,244 @@
+{
+  "id": "api-claimprocs",
+  "type": "api",
+  "title": "ClaimProcs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ClaimProcs.txt",
+  "content": "API ClaimProcs\nSee API Specification\n\nClaimProcs GET\nVersion Added: 22.2.33\n\nGets a list of ClaimProcs.\n\nParameters: All Optional.\n\nProcNum: (Added in version 23.2.16) FK to procedurelog.ProcNum.\nClaimNum: (Optional after version 23.2.16) FK to claim.ClaimNum.\nPatNum: (Optional after version 23.2.16) FK to patient.PatNum.\nStatus: (Added in version 24.4.13) Either \"NotReceived\", \"Received\", \"Preauth\", \"Adjustment\", \"Supplemental\", \"CapClaim\", \"Estimate\", \"CapComplete\", \"CapEstimate\", or \"InsHist\".\nClaimPaymentNum: (Added in version 23.2.16) FK to claimpayment.ClaimPaymentNum.\n\nExample Request:\nGET /claimprocs?ProcNum=1734730\nGET /claimprocs?ClaimNum=98567\nGET /claimprocs?Status=Received\nGET /claimprocs?PatNum=1337&ClaimPaymentNum=6352\n\nExample Response:\n[\n{\n\"ClaimProcNum\": 1984257,\n\"ProcNum\": 1734730,\n\"ClaimNum\": 98567,\n\"PatNum\": 1337,\n\"ProvNum\": 7,\n\"FeeBilled\": 88.0,\n\"InsPayEst\": 88.0,\n\"DedApplied\": 10.0,\n\"Status\": \"Received\",\n\"InsPayAmt\": 78.0,\n\"Remarks\": \"\",\n\"ClaimPaymentNum\": 6352,\n\"PlanNum\": 12,\n\"DateCP\": \"2021-02-16\",\n\"WriteOff\": 0.0,\n\"CodeSent\": \"D0330\",\n\"AllowedOverride\": -1.0,\n\"Percentage\": 100,\n\"PercentOverride\": -1,\n\"CopayAmt\": -1.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 88.0,\n\"CopayOverride\": -1.0,\n\"ProcDate\": \"2021-02-16\",\n\"DateEntry\": \"0001-01-01\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": -1.0,\n\"InsEstTotal\": 88.0,\n\"InsEstTotalOverride\": -1.0,\n\"PaidOtherInsOverride\": -1.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": -1.0,\n\"WriteOffEstOverride\": -1.0,\n\"ClinicNum\": 2,\n\"InsSubNum\": 3,\n\"PaymentRow\": 1,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 0,\n\"claimPaymentTracking\": \"\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2021-01-26\",\n\"SecDateTEdit\": \"2021-02-16 09:43:17\",\n\"DateSuppReceived\": \"2021-02-16\",\n\"DateInsFinalized\": \"2021-02-16\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n},\n{\n\"ClaimProcNum\": 1984258,\n\"ProcNum\": 1734728,\n\"ClaimNum\": 98567,\n\"PatNum\": 1337,\n\"ProvNum\": 7,\n\"FeeBilled\": 76.0,\n\"InsPayEst\": 76.0,\n\"DedApplied\": 0.0,\n\"Status\": \"Received\",\n\"InsPayAmt\": 76.0,\n\"Remarks\": \"\",\n\"ClaimPaymentNum\": 6352,\n\"PlanNum\": 12,\n\"DateCP\": \"2021-02-16\",\n\"WriteOff\": 0.0,\n\"CodeSent\": \"D1110\",\n\"AllowedOverride\": -1.0,\n\"Percentage\": 100,\n\"PercentOverride\": -1,\n\"CopayAmt\": -1.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 76.0,\n\"CopayOverride\": -1.0,\n\"ProcDate\": \"2021-02-16\",\n\"DateEntry\": \"0001-01-01\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": -1.0,\n\"InsEstTotal\": 76.0,\n\"InsEstTotalOverride\": -1.0,\n\"PaidOtherInsOverride\": -1.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": -1.0,\n\"WriteOffEstOverride\": -1.0,\n\"ClinicNum\": 2,\n\"InsSubNum\": 3,\n\"PaymentRow\": 1,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 0,\n\"claimPaymentTracking\": \"\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2021-01-26\",\n\"SecDateTEdit\": \"2021-02-16 09:44:44\",\n\"DateSuppReceived\": \"2021-02-16\",\n\"DateInsFinalized\": \"2021-02-16\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n},\nect.\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nClaimProcs PUT (update)\nVersion Added: 22.3.33\n\nClaimProcs are complex. They are used to link procedures to claims, insurance payments to procedures or claims, and insurance estimates to procedures without a claim. See Claim Procedures ( claimprocs ) and Claim for more details.\n\nUpdates a ClaimProc exactly as in Open Dental, performing the same calculations for necessary fields. All below fields are optional. However, which fields can be changed depends on the status of the ClaimProc and the Claim (if associated). Editing a received ClaimProc can delete all of the Income Transfers on the claim.\n\nCannot update a ClaimProc that has IsTransfer set to true, or a Status of \"Adjustment\", \"InsHist\", \"CapClaim\", \"CapComplete\", or \"CapEstimate\". To update a ClaimProc with a Status of Adjustment, use ClaimProcs PUT InsAdjust.\n\nUpdating a ClaimProc recalculates the claim totals of the Claim to which it's attached. BlueBook values are not updated. Override field values use -1 to represent none or blank.\n\nClaimProcNum: Required in the URL.\n\nProvNum: ProvNum of a provider. Follows the ProcProvChangesClaimProcWithClaim preference. See Claimproc Provider for more information.\nFeeBilled: The amount billed to insurance.\nDedApplied: Deductible applied to this procedure only. DedApplied will always match the DedEstOverride value when ClaimProc status is NotReceived or Preauth.\nStatus: Either \"NotReceived\", \"Received\", \"Preauth\", \"Supplemental\", or \"Estimate\". When set to Received or Supplemental, ClaimProc.DateEntry will be updated to DateTime.Now.\nInsPayAmt: Amount insurance actually paid. Cannot be updated once the procedure is attached to a check.\nRemarks: The remarks that insurance sends in the EOB about procedures. Overwrites any existing Remarks.\nClaimPaymentNum: (Added in version 24.3.24) ClaimPaymentNum of a partial claimpayment. Attaches this ClaimProc, alongside any other able ClaimProcs on the same Claim, to the specified ClaimPayment. Can supply 0 to detach this ClaimProc, and all other ClaimProcs from the same claim that are on the same ClaimPayment. See Finalize Insurance Payment and Batch Insurance Payment for more information.\nWriteOff: Amount not covered by insurance which is written off.\nCodeSent: The procedure code that was sent to insurance. Usually it is the same as the actual procedure code, but may be different if using alternate codes (for example: Medicaid), medical codes, or custom codes with suffixes that get removed before being sent. See also Incorrect Procedures on Claim. Use ProcedureCodes GET to get a list of valid codes.\nPercentOverride: The percentage that insurance is expected to cover. A number between 0 and 100. Use -1 to indicate no override.\nNoBillIns: (Added in version 23.2.10) Determines if the procedure should be billed to the insurance plan. Either \"true\" or \"false\". Set to true to not bill to the insurance plan and remove all estimate and override field values.\nCopayOverride: Based on the insurance plan's copay fee schedule, and subtracted from the amount that insurance will pay. Use -1 to indicate no override.\nDedEstOverride: The amount that the patient must pay each year before insurance kicks in, and always subtracted before Percentage is calculated. Use -1 to indicate no override.\nInsEstTotalOverride: The estimated amount that insurance will pay. If the claimproc is already attached to a claim, this will not affect the patient balance. Use -1 to indicate no override.\nPaidOtherInsOverride: Adds up all amounts paid by insurance plans that are lower in order. Use -1 to indicate no override.\nWriteOffEstOverride: WriteOff amount usually only used for PPOs. Use -1 to indicate no override.\nClaimPaymentTracking: Used to document information about the payment of the procedure. Useful to track why payment was rejected. See also Definitions: Claim Payment Tracking. Definition.DefNum where definition.Category=36.\n\nExample Request:\nPUT /claimprocs/293\n\n{\n\"Status\": \"Received\",\n\"InsPayAmt\": \"50.00\"\n}\n\nor\n\n{\n\"ProvNum\": 10,\n\"FeeBilled\": \"65.00\",\n\"DedApplied\": \"5\",\n\"Status\": \"Received\",\n\"InsPayAmt\": \"50.00\",\n\"Remarks\": \"Patient has reached their annual limit\",\n\"WriteOff\": \"5\",\n\"CodeSent\": \"D0021\",\n\"PercentOverride\": \"-1\",\n\"CopayOverride\": \"-1\",\n\"DedEstOverride\": \"-1\",\n\"InsEstTotalOverride\": \"50\",\n\"PaidOtherInsOverride\": \"-1\",\n\"WriteOffEstOverride\": \"-1\",\n\"ClaimPaymentTracking\": 448\n}\n\nExample Response:\n{\n\"ClaimProcNum\": 293,\n\"ProcNum\": 966,\n\"ClaimNum\": 45,\n\"PatNum\": 72,\n\"ProvNum\": 10,\n\"FeeBilled\": 65.0,\n\"InsPayEst\": 50.0,\n\"DedApplied\": 5.0,\n\"Status\": \"Received\",\n\"InsPayAmt\": 50.0,\n\"Remarks\": \"Patient has reached their annual limit\",\n\"ClaimPaymentNum\": 0,\n\"PlanNum\": 3,\n\"DateCP\": \"2022-11-23\",\n\"WriteOff\": 5.0,\n\"CodeSent\": \"D0021\",\n\"AllowedOverride\": -1.0,\n\"Percentage\": 0,\n\"PercentOverride\": -1,\n\"CopayAmt\": -1.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 0.0,\n\"CopayOverride\": -1.0,\n\"ProcDate\": \"2022-12-02\",\n\"DateEntry\": \"2022-12-02\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": -1.0,\n\"InsEstTotal\": 0.0,\n\"InsEstTotalOverride\": 50.0,\n\"PaidOtherInsOverride\": -1.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": -1.0,\n\"WriteOffEstOverride\": -1.0,\n\"ClinicNum\": 3,\n\"InsSubNum\": 13,\n\"PaymentRow\": 0,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 448,\n\"claimPaymentTracking\": \"Paid In Full\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2022-11-23\",\n\"SecDateTEdit\": \"2022-12-02 11:46:14\",\n\"DateSuppReceived\": \"2022-12-02\",\n\"DateInsFinalized\": \"0001-01-01\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n}\n\n200 OK\n400 Bad Request (with explanation)\n404 NotFound (with explanation)\n\nClaimProcs PUT InsAdjust\nVersion Added: 21.1\n\nThis adds or changes a claimproc that is acting as an insurance adjustment. PatPlanNum is required. You can obtain the PatPlanNum from FamilyModules GET Insurance. \"date\" is optional and defaults to today. It should be a date within the benefit year that you are interested in. Any adjustment that is created will also use that date. Either insUsed or deductibleUsed is Required. Pass in the total insurance and/or deductible used. The logic will take into consideration existing paid claims. For example, if payments of $200 are already entered into Open Dental, and you pass in insUsed of $300, then it will result in a $100 adjustment so that it will properly show the $300. If the insUsed passed in exactly equals payments already in Open Dental, then any existing adjustment will be deleted. The calculations do not distinguish family or lifetime benefits.\n\nPatPlanNum: Required.\ninsUsed: This or deductibleUsed is required.\ndeductibleUsed: This or insUsed is required.\ndate: Optional. String in \"yyyy-MM-dd\" format. Default today's date.\n\nExample Request:\nPUT /claimprocs/InsAdjust\n\n{\n\"PatPlanNum\": 123,\n\"date\": \"2020-01-01\",\n\"insUsed\":\"300\",\n\"deductibleUsed\":\"25\"\n}\n\nExample Response:\n200 OK (Regardless of how the math worked out. ClaimProcs could have been added or deleted.)\n\nClaimProcs POST InsAdjust\nVersion Added: 23.2.5\n\nCreates a claimproc that is acting as an insurance adjustment. See Adjustments to Insurance Benefits for more information.\n\nPatPlanNum: Required.\ninsUsed: Optional. Default 0.\ndeductibleUsed: Optional. Default 0.\ndate: Optional. String in \"yyyy-MM-dd\" format. Default today's date.\n\nExample Request:\nPOST /claimprocs/InsAdjust\n\n{\n\"PatPlanNum\": 123,\n\"date\": \"2023-07-18\",\n\"insUsed\":\"300.75\",\n\"deductibleUsed\":\"25.99\"\n}\n\nExample Response:\n{\n\"ClaimProcNum\": 1117,\n\"ProcNum\": 0,\n\"ClaimNum\": 0,\n\"PatNum\": 72,\n\"ProvNum\": 0,\n\"FeeBilled\": 0.0,\n\"InsPayEst\": 0.0,\n\"DedApplied\": 25.99,\n\"Status\": \"Adjustment\",\n\"InsPayAmt\": 300.75,\n\"Remarks\": \"\",\n\"ClaimPaymentNum\": 0,\n\"PlanNum\": 38,\n\"DateCP\": \"0001-01-01\",\n\"WriteOff\": 0.0,\n\"CodeSent\": \"\",\n\"AllowedOverride\": 0.0,\n\"Percentage\": 0,\n\"PercentOverride\": 0,\n\"CopayAmt\": 0.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 0.0,\n\"CopayOverride\": 0.0,\n\"ProcDate\": \"2023-07-18\",\n\"DateEntry\": \"0001-01-01\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": 0.0,\n\"InsEstTotal\": 0.0,\n\"InsEstTotalOverride\": 0.0,\n\"PaidOtherInsOverride\": 0.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": 0.0,\n\"WriteOffEstOverride\": 0.0,\n\"ClinicNum\": 0,\n\"InsSubNum\": 30,\n\"PaymentRow\": 0,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 0,\n\"claimPaymentTracking\": \"\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-08-01\",\n\"SecDateTEdit\": \"2023-08-01 14:41:25\",\n\"DateSuppReceived\": \"0001-01-01\",\n\"DateInsFinalized\": \"0001-01-01\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.2.5",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ClaimProcs",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ClaimProcs",
+      "method": "GET",
+      "path": "/claimprocs",
+      "versionAdded": "22.2.33",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /claimprocs?ProcNum=1734730\nGET /claimprocs?ClaimNum=98567\nGET /claimprocs?Status=Received\nGET /claimprocs?PatNum=1337&ClaimPaymentNum=6352",
+          "response": "[\n{\n\"ClaimProcNum\": 1984257,\n\"ProcNum\": 1734730,\n\"ClaimNum\": 98567,\n\"PatNum\": 1337,\n\"ProvNum\": 7,\n\"FeeBilled\": 88.0,\n\"InsPayEst\": 88.0,\n\"DedApplied\": 10.0,\n\"Status\": \"Received\",\n\"InsPayAmt\": 78.0,\n\"Remarks\": \"\",\n\"ClaimPaymentNum\": 6352,\n\"PlanNum\": 12,\n\"DateCP\": \"2021-02-16\",\n\"WriteOff\": 0.0,\n\"CodeSent\": \"D0330\",\n\"AllowedOverride\": -1.0,\n\"Percentage\": 100,\n\"PercentOverride\": -1,\n\"CopayAmt\": -1.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 88.0,\n\"CopayOverride\": -1.0,\n\"ProcDate\": \"2021-02-16\",\n\"DateEntry\": \"0001-01-01\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": -1.0,\n\"InsEstTotal\": 88.0,\n\"InsEstTotalOverride\": -1.0,\n\"PaidOtherInsOverride\": -1.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": -1.0,\n\"WriteOffEstOverride\": -1.0,\n\"ClinicNum\": 2,\n\"InsSubNum\": 3,\n\"PaymentRow\": 1,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 0,\n\"claimPaymentTracking\": \"\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2021-01-26\",\n\"SecDateTEdit\": \"2021-02-16 09:43:17\",\n\"DateSuppReceived\": \"2021-02-16\",\n\"DateInsFinalized\": \"2021-02-16\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n},\n{\n\"ClaimProcNum\": 1984258,\n\"ProcNum\": 1734728,\n\"ClaimNum\": 98567,\n\"PatNum\": 1337,\n\"ProvNum\": 7,\n\"FeeBilled\": 76.0,\n\"InsPayEst\": 76.0,\n\"DedApplied\": 0.0,\n\"Status\": \"Received\",\n\"InsPayAmt\": 76.0,\n\"Remarks\": \"\",\n\"ClaimPaymentNum\": 6352,\n\"PlanNum\": 12,\n\"DateCP\": \"2021-02-16\",\n\"WriteOff\": 0.0,\n\"CodeSent\": \"D1110\",\n\"AllowedOverride\": -1.0,\n\"Percentage\": 100,\n\"PercentOverride\": -1,\n\"CopayAmt\": -1.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 76.0,\n\"CopayOverride\": -1.0,\n\"ProcDate\": \"2021-02-16\",\n\"DateEntry\": \"0001-01-01\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": -1.0,\n\"InsEstTotal\": 76.0,\n\"InsEstTotalOverride\": -1.0,\n\"PaidOtherInsOverride\": -1.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": -1.0,\n\"WriteOffEstOverride\": -1.0,\n\"ClinicNum\": 2,\n\"InsSubNum\": 3,\n\"PaymentRow\": 1,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 0,\n\"claimPaymentTracking\": \"\",\n\"SecUserNumEntry\": 1,\n\"SecDateEntry\": \"2021-01-26\",\n\"SecDateTEdit\": \"2021-02-16 09:44:44\",\n\"DateSuppReceived\": \"2021-02-16\",\n\"DateInsFinalized\": \"2021-02-16\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n},\nect.\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "730",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "567",
+          "status": "GET",
+          "description": ""
+        },
+        {
+          "code": "352",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of ClaimProcs."
+    },
+    {
+      "resource": "ClaimProcs",
+      "method": "PUT",
+      "path": "/claimprocs",
+      "versionAdded": "21.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /claimprocs/InsAdjust\n\n{\n\"PatPlanNum\": 123,\n\"date\": \"2020-01-01\",\n\"insUsed\":\"300\",\n\"deductibleUsed\":\"25\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "are",
+          "description": ""
+        },
+        {
+          "code": "100",
+          "status": "adjustment",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": "Regardless of how the math worked out. ClaimProcs could have been added or deleted."
+        }
+      ],
+      "description": "This adds or changes a claimproc that is acting as an insurance adjustment. PatPlanNum is required. You can obtain the PatPlanNum from FamilyModules GET Insurance. \"date\" is optional and defaults to today. It should be a date within the benefit year that you are interested in. Any adjustment that is created will also use that date. Either insUsed or deductibleUsed is Required. Pass in the total insurance and/or deductible used. The logic will take into consideration existing paid claims. For example, if payments of $ already entered into Open Dental, and you pass in insUsed of $300, then it will result in a $ so that it will properly show the $300. If the insUsed passed in exactly equals payments already in Open Dental, then any existing adjustment will be deleted. The calculations do not distinguish family or lifetime benefits."
+    },
+    {
+      "resource": "ClaimProcs",
+      "method": "POST",
+      "path": "/claimprocs",
+      "versionAdded": "23.2.5",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /claimprocs/InsAdjust\n\n{\n\"PatPlanNum\": 123,\n\"date\": \"2023-07-18\",\n\"insUsed\":\"300.75\",\n\"deductibleUsed\":\"25.99\"\n}",
+          "response": "{\n\"ClaimProcNum\": 1117,\n\"ProcNum\": 0,\n\"ClaimNum\": 0,\n\"PatNum\": 72,\n\"ProvNum\": 0,\n\"FeeBilled\": 0.0,\n\"InsPayEst\": 0.0,\n\"DedApplied\": 25.99,\n\"Status\": \"Adjustment\",\n\"InsPayAmt\": 300.75,\n\"Remarks\": \"\",\n\"ClaimPaymentNum\": 0,\n\"PlanNum\": 38,\n\"DateCP\": \"0001-01-01\",\n\"WriteOff\": 0.0,\n\"CodeSent\": \"\",\n\"AllowedOverride\": 0.0,\n\"Percentage\": 0,\n\"PercentOverride\": 0,\n\"CopayAmt\": 0.0,\n\"NoBillIns\": \"false\",\n\"PaidOtherIns\": 0.0,\n\"BaseEst\": 0.0,\n\"CopayOverride\": 0.0,\n\"ProcDate\": \"2023-07-18\",\n\"DateEntry\": \"0001-01-01\",\n\"DedEst\": 0.0,\n\"DedEstOverride\": 0.0,\n\"InsEstTotal\": 0.0,\n\"InsEstTotalOverride\": 0.0,\n\"PaidOtherInsOverride\": 0.0,\n\"EstimateNote\": \"\",\n\"WriteOffEst\": 0.0,\n\"WriteOffEstOverride\": 0.0,\n\"ClinicNum\": 0,\n\"InsSubNum\": 30,\n\"PaymentRow\": 0,\n\"PayPlanNum\": 0,\n\"ClaimPaymentTracking\": 0,\n\"claimPaymentTracking\": \"\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-08-01\",\n\"SecDateTEdit\": \"2023-08-01 14:41:25\",\n\"DateSuppReceived\": \"0001-01-01\",\n\"DateInsFinalized\": \"0001-01-01\",\n\"IsTransfer\": \"false\",\n\"ClaimAdjReasonCodes\": \"\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a claimproc that is acting as an insurance adjustment. See Adjustments to Insurance Benefits for more information."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-patplan",
+      "description": "API references database table patplan"
+    },
+    {
+      "type": "references",
+      "target": "db-claimpayment",
+      "description": "API references database table claimpayment"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurecode",
+      "description": "API references database table procedurecode"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-ebill",
+      "description": "API references database table ebill"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-claimproc",
+      "description": "API references database table claimproc"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    },
+    {
+      "type": "references",
+      "target": "db-procedurelog",
+      "description": "API references database table procedurelog"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    },
+    {
+      "type": "references",
+      "target": "db-supply",
+      "description": "API references database table supply"
+    }
+  ]
+}

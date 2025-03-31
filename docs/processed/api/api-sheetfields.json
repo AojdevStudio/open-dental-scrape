@@ -1,0 +1,79 @@
+{
+  "id": "api-sheetfields",
+  "type": "api",
+  "title": "Sheetfields",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Sheetfields.txt",
+  "content": "API SheetFields\nSee API Specification\n\nSheetFields GET\nVersion Added: 22.1\n\nGets all SheetFields for a single sheet.\n\nSheetNum: Required.\n\nExample Requests:\nGET /sheetfields?SheetNum=24\nGET /sheetfields?SheetNum=24&Offset=200\n\nExample Response:\n[\n{\n\"SheetFieldNum\": 1049,\n\"SheetNum\": 24,\n\"FieldType\": \"InputField\",\n\"FieldName\": \"prov.nameFormal\",\n\"FieldValue\": \"John D. Smith\",\n\"IsRequired\": \"true\",\n\"ReportableName\": \"\",\n\"DateTimeSig\": \"0001-01-01 00:00:00\"\n},\n{\n\"SheetFieldNum\": 3068,\n\"SheetNum\": 24,\n\"FieldType\": \"SigBoxPractice\",\n\"FieldName\": \"\",\n\"FieldValue\": \"1FFFFFFFB59486...\",\n\"IsRequired\": \"false\",\n\"ReportableName\": \"\",\n\"DateTimeSig\": \"2023-07-17 13:38:27\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "22.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Sheetfields",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "SheetFields",
+      "method": "GET",
+      "path": "/sheetfields",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /sheetfields?SheetNum=24\nGET /sheetfields?SheetNum=24&Offset=200",
+          "response": "[\n{\n\"SheetFieldNum\": 1049,\n\"SheetNum\": 24,\n\"FieldType\": \"InputField\",\n\"FieldName\": \"prov.nameFormal\",\n\"FieldValue\": \"John D. Smith\",\n\"IsRequired\": \"true\",\n\"ReportableName\": \"\",\n\"DateTimeSig\": \"0001-01-01 00:00:00\"\n},\n{\n\"SheetFieldNum\": 3068,\n\"SheetNum\": 24,\n\"FieldType\": \"SigBoxPractice\",\n\"FieldName\": \"\",\n\"FieldValue\": \"1FFFFFFFB59486...\",\n\"IsRequired\": \"false\",\n\"ReportableName\": \"\",\n\"DateTimeSig\": \"2023-07-17 13:38:27\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all SheetFields for a single sheet."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-eform",
+      "description": "API references database table eform"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-sheetfield",
+      "description": "API references database table sheetfield"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}

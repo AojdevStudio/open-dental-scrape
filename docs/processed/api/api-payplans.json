@@ -1,0 +1,140 @@
+{
+  "id": "api-payplans",
+  "type": "api",
+  "title": "Payplans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Payplans.txt",
+  "content": "API PayPlans\nSee API Specification\n\nPrior to 23.3.1, Open Dental users had the ability to create both Patient Payment Plans and Dynamic Payment Plans. The API supported these with PayPlans POST (create) and PayPlans POST Dynamic, respectively. In version 23.3.1, Open Dental deprecated Patient Payment Plans, renaming them to Old Payment Plans in the UI. The PayPlans POST (create) method was also deprecated at that time. Dynamic Payment Plans are now referred to simply as Payment Plans in Open Dental, and can still be created with the PayPlans POST Dynamic method.\n\nPayPlans GET (single)\nVersion Added: 24.4.30\n\nGets a single payplan.\n\nPayPlanNum: Required in the URL.\n\nExample Request:\nGET /payplans/48\n\nExample Response:\n\n{\n\"PayPlanNum\": 48,\n\"PatNum\": 64,\n\"Guarantor\": 64,\n\"PayPlanDate\": \"2025-02-26\",\n\"APR\": 0.0,\n\"Note\": \"02/26/2025 - Date of Agreement: 02/26/2025, Total Amount: 40.00, APR: 0, Total Cost of Loan: 40.00\",\n\"PlanNum\": 0,\n\"CompletedAmt\": 0.0,\n\"InsSubNum\": 0,\n\"PaySchedule\": \"Monthly\",\n\"NumberOfPayments\": 0,\n\"PayAmt\": 40.0,\n\"DownPayment\": 0,\n\"IsClosed\": \"false\",\n\"PlanCategory\": 0,\n\"planCategory\": \"\",\n\"IsDynamic\": \"true\",\n\"ChargeFrequency\": \"Monthly\",\n\"DatePayPlanStart\": \"2025-03-26\",\n\"IsLocked\": \"false\",\n\"DateInterestStart\": \"0001-01-01\",\n\"DynamicPayPlanTPOption\": \"AwaitComplete\",\n\"principalAmount\": 40.0\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPayPlans GET (multiple)\nVersion Added: 22.2.16\n\nGets a list of payment plans (Patient, Insurance, and Dynamic) that are assigned to the patient. An Insurance payment plan has a PlanNum and InsSubNum value greater then zero, a Dynamic payment plan has IsDynamic as true, otherwise it is a Patient payment plan. DatePayPlanStart and CompletedAmt are only used for Dynamic payment plans.\n\nPatNum: This or Guarantor is required in the URL.\nGuarantor: This or PatNum is required in the URL.\n\nExample Requests:\nGET /payplans?PatNum=72\nGET /payplans?Guarantor=72\n\nExample Response:\n\n[\n{\n\"PayPlanNum\": 150,\n\"PatNum\": 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2020-04-15\",\n\"APR\": 0.0,\n\"Note\": \"04/15/2020 - Date of Agreement: 04/15/2020, Total Amount: 64.00, APR: 0, Total Cost of Loan: 64.00\",\n\"PlanNum\": 0,\n\"CompletedAmt\": 0.0,\n\"InsSubNum\": 0,\n\"PaySchedule\": \"Monthly\",\n\"NumberOfPayments\": 10,\n\"PayAmt\": 0.0,\n\"DownPayment\": 0.0,\n\"IsClosed\": \"true\",\n\"PlanCategory\": 0,\n\"planCategory\": \"\",\n\"IsDynamic\": \"false\",\n\"ChargeFrequency\": \"Weekly\",\n\"DatePayPlanStart\": \"2001-01-01\",\n\"IsLocked\": \"false\",\n\"DateInterestStart\": \"2001-01-01\",\n\"DynamicPayPlanTPOption\": \"None\",\n\"principalAmount\": 64.0\n},\n{\n\"PayPlanNum\": 167,\n\"PatNum\": 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2021-01-23\",\n\"APR\": 10.0,\n\"Note\": \"01/23/2021 - Date of Agreement: 01/23/2021, Total Amount: 1000.00, APR: 10, Total Cost of Loan: 1029.44\",\n\"PlanNum\": 3,\n\"CompletedAmt\": 0.0,\n\"InsSubNum\": 13,\n\"PaySchedule\": \"Monthly\",\n\"NumberOfPayments\": 10,\n\"PayAmt\": 0.0,\n\"DownPayment\": 0.0,\n\"IsClosed\": \"true\",\n\"PlanCategory\": 447,\n\"planCategory\": \"Implant\",\n\"IsDynamic\": \"false\",\n\"ChargeFrequency\": \"Weekly\",\n\"DatePayPlanStart\": \"2001-01-01\",\n\"IsLocked\": \"false\",\n\"DateInterestStart\": \"2021-02-23\",\n\"DynamicPayPlanTPOption\": \"None\",\n\"principalAmount\": 1000.0\n},\n{\n\"PayPlanNum\": 169,\n\"PatNum\": 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2022-06-24\",\n\"APR\": 0.0,\n\"Note\": \"06/24/2022 - Date of Agreement: 06/24/2022, Total Amount: 643.00, APR: 0, Total Cost of Loan: 643.00\",\n\"PlanNum\": 0,\n\"CompletedAmt\": 643.0,\n\"InsSubNum\": 0,\n\"PaySchedule\": \"Monthly\",\n\"NumberOfPayments\": 0,\n\"PayAmt\": 128.6,\n\"DownPayment\": 0.0,\n\"IsClosed\": \"false\",\n\"PlanCategory\": 446,\n\"planCategory\": \"Ortho\",\n\"IsDynamic\": \"true\",\n\"ChargeFrequency\": \"Monthly\",\n\"DatePayPlanStart\": \"2022-07-24\",\n\"IsLocked\": \"false\",\n\"DateInterestStart\": \"2001-01-01\",\n\"DynamicPayPlanTPOption\": \"AwaitComplete\",\n\"principalAmount\": 643.0\n}\n]\n\n200 OK\n404 NotFound (Patient or Guarantor not found)\n\nPayPlans POST Dynamic\nVersion Added: 22.2.22\n\nCreates a payment plan for the patient with the specified terms. This is a dynamic payment plan, not an insurance or patient payment plan. Procedures and/or adjustments must be associated with the plan.\n\nPatNum: Required.\nPayAmt: This or NumberOfPayments is required. The amount due per payment plan charge.\nNumberOfPayments: This or PayAmt is required. The total number of payments in the payment plan.\nprocNums: This and/or adjNums is required. An array of ProcNums, in [1,2,3] format.\nadjNums: This and/or procNums is required. An Array of AdjNums, in [1,2,3] format.\n\nGuarantor: Optional. The person responsible for payments. Default this plan's patient.\nPayPlanDate: Optional. The date of the plan agreement. Default today.\nAPR: Optional. Default 0.\nDownPayment: Optional. Default 0.00.\nNote: Optional. The terms of the payment plan are stored in this field by default. Additional note text is appended to these terms.\nChargeFrequency: Optional. Either \"Weekly\", \"EveryOtherWeek\", \"Monthly\", \"Quarterly\", or \"OrdinalWeekday\" (ie, second Tueday of each month, based on the DatePayPlanStart). Default \"Monthly\".\nDatePayPlanStart: Optional. Due date of first payment. Default one month after the PayPlanDate.\nDateInterestStart: Optional. Date the payment plan can start posting interest charges. Default minval.\nIsLocked: Optional. Default to \"true\". Required to be true If APR is above 0.\nDynamicPayPlanTPOption: Either \"AwaitComplete\" or \"TreatAsComplete\". Default \"AwaitComplete\".\n\nExample Request:\nPOST /payplans/Dynamic\n\n{\n\"PatNum\" : 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2022-06-30\",\n\"NumberOfPayments\": 8,\n\"APR\": 10,\n\"DownPayment\": 100,\n\"Note\": \"DownPayment in Cash\",\n\"ChargeFrequency\":\"Monthly\",\n\"DatePayPlanStart\": \"2022-07-01\",\n\"DateInterestStart\": \"2022-08-01\",\n\"IsLocked\": \"true\",\n\"DynamicPayPlanTPOption\": \"AwaitComplete\",\n\"procNums\": [848,847,860,865],\n\"adjNums\": [40]\n}\n\nExample Response:\n\n{\n\"PayPlanNum\": 271,\n\"PatNum\": 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2022-06-30\",\n\"APR\": 10.0,\n\"Note\": \"06/30/2022 - Date of Agreement: 06/30/2022, Total Amount: 728.00, APR: 10, Total Cost of Loan: 741.71, DownPayment in Cash\",\n\"PlanNum\": 0,\n\"CompletedAmt\": 652.0,\n\"InsSubNum\": 0,\n\"PaySchedule\": \"Monthly\",\n\"NumberOfPayments\": 0,\n\"PayAmt\": 81.48,\n\"DownPayment\": 100.0,\n\"IsClosed\": \"false\",\n\"PlanCategory\": 0,\n\"planCategory\": \"\",\n\"IsDynamic\": \"true\",\n\"ChargeFrequency\": \"Monthly\",\n\"DatePayPlanStart\": \"2022-07-01\",\n\"IsLocked\": \"true\",\n\"DateInterestStart\": \"2022-08-01\",\n\"DynamicPayPlanTPOption\": \"AwaitComplete\",\n\"principalAmount\": 728.0\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nPayPlans POST (create)\nVersion Added: 22.4.39\n\nThis method is deprecated in version 23.3.1. Use PayPlans POST Dynamic instead.\n\nCreates a payment plan for the patient with the specified terms. This is a patient payment plan, not an insurance or dynamic payment plan. Procedures and adjustments are not associated with the plan. The terms of the payment plan are stored in the PayPlan.Note field and returned in the response. Uses the patient's information to set the provider and clinic (if enabled) associated with the payment plan.\n\nPatNum: Required.\nuseEstBalance: (Added in version 22.2) This or principalAmount is required. Setting this to \"true\" will use the Patient's Estimated Balance for the principal amount.\nprincipalAmount: This or useEstBalance is required. The principal amount for the plan.\nPayAmt: This or NumberOfPayments is required. The amount due per payment plan charge.\nNumberOfPayments: This or PayAmt is required. The total number of payments in the payment plan.\n\nGuarantor: Optional. The person responsible for payments. Default this plan's patient.\nPayPlanDate: Optional. The date of the plan agreement. Default today.\nAPR: Optional. Default 0.\nDownPayment: Optional. Default 0.00.\nNote: Optional. The terms of the payment plan are stored in this field by default. Additional note text is appended to these terms.\nChargeFrequency: Optional. Either \"Weekly\", \"EveryOtherWeek\", \"Monthly\", \"Quarterly\", or \"OrdinalWeekday\" (ie, second Tueday of each month, based on the DatePayPlanStart). Default \"Monthly\".\nDatePayPlanStart: Optional. Due date of first payment. Default one month after the PayPlanDate.\nDateInterestStart: Optional. Date the payment plan can start posting interest charges. Default minval.\n\nExample Requests:\nPOST /payplans\n\n{\n\"PatNum\" : 61,\n\"useEstBalance\": \"true\",\n\"PayAmt\": 100\n}\n\nor\n\n{\n\"PatNum\" : 61,\n\"principalAmount\": 500,\n\"PayAmt\": 100\n}\n\nor\n\n{\n\"PatNum\" : 19,\n\"principalAmount\": 256.12,\n\"NumberOfPayments\": 12,\n\"APR\": 5\n}\n\nor\n\n{\n\"PatNum\" : 11,\n\"Guarantor\": 21,\n\"PayPlanDate\": \"2021-09-06\",\n\"principalAmount\": 500,\n\"PayAmt\": 75.50,\n\"APR\": 18,\n\"DownPayment\": 125,\n\"ChargeFrequency\": \"OrdinalWeekday\",\n\"Note\": \"No payments until 12/06/2021. No interest until 01/03/2022. Payments due first Monday of each month.\",\n\"DatePayPlanStart\": \"2021-12-06\",\n\"DateInterestStart\": \"2022-01-03\"\n}\n\nExample Responses:\n\n\"9/20/2021 - Date of Agreement: 9/20/2021, Total Amount: 612.98, APR: 0, Total Cost of Loan: 612.98 \"\n\nor\n\n\"9/20/2021 - Date of Agreement: 9/20/2021, Total Amount: 500.00, APR: 0, Total Cost of Loan: 500.00 \"\n\nor\n\n\"9/20/2021 - Date of Agreement: 9/20/2021, Total Amount: 256.12, APR: 5, Total Cost of Loan: 263.11 \"\n\nor\n\n\"9/20/2021 - Date of Agreement: 9/6/2021, Total Amount: 500.00, APR: 18, Total Cost of Loan: 511.66 No payments until 12/06/2021. No interest until 01/03/2022. Payments due first Monday of each month.\"\n\n201 Created\n400 BadRequest (Missing or invalid fields)\n404 NotFound (Patient not found)\n410 Gone (Deprecated)\nPayPlans PUT Close\nVersion Added: 22.4.39\n\nCloses a single patient or dynamic payment plan, not an insurance payment plan. Any outstanding interest will be charged to the patient's account and make them due immediately. See Payment Plan Close.\n\nPayPlanNum: Required in the URL.\n\nExample Requests:\nPUT /payplans/343/Close\n\nExample Responses:\n{\n\"PayPlanNum\" : 343,\n\"PatNum\" : 11,\n\"Guarantor\": 21,\n\"PayPlanDate\": \"2021-09-06\",\n\"APR\": 18.0,\n\"Note\": \"No payments until 12/06/2021. No interest until 01/03/2022. Payments due first Monday of each month.\",\n\"PlanNum\": 34,\n\"CompletedAmt\": 700.0,\n\"InsSubNum\": 86546,\n\"PaySchedule\": 1,\n\"NumberOfPayments\": 7,\n\"PayAmt\": 75.50,\n\"DownPayment\": 125.0,\n\"IsClosed\": true,\n\"PlanCategory\": 371,\n\"planCategory\": \"General\",\n\"IsDynamic\": false,\n\"ChargeFrequency\": \"OrdinalWeekday\",\n\"DatePayPlanStart\" :\"2022-10-03\",\n\"IsLocked\": true,\n\"DateInterestStart\": \"2022-11-03\",\n\"DynamicPayPlanTPOption\": 0,\n\"principalAmount\": 500.0\n}\n\n200 OK\n400 BadRequest (Missing or invalid fields)\n404 NotFound (PayPlan not found)",
+  "metadata": {
+    "version": "24.4.30",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Payplans",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PayPlans",
+      "method": "POST",
+      "path": "/payplans",
+      "versionAdded": "22.2.22",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /payplans/Dynamic\n\n{\n\"PatNum\" : 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2022-06-30\",\n\"NumberOfPayments\": 8,\n\"APR\": 10,\n\"DownPayment\": 100,\n\"Note\": \"DownPayment in Cash\",\n\"ChargeFrequency\":\"Monthly\",\n\"DatePayPlanStart\": \"2022-07-01\",\n\"DateInterestStart\": \"2022-08-01\",\n\"IsLocked\": \"true\",\n\"DynamicPayPlanTPOption\": \"AwaitComplete\",\n\"procNums\": [848,847,860,865],\n\"adjNums\": [40]\n}",
+          "response": "{\n\"PayPlanNum\": 271,\n\"PatNum\": 72,\n\"Guarantor\": 72,\n\"PayPlanDate\": \"2022-06-30\",\n\"APR\": 10.0,\n\"Note\": \"06/30/2022 - Date of Agreement: 06/30/2022, Total Amount: 728.00, APR: 10, Total Cost of Loan: 741.71, DownPayment in Cash\",\n\"PlanNum\": 0,\n\"CompletedAmt\": 652.0,\n\"InsSubNum\": 0,\n\"PaySchedule\": \"Monthly\",\n\"NumberOfPayments\": 0,\n\"PayAmt\": 81.48,\n\"DownPayment\": 100.0,\n\"IsClosed\": \"false\",\n\"PlanCategory\": 0,\n\"planCategory\": \"\",\n\"IsDynamic\": \"true\",\n\"ChargeFrequency\": \"Monthly\",\n\"DatePayPlanStart\": \"2022-07-01\",\n\"IsLocked\": \"true\",\n\"DateInterestStart\": \"2022-08-01\",\n\"DynamicPayPlanTPOption\": \"AwaitComplete\",\n\"principalAmount\": 728.0\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates a payment plan for the patient with the specified terms. This is a dynamic payment plan, not an insurance or patient payment plan. Procedures and/or adjustments must be associated with the plan."
+    },
+    {
+      "resource": "PayPlans",
+      "method": "PUT",
+      "path": "/payplans",
+      "versionAdded": "22.4.39",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /payplans/343/Close",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Missing or invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "PayPlan not found"
+        }
+      ],
+      "description": "Closes a single patient or dynamic payment plan, not an insurance payment plan. Any outstanding interest will be charged to the patient's account and make them due immediately. See Payment Plan Close."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-payplan",
+      "description": "API references database table payplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-inssub",
+      "description": "API references database table inssub"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

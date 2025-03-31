@@ -1,0 +1,108 @@
+{
+  "id": "api-toothinitials",
+  "type": "api",
+  "title": "ToothInitials",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ToothInitials.txt",
+  "content": "API ToothInitials\nSee API Specification\n\nSee Missing/Primary Teeth for more information.\n\nToothInitials GET\nVersion Added: 24.2.3\n\nGets all toothinitials.\n\nPatNum: Optional.\n\nExample Requests:\nGET /toothinitials\nGET /toothinitials?PatNum=13\n\nExample Response:\n[\n{\n\"ToothInitialNum\": 322,\n\"PatNum\": 13,\n\"ToothNum\": \"32\",\n\"InitialType\": \"Missing\",\n\"Movement\": \"0\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 12:18:00\",\n\"SecDateTEdit\": \"2024-05-30 12:18:00\",\n\"DrawText\": \"\"\n},\n{\n\"ToothInitialNum\": 324,\n\"PatNum\": 13,\n\"ToothNum\": \"17\",\n\"InitialType\": \"Hidden\",\n\"Movement\": \"0\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 12:18:08\",\n\"SecDateTEdit\": \"2024-05-30 12:18:08\",\n\"DrawText\": \"\"\n},\n{\n\"ToothInitialNum\": 344,\n\"PatNum\": 13,\n\"ToothNum\": \"22\",\n\"InitialType\": \"Rotate\",\n\"Movement\": \"-20\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 12:42:57\",\n\"SecDateTEdit\": \"2024-05-30 12:42:57\",\n\"DrawText\": \"\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nToothInitials POST (create)\nVersion Added: 24.2.3\n\nCreates a toothinitial for a patient.\n\nPatNum: Required.\nToothNum: Required. A single tooth number, either 1-32 or A-T.\nInitialType: Required. Either \"Missing\", \"Hidden\", or \"Primary\".\n\nExample Request:\nPOST /toothinitials\n\n{\n\"PatNum\": 13,\n\"ToothNum\": 32,\n\"InitialType\": \"Missing\"\n}\n\nExample Response:\n{\n\"ToothInitialNum\": 346,\n\"PatNum\": 13,\n\"ToothNum\": \"32\",\n\"InitialType\": \"Missing\",\n\"Movement\": \"0\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 14:11:19\",\n\"SecDateTEdit\": \"2024-05-30 14:11:19\",\n\"DrawText\": \"\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nToothInitials DELETE\nVersion Added: 24.2.3\n\nDeletes an existing toothinitial with an InitialType of \"Missing\", \"Hidden\", or \"Primary\".\n\nToothInitialNum: Required in the URL.\n\nExample Request:\nDELETE /toothinitials/346\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.2.3",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ToothInitials",
+      "GET",
+      "POST",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ToothInitials",
+      "method": "GET",
+      "path": "/toothinitials",
+      "versionAdded": "24.2.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /toothinitials\nGET /toothinitials?PatNum=13",
+          "response": "[\n{\n\"ToothInitialNum\": 322,\n\"PatNum\": 13,\n\"ToothNum\": \"32\",\n\"InitialType\": \"Missing\",\n\"Movement\": \"0\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 12:18:00\",\n\"SecDateTEdit\": \"2024-05-30 12:18:00\",\n\"DrawText\": \"\"\n},\n{\n\"ToothInitialNum\": 324,\n\"PatNum\": 13,\n\"ToothNum\": \"17\",\n\"InitialType\": \"Hidden\",\n\"Movement\": \"0\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 12:18:08\",\n\"SecDateTEdit\": \"2024-05-30 12:18:08\",\n\"DrawText\": \"\"\n},\n{\n\"ToothInitialNum\": 344,\n\"PatNum\": 13,\n\"ToothNum\": \"22\",\n\"InitialType\": \"Rotate\",\n\"Movement\": \"-20\",\n\"DrawingSegment\": \"\",\n\"ColorDraw\": \"0,0,0\",\n\"SecDateTEntry\": \"2024-05-30 12:42:57\",\n\"SecDateTEdit\": \"2024-05-30 12:42:57\",\n\"DrawText\": \"\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets all toothinitials."
+    },
+    {
+      "resource": "ToothInitials",
+      "method": "DELETE",
+      "path": "/toothinitials",
+      "versionAdded": "24.2.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /toothinitials/346",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "346",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes an existing toothinitial with an InitialType of \"Missing\", \"Hidden\", or \"Primary\"."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-toothinitial",
+      "description": "API references database table toothinitial"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

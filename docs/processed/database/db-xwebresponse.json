@@ -1,0 +1,40 @@
+{
+  "id": "db-xwebresponse",
+  "type": "database",
+  "title": "xwebresponse",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "xwebresponse",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "xwebresponse",
+    "description": "Table for xwebresponse data.",
+    "columns": [
+      {
+        "name": "xwebresponseNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "xwebresponseNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

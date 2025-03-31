@@ -1,0 +1,122 @@
+API ClaimTrackings
+See API Specification
+
+ClaimTrackings GET
+Version Added: 23.2.5
+
+Gets a list of ClaimTrackings.
+
+ClaimNum: Optional. FK to claim.ClaimNum.
+
+Example Requests:
+GET /claimtrackings
+GET /claimtrackings?ClaimNum=25
+
+Example Response:
+[
+{
+"ClaimTrackingNum": 45,
+"ClaimNum": 19,
+"TrackingType": "StatusHistory",
+"UserNum": 1,
+"DateTimeEntry": "2023-07-20 14:05:45",
+"Note": "",
+"TrackingDefNum": 345,
+"TrackingErrorDefNum": 343
+},
+{
+"ClaimTrackingNum": 46,
+"ClaimNum": 3,
+"TrackingType": "StatusHistory",
+"UserNum": 1,
+"DateTimeEntry": "2023-07-20 13:23:20",
+"Note": "",
+"TrackingDefNum": 341,
+"TrackingErrorDefNum": 0
+},
+{
+"ClaimTrackingNum": 34,
+"ClaimNum": 1,
+"TrackingType": "StatusHistory",
+"UserNum": 1,
+"DateTimeEntry": "2023-07-20 13:22:19",
+"Note": "",
+"TrackingDefNum": 0,
+"TrackingErrorDefNum": 0
+},
+etc...
+]
+
+200 OK
+404 NotFound (Claim not found)
+
+ClaimTrackings POST (create)
+Version Added: 23.2.5
+
+Creates a new ClaimTracking. Requires one-time setup by the Dental Office, see Edit Claim - Status History Tab.
+
+ClaimNum: Required. FK to claim.ClaimNum.
+Note: Optional. Default empty string.
+TrackingDefNum: Required and cannot be 0 if the ClaimTrackingStatusExcludesNone preference is enabled. If not enabled, TrackingDefNum is optional and defaults to 0 (None). Definition.DefNum where definition.Category=31.
+TrackingErrorDefNum: Optional. Definition.DefNum where definition.Category=43. Default 0.
+
+Example Request:
+POST /claimtrackings
+
+{
+"ClaimNum": 15,
+"Note": "Missing attachment.",
+"TrackingDefNum": 339,
+"TrackingErrorDefNum": 340
+}
+
+Example Response:
+{
+"ClaimTrackingNum": 52,
+"ClaimNum": 15,
+"TrackingType": "StatusHistory",
+"UserNum": 0,
+"DateTimeEntry": "2023-07-26 09:47:10",
+"Note": "Missing attachment.",
+"TrackingDefNum": 339,
+"TrackingErrorDefNum": 340
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+ClaimTrackings PUT (update)
+Version Added: 23.2.5
+
+Updates an existing ClaimTracking.
+
+ClaimTrackingNum: Required in the URL. Primary key.
+Note: Optional. Overwrites existing note.
+TrackingDefNum: Optional. Definition.DefNum where definition.Category=31. Cannot be 0 if the ClaimTrackingStatusExcludesNone preference is enabled. Use 0 to indicate None.
+TrackingErrorDefNum: Optional. Definition.DefNum where definition.Category=43. Use 0 to indicate None.
+
+Example Request:
+PUT /claimtrackings/52
+
+{
+"Note": "Attachments sent.",
+"TrackingDefNum": 341,
+"TrackingErrorDefNum": 0
+}
+
+Example Responses:
+{
+"ClaimTrackingNum": 52,
+"ClaimNum": 15,
+"TrackingType": "StatusHistory",
+"UserNum": 0,
+"DateTimeEntry": "2023-07-26 10:00:54",
+"Note": "Attachments sent.",
+"TrackingDefNum": 341,
+"TrackingErrorDefNum": 0
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

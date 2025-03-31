@@ -1,0 +1,109 @@
+{
+  "id": "api-reports",
+  "type": "api",
+  "title": "Reports",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Reports.txt",
+  "content": "API Reports\nSee API Specification\n\nReports GET Aging\nVersion Added: 21.4\n\nRarely used. See API Setup for additional information.\n\nGets the Aging Report for all patients. This endpoint calculates aging, but does not update accounts.\n\nDateAsOf: Optional. Defaults to today's date. Gets the aging as of the passed in date. Must be in yyyy-MM-dd format.\nClinicNum: (Added in version 22.2) Optional. Gets aging for account entries on a specific clinic. Not specifying ClinicNum will get aging for all clinics, if enabled.\n\nReturned fields are detailed below:\n\nPatNum: The PatNum of the guarantor.\npatName: The guarantor's first and last name.\nBal_0_30: The balance that is up to 30 days past due.\nBal_31_60: The balance that is 31-60 days past due.\nBal_61_90: The balance that is 61-90 days past due.\nBalOver90: The balance that is greater than 90 days past due.\nBalTotal: The total amount owed by the family before insurance.\nInsWoEst: The insurance write-off estimate amount based on procedures attached to the claim.\nInsPayEst: The total estimated insurance payment amount.\nPatientPortion: BalTotal - InsPayEst - InsWoEst.\n\nExample Requests:\nGET /reports/Aging\nGET /reports/Aging?DateAsOf=2020-07-30&ClinicNum=5\nGET /reports/Aging?Offset=200\n\nExample Response:\n[\n{\n\"PatNum\": 11,\n\"patName\": \"Allowed, Allen \",\n\"Bal_0_30\": 0,\n\"Bal_31_60\": 0,\n\"Bal_61_90\": 0,\n\"BalOver90\": 370,\n\"BalTotal\": 370,\n\"InsWoEst\": 0,\n\"InsPayEst\": 265,\n\"PatientPortion\": 105\n},\n{\n\"PatNum\": 13,\n\"patName\": \"Copay, Candi \",\n\"Bal_0_30\": 0,\n\"Bal_31_60\": 0,\n\"Bal_61_90\": 0,\n\"BalOver90\": 140,\n\"BalTotal\": 140,\n\"InsWoEst\": 30,\n\"InsPayEst\": 35,\n\"PatientPortion\": 75\n},\netc...\n]\n\nReports GET FinanceCharges\nVersion Added: 22.2.32\n\nGets the Finance Charge Report for passed in parameters.\n\nDateFrom: Optional. Defaults to today's date. Must be in yyyy-MM-dd format.\nDateTo: Optional. Defaults to today's date. Must be in yyyy-MM-dd format.\nProvNums: Optional. Array of ProvNums. Default all providers.\nBillingTypes: Optional. Array of DefNums for definitions where definition.Category=4. Default all billing types.\n\nReturned fields are detailed below:\n\nPatNum: The PatNum of the patient.\nPatName: The patient's first and last name.\nPreferred: The patient's preferred name.\nAdjAmt: The amount of the adjustment.\n\nExample Requests:\nGET /reports/FinanceCharges\nGET /reports/FinanceCharges?DateFrom=2022-08-22&DateTo=2022-09-02&ProvNums=[2,3]&BillingTypes=[40]\nGET /reports/FinanceCharges?ProvNums=2,3,4\n\nExample Response:\n[\n{\n\"PatNum\": 11,\n\"PatName\": \"Allowed, Allen \",\n\"Preferred\": \"\",\n\"AdjAmt\": 3.08\n},\n{\n\"PatNum\": 13,\n\"PatName\": \"Copay, Candice \",\n\"Preferred\": \"Candi\",\n\"AdjAmt\": 1.17\n},\n{\n\"PatNum\": 25,\n\"PatName\": \"Jones, Mary Sue \",\n\"Preferred\": \"\",\n\"AdjAmt\": 16.05\n},\netc...\n]",
+  "metadata": {
+    "version": "22.2.32",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Reports",
+      "GET",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Reports",
+      "method": "GET",
+      "path": "/reports",
+      "versionAdded": "21.4",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /reports/Aging\nGET /reports/Aging?DateAsOf=2020-07-30&ClinicNum=5\nGET /reports/Aging?Offset=200",
+          "response": "[\n{\n\"PatNum\": 11,\n\"patName\": \"Allowed, Allen \",\n\"Bal_0_30\": 0,\n\"Bal_31_60\": 0,\n\"Bal_61_90\": 0,\n\"BalOver90\": 370,\n\"BalTotal\": 370,\n\"InsWoEst\": 0,\n\"InsPayEst\": 265,\n\"PatientPortion\": 105\n},\n{\n\"PatNum\": 13,\n\"patName\": \"Copay, Candi \",\n\"Bal_0_30\": 0,\n\"Bal_31_60\": 0,\n\"Bal_61_90\": 0,\n\"BalOver90\": 140,\n\"BalTotal\": 140,\n\"InsWoEst\": 30,\n\"InsPayEst\": 35,\n\"PatientPortion\": 75\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "Example",
+          "description": ""
+        }
+      ],
+      "description": "Rarely used. See API Setup for additional information."
+    },
+    {
+      "resource": "Reports",
+      "method": "GET",
+      "path": "/reports",
+      "versionAdded": "22.2.32",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /reports/FinanceCharges\nGET /reports/FinanceCharges?DateFrom=2022-08-22&DateTo=2022-09-02&ProvNums=[2,3]&BillingTypes=[40]\nGET /reports/FinanceCharges?ProvNums=2,3,4",
+          "response": "[\n{\n\"PatNum\": 11,\n\"PatName\": \"Allowed, Allen \",\n\"Preferred\": \"\",\n\"AdjAmt\": 3.08\n},\n{\n\"PatNum\": 13,\n\"PatName\": \"Copay, Candice \",\n\"Preferred\": \"Candi\",\n\"AdjAmt\": 1.17\n},\n{\n\"PatNum\": 25,\n\"PatName\": \"Jones, Mary Sue \",\n\"Preferred\": \"\",\n\"AdjAmt\": 16.05\n},\netc...\n]"
+        }
+      ],
+      "responses": [],
+      "description": "Gets the Finance Charge Report for passed in parameters."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-adjustment",
+      "description": "API references database table adjustment"
+    },
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-payment",
+      "description": "API references database table payment"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-account",
+      "description": "API references database table account"
+    },
+    {
+      "type": "references",
+      "target": "db-mount",
+      "description": "API references database table mount"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

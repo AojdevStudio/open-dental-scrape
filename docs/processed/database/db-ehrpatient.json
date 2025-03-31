@@ -1,0 +1,69 @@
+{
+  "id": "db-ehrpatient",
+  "type": "database",
+  "title": "ehrpatient",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "ehrpatient",
+      "Patient Data",
+      "Has Primary Key",
+      "Has Foreign Keys"
+    ]
+  },
+  "database": {
+    "tableName": "ehrpatient",
+    "description": "Table for ehrpatient data.",
+    "columns": [
+      {
+        "name": "ehrpatientNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      },
+      {
+        "name": "PatNum",
+        "type": "bigint(20)",
+        "order": "2",
+        "description": "Foreign key to patient.PatNum.",
+        "nullable": false,
+        "foreign_key": {
+          "table": "patient",
+          "column": "PatNum"
+        }
+      }
+    ],
+    "primaryKey": [
+      "ehrpatientNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "References patient"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-ehrpatients",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

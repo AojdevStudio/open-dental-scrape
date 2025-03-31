@@ -1,0 +1,48 @@
+{
+  "id": "db-procapptcolor",
+  "type": "database",
+  "title": "procapptcolor",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "procapptcolor",
+      "Appointment",
+      "Procedure",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "procapptcolor",
+    "description": "Table for procapptcolor data.",
+    "columns": [
+      {
+        "name": "procapptcolorNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "procapptcolorNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "related_concept",
+      "target": "manual-module",
+      "description": "Related by concept: appointment"
+    }
+  ]
+}

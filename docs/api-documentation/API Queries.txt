@@ -1,0 +1,102 @@
+API Queries
+See API Specification
+
+Runs a custom query against the database. Queries are screened to be read-only. Temporary tables are allowed. Any command that would change the database will not be run. The Audit Trail for these requests includes the command that was run.
+
+Rarely, an office will insist on higher security for queries. There is a OpenDentalWebConfig.xml file in the eConnector installation folder. This config file has two tags that are normally empty: <UserLow> and <PasswordLow>. You can set up a different MySQL that has more restrictive permissions than the MySQL user used for all the other API methods. Once this MySQL user is set up, enter their username and password into <UserLow> and <PasswordLow>, and that user will be used here for queries. If those tags are blank, then the regular MySQL user will be used. Don't remove those tags, or the eConnector won't start.
+
+Queries POST
+Version Added: 21.1
+
+The results of the query are written to a file and saved to the SFTP site specified in the JSON. Directory will be created if it does not exist, and files already existing with the specified name will be overwritten. Query results are written in comma-delimited CSV format. If there are no results, then the file will only contain "OK".
+
+SqlCommand: Required.
+SftpAddress: Required. Specify the full path of the file (using /). The user with the SFTP credentials must have write permission in this directory.
+SftpUsername: Required.
+SftpPassword: Required.
+
+SftpPort: Optional. Default port 22.
+IsAsync: (Added in version 23.3.26) Optional. Either "true" or "false". When "true" the request will return once the SqlCommand is complete and then only the file transfer will continue asynchronously. Default "false".
+
+Example Requests:
+POST /queries
+
+{
+"SqlCommand": "SELECT PatPlanNum, PatNum, InsSubNum FROM patplan",
+"SftpAddress": "MySftpSite/myUsername/Patient Plans/PatPlans-35.csv",
+"SftpPort": 25,
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+or
+
+{
+"SqlCommand": " SELECT * FROM patient WHERE Birthdate LIKE '%-06-22' ",
+"SftpAddress": "MySftpSite/myUsername/Birthdays/Jun22.csv",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+or
+
+{
+"SqlCommand": "SELECT * FROM InsSub WHERE DateTerm < '2021-01-01'",
+"SftpAddress": "MySftpSite/myUsername/Insurance Subscriptions/Expired2021.csv",
+"SftpUsername": "myUsername",
+"SftpPassword": "myPassword"
+}
+
+Example Response:
+201 Created
+400 BadRequest (SQL syntax and Sftp connection errors)
+401 Unauthorized (Query is not read-only or is not executing on temporary tables)
+
+Queries PUT ShortQuery
+Version Added: 21.2
+
+Returning at most 100 rows. The results of the query are returned as a data table in the JSON. While pagination is supported for results that return over 100 rows, it is recommended to instead use Queries POST for longer results.
+
+Example Requests:
+PUT /queries/ShortQuery
+PUT /queries/ShortQuery?Offset=200
+
+{
+"SqlCommand": "SELECT LName, FName, HmPhone, WkPhone, WirelessPhone, Email
+FROM patient
+WHERE PatNum IN(876,2456,3892,5713,1234,6987,4321,7542,1890,5678,9012,3456)"
+}
+
+or
+
+{
+"SqlCommand": "SELECT clinic.Description, COUNT(*) AS NumberOfPatients
+FROM patient,clinic
+WHERE patient.ClinicNum=clinic.ClinicNum
+GROUP BY clinic.ClinicNum"
+}
+
+or
+
+{
+"SqlCommand": "SELECT * FROM payperiod"
+}
+
+Example Responses:
+[
+{
+"PayPeriodNum": 200,
+"DateStart": "2021-05-01T00:00:00",
+"DateStop": "2021-05-31T00:00:00",
+"DatePaycheck": "2021-06-04T00:00:00"
+},
+{
+"PayPeriodNum": 201,
+"DateStart": "2021-06-01T00:00:00",
+"DateStop": "2021-06-30T00:00:00",
+"DatePaycheck": "2021-07-05T00:00:00"
+}
+]
+200 OK
+400 BadRequest (SQL syntax errors)
+401 Unauthorized (Query is not read-only or is not executing on temporary tables)

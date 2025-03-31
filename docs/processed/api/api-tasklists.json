@@ -1,0 +1,73 @@
+{
+  "id": "api-tasklists",
+  "type": "api",
+  "title": "Tasklists",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Tasklists.txt",
+  "content": "API TaskLists\nSee API Specification\n\nTaskLists GET\nVersion Added: 22.3.15\n\nGets a list of all the TaskLists filtered by TaskListStatus.\n\nParameters:\n\nTaskListStatus: Optional. Either \"Active\" or \"Archived\". Default \"Active\".\n\nExample Request\nGET /tasklists?TaskListStatus=Archived&Offset=100\n\nExample Response:\n[\n{\n\"TaskListNum\": 102,\n\"Descript\": \"Brittany\",\n\"Parent\": 0,\n\"DateTL\": \"0001-01-01\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Patient\",\n\"DateTimeEntry\": \"2021-10-05 10:25:43\",\n\"TaskListStatus\": \"Archived\"\n},\n{\n\"TaskListNum\": 103,\n\"Descript\": \"Brittany Paperwork\",\n\"Parent\": 102,\n\"DateTL\": \"0001-01-01\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"Week\",\n\"FromNum\": 0,\n\"ObjectType\": \"None\",\n\"DateTimeEntry\": \"2021-10-05 10:27:29\",\n\"TaskListStatus\": \"Archived\"\n},\n{\n\"TaskListNum\": 105,\n\"Descript\": \"Brittany Appointments\",\n\"Parent\": 102,\n\"DateTL\": \"0001-01-01\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"Appointment\",\n\"DateTimeEntry\": \"2021-10-05 10:28:11\",\n\"TaskListStatus\": \"Archived\"\n},\n{\n\"TaskListNum\": 107,\n\"Descript\": \"Debbie\",\n\"Parent\": 0,\n\"DateTL\": \"0001-01-01\",\n\"IsRepeating\": \"false\",\n\"DateType\": \"None\",\n\"FromNum\": 0,\n\"ObjectType\": \"None\",\n\"DateTimeEntry\": \"2021-10-28 11:46:16\",\n\"TaskListStatus\": \"Archived\"\n},\netc...\n]\n\n200 OK\n400 Bad Request (Invalid TaskListStatus)",
+  "metadata": {
+    "version": "22.3.15",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Tasklists",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "TaskLists",
+      "method": "GET",
+      "path": "/tasklists/List",
+      "versionAdded": "22.3.15",
+      "parameters": [],
+      "examples": [],
+      "responses": [
+        {
+          "code": "100",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "Bad",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of all the TaskLists filtered by TaskListStatus."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-tasklist",
+      "description": "API references database table tasklist"
+    },
+    {
+      "type": "references",
+      "target": "db-task",
+      "description": "API references database table task"
+    }
+  ]
+}

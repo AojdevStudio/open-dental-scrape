@@ -1,0 +1,74 @@
+{
+  "id": "api-usergroupattaches",
+  "type": "api",
+  "title": "UserGroupAttaches",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API UserGroupAttaches.txt",
+  "content": "API UserGroupAttaches\nSee API Specification\n\nSee User Edit for more information.\n\nUserGroupAttaches GET\nVersion Added: 23.3.7\n\nGets a list of usergroupattaches.\n\nParameters: All optional.\n\nUserNum: FK to userod.UserNum.\nUserGroupNum: FK to usergroup.UserGroupNum.\n\nExample Requests:\nGET /usergroupattaches\nGET /usergroupattaches?UserNum=5\nGET /usergroupattaches?UserGroupNum=10\n\nExample Response:\n[\n{\n\"UserGroupAttachNum\": 3,\n\"UserNum\": 5,\n\"UserGroupNum\": 5\n},\n}\n\"UserGroupAttachNum\": 14,\n\"UserNum\": 5,\n\"UserGroupNum\": 10\n},\n{\n\"UserGroupAttachNum\": 23,\n\"UserNum\": 5,\n\"UserGroupNum\": 11\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.3.7",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "UserGroupAttaches",
+      "GET",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "UserGroupAttaches",
+      "method": "GET",
+      "path": "/usergroupattaches",
+      "versionAdded": "23.3.7",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /usergroupattaches\nGET /usergroupattaches?UserNum=5\nGET /usergroupattaches?UserGroupNum=10",
+          "response": "[\n{\n\"UserGroupAttachNum\": 3,\n\"UserNum\": 5,\n\"UserGroupNum\": 5\n},\n}\n\"UserGroupAttachNum\": 14,\n\"UserNum\": 5,\n\"UserGroupNum\": 10\n},\n{\n\"UserGroupAttachNum\": 23,\n\"UserNum\": 5,\n\"UserGroupNum\": 11\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Gets a list of usergroupattaches."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-userod",
+      "description": "API references database table userod"
+    },
+    {
+      "type": "references",
+      "target": "db-usergroupattach",
+      "description": "API references database table usergroupattach"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-usergroup",
+      "description": "API references database table usergroup"
+    }
+  ]
+}

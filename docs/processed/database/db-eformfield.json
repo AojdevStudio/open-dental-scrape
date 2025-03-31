@@ -1,0 +1,40 @@
+{
+  "id": "db-eformfield",
+  "type": "database",
+  "title": "eformfield",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "eformfield",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "eformfield",
+    "description": "Table for eformfield data.",
+    "columns": [
+      {
+        "name": "eformfieldNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "eformfieldNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

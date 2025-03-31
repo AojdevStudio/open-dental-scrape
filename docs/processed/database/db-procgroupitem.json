@@ -1,0 +1,41 @@
+{
+  "id": "db-procgroupitem",
+  "type": "database",
+  "title": "procgroupitem",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "procgroupitem",
+      "Procedure",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "procgroupitem",
+    "description": "Table for procgroupitem data.",
+    "columns": [
+      {
+        "name": "procgroupitemNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "procgroupitemNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

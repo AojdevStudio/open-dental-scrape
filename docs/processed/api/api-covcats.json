@@ -1,0 +1,40 @@
+{
+  "id": "api-covcats",
+  "type": "api",
+  "title": "CovCats",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API CovCats.txt",
+  "content": "API CovCats\nSee API Specification\n\nSee Insurance Categories for additional information.\n\nCovCats GET (single)\nVersion Added: 23.3.8\n\nGets a single covcat.\n\nParameters:\n\nCovCatNum: Required in the URL.\n\nExample Request:\nGET /covcats/1\n\nExample Response:\n{\n\"CovCatNum\": 1,\n\"Description\": \"General\",\n\"DefaultPercent\": -1,\n\"CovOrder\": 0,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"General\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nCovCats GET (multiple)\nVersion Added: 23.3.8\n\nGets a list of covcats.\n\nExample Request:\nGET /covcats\n\nExample Response:\n[\n{\n\"CovCatNum\": 1,\n\"Description\": \"General\",\n\"DefaultPercent\": -1,\n\"CovOrder\": 0,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"General\"\n},\n{\n\"CovCatNum\": 2,\n\"Description\": \"Diagnostic\",\n\"DefaultPercent\": 100,\n\"CovOrder\": 1,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"Diagnostic\"\n},\n{\n\"CovCatNum\": 3,\n\"Description\": \"Preventive\",\n\"DefaultPercent\": 100,\n\"CovOrder\": 3,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"RoutinePreventive\"\n},\netc.\n]\n\n200 OK\n\nCovCats POST (create)\nVersion Added: 24.1.24\n\nCreates a covcat. Do not alter Insurance Categories without a full understanding of what this does as insurance categories are global and changes may affect all plans.\n\nOne of each Electronic Benefit Category (EbenefitCat) must be assigned to a corresponding coverage category. There can be no duplicates and no missing categories in order for Open Dental Benefit Processing and Electronic Eligibility and Benefits to function properly.\n\nDescription: Required. Description of this category.\nDefaultPercent: Optional. Coverage percentage assigned to category when creating a new Insurance Plan. Integer between -1 and 100. Specifying -1 will not apply a percentage. Default -1.\nIsHidden: Optional. Either \"true\" or \"false\". Default \"false\".\nEbenefitCat: Optional. Either \"None\", \"General\", \"Diagnostic\", \"Periodontics\", \"Restorative\", \"Endodontics\", \"MaxillofacialProsth\", \"Crowns\", \"Accident\", \"Orthodontics\", \"Prosthodontics\", \"OralSurgery\", \"RoutinePreventive\", \"DiagnosticXRay\", or \"Adjunctive\". Default \"None\".\n\nExample Request:\nPOST /covcats\n\n{\n\"Description\": \"Implants\",\n\"DefaultPercent\": 80,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"None\"\n}\n\nExample Response:\n{\n\"CovCatNum\": 25,\n\"Description\": \"Implants\",\n\"DefaultPercent\": 80,\n\"CovOrder\": 16,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"None\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nCovCats PUT (update)\nVersion Added: 24.1.24\n\nUpdates a covcat. This does affect all benefits that are currently tied to this CovCat.\n\nCovOrder is important as multiple benefits can apply to a single procedure code. If some benefits are of the same type, there is a hierarchy to determine which benefits affect insurance estimates. See the Benefit Hierarchy section for more information.\n\nCovCatNum: Required in the URL.\n\nDescription: Description of this category.\nDefaultPercent: Coverage percentage assigned to category when creating a new Insurance Plan. Integer between -1 and 100. Specifying -1 will not apply a percentage.\nCovOrder: The order in which the categories are displayed. CovCats with a lower CovOrder are more general, while CovCats with a higher CovOrder will have priority and override the lower categories.\nIsHidden: Either \"true\" or \"false\".\nEbenefitCat: Either \"None\", \"General\", \"Diagnostic\", \"Periodontics\", \"Restorative\", \"Endodontics\", \"MaxillofacialProsth\", \"Crowns\", \"Accident\", \"Orthodontics\", \"Prosthodontics\", \"OralSurgery\", \"RoutinePreventive\", \"DiagnosticXRay\", or \"Adjunctive\".\n\nExample Request:\nPUT /covcats/34\n\n{\n\"Description\": \"Sealants\",\n\"DefaultPercent\": 80,\n\"CovOrder\": 17,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"None\"\n}\n\nExample Response:\n{\n\"CovCatNum\": 34,\n\"Description\": \"Sealants\",\n\"DefaultPercent\": 80,\n\"CovOrder\": 17,\n\"IsHidden\": \"false\",\n\"EbenefitCat\": \"None\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.1.24",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "CovCats",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-covcat",
+      "description": "API references database table covcat"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

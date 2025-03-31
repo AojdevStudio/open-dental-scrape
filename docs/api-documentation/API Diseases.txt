@@ -1,0 +1,170 @@
+API Diseases
+See API Specification
+
+See Problem List for more information.
+
+Diseases GET (single)
+Version Added: 24.2.5
+
+Get a single disease (Problem) that can be assigned to a patient.
+
+DiseaseNum: Required in the URL.
+
+Example Request:
+GET /diseases/2
+
+Example Response:
+{
+"DiseaseNum": 2,
+"PatNum": 41,
+"DiseaseDefNum": 44,
+"diseaseDefName": "COPD",
+"PatNote": "",
+"ProbStatus": "Active",
+"DateStart": "0001-01-01",
+"DateStop": "0001-01-01"
+}
+
+200 OK
+404 NotFound (with explanation)
+
+Diseases GET (multiple)
+Version Added: 21.3
+
+Gets a list of all diseases (Problems) that are assigned to a patient.
+
+Parameters:
+
+PatNum: Optional (Optional after version 24.2.5).
+
+Example Requests:
+GET /diseases
+GET /diseases?PatNum=41
+
+Example Response:
+[
+{
+"DiseaseNum": 2,
+"PatNum": 41,
+"DiseaseDefNum": 44,
+"diseaseDefName": "COPD",
+"PatNote": "",
+"ProbStatus": "Active",
+"DateStart": "0001-01-01",
+"DateStop": "0001-01-01"
+},
+{
+"DiseaseNum": 8,
+"PatNum": 41,
+"DiseaseDefNum": 58,
+"diseaseDefName": "Severe Back Pain",
+"PatNote": "",
+"ProbStatus": "Inactive",
+"DateStart": "0001-01-01",
+"DateStop": "0001-01-01"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Diseases POST
+Version Added: 21.3
+
+Attaches a diseaseDef (Problem) to a patient.
+
+PatNum: Required.
+DiseaseDefNum: Rarely used. Just use diseaseDefName instead, which handles insertion of DiseaseDef automatically.
+diseaseDefName: Required unless you choose to use DiseaseDefNum.
+
+DateStart: Optional. String in "yyyy-MM-dd" format. Default "0001-01-01".
+DateStop: Optional. String in "yyyy-MM-dd" format. Default "0001-01-01".
+ProbStatus: Optional. Either "Active", "Resolved" or "Inactive". Default "Active".
+PatNote: Optional.
+
+Example Requests:
+POST /diseases
+
+{
+"PatNum": 74,
+"diseaseDefName": "Diabetes"
+}
+or
+{
+"PatNum": 74,
+"DiseaseDefName": "Severe Back Pain",
+"PatNote": "Patient underwent corrective surgery 04/11/2019",
+"ProbStatus": "Resolved",
+"DateStart": "2016-01-01",
+"DateStop": "2019-04-30"
+}
+
+Example Response:
+{
+"DiseaseNum": 15,
+"PatNum": 74,
+"DiseaseDefNum": 28
+"diseaseDefName": "Severe Back Pain",
+"PatNote": "Patient underwent corrective surgery 04/11/2019",
+"ProbStatus": "Resolved",
+"DateStart": "2016-01-01",
+"DateStop": "2019-04-30"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Diseases PUT
+Version Added: 22.1
+
+Updates a disease (Problem) for a patient.
+
+DiseaseNum: Required in the URL.
+
+DateStart: Optional. String in "yyyy-MM-dd" format.
+DateStop: Optional. String in "yyyy-MM-dd" format.
+ProbStatus: Optional. Either "Active", "Resolved" or "Inactive".
+PatNote: Optional. Will overwrite existing note.
+
+Example Request:
+PUT /diseases/8
+
+{
+"ProbStatus": "Resolved",
+"DateStart": "2020-10-01",
+"DateStop": "2022-05-25"
+}
+
+Example Response:
+{
+"DiseaseNum": 8,
+"PatNum": 26,
+"DiseaseDefNum": 14
+"diseaseDefName": "Asthma",
+"PatNote": "",
+"ProbStatus": "Resolved",
+"DateStart": "2020-10-01",
+"DateStop": "2022-05-25"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Diseases DELETE
+Version Added: 22.1
+
+Deletes a disease (Problem) for a patient.
+
+DiseaseNum: Required in the URL.
+
+Example Request:
+DELETE /diseases/8
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

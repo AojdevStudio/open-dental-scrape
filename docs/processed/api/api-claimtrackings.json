@@ -1,0 +1,77 @@
+{
+  "id": "api-claimtrackings",
+  "type": "api",
+  "title": "ClaimTrackings",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API ClaimTrackings.txt",
+  "content": "API ClaimTrackings\nSee API Specification\n\nClaimTrackings GET\nVersion Added: 23.2.5\n\nGets a list of ClaimTrackings.\n\nClaimNum: Optional. FK to claim.ClaimNum.\n\nExample Requests:\nGET /claimtrackings\nGET /claimtrackings?ClaimNum=25\n\nExample Response:\n[\n{\n\"ClaimTrackingNum\": 45,\n\"ClaimNum\": 19,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 1,\n\"DateTimeEntry\": \"2023-07-20 14:05:45\",\n\"Note\": \"\",\n\"TrackingDefNum\": 345,\n\"TrackingErrorDefNum\": 343\n},\n{\n\"ClaimTrackingNum\": 46,\n\"ClaimNum\": 3,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 1,\n\"DateTimeEntry\": \"2023-07-20 13:23:20\",\n\"Note\": \"\",\n\"TrackingDefNum\": 341,\n\"TrackingErrorDefNum\": 0\n},\n{\n\"ClaimTrackingNum\": 34,\n\"ClaimNum\": 1,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 1,\n\"DateTimeEntry\": \"2023-07-20 13:22:19\",\n\"Note\": \"\",\n\"TrackingDefNum\": 0,\n\"TrackingErrorDefNum\": 0\n},\netc...\n]\n\n200 OK\n404 NotFound (Claim not found)\n\nClaimTrackings POST (create)\nVersion Added: 23.2.5\n\nCreates a new ClaimTracking. Requires one-time setup by the Dental Office, see Edit Claim - Status History Tab.\n\nClaimNum: Required. FK to claim.ClaimNum.\nNote: Optional. Default empty string.\nTrackingDefNum: Required and cannot be 0 if the ClaimTrackingStatusExcludesNone preference is enabled. If not enabled, TrackingDefNum is optional and defaults to 0 (None). Definition.DefNum where definition.Category=31.\nTrackingErrorDefNum: Optional. Definition.DefNum where definition.Category=43. Default 0.\n\nExample Request:\nPOST /claimtrackings\n\n{\n\"ClaimNum\": 15,\n\"Note\": \"Missing attachment.\",\n\"TrackingDefNum\": 339,\n\"TrackingErrorDefNum\": 340\n}\n\nExample Response:\n{\n\"ClaimTrackingNum\": 52,\n\"ClaimNum\": 15,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 0,\n\"DateTimeEntry\": \"2023-07-26 09:47:10\",\n\"Note\": \"Missing attachment.\",\n\"TrackingDefNum\": 339,\n\"TrackingErrorDefNum\": 340\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nClaimTrackings PUT (update)\nVersion Added: 23.2.5\n\nUpdates an existing ClaimTracking.\n\nClaimTrackingNum: Required in the URL. Primary key.\nNote: Optional. Overwrites existing note.\nTrackingDefNum: Optional. Definition.DefNum where definition.Category=31. Cannot be 0 if the ClaimTrackingStatusExcludesNone preference is enabled. Use 0 to indicate None.\nTrackingErrorDefNum: Optional. Definition.DefNum where definition.Category=43. Use 0 to indicate None.\n\nExample Request:\nPUT /claimtrackings/52\n\n{\n\"Note\": \"Attachments sent.\",\n\"TrackingDefNum\": 341,\n\"TrackingErrorDefNum\": 0\n}\n\nExample Responses:\n{\n\"ClaimTrackingNum\": 52,\n\"ClaimNum\": 15,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 0,\n\"DateTimeEntry\": \"2023-07-26 10:00:54\",\n\"Note\": \"Attachments sent.\",\n\"TrackingDefNum\": 341,\n\"TrackingErrorDefNum\": 0\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "23.2.5",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "ClaimTrackings",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "ClaimTrackings",
+      "method": "GET",
+      "path": "/claimtrackings",
+      "versionAdded": "23.2.5",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /claimtrackings\nGET /claimtrackings?ClaimNum=25",
+          "response": "[\n{\n\"ClaimTrackingNum\": 45,\n\"ClaimNum\": 19,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 1,\n\"DateTimeEntry\": \"2023-07-20 14:05:45\",\n\"Note\": \"\",\n\"TrackingDefNum\": 345,\n\"TrackingErrorDefNum\": 343\n},\n{\n\"ClaimTrackingNum\": 46,\n\"ClaimNum\": 3,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 1,\n\"DateTimeEntry\": \"2023-07-20 13:23:20\",\n\"Note\": \"\",\n\"TrackingDefNum\": 341,\n\"TrackingErrorDefNum\": 0\n},\n{\n\"ClaimTrackingNum\": 34,\n\"ClaimNum\": 1,\n\"TrackingType\": \"StatusHistory\",\n\"UserNum\": 1,\n\"DateTimeEntry\": \"2023-07-20 13:22:19\",\n\"Note\": \"\",\n\"TrackingDefNum\": 0,\n\"TrackingErrorDefNum\": 0\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "Claim not found"
+        }
+      ],
+      "description": "Gets a list of ClaimTrackings."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-claim",
+      "description": "API references database table claim"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-definition",
+      "description": "API references database table definition"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-claimtracking",
+      "description": "API references database table claimtracking"
+    }
+  ]
+}

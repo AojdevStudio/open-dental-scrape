@@ -1,0 +1,96 @@
+{
+  "id": "api-patientnotes",
+  "type": "api",
+  "title": "PatientNotes",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API PatientNotes.txt",
+  "content": "API PatientNotes\nSee API Specification\n\nPatientNotes GET\nVersion Added: 21.2\n\nPatientNotes have a 1:1 relationship to Patients and contain additional information about the patient. The PatNum must be included in the URL.\n\nExample Request:\nGET /patientnotes/15\n\nExample Response:\n{\n\"Medical\": \"Diabetes.\",\n\"ICEName\": \"Carolyn Wright\",\n\"ICEPhone\": \"(820) 202-1134\",\n\"Service\": \"No flo\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nPatientNotes PUT\nVersion Added: 21.2\n\nInclude the PatNum in the URL. All JSON fields are optional. If you want to append a note instead of replace, then use PatientNotes GET, and do your own concatenation before calling PUT.\n\nMedical: Replace existing medical history note.\nICEName: Replaces existing ICEName.\nICEPhone: String. Replaces existing ICEPhone.\nService (added in version 21.4): String. Replaces existing service note.\n\nExample Requests:\nPUT /patientnotes/15\n\n{\n\"Medical\": \"Unknown family history.\"\n}\n\nor\n\n{\n\"ICEName\": \"Herbert Grayson\",\n\"ICEPhone\": \"(134) 721-1321\"\n}\n\nExample Response:\n{\n\"Medical\": \"Diabetes.\",\n\"ICEName\": \"Carolyn Wright\",\n\"ICEPhone\": \"(820) 202-1134\",\n\"Service\": \"No flo\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "21.2",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "PatientNotes",
+      "GET",
+      "PUT",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "PatientNotes",
+      "method": "GET",
+      "path": "/patientnotes",
+      "versionAdded": "21.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /patientnotes/15",
+          "response": "{\n\"Medical\": \"Diabetes.\",\n\"ICEName\": \"Carolyn Wright\",\n\"ICEPhone\": \"(820) 202-1134\",\n\"Service\": \"No flo\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "PatientNotes have a 1:1 relationship to Patients and contain additional information about the patient. The PatNum must be included in the URL."
+    },
+    {
+      "resource": "PatientNotes",
+      "method": "PUT",
+      "path": "/patientnotes",
+      "versionAdded": "21.2",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /patientnotes/15\n\n{\n\"Medical\": \"Unknown family history.\"\n}\n\nor\n\n{\n\"ICEName\": \"Herbert Grayson\",\n\"ICEPhone\": \"(134) 721-1321\"\n}",
+          "response": "{\n\"Medical\": \"Diabetes.\",\n\"ICEName\": \"Carolyn Wright\",\n\"ICEPhone\": \"(820) 202-1134\",\n\"Service\": \"No flo\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Include the PatNum in the URL. All JSON fields are optional. If you want to append a note instead of replace, then use PatientNotes GET, and do your own concatenation before calling PUT."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-patientnote",
+      "description": "API references database table patientnote"
+    }
+  ]
+}

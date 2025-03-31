@@ -1,0 +1,111 @@
+API SubstitutionLinks
+See API Specification
+
+See Estimate Downgrades for additional information.
+
+SubstitutionLinks GET
+Version Added: 22.4.25
+
+Gets a list of substitution links for a given insurance plan.
+
+PlanNum: FK to InsPlan.planNum.
+
+Example Request:
+GET /substitutionlinks?PlanNum=33
+
+Example Response:
+
+[
+{
+"SubstiutionLinkNum": 13,
+"PlanNum": 33,
+"CodeNum": 6,
+"SubstitutionCode": "D3002",
+"SubstOnlyIf": "Always"
+},
+etc...
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+SubstitutionLinks POST (create)
+Version Added: 22.4.1
+
+Creates a new SubstitutionLink. These links are created for a single insurance plan and will overwrite the ProcedureCode on a procedure with the SubstitutionCode. This replacement is based upon the SubstOnlyIf condition.
+
+PlanNum: Required. FK to InsPlan.PlanNum.
+CodeNum: Required. FK to ProcedureCode.CodeNum.
+SubstitutionCode: Required. FK to ProcedureCode.ProcCode. Case-sensitive.
+SubstOnlyIf: Required. Either "Always", "Molar", "SecondMolar", "Never", or "Posterior".
+
+Example Request:
+POST /substitutionlinks
+
+{
+"PlanNum": 34,
+"CodeNum": 6,
+"SubstitutionCode": "D3002",
+"SubstOnlyIf": "Molar"
+}
+
+Example Response:
+
+{
+"SubstitutionLinkNum": 16,
+"PlanNum": 34,
+"CodeNum": 6,
+"SubstitutionCode": "D3002",
+"SubstOnlyIf": "Molar"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+SubstitutionLinks PUT (update)
+Version Added: 22.4.25
+
+Updates a substitution link.
+
+SubstitutionLinkNum: Required in the URL.
+
+SubstitutionCode: Optional. FK to ProcedureCode.ProcCode. Case-sensitive.
+SubstOnlyIf: Optional. Either "Always", "Molar", "SecondMolar", "Never", or "Posterior".
+Example Request:
+PUT /substitutionlinks/34
+
+{
+"SubstitutionCode": "D3004",
+"SubstOnlyIf": "SecondMolar"
+}
+
+Example Response:
+
+{
+"SubstitutionLinkNum": 34,
+"PlanNum": 14,
+"CodeNum": 6,
+"SubstitutionCode": "D3004",
+"SubstOnlyIf": "SecondMolar"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+SubstitutionLinks DELETE
+Version Added: 22.4.25
+
+Deletes an existing substitution link by SubstitutionLinkNum.
+
+SubsitutionLinkNum: Required in URL.
+
+Example Request:
+DELETE /substitutionlinks/25
+
+Example Response:
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

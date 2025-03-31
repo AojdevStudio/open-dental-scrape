@@ -1,0 +1,62 @@
+{
+  "id": "api-codegroups",
+  "type": "api",
+  "title": "CodeGroups",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API CodeGroups.txt",
+  "content": "API CodeGroups\nSee API Specification\n\nA codegroup is used in Benefit Frequencies. For more information, see Code Groups and Frequency Limitations.\n\nCodeGroups GET\nVersion Added: 23.2.62\n\nGets a list of codegroups.\n\nExample Request:\nGET /codegroups\n\nExample Response:\n[\n{\n\"CodeGroupNum\": 1,\n\"GroupName\": \"Fluoride\",\n\"ProcCodes\": \"D1206\",\n\"ItemOrder\": 0,\n\"CodeGroupFixed\": \"Fluoride\",\n\"IsHidden\": \"false\",\n\"ShowInAgeLimit\": \"true\"\n},\n{\n\"CodeGroupNum\": 2,\n\"GroupName\": \"Sealant\",\n\"ProcCodes\": \"D1351\",\n\"ItemOrder\": 1,\n\"CodeGroupFixed\": \"Sealant\",\n\"IsHidden\": \"false\",\n\"ShowInAgeLimit\": \"true\"\n},\netc...\n]\n\n200 OK\n\nCodeGroups POST (create)\nVersion Added: 24.1.29\n\nCreates a codegroup.\n\nGroupName: Required. Name of the codegroup.\nProcCodes: Optional. Comma delimited list of procedure codes.\nCodeGroupFixed: Optional. Either \"None\", \"BW\", \"PanoFMX\", \"Exam\", \"Perio\", \"Prophy\", \"SRP\", \"FMDebride\", \"Fluoride\", or \"Sealant\". Default \"None\".\nIsHidden: Optional. Either \"true\" or \"false\". If true, this codegroup will be hidden from the Frequency Limitations grid. Default \"false\".\nShowInAgeLimit: Optional. Either \"true\" or \"false\". If true, this codegroup will show in Age Limitations grid. Default \"false\".\n\nExample Request:\nPOST /codegroups\n\n{\n\"GroupName\": \"Perio Maintenance\",\n\"ProcCodes\": \"D4910\",\n\"CodeGroupFixed\": \"Perio\",\n\"IsHidden\": \"false\",\n\"ShowInAgeLimit\": \"true\"\n}\n\nExample Response:\n{\n\"CodeGroupNum\": 23,\n\"GroupName\": \"Perio Maintenance\",\n\"ProcCodes\": \"D4910\",\n\"ItemOrder\": 1,\n\"CodeGroupFixed\": \"Perio\",\n\"IsHidden\": \"false\",\n\"ShowInAgeLimit\": \"true\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n\nCodeGroups PUT (update)\nVersion Added: 24.1.29\n\nUpdates a codegroup.\n\nCodeGroupNum: Required in the URL.\n\nGroupName: Name of the codegroup.\nProcCodes: Comma delimited list of procedure codes. Overwrites existing value.\nCodeGroupFixed: Either \"None\", \"BW\", \"PanoFMX\", \"Exam\", \"Perio\", \"Prophy\", \"SRP\", \"FMDebride\", \"Fluoride\", or \"Sealant\".\nIsHidden: Either \"true\" or \"false\". If true, this codegroup will be hidden from the Frequency Limitations grid.\nShowInAgeLimit: Either \"true\" or \"false\". If true, this codegroup will show in Age Limitations grid.\n\nExample Request:\nPUT /codegroups/23\n\n{\n\"IsHidden\": \"true\",\n\"ShowInAgeLimit\": \"false\"\n}\n\nExample Response:\n{\n\"CodeGroupNum\": 23,\n\"GroupName\": \"Perio Maintenance\",\n\"ProcCodes\": \"D4910\",\n\"ItemOrder\": 9,\n\"CodeGroupFixed\": \"Perio\",\n\"IsHidden\": \"true\",\n\"ShowInAgeLimit\": \"false\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.1.29",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "CodeGroups",
+      "GET",
+      "POST",
+      "PUT",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "CodeGroups",
+      "method": "GET",
+      "path": "/codegroups",
+      "versionAdded": "23.2.62",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /codegroups",
+          "response": "[\n{\n\"CodeGroupNum\": 1,\n\"GroupName\": \"Fluoride\",\n\"ProcCodes\": \"D1206\",\n\"ItemOrder\": 0,\n\"CodeGroupFixed\": \"Fluoride\",\n\"IsHidden\": \"false\",\n\"ShowInAgeLimit\": \"true\"\n},\n{\n\"CodeGroupNum\": 2,\n\"GroupName\": \"Sealant\",\n\"ProcCodes\": \"D1351\",\n\"ItemOrder\": 1,\n\"CodeGroupFixed\": \"Sealant\",\n\"IsHidden\": \"false\",\n\"ShowInAgeLimit\": \"true\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of codegroups."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-codegroup",
+      "description": "API references database table codegroup"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-benefit",
+      "description": "API references database table benefit"
+    }
+  ]
+}

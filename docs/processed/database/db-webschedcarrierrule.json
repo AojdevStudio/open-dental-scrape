@@ -1,0 +1,40 @@
+{
+  "id": "db-webschedcarrierrule",
+  "type": "database",
+  "title": "webschedcarrierrule",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "webschedcarrierrule",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "webschedcarrierrule",
+    "description": "Table for webschedcarrierrule data.",
+    "columns": [
+      {
+        "name": "webschedcarrierruleNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "webschedcarrierruleNum"
+    ],
+    "indexes": []
+  },
+  "relationships": []
+}

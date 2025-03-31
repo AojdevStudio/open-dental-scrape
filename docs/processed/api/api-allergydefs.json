@@ -1,0 +1,99 @@
+{
+  "id": "api-allergydefs",
+  "type": "api",
+  "title": "Allergydefs",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Allergydefs.txt",
+  "content": "API AllergyDefs\nSee API Specification\n\nAllergyDefs GET\nVersion Added: 21.3\n\nGets a list of all allergies that that are assigned to patients.\n\nRarely used. Usually just use Allergies GET and POST.\n\nExample Requests:\nGET /allergydefs\nGET /allergydefs?Offset=200\n\nExample Response:\n[\n{\n\"AllergyDefNum\": 44,\n\"Description \": \"Allergy - Phentermine\",\n\"IsHidden\": \"false\",\n\"DateTStamp\": \"2020-07-17 02:45:38\",\n\"SnomedType\": \"\",\n\"MedicationNum\": 0,\n\"UniiCode\": \"\",\n},\n{\n\"AllergyDefNum\": 45,\n\"Description \": \"Allergy - Sudogest\",\n\"IsHidden\": \"false\",\n\"DateTStamp\": \"2015-12-10 05:40:32\",\n\"SnomedType\": \"\",\n\"MedicationNum\": 0,\n\"UniiCode\": \"\",\n},\netc...\n]\n\nAllergyDefs POST\nVersion Added: 21.3\n\nInserts a single AllergyDef using a unique Description.\n\nRarely used. Usually just use Allergies GET and POST.\n\nExample Request:\nPOST /allergydefs\n\n{\n\"Description\": \"Tylenol\"\n}\n\nExample Response:\n201 Created\n400 BadRequest \"Description is required\" or \"An AllergyDef with that name already exists\".",
+  "metadata": {
+    "version": "21.3",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Allergydefs",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "AllergyDefs",
+      "method": "GET",
+      "path": "/allergydefs",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /allergydefs\nGET /allergydefs?Offset=200",
+          "response": "[\n{\n\"AllergyDefNum\": 44,\n\"Description \": \"Allergy - Phentermine\",\n\"IsHidden\": \"false\",\n\"DateTStamp\": \"2020-07-17 02:45:38\",\n\"SnomedType\": \"\",\n\"MedicationNum\": 0,\n\"UniiCode\": \"\",\n},\n{\n\"AllergyDefNum\": 45,\n\"Description \": \"Allergy - Sudogest\",\n\"IsHidden\": \"false\",\n\"DateTStamp\": \"2015-12-10 05:40:32\",\n\"SnomedType\": \"\",\n\"MedicationNum\": 0,\n\"UniiCode\": \"\",\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "Example",
+          "description": ""
+        }
+      ],
+      "description": "Gets a list of all allergies that that are assigned to patients."
+    },
+    {
+      "resource": "AllergyDefs",
+      "method": "POST",
+      "path": "/allergydefs",
+      "versionAdded": "21.3",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /allergydefs\n\n{\n\"Description\": \"Tylenol\"\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": ""
+        }
+      ],
+      "description": "Inserts a single AllergyDef using a unique Description."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-allergydef",
+      "description": "API references database table allergydef"
+    },
+    {
+      "type": "references",
+      "target": "db-medication",
+      "description": "API references database table medication"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-snomed",
+      "description": "API references database table snomed"
+    },
+    {
+      "type": "references",
+      "target": "db-allergy",
+      "description": "API references database table allergy"
+    }
+  ]
+}

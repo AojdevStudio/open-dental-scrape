@@ -1,0 +1,175 @@
+{
+  "id": "api-subscriptions",
+  "type": "api",
+  "title": "Subscriptions",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Subscriptions.txt",
+  "content": "API Subscriptions\nSee API Specification\n\nSubscriptions allow you to receive API Events about database changes or UI actions. Each event is a REST style call to an endpoint of your choice.\n\nThere are two ways a Subscription can be processed:\n\nOpenDental.exe running on a workstation can process both UI and Database Events.\nOpenDentalAPIService.exe running on a workstation can only process Database Events (no UI).\nSee API Guide - Subscriptions and Events for more information.\n\nSubscriptions POST\nVersion Added: 22.1\n\nCreates a subscription. Subscriptions are specific to the Customer's API Key specified in the API request header. Each subscription is for either a database event or for a UI event. You may choose to append \"/patientevent\" or \"?type=patientevent\" if you use the same EndPointUrl in multiple subscriptions.\n\nEndPointUrl: Required. This is the URL endpoint to which events will be sent. Examples of endpoints that you might choose include:\n   https://myserver/apievents/\n   http://localhost:2097/\n   http://192.168.1.14:2097/\nWorkstation: Required unless you want all workstations to be firing events. The machine name of the computer that will fire events. Only leave this blank if your endpoint is localhost. If you don't specify a workstation for the other scenarios, your endpoint will get duplicate event from all machines running OpenDental.exe and/or OpenDentalAPIService.exe, which is very undesirable.\nPollingSeconds: Required for Database Events. Frequency of database polling, in seconds.\nWatchTable: Required for Database Events. The name of the database table to monitor. List of types is in API Events. Example: \"Patient\".\nUiEventType: Required for UI Events. List of types is in API Events. Example: \"PatientSelected\".\nDateTimeStart: Optional. When this Subscription will start monitoring the database table for changes. Default Now. This database column gets changed each time events are fired, as described in API Events.\nDateTimeStop: Optional. When this Subscription will expire. Default 01-01-0001 to represent no expiration.\nNote: Optional.\n\nExample Requests:\nPOST /subscriptions\n{\n\"EndPointUrl\": \"https://myserver/apievents/\",\n\"Workstation\": \"MOLLYR\",\n\"WatchTable\": \"Appointment\",\n\"PollingSeconds\": 5,\n\"DateTimeStart\": \"2022-01-31\"\n}\n\nor\n\n{\n\"EndPointUrl\": \"http://localhost:2097/\",\n\"UiEventType\": \"PatientSelected\"\n}\n\nExample Response:\n{\n\"SubscriptionNum\": 14,\n\"EndPointUrl\": \"https://myserver/apievents/\",\n\"Workstation\": \"MOLLYR\",\n\"CustomerKey\": \"VzkmZEaUWOjnQX2z\",\n\"WatchTable\": \"Appointment\",\n\"PollingSeconds\": 5,\n\"UiEventType\": \"\",\n\"DateTimeStart\": \"2022-01-31 00:00:00\",\n\"DateTimeStop\": \"0001-01-01 00:00:00\",\n\"Note\": \"\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound\n\nSubscriptions GET\nVersion Added: 22.1\n\nGets a list of all subscriptions for the Customer's API Key specified in the API request header.\n\nExample Request:\nGET /subscriptions\n\nExample Response:\n[\n{\n\"SubscriptionNum\": 14,\n\"EndPointUrl\": \"https://myserver/apievents/\",\n\"Workstation\": \"MOLLYR\",\n\"CustomerKey\": \"VzkmZEaUWOjnQX2z\",\n\"WatchTable\": \"Appointment\",\n\"PollingSeconds\": 5,\n\"UiEventType\": \"\",\n\"DateTimeStart\": \"2022-01-31 00:00:00\",\n\"DateTimeStop\": \"0001-01-01 00:00:00\",\n\"Note\": \"\"\n},\n{\n\"SubscriptionNum\": 18,\n\"EndPointUrl\": \"http://localhost:2097/\",\n\"Workstation\": \"\",\n\"CustomerKey\": \"VzkmZEaUWOjnQX2z\",\n\"WatchTable\": \"\",\n\"PollingSeconds\": 0,\n\"UiEventType\": \"PatientSelected\",\n\"DateTimeStart\": \"2022-02-02 08:12:15\",\n\"DateTimeStop\": \"0001-01-01 00:00:00\",\n\"Note\": \"\"\n},\netc...\n]\n\nSubscriptions PUT\nVersion Added: 22.1\n\nUpdates an existing Subscription.\n\nSubscriptionNum: Required in the URL.\nEndPointUrl: This is the URL endpoint to which events will be sent.\nWorkstation: The machine name of the computer that will fire events. Blank if you want all machines to fire events.\nPollingSeconds: Frequency of database polling, in seconds. Can only be set for WatchTable subscriptions.\nDateTimeStart: When the subscription started. This gets updated each time database is polled so that it represents the start of the date range for the next polling.\nDateTimeStop: When the subscription will expire.\nNote: Optional.\n\nExample Request:\nPUT /subscriptions/14\n\n{\n\"PollingSeconds\": 30,\n\"Note\": \"Decreased polling rate.\"\n}\n\nor\n\n{\n\"EndPointUrl\": \"https://myserver2/apievents/\",\n\"Workstation\": \"BETTYC\",\n\"DateTimeStop\": \"2022-12-31\",\n}\n\nExample Response:\n200 OK\n400 BadRequest (Invalid fields)\n404 NotFound (Subscription not found)\n\nSubscriptions DELETE\nVersion Added: 22.1\n\nDeletes a Subscription.\n\nSubscriptionNum: Required in the URL.\n\nExample Request:\nDELETE /subscriptions/14\n\nExample Response:\n200 OK\n400 BadRequest (Invalid fields)\n404 NotFound (SubscriptionNum not found)",
+  "metadata": {
+    "version": "22.1",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Subscriptions",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "Subscriptions",
+      "method": "POST",
+      "path": "/subscriptions",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /subscriptions\n{\n\"EndPointUrl\": \"https://myserver/apievents/\",\n\"Workstation\": \"MOLLYR\",\n\"WatchTable\": \"Appointment\",\n\"PollingSeconds\": 5,\n\"DateTimeStart\": \"2022-01-31\"\n}\n\nor\n\n{\n\"EndPointUrl\": \"http://localhost:2097/\",\n\"UiEventType\": \"PatientSelected\"\n}",
+          "response": "{\n\"SubscriptionNum\": 14,\n\"EndPointUrl\": \"https://myserver/apievents/\",\n\"Workstation\": \"MOLLYR\",\n\"CustomerKey\": \"VzkmZEaUWOjnQX2z\",\n\"WatchTable\": \"Appointment\",\n\"PollingSeconds\": 5,\n\"UiEventType\": \"\",\n\"DateTimeStart\": \"2022-01-31 00:00:00\",\n\"DateTimeStop\": \"0001-01-01 00:00:00\",\n\"Note\": \"\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "001",
+          "status": "to",
+          "description": ""
+        },
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": ""
+        }
+      ],
+      "description": "Creates a subscription. Subscriptions are specific to the Customer's API Key specified in the API request header. Each subscription is for either a database event or for a UI event. You may choose to append \"/patientevent\" or \"?type=patientevent\" if you use the same EndPointUrl in multiple subscriptions."
+    },
+    {
+      "resource": "Subscriptions",
+      "method": "GET",
+      "path": "/subscriptions",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /subscriptions",
+          "response": "[\n{\n\"SubscriptionNum\": 14,\n\"EndPointUrl\": \"https://myserver/apievents/\",\n\"Workstation\": \"MOLLYR\",\n\"CustomerKey\": \"VzkmZEaUWOjnQX2z\",\n\"WatchTable\": \"Appointment\",\n\"PollingSeconds\": 5,\n\"UiEventType\": \"\",\n\"DateTimeStart\": \"2022-01-31 00:00:00\",\n\"DateTimeStop\": \"0001-01-01 00:00:00\",\n\"Note\": \"\"\n},\n{\n\"SubscriptionNum\": 18,\n\"EndPointUrl\": \"http://localhost:2097/\",\n\"Workstation\": \"\",\n\"CustomerKey\": \"VzkmZEaUWOjnQX2z\",\n\"WatchTable\": \"\",\n\"PollingSeconds\": 0,\n\"UiEventType\": \"PatientSelected\",\n\"DateTimeStart\": \"2022-02-02 08:12:15\",\n\"DateTimeStop\": \"0001-01-01 00:00:00\",\n\"Note\": \"\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [],
+      "description": "Gets a list of all subscriptions for the Customer's API Key specified in the API request header."
+    },
+    {
+      "resource": "Subscriptions",
+      "method": "PUT",
+      "path": "/subscriptions",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "PUT /subscriptions/14\n\n{\n\"PollingSeconds\": 30,\n\"Note\": \"Decreased polling rate.\"\n}\n\nor\n\n{\n\"EndPointUrl\": \"https://myserver2/apievents/\",\n\"Workstation\": \"BETTYC\",\n\"DateTimeStop\": \"2022-12-31\",\n}",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "Subscription not found"
+        }
+      ],
+      "description": "Updates an existing Subscription."
+    },
+    {
+      "resource": "Subscriptions",
+      "method": "DELETE",
+      "path": "/subscriptions",
+      "versionAdded": "22.1",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /subscriptions/14",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "Invalid fields"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "SubscriptionNum not found"
+        }
+      ],
+      "description": "Deletes a Subscription."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-for",
+      "description": "References database table for"
+    },
+    {
+      "type": "references",
+      "target": "db-to",
+      "description": "References database table to"
+    },
+    {
+      "type": "references",
+      "target": "db-subscriptions",
+      "description": "References database table subscriptions"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-computer",
+      "description": "API references database table computer"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    }
+  ]
+}

@@ -1,0 +1,309 @@
+API ProcedureCodes
+See API Specification
+
+ProcedureCodes GET (single)
+Version Added: 23.3.25
+
+Gets a single ProcedureCode.
+
+Example Request:
+GET /procedurecodes/35
+
+Example Response:
+{
+"CodeNum": 35,
+"ProcCode": "D0120",
+"Descript": "periodic oral evaluation - established patient",
+"AbbrDesc": "PerEx",
+"ProcTime": "/X/",
+"ProcCat": 73,
+"procCat": "Exams & Xrays",
+"TreatArea": "Mouth",
+"NoBillIns": "false",
+"IsProsth": "false",
+"DefaultNote": "",
+"IsHygiene": "false",
+"AlternateCode1": "",
+"MedicalCode": "",
+"IsTaxed": "false",
+"PaintType": "None",
+"LaymanTerm": "",
+"IsCanadianLab": "false",
+"BaseUnits": 0,
+"SubstitutionCode": "",
+"SubstOnlyIf": "Always",
+"DateTStamp": "2023-12-12 09:15:11",
+"DrugNDC": "",
+"RevenueCodeDefault": "",
+"ProvNumDefault": 0,
+"CanadaTimeUnits": 0.0,
+"IsRadiology": "false",
+"DefaultClaimNote": "",
+"DefaultTPNote": "",
+"PaintText": "",
+"AreaAlsoToothRange": "false",
+"DiagnosticCodes": ""
+}
+
+200 OK
+404 NotFound
+
+ProcedureCodes GET (multiple)
+Version Added: 22.3.22
+
+Gets a list of ProcedureCodes.
+
+DateTStamp: (Added in version 22.4.28) Optional. String in "yyyy-MM-dd HH:mm:ss" format. Get ProcedureCodes altered on and after the specified date and time.
+
+Example Requests:
+GET /procedurecodes
+GET /procedurecodes?DateTStamp=2021-11-07%2014%3A00%3A00
+
+Example Response:
+[
+{
+"CodeNum": 35,
+"ProcCode": "D0120",
+"Descript": "periodic oral evaluation - established patient",
+"AbbrDesc": "PerEx",
+"ProcTime": "/X/",
+"ProcCat": 73,
+"procCat": "Exams & Xrays",
+"TreatArea": "Mouth",
+"NoBillIns": "false",
+"IsProsth": "false",
+"DefaultNote": "",
+"IsHygiene": "false",
+"AlternateCode1": "",
+"MedicalCode": "",
+"IsTaxed": "false",
+"PaintType": "None",
+"LaymanTerm": "",
+"IsCanadianLab": "false",
+"BaseUnits": 0,
+"SubstitutionCode": "",
+"SubstOnlyIf": "Always",
+"DateTStamp": "2023-12-12 09:15:11",
+"DrugNDC": "",
+"RevenueCodeDefault": "",
+"ProvNumDefault": 0,
+"CanadaTimeUnits": 0.0,
+"IsRadiology": "false",
+"DefaultClaimNote": "",
+"DefaultTPNote": "",
+"PaintText": "",
+"AreaAlsoToothRange": "false",
+"DiagnosticCodes": ""
+},
+{
+"CodeNum": 36,
+"ProcCode": "D0140",
+"Descript": "limited oral evaluation - problem focused",
+"AbbrDesc": "LimEx",
+"ProcTime": "/X/",
+"ProcCat": 73,
+"procCat": "Exams & Xrays",
+"TreatArea": "Mouth",
+"NoBillIns": "false",
+"IsProsth": "false",
+"DefaultNote": "",
+"IsHygiene": "false",
+"AlternateCode1": "",
+"MedicalCode": "",
+"IsTaxed": "false",
+"PaintType": "None",
+"LaymanTerm": "",
+"IsCanadianLab": "false",
+"BaseUnits": 0,
+"SubstitutionCode": "",
+"SubstOnlyIf": "Always",
+"DateTStamp": "2018-07-18 08:59:14",
+"DrugNDC": "",
+"RevenueCodeDefault": "",
+"ProvNumDefault": 0,
+"CanadaTimeUnits": 1.0,
+"IsRadiology": "false",
+"DefaultClaimNote": "",
+"DefaultTPNote": "",
+"PaintText": "",
+"AreaAlsoToothRange": "false",
+"DiagnosticCodes": ""
+},
+etc...
+]
+
+200 OK
+400 BadRequest
+
+ProcedureCodes POST (create)
+Version Added: 22.3
+
+Creates a new ProcedureCode. For more information, see Procedure Code.
+
+ProcCode: Required. Dental code.
+Descript: Required. The main description of the procedure.
+AbbrDesc: Required. Abbreviated description.
+ProcCat: This or procCat is required. FK to definition.DefNum where definition.Category=11.
+procCat: This or ProcCat is required. The string version of the definition.ItemName.
+
+ProcTime: Optional. Time pattern in increments defined by the AppointmentTimeIncrement preference. A string consisting of 'X' and '/' characters only. Default "/X/".
+TreatArea: (Added in version 22.4.34) Optional. Either "None", "Surf", "Tooth", "Mouth", "Quad", "Sextant", "Arch", or "ToothRange". Default is "None".
+NoBillIns: (Added in version 23.2.10) Optional. Either "true" or "false". Default "false".
+IsProsth: (Added in version 23.3.25) Optional. Either "true" or "false". Default "false".
+DefaultNote: Optional. The default note for this procedure that will be copied to a ProcNote when marking complete.
+IsHygiene: Optional. Either "true" or "false". Default "false".
+AlternateCode1: (Added in version 23.3.25) Optional. For Medicaid.
+MedicalCode: Optional. FK to procedurecode.ProcCode. The medical code that is being referenced must be set up first. Anytime a procedure is added, this medical code will also be added to that procedure.
+IsTaxed: (Added in version 23.3.25) Optional. If true, uses PrefName.SalesTaxDefaultProvider to apply a sales tax adjustment to procedurelog. Either "true" or "false". Default "false".
+PaintType: (Added in version 23.3.25) Optional. Either "None", "Extraction", "Implant", "RCT", "PostBU", "FillingDark", "FillingLight", "CrownDark", "CrownLight", "BridgeDark", "BridgeLight", "DentureDark", "DentureLight", "Sealant", "Veneer", "Text", "RetainedRoot", or "SpaceMaintainer". Default is "None".
+LaymanTerm: Optional. When creating treatment plans, this description will be used instead of Descript.
+IsCanadianLab: (Added in version 23.3.25) Optional. True if procedure code is used as an adjunct to track the lab fee. Either "true" or "false". Default "false".
+BaseUnits: (Added in version 23.3.25) Optional. Base units for a code. Cannot be negative. Normally 0.
+SubstitutionCode: (Added in version 22.4.9) Optional. FK to procedurecode.ProcCode. Used to create a substitution code at the procedure level. Case sensitive.
+SubstOnlyIf: (Added in version 22.4.9) Optional. Either "Always", "Molar", "SecondMolar", "Never", or "Posterior". Only used if SubstitutionCode is set. Default is "Always".
+DrugNDC: (Added in version 23.3.25) Optional. National Drug Code number. 11 digits or blank.
+RevenueCodeDefault: (Added in version 23.3.25) Optional. A 3-digit code sometimes used for institutional claims.
+ProvNumDefault: Optional. FK to provider.ProvNum. 0 for none. Otherwise, this provider will override other providers.
+CanadaTimeUnits: Optional. Tracks scaling insurance and periodontal scaling units for patients depending on coverage.
+IsRadiology: (Added in version 23.3.25) Optional. Either "true" or "false". Default "false".
+DefaultClaimNote: (Added in version 23.3.25) Optional. Default note appended to claim.ClaimNote when a claim is created using this procedure code.
+DefaultTPNote: (Added in version 23.3.25) Optional. Default note appended to a treatment planned procedure.
+PaintText: (Added in version 23.3.24) Optional. The text to draw on the tooth. PaintType must be "Text".
+AreaAlsoToothRange: (Added in version 23.3.25) Optional. TreatArea must be "Quad" or "Arch". Either "true" or "false". Default "false".
+DiagnosticCodes: (Added in version 23.3.25) Optional. Text to store up to 4 ICD-10 codes. Codes are comma-separated with no whitespace.
+
+Example Request:
+POST /procedurecodes
+
+{
+"ProcCode": "G0140",
+"Descript": "limited oral evaluation - problem focused",
+"AbbrDesc": "LimEx",
+"ProcCat": 83,
+"DiagnosticCodes": "B08.09"
+}
+
+Example Response:
+{
+"CodeNum": 617,
+"ProcCode": "G0140",
+"Descript": "limited oral evaluation - problem focused",
+"AbbrDesc": "LimEx",
+"ProcTime": "/X/",
+"ProcCat": 83,
+"procCat": "Ortho",
+"TreatArea": "None",
+"NoBillIns": "false",
+"IsProsth": "false",
+"DefaultNote": "",
+"IsHygiene": "false",
+"AlternateCode1": "",
+"MedicalCode": "",
+"IsTaxed": "false",
+"PaintType": "None",
+"LaymanTerm": "",
+"IsCanadianLab": "false",
+"BaseUnits": 0,
+"SubstitutionCode": "",
+"SubstOnlyIf": "Always",
+"DateTStamp": "2023-12-29 09:19:21",
+"DrugNDC": "",
+"RevenueCodeDefault": "",
+"ProvNumDefault": 0,
+"CanadaTimeUnits": 0.0,
+"IsRadiology": "false",
+"DefaultClaimNote": "",
+"DefaultTPNote": "",
+"PaintText": "",
+"AreaAlsoToothRange": "false",
+"DiagnosticCodes": "B08.09"
+}
+
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+ProcedureCodes PUT (update)
+Version Added: 23.3.25
+
+Updates an existing ProcedureCode. All fields are optional. For more information, see Procedure Code.
+
+CodeNum: Required in URL.
+
+Descript: The main description of the Procedure.
+AbbrDesc: Abbreviated description.
+ProcTime: Time pattern in increments defined by the AppointmentTimeIncrement preference. A string consisting of 'X' and '/' characters only.
+ProcCat: This or procCat. FK to definition.DefNum where definition.Category=11.
+procCat: This or ProcCat. The string version of the definition.ItemName.
+TreatArea: Either "None", "Surf", "Tooth", "Mouth", "Quad", "Sextant", "Arch", or "ToothRange".
+NoBillIns: Either "true" or "false".
+IsProsth: Either "true" or "false".
+DefaultNote: The default note for this procedure that will be copied to a ProcNote when marking complete.
+IsHygiene: Either "true" or "false".
+AlternateCode1: For Medicaid.
+MedicalCode: FK to procedurecode.ProcCode. The medical code that is being referenced must be set up first. Anytime a procedure is added, this medical code will also be added to that procedure.
+IsTaxed: If true, uses PrefName.SalesTaxDefaultProvider to apply a sales tax adjustiment to a procedurelog. Either "true" or "false".
+PaintType: Either "None", "Extraction", "Implant", "RCT", "PostBU", "FillingDark", "FillingLight", "CrownDark", "CrownLight", "BridgeDark", "BridgeLight", "DentureDark", "DentureLight", "Sealant", "Veneer", "Text", "RetainedRoot", or "SpaceMaintainer".
+LaymanTerm: When creating treatment plans, this description will be used instead of the Descript.
+IsCanadianLab: True if procedure code is used as an adjunct to track lab fee. Either "true" or "false".
+BaseUnits: Base units for a code. Cannot be negative. Normally 0.
+SubstitutionCode: FK to procedureCode.ProcCode. Used to create a substitution code at the procedure level. Case sensitive.
+SubstOnlyIf: Either "Always", "Molar", "SecondMolar", "Never", or "Posterior". Only used if SubstitutionCode is set.
+DrugNDC: National Drug Code number. 11 digits or blank.
+RevenueCodeDefault: A 3-digit code sometimes used for institutional claims.
+ProvNumDefault: FK to provider.ProvNum. 0 for none. Otherwise, this provider will override other providers.
+CanadaTimeUnits: Tracks scaling insurance and periodontal scaling units for patients depending on coverage.
+IsRadiology: Either "true" or "false".
+DefaultClaimNote: Default note appended to claim.ClaimNote when a claim is created using this procedure code.
+DefaultTPNote: Default note appended to a treatment planned procedure.
+PaintText: The text to draw on the tooth. PaintType must be "Text".
+AreaAlsoToothRange: TreatArea must be "Quad" or "Arch". Either "true" or "false".
+DiagnosticCodes: Text to store up to 4 ICD-10 codes. Codes are comma-separated with no whitespace.
+
+Example Request:
+PUT /procedurecodes/617
+
+{
+"PaintType": "Text",
+"PaintText": "Watch"
+}
+
+Example Response:
+{
+"CodeNum": 617,
+"ProcCode": "G0140",
+"Descript": "limited oral evaluation - problem focused",
+"AbbrDesc": "LimEx",
+"ProcTime": "/X/",
+"ProcCat": 83,
+"procCat": "Ortho",
+"TreatArea": "None",
+"NoBillIns": "false",
+"IsProsth": "false",
+"DefaultNote": "",
+"IsHygiene": "false",
+"AlternateCode1": "",
+"MedicalCode": "",
+"IsTaxed": "false",
+"PaintType": "Text",
+"LaymanTerm": "",
+"IsCanadianLab": "false",
+"BaseUnits": 0,
+"SubstitutionCode": "",
+"SubstOnlyIf": "Always",
+"DateTStamp": "2023-12-29 09:19:21",
+"DrugNDC": "",
+"RevenueCodeDefault": "",
+"ProvNumDefault": 0,
+"CanadaTimeUnits": 0.0,
+"IsRadiology": "false",
+"DefaultClaimNote": "",
+"DefaultTPNote": "",
+"PaintText": "Watch",
+"AreaAlsoToothRange": "false",
+"DiagnosticCodes": "B08.09"
+}
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

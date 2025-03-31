@@ -1,0 +1,98 @@
+{
+  "id": "api-labcases",
+  "type": "api",
+  "title": "LabCases",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API LabCases.txt",
+  "content": "API LabCases\nSee API Specification\n\nSee Lab Case for more information.\n\nLabCases GET (single)\nVersion Added: 24.2.28\n\nGets a single labcase.\n\nLabCaseNum: Required in URL.\n\nExample Request:\nGET /labcases/1\n\nExample Response:\n{\n\"LabCaseNum\": 1,\n\"PatNum\": 33,\n\"LaboratoryNum\": 1,\n\"AptNum\": 6994,\n\"PlannedAptNum\": 0,\n\"DateTimeDue\": \"0001-01-01 00:00:00\",\n\"DateTimeCreated\": \"0001-01-01 00:00:00\",\n\"DateTimeSent\": \"2000-01-01 00:00:00\",\n\"DateTimeRecd\": \"2000-01-01 00:00:00\",\n\"DateTimeChecked\": \"0001-01-01 00:00:00\",\n\"ProvNum\": 1,\n\"Instructions\": \"\",\n\"LabFee\": 0.0,\n\"DateTStamp\": \"2022-09-30 14:23:12\",\n\"InvoiceNum\": \"\"\n}\n\n200 OK\n404 NotFound (with explanation)\n\nLabCases GET (multiple)\nVersion Added: 24.2.28\n\nGets a list of labcases.\n\nParameters: All optional.\n\nPatNum: FK to patient.PatNum.\nLaboratoryNum: FK to laboratory.LaboratoryNum. The lab that the case gets sent to.\nAptNum: FK to appointment.AptNum.\nPlannedAptNum: FK to appointment.AptNum.\nProvNum : FK to provider.ProvNum.\n\nExample Requests:\nGET /labcases\nGET /labcases?PatNum=1\nGET /labcases?LaboratoryNum=5\nGET /labcases?AptNum=143\nGET /labcases?PlannedAptNum=357\nGET /labcases?AptNum=143&ProvNum=3\n\nExample Responses:\n[\n{\n\"LabCaseNum\": 226,\n\"PatNum\": 33,\n\"LaboratoryNum\": 1,\n\"AptNum\": 143,\n\"PlannedAptNum\": 0,\n\"DateTimeDue\": \"0001-01-01 00:00:00\",\n\"DateTimeCreated\": \"2022-09-30 14:23:12\",\n\"DateTimeSent\": \"2022-10-03 14:24:12\",\n\"DateTimeRecd\": \"2022-10-04 14:24:12\",\n\"DateTimeChecked\": \"2022-10-05 14:24:12\",\n\"ProvNum\": 3,\n\"Instructions\": \"Repair clasps on Max partial\",\n\"LabFee\": 0.0,\n\"DateTStamp\": \"2022-10-05 14:24:12\",\n\"InvoiceNum\": \"\"\n},\n{\n\"LabCaseNum\": 227,\n\"PatNum\": 33,\n\"LaboratoryNum\": 1,\n\"AptNum\": 143,\n\"PlannedAptNum\": 0,\n\"DateTimeDue\": \"0001-01-01 00:00:00\",\n\"DateTimeCreated\": \"2022-09-30 14:24:12\",\n\"DateTimeSent\": \"2022-09-30 14:24:12\",\n\"DateTimeRecd\": \"2022-10-03 14:24:12\",\n\"DateTimeChecked\": \"2022-10-04 14:24:12\",\n\"ProvNum\": 3,\n\"Instructions\": \"\",\n\"LabFee\": 0.0,\n\"DateTStamp\": \"2022-10-04 14:24:12\",\n\"InvoiceNum\": \"\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nLabCases POST (create)\nVersion Added: 24.4.19\n\nCreates a labcase.\n\nPatNum: Required. FK to patient.PatNum.\nLaboratoryNum: Required. FK to laboratory.LaboratoryNum. The lab that the case gets sent to.\nProvNum: Required. FK to provider.ProvNum.\n\nAptNum: Optional. FK to appointment.AptNum where appointment.AptStatus=Scheduled.\nPlannedAptNum: Optional. FK to appointment.AptNum where appointment.AptStatus=Planned.\nDateTimeDue: Optional. The due date that is put on the labslip. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeCreated: Optional. When the labcase was created. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeSent: Optional. The time that the labcase actually went out to the lab. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeRecd: Optional. Date/time received back from the lab. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeChecked: Optional. Date/time that quality was checked. String in \"yyyy-MM-dd HH:mm:ss\" format.\nInstructions: Optional. The text instructions for this labcase.\nLabFee: Optional. This is used for tracking and informational purposes only. The fee is not used in any calculation.\nInvoiceNum: Optional. This is an optional invoice number used for tracking and informational purposes only.\n\nExample Request:\nPOST /labcases\n\n{\n\"PatNum\": 33,\n\"LaboratoryNum\": 1,\n\"AptNum\": 143,\n\"PlannedAptNum\": 0,\n\"DateTimeDue\": \"2022-10-04 14:23:12\",\n\"DateTimeCreated\": \"2022-09-30 14:23:12\",\n\"DateTimeSent\": \"2022-10-03 14:24:12\",\n\"DateTimeRecd\": \"2022-10-04 14:24:12\",\n\"DateTimeChecked\": \"2022-10-05 14:24:12\",\n\"ProvNum\": 3,\n\"Instructions\": \"Repair clasps on Max partial\",\n\"LabFee\": 0.0,\n\"InvoiceNum\": \"\"\n}\n\nExample Response:\n{\n\"LabCaseNum\": 226,\n\"PatNum\": 33,\n\"LaboratoryNum\": 1,\n\"AptNum\": 143,\n\"PlannedAptNum\": 0,\n\"DateTimeDue\": \"2022-10-04 14:23:12\",\n\"DateTimeCreated\": \"2022-09-30 14:23:12\",\n\"DateTimeSent\": \"2022-10-03 14:24:12\",\n\"DateTimeRecd\": \"2022-10-04 14:24:12\",\n\"DateTimeChecked\": \"2022-10-05 14:24:12\",\n\"ProvNum\": 3,\n\"Instructions\": \"Repair clasps on Max partial\",\n\"LabFee\": 0.0,\n\"DateTStamp\": \"2022-10-05 14:24:12\",\n\"InvoiceNum\": \"\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nLabCases PUT (update)\nVersion Added: 24.4.19\n\nUpdates a labcase.\n\nLabCaseNum: Required in the URL.\n\nLaboratoryNum: FK to laboratory.LaboratoryNum. The lab that the case gets sent to.\nAptNum: FK to appointment.AptNum where appointment.AptStatus=Scheduled.\nPlannedAptNum: FK to appointment.AptNum where appointment.AptStatus=Planned.\nDateTimeDue: The due date that is put on the labslip. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeCreated: When the labcase was created. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeSent: The time that the labcase actually went out to the lab. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeRecd: Date/time received back from the lab. String in \"yyyy-MM-dd HH:mm:ss\" format.\nDateTimeChecked: Date/time that quality was checked. String in \"yyyy-MM-dd HH:mm:ss\" format.\nProvNum: FK to provider.ProvNum.\nInstructions: The instructions for this labcase.\nLabFee: This is used for tracking and informational purposes only. The fee is not used in any calculation.\nInvoiceNum: This is an optional invoice number used for tracking and informational purposes only.\n\nExample Request:\nPUT /labcases/226\n\n{\n\"DateTimeDue\": \"2022-12-05 09:30:00\",\n\"DateTimeCreated\": \"2022-11-30 12:00:00\",\n\"DateTimeSent\": \"2022-12-01 16:15:00\",\n\"DateTimeRecd\": \"2022-12-05 09:45:00\",\n\"DateTimeChecked\": \"2022-12-06 10:00:00\",\n\"ProvNum\": 4,\n\"Instructions\": \"PFM crown #28. Shade A1\",\n\"LabFee\": 17.50,\n\"InvoiceNum\": \"271828\"\n}\n\nExample Response:\n{\n\"LabCaseNum\": 226,\n\"PatNum\": 33,\n\"LaboratoryNum\": 1,\n\"AptNum\": 143,\n\"PlannedAptNum\": 0,\n\"DateTimeDue\": \"2022-12-05 09:30:00\",\n\"DateTimeCreated\": \"2022-11-30 12:00:00\",\n\"DateTimeSent\": \"2022-12-01 16:15:00\",\n\"DateTimeRecd\": \"2022-12-05 09:45:00\",\n\"DateTimeChecked\": \"2022-12-06 10:00:00\",\n\"ProvNum\": 4,\n\"Instructions\": \"PFM crown #28. Shade A1\",\n\"LabFee\": 17.50,\n\"DateTStamp\": \"2022-12-07 10:24:53\",\n\"InvoiceNum\": \"271828\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nLabCases DELETE\nVersion Added: 24.4.19\n\nDeletes a labcase.\n\nLabCaseNum: Required in URL.\n\nExample Request:\nDELETE /labcases/5\n\nExample Response:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.19",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "LabCases",
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "LabCases",
+      "method": "DELETE",
+      "path": "/labcases",
+      "versionAdded": "24.4.19",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /labcases/5",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a labcase."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-laboratory",
+      "description": "API references database table laboratory"
+    },
+    {
+      "type": "references",
+      "target": "db-labcase",
+      "description": "API references database table labcase"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-schedule",
+      "description": "API references database table schedule"
+    },
+    {
+      "type": "references",
+      "target": "db-fee",
+      "description": "API references database table fee"
+    },
+    {
+      "type": "references",
+      "target": "db-appointment",
+      "description": "API references database table appointment"
+    },
+    {
+      "type": "references",
+      "target": "db-provider",
+      "description": "API references database table provider"
+    }
+  ]
+}

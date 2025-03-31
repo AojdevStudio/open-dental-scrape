@@ -1,0 +1,65 @@
+API Popups
+See API Specification
+
+Popups GET
+Version Added: 21.4
+
+Gets active and disabled popups for a patient and associated Family and SuperFamily. For versions 22.2 and later, the IsDisabled field is deprecated and may give unreliable information. DateTimeDisabled, also introduced in 22.2, should be referenced instead.
+
+Example Request:
+GET /popups?PatNum=10
+
+Example Response:
+[
+{
+"PopupNum": 1,
+"PatNum": 10,
+"Description": "Needs to fill out paperwork.",
+"PopupLevel": "Patient",
+"IsDisabled": "false",
+"DateTimeDisabled": "1/1/0001 12:00:00 AM"
+},
+{
+"PopupNum": 2,
+"PatNum": 10,
+"Description": "Verify cell phone number is accurate.",
+"PopupLevel": "Family",
+"IsDisabled": "false",
+"DateTimeDisabled": "8/22/2023 8:00:00 AM"
+},
+{
+"PopupNum": 5,
+"PatNum": 35,
+"Description": "Ask about medications.",
+"PopupLevel": "SuperFamily",
+"IsDisabled": "false",
+"DateTimeDisabled": "5/22/2022 8:30:00 AM"
+}
+]
+
+200 OK
+400 BadRequest (with explanation)
+404 NotFound (with explanation)
+
+Popups POST (create)
+Version Added: 21.1
+
+Be careful. Popups tend to be annoying to users and are usually reserved for more important notes.
+
+PatNum: Required.
+Description: Required.
+PopupLevel: Optional. "Patient", triggered when patient is selected in Open Dental. "Family", triggered when any member of the patient's family is selected in Open Dental. "SuperFamily", triggered when any member of the patient's super family is selected in Open Dental. The patient must be part of a SuperFamily for this option to be available. Default is "Patient".
+
+Example Request:
+POST /popups
+
+{
+"PatNum": "15",
+"Description":"Needs to fill out paperwork",
+"PopupLevel":"Patient"
+}
+
+Example Response:
+201 Created
+400 BadRequest (with explanation)
+404 NotFound (with explanation)

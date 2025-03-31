@@ -1,0 +1,51 @@
+{
+  "id": "db-usergroupattach",
+  "type": "database",
+  "title": "usergroupattach",
+  "metadata": {
+    "category": [
+      "Database",
+      "Table"
+    ],
+    "tags": [
+      "usergroupattach",
+      "Has Primary Key"
+    ]
+  },
+  "database": {
+    "tableName": "usergroupattach",
+    "description": "Table for usergroupattach data.",
+    "columns": [
+      {
+        "name": "usergroupattachNum",
+        "type": "bigint(20)",
+        "order": "0",
+        "description": "Primary key.",
+        "nullable": false
+      },
+      {
+        "name": "DateTStamp",
+        "type": "datetime",
+        "order": "1",
+        "description": "Timestamp for when this record was last modified.",
+        "nullable": true
+      }
+    ],
+    "primaryKey": [
+      "usergroupattachNum"
+    ],
+    "indexes": []
+  },
+  "relationships": [
+    {
+      "type": "referenced_by",
+      "target": "api-usergroupattaches",
+      "description": "Database table referenced by API"
+    },
+    {
+      "type": "referenced_by",
+      "target": "api-permissions",
+      "description": "Database table referenced by API"
+    }
+  ]
+}

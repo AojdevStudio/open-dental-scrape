@@ -1,0 +1,37 @@
+{
+  "id": "api-labturnarounds",
+  "type": "api",
+  "title": "LabTurnArounds",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API LabTurnArounds.txt",
+  "content": "API LabTurnarounds\nSee API Specification\n\nSee Laboratories for more information.\n\nLabTurnarounds GET (single)\nVersion Added: 24.2.29\n\nGets a single labturnaround.\n\nLabTurnaroundNum: Required in URL.\n\nExample Request:\nGET /labturnarounds/23\n\nExample Response:\n{\n\"LabTurnaroundNum\": 23,\n\"LaboratoryNum\": 7,\n\"Description\": \"Implant\",\n\"DaysPublished\": 3,\n\"DaysActual\": 4\n}\n\n200 OK\n404 NotFound (with explanation)\n\nLabTurnarounds GET (multiple)\nVersion Added: 24.2.29\n\nGets a list of labturnarounds.\n\nLaboratoryNum: Optional. FK to laboratory.LaboratoryNum.\n\nExample Requests:\nGET /labturnarounds\nGET /labturnarounds?LaboratoryNum=7\n\nExample Response:\n[\n{\n\"LabTurnaroundNum\": 23,\n\"LaboratoryNum\": 7,\n\"Description\": \"Implant\",\n\"DaysPublished\": 3,\n\"DaysActual\": 4\n},\n{\n\"LabTurnaroundNum\": 24,\n\"LaboratoryNum\": 7,\n\"Description\": \"Repair\",\n\"DaysPublished\": 1,\n\"DaysActual\": 2\n},\netc...\n]\n\n200 OK\n404 NotFound (with explanation)\n\nLabTurnarounds POST (create)\nVersion Added: 24.4.13\n\nCreates a labturnaround for a laboratory.\n\nLaboratoryNum: Required. FK to laboratory.LaboratoryNum.\nDescription: Required. The description of the service that the lab is performing.\nDaysActual: Required. The actual number of days.\n\nDaysPublished: Optional. The number of days that the lab publishes as the turnaround time for the service.\n\nExample Request:\nPOST /labturnarounds\n\n{\n\"LaboratoryNum\": 6,\n\"Description\": \"Implant\",\n\"DaysPublished\": 3,\n\"DaysActual\": 4\n}\n\nExample Response:\n{\n\"LabTurnaroundNum\": 23,\n\"LaboratoryNum\": 6,\n\"Description\": \"Implant\",\n\"DaysPublished\": 3,\n\"DaysActual\": 4\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nLabTurnarounds PUT (update)\nVersion Added: 24.4.13\n\nUpdates a labturnaround for a laboratory.\n\nLabTurnaroundNum: Required in the URL.\n\nDescription: Optional. The description of the service that the lab is performing. Overwrites existing description.\nDaysPublished: Optional. The number of days that the lab publishes as the turnaround time for the service.\nDaysActual: Optional. The actual number of days.\n\nExample Requests:\nPUT /labturnarounds/23\n\n{\n\"Description\": \"Implant\"\n}\n\nor\n\n{\n\"DaysPublished\": 3,\n\"DaysActual\": 4\n}\n\nExample Response:\n{\n\"LabTurnaroundNum\": 23,\n\"LaboratoryNum\": 6,\n\"Description\": \"Implant\",\n\"DaysPublished\": 3,\n\"DaysActual\": 4\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.13",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "LabTurnArounds",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-laboratory",
+      "description": "API references database table laboratory"
+    },
+    {
+      "type": "references",
+      "target": "db-labturnaround",
+      "description": "API references database table labturnaround"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "id": "api-treatmentplans",
+  "type": "api",
+  "title": "Treatmentplans",
+  "path": "/Users/aojdevstudio/cursor-projects/open-dental-scrape/docs/api-documentation/API Treatmentplans.txt",
+  "content": "API TreatPlans\nSee API Specification\n\nTreatment Plans are designed to track treatment the patient has accepted, display treatment charted for the patient that has not been completed, or keep a record of treatment the patient denied.\n\ntreatplans with a TPStatus of \"Active\" or \"Inactive\" use treatplanattach to reference attached procedures. treatplans with a TPStatus of \"Saved\" use proctp which are copies of the procedure, and will not change after being saved.\n\nTreatPlans GET\nVersion Added: 22.4.16\n\nGet a list of treatplans that meet a set of search criteria.\n\nParameters: All optional.\n\nPatNum: patient.PatNum.\nSecDateTEdit : Only include treatplans with a SecDateTEdit altered after the specified date and time. String in \"yyyy-MM-dd HH:mm:ss\" format.\nTPStatus : Either \"Saved\", \"Active\", or \"Inactive\". Default all.\n\nExample Requests:\nGET /treatplans?PatNum=1897&TPStatus=Saved\nGET /treatplans?SecDateTEdit=2022-07-01%2005%3A30%3A00\n\nExample Response:\n[\n{\n\"TreatPlanNum\": 1786,\n\"PatNum\": 1897,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Active Treatment Plan\",\n\"Note\": \"Please read this carefully:\\nIf you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect.\\nEven if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Active\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2022-07-02\",\n\"SecDateTEdit\": \"2022-07-02 09:39:54\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n},\n{\n\"TreatPlanNum\": 1787,\n\"PatNum\": 1901,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Active Treatment Plan\",\n\"Note\": \"Please read this carefully:\\nIf you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect.\\nEven if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Active\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2022-07-02\",\n\"SecDateTEdit\": \"2022-07-02 10:32:51\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n},\n{\n\"TreatPlanNum\": 1788,\n\"PatNum\": 1906,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Saved Treatment Plan\",\n\"Note\": \"Please read this carefully:\\nIf you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect.\\nEven if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Saved\",\n\"SecUserNumEntry\": 13,\n\"SecDateEntry\": \"2022-07-02\",\n\"SecDateTEdit\": \"2022-07-02 11:39:54\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"2022-07-02 11:39:54\",\n\"DateTPracticeSigned\": \"2022-07-02 11:39:54\",\n\"SignatureText\": \"Brandon Booter\",\n\"SignaturePracticeText\": \"Dr. Carl Moore\",\n\"isSigned\": \"true\",\n\"isSignedPractice\": \"true\"\n},\netc...\n]\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTreatPlans POST (create)\nVersion Added: 23.2.13\n\nCreates an inactive treatplan for a patient.\n\nParameters:\n\nPatNum: Required.\nHeading: Optional. Default \"Inactive Treatment Plan\".\nNote: Optional. Defaults to the TreatmentPlanNote preference.\nTPType: Optional. Either \"Insurance\" or \"Discount\". If the patient is subscribed to a Discount Plan, this will default to \"Discount\". Otherwise, defaults to \"Insurance\".\n\nExample Request:\nPOST /treatplans\n\n{\n\"PatNum\": 31,\n\"Heading\": \"Fillings\",\n\"Note\": \"ONLY AN ESTIMATE.\",\n\"TPType\": \"Insurance\"\n}\n\nExample Response:\n{\n\"TreatPlanNum\": 18,\n\"PatNum\": 31,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Fillings\",\n\"Note\": \"ONLY AN ESTIMATE.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Inactive\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-08-10\",\n\"SecDateTEdit\": \"2023-08-10 12:18:12\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTreatPlans POST Saved\nVersion Added: 23.2.22\n\nCreates an unsigned Saved treatplan from an existing Active or Inactive treatplan.\n\nParameters:\n\nTreatPlanNum: Required.\nHeading: Optional. Defaults to the heading of the supplied Treatment Plan.\nUserNumPresenter: Optional. FK to userod.UserNum. Default 0.\n\nExample Request:\nPOST /treatplans/Saved\n\n{\n\"TreatPlanNum\": 138,\n\"Heading\": \"Saved Plan\",\n\"UserNumPresenter\": 5\n}\n\nExample Response:\n{\n\"TreatPlanNum\": 138,\n\"PatNum\": 15,\n\"DateTP\": \"2023-09-22\",\n\"Heading\": \"Saved Plan\",\n\"Note\": \"If you have dental insurance, please be aware that THIS IS AN ESTIMATE ONLY. Coverage may be different if your deductible has not been met, annual maximum has been met, or if your coverage table is lower than average.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Saved\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-09-22\",\n\"SecDateTEdit\": \"2023-09-22 14:45:35\",\n\"UserNumPresenter\": 5,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n}\n\n201 Created\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTreatPlans PUT (update)\nVersion Added: 24.1.10\n\nUpdates a treatplan.\n\nTo sign a treatplan with TPStatus of \"Saved\", set isSigned to true for the patient, or isSignedPractice to true for the practice. The signature that appears on the treatplan will be shown as the following: \"Digitally Signed by [API DeveloperName] Date Signed: [\"MM/dd/yyyy HH:mm:ss tt\"]\". Every treatplan is required to have at least one Signature box for the patient's signature. The availablity of SignatureText, SignaturePractice, and SignaturePracticeText is dependent upon the default Treatment Plan Sheet of the Clinic associated with the saved treatplan's procedures.\n\nSee API Implementation, Treatment Plan Layout, Sign Treatment Plan, and Sheet Def Defaults for more information on signing Treatment Plans.\n\nTreatPlanNum: Required in the URL.\n\nDateTP: The date of the treatment plan. Can only be set if TPStatus is \"Saved\". String in \"yyyy-MM-dd\" format.\nHeading: The heading that shows at the top of the treatment plan.\nNote: A note specific to this treatment plan that shows at the bottom. Overwrites existing note.\nResponsParty: FK to patient.PatNum. The patient responsible for approving the treatment.\nTPType: Either \"Insurance\" or \"Discount\".\nSignatureText: The typed name of the person who signed the patient signature.\nSignaturePracticeText: The typed name of the person who signed the practice signature.\nisSigned: Either \"true\" or \"false\". True updates the treatplan Signature, digitally signs for the patient, and overwrites existing signature. False clears the exisiting treatplan Signature.\nisSignedPractice: Either \"true\" or \"false\". True updates the treatplan SignaturePractice, digitally signs for the practice, and overwrites existing signature. False clears the exisiting treatplan SignaturePractice.\n\nExample Requests:\nPUT /treatplans/9087\n\n{\n\"DateTP\": \"2024-01-27\",\n\"Heading\": \"Inactive Treatment Plan - Patient Declined\"\n}\n\nor\n\n{\n\"DateTP\": \"2024-01-27\",\n\"Heading\": \"Saved Treatment Plan for Extractions + Implant\",\n\"Note\": \"Please read this carefully: If you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect. Even if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay. This Treatment Plan was selected using Amazing Smiles Dental Application.\",\n\"ResponsParty\": 712,\n\"SignatureText\": \"Pamela Hoovey\",\n\"SignaturePracticeText\": \"Dr. Ben Jeong\",\n\"isSigned\": \"true\",\n\"isSignedPractice\": \"true\"\n}\n\nExample Response:\n{\n\"TreatPlanNum\": 9087\n\"PatNum\": 8643,\n\"DateTP\": \"2024-01-27\",\n\"Heading\": \"Saved Treatment Plan for Extractions + Implant\",\n\"Note\": \"Please read this carefully: If you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect. Even if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay. This Treatment Plan was selected using Amazing Smiles Dental Application..\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 712,\n\"DocNum\": 476,\n\"TPStatus\": \"Saved\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2024-01-22\",\n\"SecDateTEdit\": \"2024-01-27 14:13:05\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"2024-01-27 14:13:05\",\n\"DateTPracticeSigned\": \"2024-01-27 14:13:05\",\n\"SignatureText\": \"Pamela Hoovey\",\n\"SignaturePracticeText\": \"Dr. Ben Jeong\",\n\"isSigned\": \"true\",\n\"isSignedPractice\": \"true\"\n}\n\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)\n\nTreatPlans DELETE\nVersion Added: 24.4.26\n\nDeletes a treatplan. For treatplans with a TPStatus of \"Saved\", all associated proctps are also deleted.\n\nTreatPlanNum: Required in the URL.\n\nExample Request:\nDELETE /treatplans/115\n\nExample Responses:\n200 OK\n400 BadRequest (with explanation)\n404 NotFound (with explanation)",
+  "metadata": {
+    "version": "24.4.26",
+    "lastUpdated": "",
+    "category": [
+      "API"
+    ],
+    "tags": [
+      "Treatmentplans",
+      "Required Fields",
+      "Examples"
+    ]
+  },
+  "endpoints": [
+    {
+      "resource": "TreatPlans",
+      "method": "GET",
+      "path": "/treatplans",
+      "versionAdded": "22.4.16",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "GET /treatplans?PatNum=1897&TPStatus=Saved\nGET /treatplans?SecDateTEdit=2022-07-01%2005%3A30%3A00",
+          "response": "[\n{\n\"TreatPlanNum\": 1786,\n\"PatNum\": 1897,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Active Treatment Plan\",\n\"Note\": \"Please read this carefully:\\nIf you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect.\\nEven if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Active\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2022-07-02\",\n\"SecDateTEdit\": \"2022-07-02 09:39:54\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n},\n{\n\"TreatPlanNum\": 1787,\n\"PatNum\": 1901,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Active Treatment Plan\",\n\"Note\": \"Please read this carefully:\\nIf you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect.\\nEven if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Active\",\n\"SecUserNumEntry\": 12,\n\"SecDateEntry\": \"2022-07-02\",\n\"SecDateTEdit\": \"2022-07-02 10:32:51\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n},\n{\n\"TreatPlanNum\": 1788,\n\"PatNum\": 1906,\n\"DateTP\": \"0001-01-01\",\n\"Heading\": \"Saved Treatment Plan\",\n\"Note\": \"Please read this carefully:\\nIf you have insurance, THIS IS AN ESTIMATE ONLY. Insurance might not pay what we expect.\\nEven if you pay your estimate ahead of time, you will still be responsible for any portion that insurance does not pay.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Saved\",\n\"SecUserNumEntry\": 13,\n\"SecDateEntry\": \"2022-07-02\",\n\"SecDateTEdit\": \"2022-07-02 11:39:54\",\n\"UserNumPresenter\": 0,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"2022-07-02 11:39:54\",\n\"DateTPracticeSigned\": \"2022-07-02 11:39:54\",\n\"SignatureText\": \"Brandon Booter\",\n\"SignaturePracticeText\": \"Dr. Carl Moore\",\n\"isSigned\": \"true\",\n\"isSignedPractice\": \"true\"\n},\netc...\n]"
+        }
+      ],
+      "responses": [
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Get a list of treatplans that meet a set of search criteria."
+    },
+    {
+      "resource": "TreatPlans",
+      "method": "POST",
+      "path": "/treatplans",
+      "versionAdded": "23.2.22",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "POST /treatplans/Saved\n\n{\n\"TreatPlanNum\": 138,\n\"Heading\": \"Saved Plan\",\n\"UserNumPresenter\": 5\n}",
+          "response": "{\n\"TreatPlanNum\": 138,\n\"PatNum\": 15,\n\"DateTP\": \"2023-09-22\",\n\"Heading\": \"Saved Plan\",\n\"Note\": \"If you have dental insurance, please be aware that THIS IS AN ESTIMATE ONLY. Coverage may be different if your deductible has not been met, annual maximum has been met, or if your coverage table is lower than average.\",\n\"SigIsTopaz\": \"false\",\n\"ResponsParty\": 0,\n\"DocNum\": 0,\n\"TPStatus\": \"Saved\",\n\"SecUserNumEntry\": 0,\n\"SecDateEntry\": \"2023-09-22\",\n\"SecDateTEdit\": \"2023-09-22 14:45:35\",\n\"UserNumPresenter\": 5,\n\"TPType\": \"Insurance\",\n\"DateTSigned\": \"0001-01-01 00:00:00\",\n\"DateTPracticeSigned\": \"0001-01-01 00:00:00\",\n\"SignatureText\": \"\",\n\"SignaturePracticeText\": \"\",\n\"isSigned\": \"false\",\n\"isSignedPractice\": \"false\"\n}"
+        }
+      ],
+      "responses": [
+        {
+          "code": "201",
+          "status": "Created",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Creates an unsigned Saved treatplan from an existing Active or Inactive treatplan."
+    },
+    {
+      "resource": "TreatPlans",
+      "method": "DELETE",
+      "path": "/treatplans",
+      "versionAdded": "24.4.26",
+      "parameters": [],
+      "examples": [
+        {
+          "request": "DELETE /treatplans/115",
+          "response": ""
+        }
+      ],
+      "responses": [
+        {
+          "code": "115",
+          "status": "Example",
+          "description": ""
+        },
+        {
+          "code": "200",
+          "status": "OK",
+          "description": ""
+        },
+        {
+          "code": "400",
+          "status": "BadRequest",
+          "description": "with explanation"
+        },
+        {
+          "code": "404",
+          "status": "NotFound",
+          "description": "with explanation"
+        }
+      ],
+      "description": "Deletes a treatplan. For treatplans with a TPStatus of \"Saved\", all associated proctps are also deleted."
+    }
+  ],
+  "relationships": [
+    {
+      "type": "references",
+      "target": "db-is",
+      "description": "References database table is"
+    },
+    {
+      "type": "references",
+      "target": "db-treatplan",
+      "description": "API references database table treatplan"
+    },
+    {
+      "type": "references",
+      "target": "db-patient",
+      "description": "API references database table patient"
+    },
+    {
+      "type": "references",
+      "target": "db-proctp",
+      "description": "API references database table proctp"
+    },
+    {
+      "type": "references",
+      "target": "db-userod",
+      "description": "API references database table userod"
+    },
+    {
+      "type": "references",
+      "target": "db-clinic",
+      "description": "API references database table clinic"
+    },
+    {
+      "type": "references",
+      "target": "db-document",
+      "description": "API references database table document"
+    },
+    {
+      "type": "references",
+      "target": "db-preference",
+      "description": "API references database table preference"
+    },
+    {
+      "type": "references",
+      "target": "db-treatplanattach",
+      "description": "API references database table treatplanattach"
+    },
+    {
+      "type": "references",
+      "target": "db-sheet",
+      "description": "API references database table sheet"
+    }
+  ]
+}
