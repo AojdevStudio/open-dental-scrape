@@ -29,6 +29,10 @@ from pathlib import Path
 from typing import Dict, List, Any, Optional, Tuple, Set
 import re
 from tqdm import tqdm
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(

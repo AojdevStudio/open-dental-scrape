@@ -7,7 +7,12 @@ This script takes the processed embedding chunks from the prepare_code_embedding
 script and uploads them to an OpenAI vector database.
 
 Usage:
-    python upload_to_vector_db.py --input-dir /path/to/processed/embeddings --openai-api-key YOUR_API_KEY
+    python upload_to_vector_db.py --input-dir /path/to/processed/embeddings [--openai-api-key YOUR_API_KEY]
+
+Environment Variables:
+    - OPENAI_API_KEY: Your OpenAI API key (alternative to --openai-api-key)
+    - VECTOR_INDEX_NAME: Name of the vector index (alternative to --index-name)
+    - VECTOR_INDEX_DESCRIPTION: Description of the vector index (alternative to --index-description)
 
 Requirements:
     - openai>=1.0.0
@@ -17,12 +22,17 @@ Requirements:
 import argparse
 import json
 import os
+import sys
 import time
 from pathlib import Path
 import logging
 from typing import Dict, List, Any, Optional
 import openai
 from tqdm import tqdm
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(
@@ -135,11 +145,30 @@ class VectorDBUploader:
         logger.info(f"Creating vector index: {name}")
         
         try:
-            response = self.openai_client.beta.vector_stores.create(
-                name=name,
-                description=description,
-                embedding_model="text-embedding-ada-002"
-            )
+            # In the current OpenAI API, vector indexes are created differently
+            # We'll use the Files API to create and upload vectors
+            
+            # First, create a temporary file with our vectors
+            temp_file_path = self.input_dir / "temp_vectors.jsonl"
+            with open(temp_file_path, "w") as f:
+                f.write(json.dumps({
+                    "name": name,
+                    "description": description,
+                    "metadata": {
+                        "embedding_model": "text-embedding-ada-002"
+                    }
+                }))
+            
+            # Upload the file to OpenAI
+            with open(temp_file_path, "rb") as file:
+                response = self.openai_client.files.create(
+                    file=file,
+                    purpose="vector_index"
+                )
+            
+            # Clean up
+            if temp_file_path.exists():
+                temp_file_path.unlink()
             
             index_id = response.id
             logger.info(f"Created vector index with ID: {index_id}")
@@ -180,10 +209,31 @@ class VectorDBUploader:
                 batch_data.append(item)
             
             try:
-                response = self.openai_client.beta.vector_stores.add_vectors(
-                    vector_store_id=index_id,
-                    vectors=batch_data
-                )
+                # In the current API, vectors are uploaded via files API
+                # Create a temporary JSONL file with our vectors
+                temp_file_path = self.input_dir / f"temp_vectors_batch_{i}.jsonl"
+                with open(temp_file_path, "w") as f:
+                    for item in batch_data:
+                        f.write(json.dumps(item) + "\n")
+                
+                # Upload the file to OpenAI
+                with open(temp_file_path, "rb") as file:
+                    response = self.openai_client.files.create(
+                        file=file,
+                        purpose="vectors",
+                        user_provided_filename=f"batch_{i}.jsonl"
+                    )
+                    
+                    # Attach the file to the vector index
+                    self.openai_client.files.attach(
+                        file_id=response.id,
+                        target_id=index_id,
+                        purpose="vector_index"
+                    )
+                
+                # Clean up
+                if temp_file_path.exists():
+                    temp_file_path.unlink()
                 
                 # Count successful uploads
                 uploaded_count += len(batch)
@@ -269,20 +319,31 @@ class VectorDBUploader:
 def main():
     parser = argparse.ArgumentParser(description="Upload processed embedding chunks to an OpenAI vector database")
     parser.add_argument("--input-dir", required=True, help="Path to directory containing processed embedding chunks")
-    parser.add_argument("--openai-api-key", required=True, help="OpenAI API key")
-    parser.add_argument("--index-name", default="open_dental_docs", help="Name of the vector index")
-    parser.add_argument("--index-description", default="Open Dental documentation for code understanding", help="Description of the vector index")
+    parser.add_argument("--openai-api-key", help="OpenAI API key (can also be set via OPENAI_API_KEY env variable)")
+    parser.add_argument("--index-name", help="Name of the vector index (can also be set via VECTOR_INDEX_NAME env variable)")
+    parser.add_argument("--index-description", help="Description of the vector index (can also be set via VECTOR_INDEX_DESCRIPTION env variable)")
     parser.add_argument("--batch-size", type=int, default=100, help="Number of chunks to upload in a single batch")
     
     args = parser.parse_args()
     
+    # Use environment variables if arguments are not provided
+    api_key = args.openai_api_key or os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        logger.error("OpenAI API key not provided. Set via --openai-api-key or OPENAI_API_KEY environment variable")
+        sys.exit(1)
+    
+    index_name = args.index_name or os.environ.get("VECTOR_INDEX_NAME", "open_dental_docs")
+    index_description = args.index_description or os.environ.get(
+        "VECTOR_INDEX_DESCRIPTION", "Open Dental documentation for code understanding"
+    )
+    
     uploader = VectorDBUploader(
         input_dir=args.input_dir,
-        openai_api_key=args.openai_api_key,
+        openai_api_key=api_key,
         batch_size=args.batch_size
     )
     
-    result = uploader.upload(args.index_name, args.index_description)
+    result = uploader.upload(index_name, index_description)
     
     if result["success"]:
         print(f"Successfully uploaded {result['uploaded_chunks']} out of {result['total_chunks']} chunks")

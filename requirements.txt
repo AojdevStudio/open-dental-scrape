@@ -3,3 +3,4 @@ tqdm>=4.65.0
 uuid>=1.30.0
 pathlib>=1.0.1
 argparse>=1.4.0
+python-dotenv>=1.0.0
