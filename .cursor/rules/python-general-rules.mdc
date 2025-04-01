@@ -1,7 +1,7 @@
 ---
 description: 
-globs: 
-alwaysApply: true
+globs: **/*.py
+alwaysApply: false
 ---
 ---
 description: General Python development rules applicable to all Python files in the project.
