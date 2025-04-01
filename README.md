@@ -13,7 +13,28 @@ This tool allows you to:
 
 ## Step-by-Step Setup Guide
 
-### Step 1: Install Required Software
+### Option 1: Quick Setup (Recommended for Most Users)
+
+For the easiest setup experience, you can use our automated pipeline script:
+
+1. Make sure you have Python and Docker installed (see Step 1 in the Detailed Setup below)
+2. Create a `.env` file with your OpenAI API key (see Step 2.3 in the Detailed Setup below)
+3. Open a terminal and run:
+
+```
+bash run_pipeline.sh
+```
+
+This single command will:
+- Prepare the code embeddings
+- Generate local embeddings
+- Tell you when it's ready to use
+
+After running this script, you can skip to Step 3 (Start the Search Database) in the Detailed Setup.
+
+### Option 2: Detailed Setup
+
+#### Step 1: Install Required Software
 
 #### Install Python
 
@@ -133,6 +154,10 @@ If you're still having trouble, please contact technical support with:
 Here's a summary of all the commands you'll need:
 
 ```
+# OPTION 1: Run the entire pipeline (easiest)
+bash run_pipeline.sh
+
+# OPTION 2: Manual steps
 # Install packages
 pip install qdrant-client openai python-dotenv tqdm
 
