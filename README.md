@@ -1,72 +1,153 @@
 # Open Dental Documentation Search
 
-This project enables semantic search over Open Dental documentation using vector embeddings.
+This easy-to-follow guide will help you set up and use the Open Dental Documentation Search system, which lets you ask questions about Open Dental and get accurate answers from the documentation.
 
-## Prerequisites
+![Open Dental Logo](https://www.opendental.com/img/ODLogo.png)
 
-- Python 3.10+
-- OpenAI API key
-- Qdrant running locally (or remote Qdrant instance)
+## What This Tool Does
 
-## Setup
+This tool allows you to:
+- Search through Open Dental documentation using natural language questions
+- Get precise answers with references to the original documentation
+- Find information across APIs, database schemas, and manuals
 
-1. Install the required packages:
+## Step-by-Step Setup Guide
 
-```bash
+### Step 1: Install Required Software
+
+#### Install Python
+
+If you don't already have Python installed:
+
+1. Go to [python.org/downloads](https://python.org/downloads)
+2. Download and install Python 3.10 or newer
+3. Make sure to check "Add Python to PATH" during installation
+
+#### Install Docker
+
+Docker is needed to run the search database:
+
+1. Go to [docker.com/products/docker-desktop](https://docker.com/products/docker-desktop)
+2. Download and install Docker Desktop
+3. Start Docker Desktop after installation
+
+### Step 2: Set Up the Project
+
+1. Open a terminal or command prompt
+   - **Windows**: Search for "Command Prompt" or "PowerShell"
+   - **Mac**: Search for "Terminal" in Spotlight
+   - **Linux**: Use your terminal application
+
+2. Install the required Python packages by copying and pasting this command:
+
+```
 pip install qdrant-client openai python-dotenv tqdm
 ```
 
-2. Create a `.env` file with your OpenAI API key:
+3. Create a file named `.env` in the project folder with your OpenAI API key:
+   - Open a text editor (like Notepad, TextEdit, or VS Code)
+   - Copy and paste the following, replacing `your_api_key_here` with your actual OpenAI API key:
 
 ```
 OPENAI_API_KEY=your_api_key_here
 ```
 
-3. Make sure Qdrant is running. To run Qdrant locally using Docker:
+   - Save the file as `.env` in the project folder
 
-```bash
+### Step 3: Start the Search Database
+
+1. Start the Qdrant database by copying and pasting this command into your terminal:
+
+```
 docker run -p 6333:6333 -p 6334:6334 -v $(pwd)/qdrant_storage:/qdrant/storage qdrant/qdrant
 ```
 
-## Loading the embeddings
+2. Keep this terminal window open! The database will run in this window.
 
-Use the fixed loading script to load your embeddings into Qdrant:
+### Step 4: Load Documentation into the Search Database
 
-```bash
+1. Open a new terminal or command prompt window
+2. Navigate to the project folder
+3. Run the loading script by copying and pasting this command:
+
+```
 python load_embeddings_to_qdrant_fixed.py
 ```
 
-This script:
-- Creates a collection named "open_dental_docs" if it doesn't exist
-- Loads embeddings from `./local_embeddings/combined_embeddings.json`
-- Generates UUID for each document (avoiding the string ID issue)
-- Creates a mapping between original IDs and generated UUIDs
-- Uploads the embeddings to Qdrant in batches
+4. Wait for the loading to complete - you'll see a message saying "Upload complete!"
 
-## Querying the embeddings
+### Step 5: Search the Documentation
 
-Once your embeddings are loaded, you can query them:
+Now you can start searching! Use this command format:
 
-```bash
-python query_qdrant.py "How to create a patient in Open Dental?"
+```
+python query_qdrant_fixed.py "Your question about Open Dental goes here?"
 ```
 
-Additional options:
-- `--limit` - Number of results to return (default: 5)
-- `--filter` - Filter by document type (choices: api, database, manual, relationship)
+For example:
 
-Example with filtering:
-```bash
-python query_qdrant.py "How to create a patient in Open Dental?" --filter manual --limit 10
 ```
+python query_qdrant_fixed.py "How do I create a new patient record?"
+```
+
+#### Advanced Search Options:
+
+- To get more results, add `--limit` followed by a number:
+  ```
+  python query_qdrant_fixed.py "How do I create a new patient record?" --limit 10
+  ```
+
+- To search only specific document types, add `--filter` followed by one of: api, database, manual, relationship:
+  ```
+  python query_qdrant_fixed.py "How do I create a new patient record?" --filter manual
+  ```
 
 ## Troubleshooting
 
 If you encounter any issues:
 
-1. Make sure Qdrant is running and accessible
-2. Check that your OpenAI API key is valid
-3. Verify that your embeddings file exists and is formatted correctly
+### The database won't start
+- Make sure Docker Desktop is running
+- Try restarting Docker Desktop
+- Make sure no other program is using ports 6333 or 6334
+
+### Loading errors
+- Check that your `.env` file exists and contains your OpenAI API key
+- Make sure the local_embeddings folder contains the combined_embeddings.json file
+- Try running `python check_qdrant.py` to verify the database is working
+
+### Search isn't working
+- Make sure the database is still running in the first terminal window
+- Verify that embeddings were loaded successfully
+- Check your internet connection (needed for OpenAI embeddings)
+
+## Need More Help?
+
+If you're still having trouble, please contact technical support with:
+1. A screenshot of any error messages
+2. The steps you followed
+3. What you expected to happen
+
+## Quick Reference Commands
+
+Here's a summary of all the commands you'll need:
+
+```
+# Install packages
+pip install qdrant-client openai python-dotenv tqdm
+
+# Start database (keep this running in a terminal)
+docker run -p 6333:6333 -p 6334:6334 -v $(pwd)/qdrant_storage:/qdrant/storage qdrant/qdrant
+
+# Load documentation (in a new terminal)
+python load_embeddings_to_qdrant_fixed.py
+
+# Search the documentation
+python query_qdrant_fixed.py "Your question here?"
+
+# Check if database is working properly
+python check_qdrant.py
+```
 
 ## Structure of embeddings file
 
