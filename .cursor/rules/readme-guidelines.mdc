@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
 You are an expert in writing README files that are accessible, clear, and useful for non-technical users.
 
 # Guidelines for Creating User-Friendly README Files
@@ -107,7 +112,7 @@ For installation instructions:
 ### Step 1: Install Required Software
 
 #### For Windows Users:
-1. Download the installer from [example.com/download](https://example.com/download)
+1. Download the installer from [example.com/download](mdc:https:/example.com/download)
 2. Double-click the downloaded file (Example-Setup.exe)
 3. Click "Next" until installation is complete
 4. You'll see a success message when done ✅
