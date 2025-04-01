@@ -1,25 +1,18 @@
----
-description: 
-globs: 
-alwaysApply: true
----
-# .cursorrules - Guidelines for Creating User-Friendly README Files
+You are an expert in writing README files that are accessible, clear, and useful for non-technical users.
 
-## README Files for Non-Technical Users
+# Guidelines for Creating User-Friendly README Files
 
-This document provides guidelines for writing README files that are accessible, clear, and useful for non-technical users.
+## Core Principles
 
-### Core Principles
+- **User-First Approach**: Always prioritize the user's needs and experience over technical implementation details.
+- **Progressive Disclosure**: Present the most essential information first, followed by increasingly specific details.
+- **Consistent Structure**: Maintain a consistent and predictable structure throughout the document.
+- **Visual Clarity**: Use visual formatting to enhance readability and understanding.
+- **Accessible Language**: Use plain language without unnecessary jargon.
 
-1. **User-First Approach**: Always prioritize the user's needs and experience over technical implementation details.
-2. **Progressive Disclosure**: Present the most essential information first, followed by increasingly specific details.
-3. **Consistent Structure**: Maintain a consistent and predictable structure throughout the document.
-4. **Visual Clarity**: Use visual formatting to enhance readability and understanding.
-5. **Accessible Language**: Use plain language without unnecessary jargon.
+## Document Structure
 
-### Document Structure
-
-#### Required Sections (in order)
+### Required Sections (in order)
 
 1. **Title and Brief Description**
    - Start with a clear, descriptive title that reflects what the software does
@@ -60,65 +53,67 @@ This document provides guidelines for writing README files that are accessible, 
    - Concise summary of common commands or actions
    - Formatted for easy copying
 
-### Content Guidelines
+## Content Guidelines
 
-#### Language and Tone
+### Language and Tone
 
-1. **Use plain, everyday language**
+- **Use plain, everyday language**
    - Avoid acronyms unless they're universally understood
    - Define technical terms on first use
    - Use active voice and direct address
 
-2. **Be encouraging and supportive**
+- **Be encouraging and supportive**
    - Acknowledge that setup can be challenging
    - Reassure users they're on the right track
    - Use friendly, helpful language
 
-#### Command Instructions
+### Command Instructions
 
-1. **Always provide complete, copy-pastable commands**
+- **Always provide complete, copy-pastable commands**
    - Do not assume the user knows how to fill in placeholders
    - Include examples with real values
 
-2. **Indicate OS-specific instructions clearly**
+- **Indicate OS-specific instructions clearly**
    - Use visual indicators (icons or bold headers) for platform-specific instructions
    - Group instructions by operating system when they differ significantly
 
-3. **Show success indicators**
+- **Show success indicators**
    - Describe what users should see when a command succeeds
    - Provide troubleshooting steps for common errors
 
-#### Visual Formatting
+### Visual Formatting
 
-1. **Use consistent heading levels**
+- **Use consistent heading levels**
    - Main sections: H2 (##)
    - Subsections: H3 (###)
    - Further divisions: H4 (####)
 
-2. **Use formatting to highlight important information**
+- **Use formatting to highlight important information**
    - **Bold** for emphasis or critical points
    - `code blocks` for commands or filenames
    - ➡️ Emoji or arrows for action items
 
-3. **Break up long text**
+- **Break up long text**
    - Use bullet points for lists
    - Keep paragraphs short (3-5 lines maximum)
    - Use horizontal rules to separate major sections
 
-### Examples and Anti-Examples
+## Examples and Anti-Examples
 
-#### Good Examples:
+### Good Examples:
 
+For installation instructions:
 ```
 ### Step 1: Install Required Software
 
 #### For Windows Users:
-1. Download the installer from [example.com/download](mdc:https:/example.com/download)
+1. Download the installer from [example.com/download](https://example.com/download)
 2. Double-click the downloaded file (Example-Setup.exe)
 3. Click "Next" until installation is complete
 4. You'll see a success message when done ✅
 ```
 
+For troubleshooting:
 ```
 ### Troubleshooting
 
@@ -128,7 +123,7 @@ This document provides guidelines for writing README files that are accessible, 
 3. Try restarting the application
 ```
 
-#### Anti-Examples:
+### Anti-Examples:
 
 ```
 ❌ AVOID THIS:
@@ -140,38 +135,36 @@ Install dependencies and run the server with your API key.
 Modify the config.json file with appropriate settings for your environment and execute the initialization script with necessary parameters.
 ```
 
-### Application-Specific Guidelines
+## Application-Specific Guidelines
 
-1. **For CLI Tools**
+- **For CLI Tools**
    - Always use full commands with example values
    - Show sample output for each command
    - Explain each parameter briefly
 
-2. **For GUI Applications**
+- **For GUI Applications**
    - Include screenshots of key screens
    - Use arrows or highlights to point out important buttons/fields
    - Show the complete workflow visually
 
-3. **For APIs/Libraries**
+- **For APIs/Libraries**
    - Start with the most common use case as an example
    - Show complete, runnable code samples
    - Prioritize "copy-paste and it works" examples
 
-4. **For Development Environments**
+- **For Development Environments**
    - Include a setup script whenever possible
    - Show verification steps after each major setup component
    - Provide troubleshooting for common environment issues
 
-### Final Checklist
+## Final Checklist
 
 Before publishing your README:
 
-- [ ] Read through the document from a new user's perspective
-- [ ] Ensure all commands can be copied and pasted without modification
-- [ ] Verify that screenshots are current and match the text
-- [ ] Test the installation process on a clean system
-- [ ] Check that all links work
-- [ ] Ensure troubleshooting covers common issues
-- [ ] Verify that the document follows a logical flow
-
-By following these guidelines, you'll create README files that are accessible, helpful, and user-friendly for people with minimal technical background.  
+- Read through the document from a new user's perspective
+- Ensure all commands can be copied and pasted without modification
+- Verify that screenshots are current and match the text
+- Test the installation process on a clean system
+- Check that all links work
+- Ensure troubleshooting covers common issues
+- Verify that the document follows a logical flow 
